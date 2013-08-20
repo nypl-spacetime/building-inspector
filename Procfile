@@ -1,0 +1,1 @@
+web: bundle exec rerun 'rackup config.ru -p $PORT'

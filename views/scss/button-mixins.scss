@@ -1,0 +1,61 @@
+// BUTTON MIXINS
+// FROM: http://sermoa.wordpress.com/2011/08/18/beautiful-css3-buttons-with-sass/
+
+@mixin green-button {
+  @include button-style(#152);
+}
+
+@mixin rounded-corners($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;                                                                                                                 
+  border-radius: $radius;
+}
+
+// @mixin box-shadow($h, $v, $radius, $spread, $color) {
+//   -webkit-box-shadow: $h $v $radius $spread $color;
+//   -moz-box-shadow: $h $v $radius $spread $color;
+//   box-shadow: $h $v $radius $spread $color;
+// }
+
+// @mixin text-shadow($h, $v, $radius, $color) {
+//   text-shadow: $h $v $radius $color;
+//   filter: dropshadow(color=$color, offx=$h, offy=$v);
+// }
+  
+@mixin linear-gradient($from, $to) {
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($from), to($to));
+  background-image: -webkit-linear-gradient(top, $from, $to);
+  background-image:    -moz-linear-gradient(top, $from, $to);
+  background-image:     -ms-linear-gradient(top, $from, $to);
+  background-image:      -o-linear-gradient(top, $from, $to);
+}
+
+@mixin inset-box-shadow($h, $v, $radius, $spread, $color) {
+  -webkit-box-shadow: inset $h $v $radius $spread $color;
+  -moz-box-shadow: inset $h $v $radius $spread $color;
+  box-shadow: inset $h $v $radius $spread $color;
+}
+
+@mixin button-style($base-color, $withborder: "true", $withbold: "true") {
+  background-color: $base-color;
+  font-size: 1.1em;
+  @if $withbold == "true" {
+    font-weight: bold;
+  } @else {
+    font-weight: normal;
+  }
+  color: #fff;
+  padding: 4px 16px;
+  text-decoration: none;
+  @if $withborder == "true" {
+    border: 2px solid darken($base-color, 10%);
+  }
+  @include rounded-corners(7px);
+  @include text-shadow(1px, 1px, 2px, #000);
+  @include linear-gradient(lighten($base-color, 10%), $base-color);
+  @include inset-box-shadow(0px, 1px, 2px, 0px, lighten($base-color, 50%));
+
+  &:hover {
+    @include linear-gradient($base-color, lighten($base-color, 10%));
+  }
+}

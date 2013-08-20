@@ -1,0 +1,89 @@
+@import "css3-mixins";
+@import "button-mixins";
+
+$mainfont: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+$buttoncolor: #f00;
+$black: #000;
+$white: #fff;
+$canvascolor: #111;
+$nocolor: #f00;
+$yescolor: #016D17;
+$fixcolor: #ff0;
+
+$redbuildingcolor: rgb(207, 77, 77);
+$greenbuildingcolor: rgb(86, 158, 58);
+$bluebuildingcolor: rgb(77, 150, 207);
+$yellowbuildingcolor: rgb(197, 202, 72);
+
+body {
+	font-family: $mainfont;
+	background: $white;
+}
+
+#main-container {
+	width: 100%;
+	height: 100%;
+}
+
+#map-container {
+	height: 100%;
+}
+
+#map {
+	width: 100%;
+	height: 100%;
+}
+
+#buttons {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+
+	a {
+		width: 30%;
+		height: 30px;
+		margin: 0;
+		padding-top: 10px;
+		float: left;
+		text-align: center;
+		text-decoration: none;
+		color: $white;
+
+		&#no-button {
+			background-color: $nocolor;
+		}
+
+		&#fix-button {
+			width: 40%;
+			color: $black;
+			background-color: $fixcolor;
+		}
+
+		&#yes-button {
+			background-color: $yescolor;
+		}
+
+		&.building {
+			width: 25%;
+		}
+
+		&#yellow-button {
+			color: $black;
+			background-color: $yellowbuildingcolor;
+		}
+
+		&#red-button {
+			background-color: $redbuildingcolor;
+		}
+
+		&#green-button {
+			background-color: $greenbuildingcolor;
+		}
+
+		&#blue-button {
+			background-color: $bluebuildingcolor;
+		}
+	}
+}
+
+
