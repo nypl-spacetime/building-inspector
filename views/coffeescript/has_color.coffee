@@ -11,6 +11,8 @@ class HasColor
 			zoomControl: false
 			, animate: true
 			, attributionControl: false
+			, minZoom: 19
+			, maxZoom: 19
 		)
 
 		@geo = @newGeo()
@@ -33,7 +35,7 @@ class HasColor
 				}
 			,onEachFeature: (f,l) ->
 				out = for key, val of f.properties
-					"#{key}: #{val}"
+					"<strong>#{key}:</strong> #{val}"
 				l.bindPopup(out.join("<br />"))
 		)
 

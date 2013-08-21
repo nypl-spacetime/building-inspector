@@ -11,6 +11,8 @@ class IsBuilding
 			zoomControl: false
 			, animate: true
 			, attributionControl: false
+			, minZoom: 19
+			, maxZoom: 19
 		)
 
 		@geo = @newGeo()
@@ -25,15 +27,15 @@ class IsBuilding
 		return L.geoJson({features:[]},
 			style: (feature) ->
 				return {
-					color: '#900'
-					,weight: 5
+					color: '#b00'
+					,weight: 4
 					,opacity: 1
-					,dashArray: '5,10'
+					,dashArray: '5,15'
 					,fill: false
 				}
 			,onEachFeature: (f,l) ->
 				out = for key, val of f.properties
-					"#{key}: #{val}"
+					"<strong>#{key}:</strong> #{val}"
 				l.bindPopup(out.join("<br />"))
 		)
 
