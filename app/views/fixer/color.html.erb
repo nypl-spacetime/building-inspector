@@ -1,0 +1,15 @@
+<% content_for :dynamic_js do %>
+	<%= javascript_include_tag "has_color" %>
+<% end %>
+
+<div id="main-container">
+	<div id="map-container">
+		<div id="map"></div>
+	</div>
+	<div id="buttons">
+		<a href="javascript:;" class="building" id="red-button">RED</a>
+		<a href="javascript:;" class="building" id="blue-button">BLUE</a>
+		<a href="javascript:;" class="building" id="green-button">GREEN</a>
+		<a href="javascript:;" class="building" id="yellow-button">YELLOW</a>
+	</div>
+</div>

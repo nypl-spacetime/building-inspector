@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Type:</b>
+  <%= @flag.type %>
+</p>
+
+<p>
+  <b>Polygon:</b>
+  <%= @flag.polygon_id %>
+</p>
+
+<p>
+  <b>Session:</b>
+  <%= @flag.session_id %>
+</p>
+
+<p>
+  <b>Flag value:</b>
+  <%= @flag.flag_value %>
+</p>
+
+<p>
+  <b>Is primary:</b>
+  <%= @flag.is_primary %>
+</p>
+
+
+<%= link_to 'Edit', edit_flag_path(@flag) %> |
+<%= link_to 'Back', flags_path %>

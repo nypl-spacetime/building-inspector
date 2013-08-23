@@ -1,0 +1,29 @@
+<h1>Listing sheets</h1>
+
+<table>
+  <tr>
+    <th>Status</th>
+    <th>Bbox</th>
+    <th>Map</th>
+    <th>Map url</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @sheets.each do |sheet| %>
+  <tr>
+    <td><%= sheet.status %></td>
+    <td><%= sheet.bbox %></td>
+    <td><%= sheet.map_id %></td>
+    <td><%= sheet.map_url %></td>
+    <td><%= link_to 'Show', sheet %></td>
+    <td><%= link_to 'Edit', edit_sheet_path(sheet) %></td>
+    <td><%= link_to 'Destroy', sheet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Sheet', new_sheet_path %>

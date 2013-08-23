@@ -1,0 +1,41 @@
+<%= form_for(@polygon) do |f| %>
+  <% if @polygon.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@polygon.errors.count, "error") %> prohibited this polygon from being saved:</h2>
+
+      <ul>
+      <% @polygon.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :dn %><br />
+    <%= f.text_field :dn %>
+  </div>
+  <div class="field">
+    <%= f.label :geometry %><br />
+    <%= f.text_area :geometry %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br />
+    <%= f.text_field :status %>
+  </div>
+  <div class="field">
+    <%= f.label :vectorizer_json %><br />
+    <%= f.text_area :vectorizer_json %>
+  </div>
+  <div class="field">
+    <%= f.label :sheet_id %><br />
+    <%= f.number_field :sheet_id %>
+  </div>
+  <div class="field">
+    <%= f.label :color %><br />
+    <%= f.text_field :color %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

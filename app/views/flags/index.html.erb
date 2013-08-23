@@ -1,0 +1,31 @@
+<h1>Listing flags</h1>
+
+<table>
+  <tr>
+    <th>Type</th>
+    <th>Polygon</th>
+    <th>Session</th>
+    <th>Flag value</th>
+    <th>Is primary</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @flags.each do |flag| %>
+  <tr>
+    <td><%= flag.type %></td>
+    <td><%= flag.polygon_id %></td>
+    <td><%= flag.session_id %></td>
+    <td><%= flag.flag_value %></td>
+    <td><%= flag.is_primary %></td>
+    <td><%= link_to 'Show', flag %></td>
+    <td><%= link_to 'Edit', edit_flag_path(flag) %></td>
+    <td><%= link_to 'Destroy', flag, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Flag', new_flag_path %>

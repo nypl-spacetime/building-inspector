@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Status:</b>
+  <%= @sheet.status %>
+</p>
+
+<p>
+  <b>Bbox:</b>
+  <%= @sheet.bbox %>
+</p>
+
+<p>
+  <b>Map:</b>
+  <%= @sheet.map_id %>
+</p>
+
+<p>
+  <b>Map url:</b>
+  <%= @sheet.map_url %>
+</p>
+
+
+<%= link_to 'Edit', edit_sheet_path(@sheet) %> |
+<%= link_to 'Back', sheets_path %>

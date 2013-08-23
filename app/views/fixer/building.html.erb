@@ -1,0 +1,14 @@
+<% content_for :dynamic_js do %>
+	<%= javascript_include_tag "is_building" %>
+<% end %>
+
+<div id="main-container">
+	<div id="map-container">
+		<div id="map"></div>
+	</div>
+	<div id="buttons">
+		<a href="javascript:;" id="no-button">NO</a>
+		<a href="javascript:;" id="fix-button">NEEDS FIXING</a>
+		<a href="javascript:;" id="yes-button">YES</a>
+	</div>
+</div>

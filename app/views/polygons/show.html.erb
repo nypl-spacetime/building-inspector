@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>DN:</b>
+  <%= @polygon.dn %>
+</p>
+
+<p>
+  <b>Geometry:</b>
+  <%= @polygon.geometry %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @polygon.status %>
+</p>
+
+<p>
+  <b>Vectorizer json:</b>
+  <%= @polygon.vectorizer_json %>
+</p>
+
+<p>
+  <b>Sheet:</b>
+  <%= @polygon.sheet_id %>
+</p>
+
+<p>
+  <b>Color:</b>
+  <%= @polygon.color %>
+</p>
+
+
+<%= link_to 'Edit', edit_polygon_path(@polygon) %> |
+<%= link_to 'Back', polygons_path %>
