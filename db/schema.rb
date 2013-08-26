@@ -11,10 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130823193914) do
+ActiveRecord::Schema.define(:version => 20130826194539) do
 
   create_table "flags", :force => true do |t|
-    t.string   "type"
+    t.string   "flag_type"
     t.integer  "polygon_id"
     t.string   "session_id"
     t.string   "flag_value"

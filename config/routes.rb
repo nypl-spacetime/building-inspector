@@ -14,7 +14,10 @@ Webappmini::Application.routes.draw do
 
   match "fixer/map" => "fixer#randomMap"
 
+  match "fixer/flag" => "fixer#flagPolygon"
+
   match "color" => "fixer#color"
   match "building" => "fixer#building"
+  
   root :to => "fixer#building"
 end

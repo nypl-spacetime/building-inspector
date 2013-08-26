@@ -20,7 +20,7 @@ class IsBuilding
 
 		@map.on('load', @getPolygons)
 
-		@map.on('click', @onMapClick)
+		# @map.on('click', @onMapClick)
 
 		window.map = @map
 
@@ -34,40 +34,50 @@ class IsBuilding
 					,dashArray: '5,15'
 					,fill: false
 				}
-			,onEachFeature: (f,l) ->
-				out = for key, val of f.properties
-					"<strong>#{key}:</strong> #{val}"
-				l.bindPopup(out.join("<br />"))
+			# ,onEachFeature: (f,l) ->
+			# 	out = for key, val of f.properties
+			# 		"<strong>#{key}:</strong> #{val}"
+			# 	l.bindPopup(out.join("<br />"))
 		)
 
 	getPolygons: () =>
 		fixer = @
 		$.getJSON('/fixer/map.json', (data) ->
-			# console.log(data);
+			console.log(data);
 			fixer.polyData = data
-			$("#yes-button").on("click", fixer.showNextPolygon)
-			$("#no-button").on("click", fixer.showNextPolygon)
-			$("#fix-button").on("click", fixer.showNextPolygon)
+			$("#yes-button").on("click", fixer.submitYesFlag)
+			$("#no-button").on("click", fixer.submitNoFlag)
+			$("#fix-button").on("click", fixer.submitFixFlag)
 			fixer.showNextPolygon()
 		)
 	
+	submitYesFlag: () =>
+		@submitFlag("yes")
+
+	submitNoFlag: () =>
+		@submitFlag("no")
+
+	submitFixFlag: () =>
+		@submitFlag("fix")
+
+	submitFlag: (type) =>
+		fixer = @
+		$.get("/fixer/flag", 
+			i: @currentPolygon.id
+			f: type
+			, () ->
+				fixer.showNextPolygon()
+		).fail( () ->
+			fixer.showNextPolygon()
+		)
+
 	showNextPolygon: () =>
 		@currentIndex++
 		@map.removeLayer(@geo)
 		if @currentIndex < @polyData.poly.length
 			@currentPolygon = @polyData.poly[@currentIndex]
-			@currentGeo = 
-				type : "Feature"
-				properties:
-					DN: @currentPolygon.dn
-					color: @currentPolygon.color
-					id: @currentPolygon.id
-					sheet_id: @currentPolygon.sheet_id
-					status: @currentPolygon.status
-				geometry:
-					type: "Polygon"
-					coordinates: $.parseJSON(@currentPolygon.geometry)
-			# console.log @currentPolygon, @currentGeo
+			@currentGeo = @makeGeoJSON(@currentPolygon)
+			# console.log @currentPolygon #, @currentGeo
 			@geo = @newGeo()
 			@geo.addData(@currentGeo)
 			# center on the polygon
@@ -82,6 +92,18 @@ class IsBuilding
 			# console.log(xy)
 			latlng = @map.layerPointToLatLng(xy)
 			@map.panTo( latlng )
+
+	makeGeoJSON: (poly) ->
+		type : "Feature"
+		properties:
+			DN: poly.dn
+			color: poly.color
+			id: poly.id
+			sheet_id: poly.sheet_id
+			status: poly.status
+		geometry:
+			type: "Polygon"
+			coordinates: $.parseJSON(poly.geometry)
 
 	onMapClick: (e) =>
 		@popup
