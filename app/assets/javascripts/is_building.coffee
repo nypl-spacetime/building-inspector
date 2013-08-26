@@ -61,6 +61,7 @@ class IsBuilding
 		@submitFlag("fix")
 
 	submitFlag: (type) =>
+		$("#buttons").hide()
 		fixer = @
 		$.get("/fixer/flag", 
 			i: @currentPolygon.id
@@ -75,6 +76,7 @@ class IsBuilding
 		@currentIndex++
 		@map.removeLayer(@geo)
 		if @currentIndex < @polyData.poly.length
+			$("#buttons").show()
 			@currentPolygon = @polyData.poly[@currentIndex]
 			@currentGeo = @makeGeoJSON(@currentPolygon)
 			# console.log @currentPolygon #, @currentGeo

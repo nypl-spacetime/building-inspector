@@ -36,25 +36,37 @@ body {
 
 #buttons {
 	position: absolute;
-	bottom: 0;
+	bottom: 10px;
 	width: 100%;
 
+	.wrapper {
+		width: 260px;
+		margin: 0 auto 10px auto;
+	}
+
 	a {
-		width: 30%;
-		height: 30px;
-		margin: 0;
-		padding-top: 10px;
+		width: 80px;
+		height: 55px;
+		margin-left: 10px;
+		padding-top: 35px;
 		float: left;
 		text-align: center;
 		text-decoration: none;
 		color: $white;
+
+		@include rounded-corners(10px);
+
+		&:first-child {
+			margin-left: 0;
+		}
 
 		&#no-button {
 			background-color: $nocolor;
 		}
 
 		&#fix-button {
-			width: 40%;
+			height: 65px;
+			padding-top: 25px;
 			color: $black;
 			background-color: $fixcolor;
 		}
@@ -64,7 +76,7 @@ body {
 		}
 
 		&.building {
-			width: 25%;
+			// width: 80px;
 		}
 
 		&#yellow-button {
