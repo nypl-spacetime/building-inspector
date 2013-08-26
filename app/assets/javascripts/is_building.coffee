@@ -8,6 +8,7 @@ class IsBuilding
 	verticalOffset: 100 # pixels to offset the polygon from the center
 
 	constructor: () ->
+		$("#buttons").hide()
 		@map = L.mapbox.map('map', 'nypllabs.singlesheet-fix', 
 			zoomControl: false
 			, animate: true
@@ -66,12 +67,12 @@ class IsBuilding
 		$.get("/fixer/flag", 
 			i: @currentPolygon.id
 			f: type
-			# , () ->
-			# 	fixer.showNextPolygon()
-		).done( () ->
-			fixer.showNextPolygon()
-		).fail( () ->
-			fixer.showNextPolygon()
+			, () ->
+				fixer.showNextPolygon()
+		# ).done( () ->
+		# 	fixer.showNextPolygon()
+		# ).fail( () ->
+		# 	fixer.showNextPolygon()
 		)
 
 	showNextPolygon: () =>
