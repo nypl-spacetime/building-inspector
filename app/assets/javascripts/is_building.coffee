@@ -44,7 +44,7 @@ class IsBuilding
 	getPolygons: () =>
 		fixer = @
 		$.getJSON('/fixer/map.json', (data) ->
-			console.log(data);
+			# console.log(data);
 			fixer.polyData = data
 			$("#yes-button").on("click", fixer.submitYesFlag)
 			$("#no-button").on("click", fixer.submitNoFlag)
