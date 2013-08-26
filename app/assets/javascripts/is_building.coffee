@@ -66,8 +66,10 @@ class IsBuilding
 		$.get("/fixer/flag", 
 			i: @currentPolygon.id
 			f: type
-			, () ->
-				fixer.showNextPolygon()
+			# , () ->
+			# 	fixer.showNextPolygon()
+		).done( () ->
+			fixer.showNextPolygon()
 		).fail( () ->
 			fixer.showNextPolygon()
 		)
