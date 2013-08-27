@@ -23,6 +23,27 @@ $desktopwidth: 481px;
 body {
 	font-family: $mainfont;
 	background: $grayDark;
+	color: $grayLighter;
+}
+
+table td, table th {
+	padding: 5px;
+}
+
+#nav-admin {
+	background: $grayDarkest;
+	padding: 10px 0 0 10px;
+
+	@include clearfix;
+
+	li {
+		float: left;
+		margin: 0 10px 10px 0;
+	}
+
+	a {
+		color: $grayLightest;
+	}
 }
 
 #nypl-header {
@@ -109,9 +130,9 @@ body {
 		}
 
 		&#fix-button {
-			height: 65px;
-			padding-top: 25px;
-			color: $black;
+			// height: 65px;
+			// padding-top: 25px;
+			// color: $black;
 			background-color: $fixcolor;
 		}
 

@@ -1,8 +1,10 @@
 class SheetsController < ApplicationController
+  layout "admin"
+  before_filter :authenticate_user! #, :only => [:index, :edit, :destroy]
   # GET /sheets
   # GET /sheets.json
   def index
-    @sheets = Sheet.all
+    @sheets = Sheet.paginate(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

@@ -1,0 +1,11 @@
+<ul id="nav-admin">
+	<li><%= link_to "Sheets", "/sheets" %></li>
+	<li><%= link_to "Polygons", "/polygons" %></li>
+	<li><%= link_to "Flags", "/flags" %></li>
+<% if user_signed_in? %>
+<li>
+<%= current_user.email %> •
+<%= link_to "Sign Out", destroy_user_session_path, :method => :delete %>
+</li>
+<% end %>
+</ul>

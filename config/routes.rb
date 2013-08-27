@@ -1,12 +1,11 @@
 Webappmini::Application.routes.draw do
-  resources :polygons
+  devise_for :users
 
+  resources :polygons
 
   resources :flags
 
-
   resources :sheets
-
 
   get "fixer/building"
 

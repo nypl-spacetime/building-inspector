@@ -1,8 +1,10 @@
 class FlagsController < ApplicationController
+  layout "admin"
+  before_filter :authenticate_user! #, :only => [:index, :edit, :destroy]
   # GET /flags
   # GET /flags.json
   def index
-    @flags = Flag.all
+    @flags = Flag.paginate(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

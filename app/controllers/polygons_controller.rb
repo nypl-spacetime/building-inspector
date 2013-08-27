@@ -1,8 +1,10 @@
 class PolygonsController < ApplicationController
+  layout "admin"
+  before_filter :authenticate_user! #, :only => [:index, :edit, :destroy]
   # GET /polygons
   # GET /polygons.json
   def index
-    @polygons = Polygon.all
+    @polygons = Polygon.paginate(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
