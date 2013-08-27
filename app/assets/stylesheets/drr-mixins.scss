@@ -1,0 +1,382 @@
+/*
+ * DRR-Bootstrap
+ * Source: https://github.com/NYPL/drr-bootstrap
+ * Author: NYPL Labs
+ * Description: Base front-end framework for NYPL Digital Reading Room (DRR) Sites to extend.
+ */
+
+// CSS3 Mixins
+// Source: https://github.com/matthieua/sass-css3-mixins
+// -------------------------
+@mixin background-gradient($startColor: #3C3C3C, $endColor: #999999) {
+  background-color: $startColor;
+  background-image: -webkit-gradient(linear, left top, left bottom, from($startColor), to($endColor));
+  background-image: -webkit-linear-gradient(top, $startColor, $endColor);
+  background-image:    -moz-linear-gradient(top, $startColor, $endColor);
+  background-image:     -ms-linear-gradient(top, $startColor, $endColor);
+  background-image:      -o-linear-gradient(top, $startColor, $endColor);
+  background-image:         linear-gradient(top, $startColor, $endColor);
+  filter:            progid:DXImageTransform.Microsoft.gradient(startColorStr=$startColor, EndColorStr=$endColor);
+}
+@mixin background-size($width: 100%, $height: 100%) {
+     -moz-background-size: $width $height;
+  -webkit-background-size: $width $height;
+          background-size: $width $height;
+}
+@mixin border-radius($radius: 5px) {
+  -moz-border-radius:    $radius;
+  -webkit-border-radius: $radius;
+  border-radius:         $radius;
+}
+@mixin border-radius-separate($topLeftRadius: 5px, $topRightRadius: 5px, $bottomLeftRadius: 5px, $bottomRightRadius: 5px) {
+  -webkit-border-top-left-radius:     $topLeftRadius;
+  -webkit-border-top-right-radius:    $topRightRadius;
+  -webkit-border-bottom-right-radius: $bottomLeftRadius;
+  -webkit-border-bottom-left-radius:  $bottomRightRadius;
+
+  -moz-border-radius-topleft:     $topLeftRadius;
+  -moz-border-radius-topright:    $topRightRadius;
+  -moz-border-radius-bottomright: $bottomLeftRadius;
+  -moz-border-radius-bottomleft:  $bottomRightRadius;
+
+  border-top-left-radius:     $topLeftRadius;
+  border-top-right-radius:    $topRightRadius;
+  border-bottom-right-radius: $bottomLeftRadius;
+  border-bottom-left-radius:  $bottomRightRadius;
+}
+@mixin box($orient: horizontal, $pack: center, $align: center) {
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+
+  -webkit-box-orient: $orient;
+  -moz-box-orient:    $orient;
+  box-orient:         $orient;
+
+  -webkit-box-pack: $pack;
+  -moz-box-pack:    $pack;
+  box-pack:         $pack;
+
+  -webkit-box-align: $align;
+  -moz-box-align:    $align;
+  box-align:         $align;
+}
+@mixin box-rgba($r: 60, $g: 3, $b: 12, $opacity: 0.23, $color: #3C3C3C) {
+  background-color: transparent;
+  background-color: rgba($r, $g, $b, $opacity);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr#$color,endColorstr=$color);
+            zoom:   1;
+}
+@mixin box-shadow($x: 2px, $y: 2px, $blur: 5px, $spread: 0px, $color: rgba(0,0,0,.4)) {
+  -webkit-box-shadow: $x $y $blur $spread $color;
+  -moz-box-shadow:    $x $y $blur $spread $color;
+  box-shadow:         $x $y $blur $spread $color;
+}
+@mixin box-shadow-inset($x: 2px, $y: 2px, $blur: 5px, $spread: 0px, $color: rgba(0,0,0,.4)) {
+  -webkit-box-shadow: inset $x $y $blur $spread $color;
+  -moz-box-shadow:    inset $x $y $blur $spread $color;
+  box-shadow:         inset $x $y $blur $spread $color;
+}
+@mixin box-sizing($type: border-box) {
+  -webkit-box-sizing:   $type;
+  -moz-box-sizing:      $type;
+  box-sizing:           $type;
+}
+@mixin columns($count: 3, $gap: 10) {
+  -webkit-column-count: $count;
+  -moz-column-count:    $count;
+  column-count:         $count;
+
+  -webkit-column-gap:   $gap;
+  -moz-column-gap:      $gap;
+  column-gap:           $gap;
+}
+@mixin double-borders($colorOne: #3C3C3C, $colorTwo: #999999, $radius: 0) {
+  border: 1px solid $colorOne;
+
+  -webkit-box-shadow: 0 0 0 1px $colorTwo;
+  -moz-box-shadow:    0 0 0 1px $colorTwo;
+  box-shadow:         0 0 0 1px $colorTwo;
+
+  @include border-radius( $radius );
+}
+
+@mixin flex($value: 1) {
+  -webkit-box-flex: $value;
+  -moz-box-flex:    $value;
+  box-flex:         $value;
+}
+@mixin flip($scaleX: -1) {
+  -moz-transform:    scaleX($scaleX);
+  -o-transform:      scaleX($scaleX);
+  -webkit-transform: scaleX($scaleX);
+  transform:         scaleX($scaleX);
+  filter:            FlipH;
+  -ms-filter:        "FlipH";
+}
+@mixin font-face($fontFamily, $path, $fontFilename) {
+  font-family: $fontFamily;
+  src: url('#{$path}#{$fontFilename}.eot');
+  src: url('#{$path}#{$fontFilename}.eot?#iefix') format('embedded-opentype'),
+       url('#{$path}#{$fontFilename}.woff') format('woff'),
+       url('#{$path}#{$fontFilename}.ttf') format('truetype'),
+       url('#{$path}#{$fontFilename}.svg') format('svg');
+}
+@mixin opacity($opacity: 0.5) {
+  filter:         alpha(opacity=($opacity * 100));
+  -ms-filter:     "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + ($opacity * 100) + ")";
+  -moz-opacity:   $opacity;
+  -khtml-opacity: $opacity;
+  opacity:        $opacity;
+}
+@mixin outline-radius($radius: 5px) {
+  -webkit-outline-radius: $radius;
+  -moz-outline-radius:    $radius;
+  outline-radius:         $radius;
+}
+@mixin resize($direction: both) {
+  -webkit-resize: $direction;
+  -moz-resize:    $direction;
+  resize:         $direction;
+}
+@mixin rotate($deg: 0, $m11: 0, $m12: 0, $m21: 0, $m22: 0) {
+     -moz-transform: rotate($deg + deg);
+       -o-transform: rotate($deg + deg);
+  -webkit-transform: rotate($deg + deg);
+      -ms-transform: rotate($deg + deg);
+          transform: rotate($deg + deg);
+             filter: progid:DXImageTransform.Microsoft.Matrix(
+                     M11=$m11, M12=$m12,M21=$m21, M22=$m22, sizingMethod='auto expand');
+               zoom: 1;
+}
+@mixin text-shadow($x: 2px, $y: 2px, $blur: 5px, $color: rgba(0,0,0,.4)) {
+  text-shadow: $x $y $blur $color;
+}
+@mixin transform($params) {
+  -webkit-transform: $params;
+  -moz-transform:    $params;
+  transform:         $params;
+}
+@mixin transition($what: all, $length: 1s, $easing: ease-in-out) {
+  -moz-transition:    $what $length $easing;
+  -o-transition:      $what $length $easing;
+  -webkit-transition: $what $length $easing;
+  -ms-transition:     $what $length $easing;
+  transition:         $what $length $easing;
+
+}
+@mixin triple-borders($colorOne: #3C3C3C, $colorTwo: #999999, $colorThree: #000000, $radius: 0) {
+  border: 1px solid $colorOne;
+
+  @include border-radius($radius);
+
+  -webkit-box-shadow: 0 0 0 1px $colorTwo, 0 0 0 2px $colorThree;
+  -moz-box-shadow:    0 0 0 1px $colorTwo, 0 0 0 2px $colorThree;
+  box-shadow:         0 0 0 1px $colorTwo, 0 0 0 2px $colorThree;
+}
+
+// Headings
+// -------------------------
+@mixin drr-heading($tag: "inherit") {
+  margin: ($baseLineHeight / 2) 0;
+  font-family: $headingsFontFamily;
+  font-weight: $headingsFontWeight;
+  line-height: $baseLineHeight;
+  color: $headingsColor;
+  text-transform: $headingsTransform;
+  letter-spacing: $headingsLetterSpacing;
+  @if $tag == "h1" {
+    font-size: $h1FontSize;
+    line-height: $h1FontSize;
+  } @else if $tag == "h2" {
+    font-size: $h2FontSize;
+    line-height: $h2FontSize;
+  } @else if $tag == "h3" {
+    font-size: $h3FontSize;
+    line-height: $h3FontSize;
+  } @else if $tag == "h4" {
+    font-size: $h4FontSize;
+    line-height: $h4FontSize;
+  } @else if $tag == "h5" {
+    font-size: $h5FontSize;
+    line-height: $h5FontSize;
+  } @else if $tag == "h6" {
+    font-size: $h6FontSize;
+    line-height: $h6FontSize;
+  }
+}
+
+// Buttons
+// -------------------------
+@mixin drr-button($base-color: "default", $base-bg-color: "default", $size: "default", $highlight-color: "auto", $highlight-bg-color: "auto") {
+  
+  // color
+  color: $base-color;
+  background: $base-bg-color;
+  
+  // resets
+  display: inline-block;
+  *display: inline;
+  margin-bottom: 0;
+  text-align: center;
+  text-shadow: none;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 0;  
+  filter: none;
+  *zoom: 1;
+  text-decoration: none;
+  @include border-radius(0);
+  @include box-shadow(0, 0, 0, 0);
+  
+  // Size: mini, small, default, or large
+  @if $size == "large" {
+    font-size: $fontSizeLarge;
+    padding: $basePadding $paddingLarge;
+  } @else if $size == "small" {
+    font-size: $fontSizeSmall;
+    padding: $paddingMini $paddingSmall;
+  } @else if $size == "mini" {
+    font-size: $fontSizeMini;
+    padding: $paddingMini;
+  } @else {
+    font-size: $baseFontSize;
+    padding: $paddingSmall $basePadding;
+  }
+  
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    // Highlight Text Color
+    @if ( $highlight-color == "auto" ) {
+      color: lighten($base-color, 10%);
+    } @else {
+      color: $highlight-color;
+    }
+    // Highlight BG Color
+    @if ( $highlight-bg-color == "auto" ) {
+      background: lighten($base-bg-color, 10%);
+    } @else {
+      background: $highlight-bg-color;
+    }
+  }  
+}
+
+// Inverse
+// -------------------------
+@mixin drr-inverse($alpha: 1) {  
+  background-color: rgba($bodyBackgroundInverse, $alpha);
+  color: $textColorInverse;
+  a {
+    color: $linkInverseColor;
+    &:hover,
+    &:focus {
+      color: $linkInverseColorHover;
+    }
+  }
+}
+
+// Icon
+// -------------------------
+@mixin drr-icon($content: "none") {
+  @if ( $content != "none") {
+    content: "#{$content}";
+  }  
+  font-family: $iconFontFamily;  
+  display: inline-block;
+  width: auto;
+  height: auto;
+  vertical-align: baseline;
+  background: none;
+  margin-top: 0;
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  text-transform: none;
+  line-height: 1;
+  font-weight: normal;
+  font-variant: normal;
+}
+
+// Search Box
+// -------------------------
+@mixin drr-search-box($width: "default") {
+  display: inline-block;
+  margin-bottom: $baseLineHeight / 2;
+  vertical-align: middle;
+  font-size: 0;
+  white-space: nowrap;
+  input[type="text"] {
+    @if $width != "default" {
+      width: $width; 
+    }    
+    font-size: $baseFontSize;
+    position: relative;
+    margin-bottom: 0;
+    margin-left: 0;
+    vertical-align: top;
+    border-right: 0;
+    &:focus {
+      border: $componentBorder;
+      border-right: 0;
+    }
+  }
+  .add-on,
+  button,
+  [type="submit"] {
+    color: $linkColor;
+    &:hover {
+      color: $linkColorHover;
+    }
+    cursor: pointer;
+    display: inline-block;
+    width: auto;
+    height: $baseLineHeight + $inputPadding * 2 + $componentBorderWidth * 2;
+    font-size: $baseFontSize;
+    line-height: $baseLineHeight + $inputPadding * 2 + $componentBorderWidth * 2;
+    padding-top: $inputPadding / 2;
+    text-align: center;
+    text-shadow: 0;
+    vertical-align: top;
+    background: $inputBackgroundColor;
+    border: $componentBorder;
+    border-left: 0;
+    margin-left: -2px;
+  }
+  .add-on:before,
+  button:before,
+  [type="submit"]:before {
+    @include drr-icon("o");
+    font-size: $fontSizeLarge;
+  }
+  &:hover {
+    input[type="text"] {
+      border: $componentBorderHighlight;
+      border-right: 0;
+    }
+    .add-on,
+    button,
+    [type="submit"] {
+      border: $componentBorderHighlight;
+      border-left: 0;
+    }
+  }
+}
+
+// Alert
+// -------------------------
+@mixin drr-alert($type: "info") {
+  color: $textColor; 
+  padding: $basePadding;
+  font-size: $smallFontSize;
+  margin: 0 0 $baseLineHeight / 2;
+  text-shadow: none;
+  border: 0;
+  @include border-radius(0);   
+  @if $type == "danger" {
+    background: $componentDangerBackground;
+  } @else if $type == "success" {
+    background: $componentSuccessBackground;
+  } @else {
+    background: $componentInfoBackground;
+  }
+}

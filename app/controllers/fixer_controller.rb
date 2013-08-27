@@ -3,6 +3,7 @@ class FixerController < ApplicationController
 	respond_to :json
 
 	def building
+		request.session_options[:expire_after] = 5.days
 	end
 
 	def randomMap

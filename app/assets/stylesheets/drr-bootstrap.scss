@@ -1,0 +1,113 @@
+/*
+ * DRR-Bootstrap
+ * Source: https://github.com/NYPL/drr-bootstrap
+ * Author: NYPL Labs
+ * Description: Base front-end framework for NYPL Digital Reading Room (DRR) Sites to extend.
+ */
+
+@import "drr-base";
+
+// Buttons
+// -------------------------
+.btn {
+  @include drr-button($componentTextColor, $componentBackground, "default", $componentTextColorHighlight, $componentBackgroundHighlight);
+}
+// Large
+.btn-large {
+  padding: $paddingLarge;
+  font-size: $fontSizeLarge;
+}
+.btn-small {
+  padding: $paddingSmall;
+  font-size: $fontSizeSmall;
+}
+.btn-mini {
+  padding: $paddingMini;
+  font-size: $fontSizeMini;
+}
+.btn-primary {
+  color: $componentInverseTextColor;
+  background: $componentPrimaryBackground;
+  &:hover,
+  &:focus {
+    color: $componentInverseTextColorHighlight;
+    background: $componentPrimaryBackgroundHighlight;
+  }
+}
+.btn-warning {
+  color: $componentInverseTextColor;
+  background: $componentWarningBackground;
+  &:hover,
+  &:focus {
+    color: $componentInverseTextColorHighlight;
+    background: $componentWarningBackgroundHighlight;
+  }
+}
+.btn-danger {
+  color: $componentInverseTextColor;
+  background: $componentInverseDangerBackground;
+  &:hover,
+  &:focus {
+    color: $componentInverseTextColorHighlight;
+    background: $componentInverseDangerBackgroundHighlight;
+  }
+}
+.btn-success {
+  color: $componentInverseTextColor;
+  background: $componentInverseSuccessBackground;
+  &:hover,
+  &:focus {
+    color: $componentInverseTextColorHighlight;
+    background: $componentInverseSuccessBackgroundHighlight;
+  }
+}
+.btn-info {
+  color: $componentTextColor;
+  background: $componentInfoBackground;
+  &:hover,
+  &:focus {
+    color: $componentTextColorHighlight;
+    background: $componentInfoBackgroundHighlight;
+  }
+}
+.btn-inverse {
+  color: $componentInverseTextColor;
+  background: $componentInverseBackground;
+  &:hover,
+  &:focus {
+    color: $componentInverseTextColorHighlight;
+    background: $componentInverseBackgroundHighlight;
+  }
+}
+
+// Wells
+// --------------------------------------------------
+.well {
+  padding: $basePadding;
+  margin-bottom: $paddingLarge;
+  border: 0;
+  @include drr-inverse();
+  @include border-radius(0);
+  @include box-shadow(0, 0, 0);
+  blockquote {
+    border: 0;
+  }
+  *:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+}
+.well.transparent {
+  @include drr-inverse(0.8);
+}
+
+// We're using icon fonts instead of sprites
+// -------------------------
+[class^="icon-"],
+[class*=" icon-"] {
+  width: auto;
+  height: auto;
+  line-height: 1;
+  background: none;
+}
+

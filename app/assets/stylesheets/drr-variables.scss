@@ -1,0 +1,147 @@
+/*
+ * DRR-Bootstrap
+ * Source: https://github.com/NYPL/drr-bootstrap
+ * Author: NYPL Labs
+ * Description: Base front-end framework for NYPL Digital Reading Room (DRR) Sites to extend.
+ */
+
+// Config
+// -------------------------
+$fontPath:              "";
+$imgPath:               "/image/";
+
+// Grays
+// -------------------------
+$black:                 #000;
+$grayDarkest:           #161514;
+$grayDarker:            #3F3A34;
+$grayDark:              #514E49;
+$gray:                  #71695D;
+$grayLight:             #908B85;
+$grayLighter:           #D0CDC8;
+$grayLightest:          #E8E4E2;
+$white:                 #fff;
+
+// Accent colors
+// -------------------------
+$blueDark:              #004963;
+$blue:                  #0171A1;
+$blueLight:             #A2D5E0;
+$yellowDark:            #D75B25;
+$yellow:                #FFB92D;
+$yellowLight:           #FEC172;
+
+// Messaging colors
+// -------------------------
+$green:                 #989546;
+$greenLight:            #E3E5A5;
+$red:                   #AF2228;
+$orange:                #D75B25;
+$pink:                  #F1B6BB;
+$purple:                #953064;
+
+// Scaffolding
+// -------------------------
+$bodyBackground:        $white;
+$textColor:             $grayDarker;
+$bodyBackgroundInverse: $grayDarkest;
+$textColorInverse:      $grayLightest;
+
+// Typography
+// -------------------------
+$mainFontFamily:        "Lato Regular", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$heavyFontFamily:       "Lato Black", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$iconFontFamily:        "Icomoon";
+$baseFontFamily:        $mainFontFamily;
+$headingsFontFamily:    $heavyFontFamily;
+$headingsFontWeight:    normal;
+$headingsColor:         inherit;
+$headingsTransform:     uppercase;
+
+// Text sizing
+// -------------------------
+$baseFontSize:          16px;
+$h1FontSize:            32px;
+$h2FontSize:            28px;
+$h3FontSize:            24px;
+$h4FontSize:            21px;
+$h5FontSize:            18px;
+$h6FontSize:            14px;
+$smallFontSize:         12px;
+$leadFontSize:          $h3FontSize;
+
+$baseLineHeight:        24px;
+$smallLineHeight:       20px;
+$largeLineHeight:       32px;
+
+$baseLetterSpacing:     0px;
+$smallLetterSpacing:    -1px;
+$largeLetterSpacing:    1px;
+$headingsLetterSpacing: $largeLetterSpacing;
+
+
+// Links
+// -------------------------
+$linkColor:             $blue;
+$linkColorHover:        lighten($linkColor, 10%);
+$linkInverseColor:      $blueLight;
+$linkInverseColorHover: lighten($linkInverseColor, 10%);
+
+// Component sizing
+// -------------------------
+$fontSizeMini:          $smallFontSize;
+$fontSizeSmall:         $h6FontSize;
+$fontSizeLarge:         $h3FontSize;
+$basePadding:           12px;
+$paddingLarge:          20px;
+$paddingSmall:          6px;
+$paddingMini:           3px;
+
+// Component colors
+// -------------------------
+$componentTextColor:                              $textColor;
+$componentTextColorHighlight:                     lighten($componentTextColor, 10%);
+
+$componentInverseTextColor:                       $grayLightest;
+$componentInverseTextColorHighlight:              lighten($componentInverseTextColor, 10%);
+
+$componentBackground:                             $grayLightest;
+$componentBackgroundHighlight:                    darken($grayLightest, 10%);
+
+$componentPrimaryBackground:                      $blue;
+$componentPrimaryBackgroundHighlight:             lighten($componentPrimaryBackground, 10%);
+
+$componentInfoBackground:                         $yellowLight;
+$componentInfoBackgroundHighlight:                lighten($componentInfoBackground, 10%);
+
+$componentSuccessBackground:                      $greenLight;
+$componentSuccessBackgroundHighlight:             lighten($componentSuccessBackground, 10%);
+
+$componentWarningBackground:                      $orange;
+$componentWarningBackgroundHighlight:             lighten($componentWarningBackground, 10%);
+
+$componentDangerBackground:                       $pink;
+$componentDangerBackgroundHighlight:              lighten($componentDangerBackground, 10%);
+
+$componentInverseSuccessBackground:               $green;
+$componentInverseSuccessBackgroundHighlight:      lighten($componentInverseSuccessBackground, 10%);
+
+$componentInverseDangerBackground:                $red;
+$componentInverseDangerBackgroundHighlight:       lighten($componentInverseDangerBackground, 10%);
+
+$componentInverseBackground:                      $grayDarker;
+$componentInverseBackgroundHighlight:             lighten($componentInverseBackground, 10%);
+
+// Component borders
+// -------------------------
+$componentBorderWidth:      1px;
+$componentBorder:           $componentBorderWidth solid $grayLighter;
+$componentBorderHighlight:  $componentBorderWidth solid $grayLight;
+$componentBorderLarge:      4px solid $gray;
+
+// Forms
+// -------------------------
+$inputBackgroundColor:       $bodyBackground;
+$inputColor:                 $textColor;
+$inputWidth:                 300px;
+$inputPadding:               $paddingSmall;

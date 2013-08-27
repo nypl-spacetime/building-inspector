@@ -1,32 +1,58 @@
+@import "drr-base";
+@import "nypl-header";
 @import "css3-mixins";
 @import "button-mixins";
+@import "compass/utilities/general/clearfix";
 
 $mainfont: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
 $buttoncolor: #f00;
 $black: #000;
 $white: #fff;
 $canvascolor: #111;
-$nocolor: #f00;
-$yescolor: #016D17;
-$fixcolor: #ff0;
+$nocolor: $red; // #f00;
+$yescolor: #609846; // #016D17;
+$fixcolor: $yellow; // #ff0;
 
 $redbuildingcolor: rgb(207, 77, 77);
 $greenbuildingcolor: rgb(86, 158, 58);
 $bluebuildingcolor: rgb(77, 150, 207);
 $yellowbuildingcolor: rgb(197, 202, 72);
 
+$desktopwidth: 481px;
+
 body {
 	font-family: $mainfont;
-	background: $white;
+	background: $grayDark;
+}
+
+#nypl-header {
+	display: none;
+
+	@media screen and (min-width: $desktopwidth) {
+		display: block;
+	}
 }
 
 #main-container {
 	width: 100%;
 	height: 100%;
+
+	@include clearfix;
+
+	@media screen and (min-width: $desktopwidth) {
+		width: $desktopwidth;
+		height: auto;
+		margin: 40px auto;
+	}
 }
 
 #map-container {
+	position: relative;
 	height: 100%;
+
+	@media screen and (min-width: $desktopwidth) {
+		height: 320px;
+	}
 }
 
 #map {
@@ -39,15 +65,29 @@ body {
 	bottom: 10px;
 	width: 100%;
 
+	@include clearfix;
+
+	@media screen and (min-width: $desktopwidth) {
+		position: relative;
+		bottom: auto;
+		margin-top: 10px;
+	}
+
 	.wrapper {
-		width: 260px;
+		width: 290px;
 		margin: 0 auto 10px auto;
+
+		@include clearfix;
+	
+		@media screen and (min-width: $desktopwidth) {
+			margin: 0 auto;
+		}
 	}
 
 	a {
 		width: 80px;
 		height: 55px;
-		margin-left: 10px;
+		margin: 10px;
 		padding-top: 35px;
 		float: left;
 		text-align: center;
@@ -57,7 +97,11 @@ body {
 		@include rounded-corners(10px);
 
 		&:first-child {
-			margin-left: 0;
+			margin-left: 5px;
+		}
+
+		&:last-child {
+			margin-right: 5px;
 		}
 
 		&#no-button {

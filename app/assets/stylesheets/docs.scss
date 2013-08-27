@@ -1,0 +1,60 @@
+@import "drr-bootstrap";
+
+// Colors
+// --------------------------------------------------
+.color-block {
+  padding: ($smallLineHeight/4);
+  margin-right: ($smallLineHeight/4);
+  margin-bottom: $smallLineHeight;
+  display: inline-block;
+  font-size: $smallFontSize;
+}
+.grayDarkest { background: $grayDarkest; }
+.grayDarker { background: $grayDarker; }
+.grayDark { background: $grayDark; }
+.gray { background: $gray; }
+.grayLight { background: $grayLight; }
+.grayLighter { background: $grayLighter; }
+.grayLightest { background: $grayLightest; }
+.blueDark { background: $blueDark; }
+.blueLight { background: $blueLight; }
+.yellowDark { background: $yellowDark; }
+.yellowLight { background: $yellowLight; }
+.red { background: $red; }
+.orange { background: $orange; }
+.yellow { background: $yellow; }
+.green { background: $green; }
+.greenLight { background: $greenLight; }
+.blue { background: $blue; }
+.purple { background: $purple; }
+.pink { background: $pink; }
+.grayDarkest,
+.grayDarker,
+.grayDark,
+.gray,
+.grayLight,
+.blueDark,
+.yellowDark,
+.red,
+.orange,
+.green,
+.blue,
+.purple {
+  color: $textColorInverse;
+}
+
+// Icons
+// -------------------------
+#icons [class^="icon-"],
+#icons [class*=" icon-"] {
+  width: 200px;
+  display: inline-block;
+}
+
+// App
+// -------------------------
+.code {
+  padding: $basePadding;
+  border: $componentBorder;
+  background: $grayLightest;
+}

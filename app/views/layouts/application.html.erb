@@ -9,9 +9,9 @@
 
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-	<link rel="apple-touch-icon" href="/images/touch-icon-iphone.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="/images/touch-icon-ipad.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="/images/touch-icon-iphone4.png">
+	<link rel="apple-touch-icon" href="/apple-touch-icon-iphone.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-ipad.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-iphone4.png">
 
 	<%= stylesheet_link_tag    "add2home", :media => "all" %>
 	<%= javascript_include_tag "add2home" %>
@@ -30,6 +30,8 @@
 
 </head>
 <body>
+
+<%= render :partial => "partials/nypl-header" %>
 
 <%= yield %>
 
