@@ -9,12 +9,13 @@ class IsBuilding
 
 	constructor: () ->
 		$("#buttons").hide()
-		@map = L.mapbox.map('map', 'nypllabs.singlesheet-fix', 
+		@map = L.mapbox.map('map', 'nypllabs.polygonfixer', 
 			zoomControl: false
-			, animate: true
-			, attributionControl: false
-			, minZoom: 19
-			, maxZoom: 19
+			animate: true
+			attributionControl: false
+			minZoom: 19
+			maxZoom: 19
+			# dragging: false
 		)
 
 		@geo = @newGeo()
@@ -24,6 +25,12 @@ class IsBuilding
 		# @map.on('click', @onMapClick)
 
 		window.map = @map
+
+		# @tID = window.setTimeout(
+		# 		() ->
+		# 			introJs().start()
+		# 		, 1000
+		# 	)
 
 	newGeo: () ->
 		return L.geoJson({features:[]},

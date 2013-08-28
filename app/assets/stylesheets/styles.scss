@@ -54,6 +54,27 @@ table td, table th {
 	}
 }
 
+#link-help {
+	display: block;
+	height: 30px;
+	width: 60px;
+	text-align: center;
+	text-transform: uppercase;
+	background-color: $grayDarker;
+	color: $grayLight;
+	margin: 10px auto;
+	padding-top: 4px;
+	
+	@include rounded-corners(5px);
+
+	@media screen and (max-width: $desktopwidth) {
+		position: absolute;
+		right: 10px;
+		top: 5px;
+		z-index: 111;
+	}
+}
+
 #main-container {
 	width: 100%;
 	height: 100%;

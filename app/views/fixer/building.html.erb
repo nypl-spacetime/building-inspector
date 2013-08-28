@@ -1,18 +1,22 @@
 <% content_for :page_title do %>Polygons<% end %>
 
 <% content_for :dynamic_js do %>
+	<%= stylesheet_link_tag    "introjs.min", :media => "all" %>
 	<%= javascript_include_tag "is_building" %>
+	<%= javascript_include_tag "intro.min" %>
 <% end %>
 
+<%= link_to "Help", "javascript:introJs().start();", :id => "link-help" %>
+
 <div id="main-container">
-	<div id="map-container">
+	<div id="map-container" data-step="1" data-intro="Polygons show up here">
 		<div id="map"></div>
 	</div>
 	<div id="buttons">
-		<div class="wrapper">
+		<div class="wrapper" data-step="2" data-intro="You classify the polygons here">
 			<a href="javascript:;" id="no-button">NO</a>
 			<a href="javascript:;" id="fix-button">FIX</a>
-			<a href="javascript:;" id="yes-button">YES</a>
+			<a href="javascript:;" id="yes-button" data-step="3" data-intro="Try it: this does look like a correct shape so click YES">YES</a>
 		</div>
 	</div>
 </div>
