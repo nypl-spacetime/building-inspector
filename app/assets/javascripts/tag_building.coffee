@@ -40,6 +40,7 @@ class TagBuilding
 		# console.log @tutorialOn
 
 	invokeTutorial: () =>
+		$("#map-tutorial").unswipeshow
 		$("#map-tutorial").show()
 		$("#map-container").hide()
 		$("#link-help").hide()
@@ -50,7 +51,8 @@ class TagBuilding
 		.goTo 0
 
 		fixer = @
-		$("#link-exit-tutorial").click () ->
+		$("#link-exit-tutorial").on "click", () ->
+			console.log "hi"
 			fixer.hideTutorial()
 
 		# @polyData = @tutorialData

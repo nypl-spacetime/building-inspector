@@ -50,15 +50,6 @@
 				<p>This is not a building. It is the space between buildings. This is not a correct polygon.</p>
 			</li>
 			<li class="slide">
-				<%= image_tag "tutorial4.png" %>
-				<div class="wrapper">
-					<a class="button">NO</a>
-					<a class="button">FIX</a>
-					<a class="button green">YES</a>
-				</div>
-				<p>Sometimes buildings have more than one color. This is fine; mark them as correct as long as the polygon encloses the right shape.</p>
-			</li>
-			<li class="slide">
 				<%= image_tag "tutorial5.png" %>
 				<div class="wrapper">
 					<a class="button">NO</a>
@@ -66,6 +57,24 @@
 					<a class="button green">YES</a>
 				</div>
 				<p>Some polygons may be ambiguous. We trust your instinct.</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "tutorial7.png" %>
+				<div class="wrapper">
+					<a class="button">NO</a>
+					<a class="button">FIX</a>
+					<a class="button green">YES</a>
+				</div>
+				<p>Others have an odd shape. Notice how the mid line does not completely separate the two spaces.</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "tutorial4.png" %>
+				<div class="wrapper">
+					<a class="button">NO</a>
+					<a class="button">FIX</a>
+					<a class="button green">YES</a>
+				</div>
+				<p>Some buildings have more than one color. This is fine as correct as long as the polygon encloses the right shape.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial6.png" %>
@@ -77,15 +86,6 @@
 				<p>If the polygon encloses more than one building, mark it to fix.</p>
 			</li>
 			<li class="slide">
-				<%= image_tag "tutorial7.png" %>
-				<div class="wrapper">
-					<a class="button">NO</a>
-					<a class="button">FIX</a>
-					<a class="button green">YES</a>
-				</div>
-				<p>Others have an odd shape. Notice how the mid line does not completely separate the two spaces in this building.</p>
-			</li>
-			<li class="slide">
 				<%= image_tag "tutorial8.png" %>
 				<div class="wrapper">
 					<a class="button red">NO</a>
@@ -95,8 +95,10 @@
 				<p>Others are just plain wrong. This is definitely an error.</p>
 			</li>
 			<li class="slide">
-				<p>And this is where we say goodbye!</p>
-				<a href="javascript:;" id="link-exit-tutorial" class="button green centered">START</a>
+				<div class="overlay">
+					<p>And this is where we say goodbye!</p>
+					<a href="javascript:;" id="link-exit-tutorial" class="button green centered">START</a>
+				</div>
 			</li>
 		</ul>
 		<!-- <button class="next"></button>
