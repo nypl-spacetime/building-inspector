@@ -3,7 +3,10 @@ class FixerController < ApplicationController
 	respond_to :json
 
 	def building
-		request.session_options[:expire_after] = 5.days
+		# puts "cookie A: #{cookies[:first_visit]}"
+		@isNew = (cookies[:first_visit]!="no") ? true : false
+		cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
+		# puts "cookie B: #{cookies[:first_visit]}"
 	end
 
 	def randomMap

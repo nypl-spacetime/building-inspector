@@ -9,9 +9,14 @@ $buttoncolor: #f00;
 $black: #000;
 $white: #fff;
 $canvascolor: #111;
+
 $nocolor: $red; // #f00;
 $yescolor: #609846; // #016D17;
 $fixcolor: $yellow; // #ff0;
+
+// $splitcolor: 
+// $growcolor: 
+// $shrinkcolor: 
 
 $redbuildingcolor: rgb(207, 77, 77);
 $greenbuildingcolor: rgb(86, 158, 58);
@@ -78,13 +83,40 @@ table td, table th {
 #main-container {
 	width: 100%;
 	height: 100%;
+	// position: relative;
 
 	@include clearfix;
 
 	@media screen and (min-width: $desktopwidth) {
 		width: $desktopwidth;
 		height: auto;
-		margin: 40px auto;
+		margin: 10px auto;
+	}
+}
+
+#map-tutorial {
+	width: 100%;
+	height: 540px;
+	position: relative;
+	// left: 140px;
+	// top: 100px;
+	z-index: 1;
+	background-color: $grayDark; 
+
+	.slides {
+		height: 540px;
+
+		p, h2 {
+			text-align: center;
+			color: $grayLightest;
+			margin-left: 20px;
+			margin-right: 20px;
+		}
+
+		img {
+			display: block;
+			margin: 0 auto;
+		}
 	}
 }
 
@@ -102,7 +134,7 @@ table td, table th {
 	height: 100%;
 }
 
-#buttons {
+#buttons, .slide {
 	position: absolute;
 	bottom: 10px;
 	width: 100%;
@@ -146,23 +178,33 @@ table td, table th {
 			margin-right: 5px;
 		}
 
-		&#no-button {
+		&.button {
+			background-color: $grayDarker;
+		}
+
+		&#no-button, &.red {
 			background-color: $nocolor;
 		}
 
-		&#fix-button {
+		&#fix-button, &.yellow {
 			// height: 65px;
 			// padding-top: 25px;
 			// color: $black;
 			background-color: $fixcolor;
 		}
 
-		&#yes-button {
+		&#yes-button, &.green {
 			background-color: $yescolor;
 		}
 
 		&.building {
 			// width: 80px;
+		}
+
+		&.centered {
+			margin: 50px auto 0;
+			float: none;
+			display: block;
 		}
 
 		&#yellow-button {

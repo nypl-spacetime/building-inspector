@@ -1,22 +1,121 @@
 <% content_for :page_title do %>Polygons<% end %>
 
 <% content_for :dynamic_js do %>
-	<%= stylesheet_link_tag    "introjs.min", :media => "all" %>
-	<%= javascript_include_tag "is_building" %>
-	<%= javascript_include_tag "intro.min" %>
+	<%= stylesheet_link_tag    "jquery.swipeshow", :media => "all" %>
+	<%= stylesheet_link_tag    "slideshow-theme", :media => "all" %>
+	<%= javascript_include_tag "jquery.swipeshow.min" %>
+	<%= javascript_include_tag "tag_building", {:id => "tagbuildingjs", "data-session" => "#{@isNew}"} %>
 <% end %>
 
-<%= link_to "Help", "javascript:introJs().start();", :id => "link-help" %>
+<%= link_to "Help", "javascript:;", :id => "link-help" %>
 
 <div id="main-container">
-	<div id="map-container" data-step="1" data-intro="Polygons show up here">
+	<div id="map-tutorial" class="slideshow swipeshow">
+		<ul class="slides">
+			<li class="slide">
+				<p>This is some introductory text.
+				This text should introduce:</p>
+
+				<h2>The name of the Project</h2>
+
+				<p>And should say a few more things after that. Maybe a map too:</p>
+				<%= image_tag "tutorial-intro.png" %>
+				<p>SWIPE TO CONTINUE &#x2192;</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "tutorial1.png" %>
+				<div class="wrapper">
+					<a class="button">NO</a>
+					<a class="button">FIX</a>
+					<a class="button green">YES</a>
+				</div>
+				<p>This is a building with a correct polygon.</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "tutorial2.png" %>
+				<div class="wrapper">
+					<a class="button">NO</a>
+					<a class="button yellow">FIX</a>
+					<a class="button">YES</a>
+				</div>
+				<p>This polygon does not completely enclose the building. It needs fixing.</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "tutorial3.png" %>
+				<div class="wrapper">
+					<a class="button red">NO</a>
+					<a class="button">FIX</a>
+					<a class="button">YES</a>
+				</div>
+				<p>This is not a building. It is the space between buildings. This is not a correct polygon.</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "tutorial4.png" %>
+				<div class="wrapper">
+					<a class="button">NO</a>
+					<a class="button">FIX</a>
+					<a class="button green">YES</a>
+				</div>
+				<p>Sometimes buildings have more than one color. This is fine; mark them as correct as long as the polygon encloses the right shape.</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "tutorial5.png" %>
+				<div class="wrapper">
+					<a class="button">NO</a>
+					<a class="button">FIX</a>
+					<a class="button green">YES</a>
+				</div>
+				<p>Some polygons may be ambiguous. We trust your instinct.</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "tutorial6.png" %>
+				<div class="wrapper">
+					<a class="button">NO</a>
+					<a class="button yellow">FIX</a>
+					<a class="button">YES</a>
+				</div>
+				<p>If the polygon encloses more than one building, mark it to fix.</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "tutorial7.png" %>
+				<div class="wrapper">
+					<a class="button">NO</a>
+					<a class="button">FIX</a>
+					<a class="button green">YES</a>
+				</div>
+				<p>Others have an odd shape. Notice how the mid line does not completely separate the two spaces in this building.</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "tutorial8.png" %>
+				<div class="wrapper">
+					<a class="button red">NO</a>
+					<a class="button">FIX</a>
+					<a class="button">YES</a>
+				</div>
+				<p>Others are just plain wrong. This is definitely an error.</p>
+			</li>
+			<li class="slide">
+				<p>And this is where we say goodbye!</p>
+				<a href="javascript:;" id="link-exit-tutorial" class="button green centered">START</a>
+			</li>
+		</ul>
+		<!-- <button class="next"></button>
+		<button class="previous"></button> -->
+		<div class='dots'></div>
+	</div>
+	<div id="map-container">
 		<div id="map"></div>
 	</div>
 	<div id="buttons">
-		<div class="wrapper" data-step="2" data-intro="You classify the polygons here">
+		<div class="wrapper">
 			<a href="javascript:;" id="no-button">NO</a>
 			<a href="javascript:;" id="fix-button">FIX</a>
-			<a href="javascript:;" id="yes-button" data-step="3" data-intro="Try it: this does look like a correct shape so click YES">YES</a>
+			<a href="javascript:;" id="yes-button">YES</a>
 		</div>
+		<!-- <div class="wrapper" data-step="2" data-intro="You classify the polygons here">
+			<a href="javascript:;" id="split-button">SPLIT</a>
+			<a href="javascript:;" id="grow-button">GROW</a>
+			<a href="javascript:;" id="shrink-button">SHRINK</a>
+		</div> -->
 	</div>
 </div>
