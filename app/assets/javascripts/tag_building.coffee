@@ -12,13 +12,13 @@ class TagBuilding
 	constructor: () ->
 		$("#map-tutorial").hide()
 		$("#buttons").hide()
-		@map = L.mapbox.map('map', 'nypllabs.polygonfixer', 
+		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859/859spec.json', 
 			zoomControl: false
 			animate: true
 			attributionControl: false
 			minZoom: 19
 			maxZoom: 19
-			# dragging: false
+			dragging: false
 		)
 
 		@map.on('load', @getPolygons)
