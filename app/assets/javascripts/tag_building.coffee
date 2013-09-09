@@ -4,7 +4,6 @@ class TagBuilding
 	currentIndex: -1
 	currentPolygon: {}
 	geo: {}
-	geo2: {}
 	popup: L.popup()
 	verticalOffset: 100 # pixels to offset the polygon from the center
 	loadedData: {}
@@ -14,15 +13,6 @@ class TagBuilding
 		$("#map-tutorial").hide()
 		$("#buttons").hide()
 		@map = L.mapbox.map('map', 'nypllabs.polygonfixer', 
-			zoomControl: false
-			animate: true
-			attributionControl: false
-			minZoom: 19
-			maxZoom: 19
-			# dragging: false
-		)
-
-		@map2 = L.mapbox.map('map2', 'https://s3.amazonaws.com/maptiles.nypl.org/859/859spec.json', 
 			zoomControl: false
 			animate: true
 			attributionControl: false
@@ -112,19 +102,15 @@ class TagBuilding
 		# console.log @polyData
 		@currentIndex++
 		@map.removeLayer(@geo)
-		@map2.removeLayer(@geo2)
 		if @currentIndex < @polyData.poly.length
 			$("#buttons").show()
 			@currentPolygon = @polyData.poly[@currentIndex]
 			@geo = @makePolygon(@currentPolygon)
-			@geo2 = @makePolygon(@currentPolygon)
 			# console.log @currentPolygon #, @currentGeo
 			# console.log @geo
 			# center on the polygon
 			@geo.addTo(@map)
-			@geo2.addTo(@map2)
 			@map.fitBounds( @geo.getBounds() )
-			@map2.fitBounds( @geo2.getBounds() )
 
 	makePolygon: (poly) ->
 		json = 
