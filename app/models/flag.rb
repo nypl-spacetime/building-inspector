@@ -4,4 +4,8 @@ class Flag < ActiveRecord::Base
 	validates :flag_value, presence: true
 	validates :polygon_id, presence: true
 	validates :flag_type, presence: true
+
+	def self.flags_for_session(session_id)
+		Flag.where(:session_id => session_id).count
+	end
 end

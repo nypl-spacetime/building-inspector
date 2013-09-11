@@ -10,8 +10,16 @@ class FixerController < ApplicationController
 	end
 
 	def randomMap
-		@map = Sheet.random
-		@map[:poly] = @map.mini(request.session_options[:id]) # this is deprecated but cannot figure out how to use attr_writer for the love of me
+		session = request.session_options[:id]
+		@map = {}
+		@map[:map] = Sheet.random
+		@map[:poly] = @map[:map].mini(session)
+		@map[:status] = {}
+		@map[:status][:map_polygons] = @map[:map].polygons.count
+		@map[:status][:map_polygons_session] = @map[:poly].count
+		@map[:status][:all_sheets] = Sheet.count
+		@map[:status][:all_polygons] = Polygon.count
+		@map[:status][:all_polygons_session] = Flag.flags_for_session(session)
 		respond_with( @map )
 	end
 

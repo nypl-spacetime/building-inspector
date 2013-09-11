@@ -8,6 +8,10 @@ class TagBuilding
 	verticalOffset: 100 # pixels to offset the polygon from the center
 	loadedData: {}
 	tutorialOn: $('#tagbuildingjs').data("session")
+	mapPolygons: 0
+	mapPolygonsSession: 0
+	allPolygons: 0
+	allPolygonsSession: 0
 
 	constructor: () ->
 		$("#map-tutorial").hide()
@@ -18,16 +22,20 @@ class TagBuilding
 			attributionControl: false
 			minZoom: 19
 			maxZoom: 19
-			# dragging: false
+			dragging: false
 		)
 
 		@map.on('load', @getPolygons)
 
 		$("#link-help").on("click", @invokeTutorial)
 
+		$("#yes-button").on("click", @submitYesFlag)
+		$("#no-button").on("click", @submitNoFlag)
+		$("#fix-button").on("click", @submitFixFlag)
+
 		# @map.on('click', @onMapClick)
 
-		window.map = @map
+		window.map = @
 
 		tagger = @
 
@@ -37,6 +45,25 @@ class TagBuilding
 				, 1000
 		) if @tutorialOn
 		# console.log @tutorialOn
+
+	updateScore: () =>
+		if @mapPolygons == 0 && @allPolygons == 0
+			@mapPolygons = @loadedData.status.map_polygons
+			@mapPolygonsSession = @loadedData.status.map_polygons_session
+			@allPolygons = @loadedData.status.all_polygons
+			@allPolygonsSession = @loadedData.status.all_polygons_session
+		
+		levelScore = Math.round(100 * (@allPolygonsSession / @allPolygons))
+		mapScore = Math.round(100 * ((@mapPolygons - @mapPolygonsSession) / @mapPolygons))
+		
+		levelDOM = $("#level-bar")
+		levelDOM.find(".percent").text(levelScore + "%")
+		levelDOM.find(".bar").css("width",levelScore + "%")
+		
+		mapDOM = $("#map-bar")
+		mapDOM.find(".percent").text(mapScore + "%")
+		mapDOM.find(".bar").css("width",mapScore + "%")
+
 
 	invokeTutorial: () =>
 		$("#map-tutorial").unswipeshow
@@ -64,10 +91,9 @@ class TagBuilding
 		tagger = @
 		$.getJSON('/fixer/map.json', (data) ->
 			# console.log(data);
-			tagger.polyData = tagger.loadedData = data
-			$("#yes-button").on("click", tagger.submitYesFlag)
-			$("#no-button").on("click", tagger.submitNoFlag)
-			$("#fix-button").on("click", tagger.submitFixFlag)
+			tagger.loadedData = data
+			tagger.polyData = data.poly
+			tagger.updateScore()
 			tagger.showNextPolygon()
 		)
 	
@@ -82,10 +108,12 @@ class TagBuilding
 
 	submitFlag: (type) =>
 		$("#buttons").hide()
-		if @tutorialOn
-			# do not submit the data
-			@showNextPolygon()
-			return
+		@mapPolygonsSession--
+		@updateScore()
+		# if @tutorialOn
+		# 	# do not submit the data
+		# 	@showNextPolygon()
+		# 	return
 		tagger = @
 		$.get("/fixer/flag", 
 			i: @currentPolygon.id
@@ -102,15 +130,22 @@ class TagBuilding
 		# console.log @polyData
 		@currentIndex++
 		@map.removeLayer(@geo)
-		if @currentIndex < @polyData.poly.length
+		if @currentIndex < @polyData.length
 			$("#buttons").show()
-			@currentPolygon = @polyData.poly[@currentIndex]
+			@currentPolygon = @polyData[@currentIndex]
 			@geo = @makePolygon(@currentPolygon)
 			# console.log @currentPolygon #, @currentGeo
 			# console.log @geo
 			# center on the polygon
 			@geo.addTo(@map)
 			@map.fitBounds( @geo.getBounds() )
+		else
+			console.log "Loading more polygons..."
+			@mapPolygons = 0
+			@mapPolygonsSession = 0
+			@allPolygons = 0
+			@allPolygonsSession = 0
+			@getPolygons()
 
 	makePolygon: (poly) ->
 		json = 

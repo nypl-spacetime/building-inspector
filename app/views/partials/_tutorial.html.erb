@@ -1,0 +1,95 @@
+	<div id="map-tutorial" class="slideshow swipeshow">
+		<ul class="slides">
+			<li class="slide">
+				<p>This is some introductory text.
+				This text should introduce:</p>
+
+				<h2>The name of the Project</h2>
+
+				<p>And should say a few more things after that. Maybe a map too:</p>
+				<%= image_tag "tutorial-intro.png" %>
+				<p>SWIPE TO CONTINUE &#x2192;</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "tutorial1.png" %>
+				<div class="wrapper">
+					<a class="button">NO</a>
+					<a class="button">FIX</a>
+					<a class="button green">YES</a>
+				</div>
+				<p>This is a building with a correct polygon.</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "tutorial2.png" %>
+				<div class="wrapper">
+					<a class="button">NO</a>
+					<a class="button yellow">FIX</a>
+					<a class="button">YES</a>
+				</div>
+				<p>This polygon does not completely enclose the building. It needs fixing.</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "tutorial3.png" %>
+				<div class="wrapper">
+					<a class="button red">NO</a>
+					<a class="button">FIX</a>
+					<a class="button">YES</a>
+				</div>
+				<p>This is not a building. It is the space between buildings. This is not a correct polygon.</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "tutorial5.png" %>
+				<div class="wrapper">
+					<a class="button">NO</a>
+					<a class="button">FIX</a>
+					<a class="button green">YES</a>
+				</div>
+				<p>Some polygons may be ambiguous. We trust your instinct.</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "tutorial7.png" %>
+				<div class="wrapper">
+					<a class="button">NO</a>
+					<a class="button">FIX</a>
+					<a class="button green">YES</a>
+				</div>
+				<p>Others have an odd shape. Notice how the mid line does not completely separate the two spaces.</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "tutorial4.png" %>
+				<div class="wrapper">
+					<a class="button">NO</a>
+					<a class="button">FIX</a>
+					<a class="button green">YES</a>
+				</div>
+				<p>Some buildings have more than one color. This is fine as long as the polygon encloses the right shape.</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "tutorial6.png" %>
+				<div class="wrapper">
+					<a class="button">NO</a>
+					<a class="button yellow">FIX</a>
+					<a class="button">YES</a>
+				</div>
+				<p>If the polygon encloses more than one building, mark it to fix.</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "tutorial8.png" %>
+				<div class="wrapper">
+					<a class="button red">NO</a>
+					<a class="button">FIX</a>
+					<a class="button">YES</a>
+				</div>
+				<p>Others are just plain wrong. This is definitely an error.</p>
+			</li>
+			<li class="slide">
+				<div class="overlay">
+					<p>And this is where we say goodbye!</p>
+					<a href="javascript:;" id="link-exit-tutorial" class="button green centered">START</a>
+				</div>
+			</li>
+		</ul>
+		<!-- <button class="next"></button>
+		<button class="previous"></button> -->
+		<div class='dots'></div>
+	</div>
