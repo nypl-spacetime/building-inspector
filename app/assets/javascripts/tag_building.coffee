@@ -53,16 +53,21 @@ class TagBuilding
 			@allPolygons = @loadedData.status.all_polygons
 			@allPolygonsSession = @loadedData.status.all_polygons_session
 		
-		maximumScore = @allPolygons # ~64k
-		levelScore = Math.round(100 * (@allPolygonsSession / @allPolygons))
 		mapScore = Math.round(100 * ((@mapPolygons - @mapPolygonsSession) / @mapPolygons))
+
+		level = Math.floor(Math.log(@allPolygonsSession) / Math.LN2)
+		maximumLevel = 16
+		levelScore = Math.round(100 * (level / maximumLevel)) #Math.round(100 * (@allPolygonsSession / @allPolygons))
+		levelScore = 100 if levelScore > 100
+
+		console.log "level:", level
 		
 		levelDOM = $("#level-bar")
-		levelDOM.find(".percent").text(levelScore + "%")
+		levelDOM.find(".percent").text("Level: " + level)
 		levelDOM.find(".bar").css("width",levelScore + "%")
 		
 		mapDOM = $("#map-bar")
-		mapDOM.find(".percent").text(mapScore + "%")
+		mapDOM.find(".percent").text( "This sheet: " + mapScore + "%")
 		mapDOM.find(".bar").css("width",mapScore + "%")
 
 
@@ -110,6 +115,7 @@ class TagBuilding
 	submitFlag: (type) =>
 		$("#buttons").hide()
 		@mapPolygonsSession--
+		@allPolygonsSession++
 		@updateScore()
 		# if @tutorialOn
 		# 	# do not submit the data
