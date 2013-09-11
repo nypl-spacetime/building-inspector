@@ -8,6 +8,7 @@ namespace :data_import do
 		if ENV['force']==nil
 			puts "This process was not forced (required due to destructive nature)"
 			return
+		end
 
 		process_file(id, bbox)
 	end
@@ -17,6 +18,7 @@ namespace :data_import do
 		if ENV['force']==nil
 			puts "This process was not forced (required due to destructive nature)"
 			return
+		end
 
 		file = "public/files/config-ingest.json"
 

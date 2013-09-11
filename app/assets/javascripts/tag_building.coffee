@@ -53,6 +53,7 @@ class TagBuilding
 			@allPolygons = @loadedData.status.all_polygons
 			@allPolygonsSession = @loadedData.status.all_polygons_session
 		
+		maximumScore = @allPolygons # ~64k
 		levelScore = Math.round(100 * (@allPolygonsSession / @allPolygons))
 		mapScore = Math.round(100 * ((@mapPolygons - @mapPolygonsSession) / @mapPolygons))
 		
