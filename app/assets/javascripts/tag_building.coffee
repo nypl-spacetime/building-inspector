@@ -56,6 +56,7 @@ class TagBuilding
 		mapScore = Math.round(100 * ((@mapPolygons - @mapPolygonsSession) / @mapPolygons))
 
 		level = Math.floor(Math.log(@allPolygonsSession) / Math.LN2)
+		level = 0 if @allPolygonsSession == 0
 		maximumLevel = 16
 		levelScore = Math.round(100 * (level / maximumLevel)) #Math.round(100 * (@allPolygonsSession / @allPolygons))
 		levelScore = 100 if levelScore > 100
