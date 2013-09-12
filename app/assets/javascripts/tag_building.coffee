@@ -53,22 +53,23 @@ class TagBuilding
 			@allPolygons = @loadedData.status.all_polygons
 			@allPolygonsSession = @loadedData.status.all_polygons_session
 		
-		mapScore = Math.round(100 * ((@mapPolygons - @mapPolygonsSession) / @mapPolygons))
-
 		level = Math.floor(Math.log(@allPolygonsSession) / Math.LN2)
 		level = 0 if @allPolygonsSession == 0
 		maximumLevel = 16
 		levelScore = Math.round(100 * (level / maximumLevel)) #Math.round(100 * (@allPolygonsSession / @allPolygons))
 		levelScore = 100 if levelScore > 100
 
-		console.log "level:", level
+		mapScore = Math.round(100 * ((@mapPolygons - @mapPolygonsSession) / @mapPolygons))
+		mapScore = if level > 0 then Math.floor(((Math.log(@allPolygonsSession) / Math.LN2)-level)*100) else 0
+
+		console.log "level:", level, mapScore
 		
 		levelDOM = $("#level-bar")
 		levelDOM.find(".percent").text("Level: " + level)
 		levelDOM.find(".bar").css("width",levelScore + "%")
 		
 		mapDOM = $("#map-bar")
-		mapDOM.find(".percent").text( "This sheet: " + mapScore + "%")
+		mapDOM.find(".percent").text( "Next level: " + mapScore + "%")
 		mapDOM.find(".bar").css("width",mapScore + "%")
 
 
@@ -76,6 +77,7 @@ class TagBuilding
 		$("#map-tutorial").unswipeshow
 		$("#map-tutorial").show()
 		$("#map-container").hide()
+		$("#score").hide()
 		$("#link-help").hide()
 		$("#buttons").hide()
 		$("#map-tutorial").swipeshow
@@ -90,6 +92,7 @@ class TagBuilding
 
 	hideTutorial: () =>
 		$("#map-tutorial").hide()
+		$("#score").show()
 		$("#map-container").show()
 		$("#link-help").show()
 		$("#buttons").show()
