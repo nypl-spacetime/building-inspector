@@ -12,6 +12,7 @@ class TagBuilding
 	mapPolygonsSession: 0
 	allPolygons: 0
 	allPolygonsSession: 0
+	level: 0
 
 	constructor: () ->
 		$("#map-tutorial").hide()
@@ -20,8 +21,8 @@ class TagBuilding
 			zoomControl: false
 			animate: true
 			attributionControl: false
-			minZoom: 19
-			maxZoom: 19
+			minZoom: 20
+			maxZoom: 20
 			dragging: false
 		)
 
@@ -53,25 +54,34 @@ class TagBuilding
 			@allPolygons = @loadedData.status.all_polygons
 			@allPolygonsSession = @loadedData.status.all_polygons_session
 		
-		level = Math.floor(Math.log(@allPolygonsSession) / Math.LN2)
+		levelfloat = Math.log(@allPolygonsSession) / Math.LN2
+		level = Math.floor(levelfloat)
 		level = 0 if @allPolygonsSession == 0
 		maximumLevel = 16
 		levelScore = Math.round(100 * (level / maximumLevel)) #Math.round(100 * (@allPolygonsSession / @allPolygons))
 		levelScore = 100 if levelScore > 100
 
 		mapScore = Math.round(100 * ((@mapPolygons - @mapPolygonsSession) / @mapPolygons))
-		mapScore = if level > 0 then Math.floor(((Math.log(@allPolygonsSession) / Math.LN2)-level)*100) else 0
+		mapScore = if level > 0 then Math.floor((levelfloat-level)*100) else 0
+
+		if @level != level
+			@level = level
+			@animateLevel()
 
 		console.log "level:", level, mapScore
 		
 		levelDOM = $("#level-bar")
-		levelDOM.find(".percent").text("Level: " + level)
+		levelDOM.find(".percent").text("Level: " + @level)
 		levelDOM.find(".bar").css("width",levelScore + "%")
 		
 		mapDOM = $("#map-bar")
 		mapDOM.find(".percent").text( "Next level: " + mapScore + "%")
 		mapDOM.find(".bar").css("width",mapScore + "%")
 
+	animateLevel: () =>
+		el = $("#score .level-animation")
+		el.text("Level " + @level + "!")
+		.show().fadeOut(1000)
 
 	invokeTutorial: () =>
 		$("#map-tutorial").unswipeshow

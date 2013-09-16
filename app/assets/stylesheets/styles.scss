@@ -149,6 +149,16 @@ table td, table th {
 	top: 15px;
 	z-index: 111;
 
+	.level-animation {
+		position: absolute;
+		left: 165px;
+		top: 0px;
+		width: 300px;
+		font-size: 30px;
+		z-index: 112;
+		color: red;
+	}
+
 	.progress {
 		position: relative;
 		width: 160px;
