@@ -1,4 +1,10 @@
 Webappmini::Application.routes.draw do
+  get "general/home"
+
+  get "general/about"
+  
+  get "general/help"
+
   devise_for :users
 
   resources :polygons
@@ -18,5 +24,5 @@ Webappmini::Application.routes.draw do
   match "color" => "fixer#color"
   match "building" => "fixer#building"
   
-  root :to => "fixer#building"
+  root :to => "general#home"
 end

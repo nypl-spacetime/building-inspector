@@ -7,7 +7,7 @@
 	<%= javascript_include_tag "tag_building", {:id => "tagbuildingjs", "data-session" => "#{@isNew}"} %>
 <% end %>
 
-<%= link_to "Help", "javascript:;", :id => "link-help" %>
+<%= link_to "Tutorial", "javascript:;", :id => "link-help" %>
 
 <div id="main-container">
 	<%= render :partial => "partials/tutorial" %>
@@ -16,7 +16,6 @@
 
 	<div id="map-container">
 		<div id="map"></div>
-		<div id="map2"></div>
 	</div>
 	<div id="buttons">
 		<div class="wrapper">

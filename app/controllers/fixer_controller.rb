@@ -4,13 +4,20 @@ class FixerController < ApplicationController
 
 	def building
 		# puts "cookie A: #{cookies[:first_visit]}"
-		@isNew = (cookies[:first_visit]!="no") ? true : false
+		@isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
 		cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
+		if cookies[:session] == nil
+			cookies[:session] = { :value => request.session_options[:id], :expires => 365.days.from_now }
+		end			
 		# puts "cookie B: #{cookies[:first_visit]}"
 	end
 
 	def randomMap
-		session = request.session_options[:id]
+		if cookies[:session] != nil
+			session = cookies[:session]
+		else
+			session = request.session_options[:id]
+		end
 		@map = {}
 		@map[:map] = Sheet.random
 		@map[:poly] = @map[:map].mini(session)

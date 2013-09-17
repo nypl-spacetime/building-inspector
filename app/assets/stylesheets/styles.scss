@@ -62,10 +62,33 @@ table td, table th {
 	}
 }
 
+#top-nav {
+	@include clearfix;
+
+	background: $grayDarker;
+
+	a {
+		color: $white;
+	}
+
+	li {
+		float: right;
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+
+	@media screen and (max-width: $desktopwidth) {
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 110;
+	}
+}
+
 #link-help {
 	display: block;
 	height: 30px;
-	width: 60px;
+	width: 100px;
 	text-align: center;
 	text-transform: uppercase;
 	background-color: $grayDarker;
@@ -78,7 +101,7 @@ table td, table th {
 	@media screen and (max-width: $desktopwidth) {
 		position: absolute;
 		right: 10px;
-		top: 5px;
+		top: 25px;
 		z-index: 111;
 	}
 
@@ -145,37 +168,45 @@ table td, table th {
 
 #score {
 	position: absolute;
-	left: 10px;
-	top: 15px;
+	bottom: 120px;
+	width: 100%;
 	z-index: 111;
 
+	@media screen and (min-width: $desktopwidth) {
+		bottom: 220px;
+	}
+
 	.level-animation {
-		position: absolute;
-		left: 165px;
-		top: 0px;
-		width: 300px;
-		font-size: 30px;
+		// position: absolute;
+		// left: 165px;
+		// top: 0px;
+		// width: 300px;
+		font-size: 60px;
 		z-index: 112;
 		color: red;
+		text-align: center;
+		text-transform: uppercase;
+		margin-bottom: 40px;
 	}
 
 	.progress {
 		position: relative;
-		width: 160px;
-		font-size: 10px;
+		// width: 160px;
+		font-size: 18px;
 		background: $grayLightest;
-		margin-bottom: 2px;
+		margin: 10px;
+		text-transform: uppercase;
 	}
 
 	.percent {
 		position: absolute;
 		left: 5px;
-		top: -6px;
+		top: -3px;
 		color: $grayDarkest;
 	}
 
 	.bar {
-		height: 14px;
+		height: 20px;
 		width: 0%;
 
 		&.level {
