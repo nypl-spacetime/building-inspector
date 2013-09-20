@@ -1,5 +1,6 @@
-<ul id="top-nav">
-	<li><%= link_to "About", "/general/about" %></li>
-	<li><%= link_to "Help", "/general/help" %></li>
-	<li><%= link_to "Polygonzo!", "/fixer/building" %></li>
-</ul>
+<div id="top-nav">
+	<% if @current_page != 'homepage' %><%= link_to "Home", "/" %> &middot; <% end %>
+	<!-- <%= link_to "Polygonzo!", "/fixer/building" %> &middot; -->
+	<%= link_to "About", "/general/about" %> &middot;
+	<%= link_to "Help", "/general/help" %>
+</div>

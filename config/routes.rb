@@ -17,6 +17,9 @@ Webappmini::Application.routes.draw do
 
   get "fixer/color"
 
+  get "fixer/progress"
+  get "fixer/sessionProgress"
+
   match "fixer/map" => "fixer#randomMap"
 
   match "fixer/flag" => "fixer#flagPolygon"

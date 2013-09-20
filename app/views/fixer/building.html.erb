@@ -1,6 +1,10 @@
 <% content_for :page_title do %>Polygons<% end %>
 
 <% content_for :dynamic_js do %>
+	<%= stylesheet_link_tag    "add2home", :media => "all" %>
+	<%= javascript_include_tag "add2home" %>
+
+	<%= stylesheet_link_tag    "fixer", :media => "all" %>
 	<%= stylesheet_link_tag    "jquery.swipeshow", :media => "all" %>
 	<%= stylesheet_link_tag    "slideshow-theme", :media => "all" %>
 	<%= javascript_include_tag "jquery.swipeshow.min" %>

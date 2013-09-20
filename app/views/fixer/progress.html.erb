@@ -1,0 +1,18 @@
+<% content_for :page_title do %>Progress<% end %>
+
+<% content_for :dynamic_js do %>
+	<%= javascript_include_tag "progress" %>
+	<%= stylesheet_link_tag    "progress", :media => "all" %>
+	<%= stylesheet_link_tag    "MarkerCluster", :media => "all" %>
+	<%= stylesheet_link_tag    "MarkerCluster.Default", :media => "all" %>
+	<!--[if lte IE 8]>
+	<%= stylesheet_link_tag    "MarkerCluster.Default.ie", :media => "all" %>
+	<![endif]-->
+	<%= javascript_include_tag "leaflet.markercluster" %>
+<% end %>
+
+<div id="main-container">
+	<div id="map-container">
+		<div id="map"></div>
+	</div>
+</div>

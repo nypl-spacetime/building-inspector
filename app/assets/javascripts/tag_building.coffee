@@ -71,6 +71,8 @@ class TagBuilding
 
 		# console.log "level:", level, mapScore
 		
+		$("#score .total a").text(@allPolygonsSession)
+
 		levelDOM = $("#level-bar")
 		levelDOM.find(".percent").text("Level: " + @level)
 		levelDOM.find(".bar").css("width",levelScore + "%")
@@ -147,7 +149,7 @@ class TagBuilding
 		# ).fail( () ->
 		# 	tagger.showNextPolygon()
 		)
-
+	
 	showNextPolygon: () =>
 		# console.log @polyData
 		@currentIndex++

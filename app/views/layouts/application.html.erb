@@ -16,13 +16,8 @@
 	<%= stylesheet_link_tag    "application", :media => "all" %>
 	<%= javascript_include_tag "application" %>
 
-	<%= stylesheet_link_tag    "add2home", :media => "all" %>
-	<%= javascript_include_tag "add2home" %>
-
-	<script src='http://api.tiles.mapbox.com/mapbox.js/v1.0.0/mapbox.js'></script>
-	<link href='http://api.tiles.mapbox.com/mapbox.js/v1.0.0/mapbox.css' rel='stylesheet' />
 	<!--[if lte IE 8]>
-	<link href='http://api.tiles.mapbox.com/mapbox.js/v1.0.0/mapbox.ie.css' rel='stylesheet' >
+	<%= stylesheet_link_tag "mapbox.ie", :media => "all" %>
 	<![endif]-->
 	<%= csrf_meta_tags %>
 
@@ -35,6 +30,8 @@
 <%= render :partial => "partials/nav" %>
 
 <%= yield %>
+
+<%= render :partial => "partials/footer" %>
 
 </body>
 </html>

@@ -3,39 +3,21 @@
 @import "css3-mixins";
 @import "button-mixins";
 @import "compass/utilities/general/clearfix";
+@import "variables";
 
-$mainfont: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
-$buttoncolor: #f00;
-$black: #000;
-$white: #fff;
-$canvascolor: #111;
-
-$nocolor: $red; // #f00;
-$yescolor: #609846; // #016D17;
-$fixcolor: $yellow; // #ff0;
-
-$levelcolor: #BE66E7; // purple
-$mapcolor: #4D7ED5; // blueish
-
-// $splitcolor: 
-// $growcolor: 
-// $shrinkcolor: 
-
-$redbuildingcolor: rgb(207, 77, 77);
-$greenbuildingcolor: rgb(86, 158, 58);
-$bluebuildingcolor: rgb(77, 150, 207);
-$yellowbuildingcolor: rgb(197, 202, 72);
-
-$desktopwidth: 481px;
 
 body {
 	font-family: $mainfont;
-	background: $grayDark;
-	color: $grayLighter;
+	background: $white;
+	color: $grayDarker;
 }
 
 table td, table th {
 	padding: 5px;
+}
+
+p {
+	margin-bottom: 2em;
 }
 
 #nav-admin {
@@ -65,16 +47,12 @@ table td, table th {
 #top-nav {
 	@include clearfix;
 
-	background: $grayDarker;
+	width: $generalwidth;
+	margin: 20px auto;
+	text-align: center;
 
 	a {
-		color: $white;
-	}
-
-	li {
-		float: right;
-		margin-left: 10px;
-		margin-right: 10px;
+		color: $blue;
 	}
 
 	@media screen and (max-width: $desktopwidth) {
@@ -85,244 +63,47 @@ table td, table th {
 	}
 }
 
-#link-help {
-	display: block;
-	height: 30px;
-	width: 100px;
+#main-container {
+	width: $generalwidth;
+	margin: 0 auto;
 	text-align: center;
+}
+
+#intro {
+	position: relative;
+	margin: 20px 0;
+	padding: 5px 0 20px;
+	background: lighten($orange, 10%);
+
+	h1 {
+		color: darken($orange, 20%);
+	}
+}
+
+#link-try {
+	display: block;
+	width: 150px;
+	margin: 20px auto;
+	padding: 15px 0;
+	font-size: 24px;
 	text-transform: uppercase;
-	background-color: $grayDarker;
-	color: $grayLight;
-	margin: 10px auto;
-	padding-top: 4px;
-	
+	text-align: center;
+	text-decoration: none;
+	color: $white;
+	background: $yescolor;
+
 	@include rounded-corners(5px);
 
-	@media screen and (max-width: $desktopwidth) {
-		position: absolute;
-		right: 10px;
-		top: 25px;
-		z-index: 111;
-	}
-
 	&:hover {
-		text-decoration: none;
-	}
-}
-
-#main-container {
-	width: 100%;
-	height: 100%;
-	position: relative;
-
-	@include clearfix;
-
-	@media screen and (min-width: $desktopwidth) {
-		width: $desktopwidth;
-		height: 540px;
-		margin: 10px auto;
-	}
-}
-
-#map-tutorial {
-	width: 95%;
-	height: 95%;
-	position: relative;
-	// left: 140px;
-	top: 2%;
-	z-index: 1;
-	background-color: $gray;
-	@include box-shadow(0, 0, 15px);
-
-	.slides {
-		// height: 540px;
-
-		p, h2 {
-			text-align: center;
-			color: $grayLightest;
-			margin-left: 20px;
-			margin-right: 20px;
-			margin-top: 0;
-		}
-
-		img {
-			display: block;
-			margin: 0 auto;
-		}
-	}
-
-	.overlay {
-		z-index: 12;
-		position: absolute;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
-	}
-}
-
-#link-exit-tutorial {
-	font-size: 32px;
-	width: 200px;
-}
-
-#score {
-	position: absolute;
-	bottom: 120px;
-	width: 100%;
-	z-index: 111;
-
-	@media screen and (min-width: $desktopwidth) {
-		bottom: 220px;
-	}
-
-	.level-animation {
-		// position: absolute;
-		// left: 165px;
-		// top: 0px;
-		// width: 300px;
-		font-size: 60px;
-		z-index: 112;
-		color: red;
-		text-align: center;
-		text-transform: uppercase;
-		margin-bottom: 40px;
-	}
-
-	.progress {
-		position: relative;
-		// width: 160px;
-		font-size: 18px;
-		background: $grayLightest;
-		margin: 10px;
-		text-transform: uppercase;
-	}
-
-	.percent {
-		position: absolute;
-		left: 5px;
-		top: -3px;
-		color: $grayDarkest;
-	}
-
-	.bar {
-		height: 20px;
-		width: 0%;
-
-		&.level {
-			background: $levelcolor;
-		}
-
-		&.map {
-			background: $mapcolor;
-		}
-	}
-}
-
-#map-container {
-	position: relative;
-	height: 100%;
-
-	@media screen and (min-width: $desktopwidth) {
-		height: 320px;
-	}
-}
-
-#map {
-	width: 100%;
-	height: 100%;
-}
-
-#buttons, .slide {
-	position: absolute;
-	bottom: 10px;
-	width: 100%;
-
-	@include clearfix;
-
-	@media screen and (min-width: $desktopwidth) {
-		position: relative;
-		bottom: auto;
-		margin-top: 10px;
-	}
-
-	.wrapper {
-		width: 290px;
-		margin: 0 auto;
-
-		@include clearfix;
-	
-		@media screen and (min-width: $desktopwidth) {
-			margin: 0 auto;
-		}
-	}
-
-	a {
-		width: 80px;
-		height: 55px;
-		margin: 10px;
-		padding-top: 35px;
-		float: left;
-		text-align: center;
-		text-decoration: none;
 		color: $white;
-
-		@include rounded-corners(10px);
-
-		&:first-child {
-			margin-left: 5px;
-		}
-
-		&:last-child {
-			margin-right: 5px;
-		}
-
-		&.button {
-			background-color: $grayDarker;
-		}
-
-		&#no-button, &.red {
-			background-color: $nocolor;
-		}
-
-		&#fix-button, &.yellow {
-			// height: 65px;
-			// padding-top: 25px;
-			// color: $black;
-			background-color: $fixcolor;
-		}
-
-		&#yes-button, &.green {
-			background-color: $yescolor;
-		}
-
-		&.building {
-			// width: 80px;
-		}
-
-		&.centered {
-			margin: 50px auto 0;
-			float: none;
-			display: block;
-		}
-
-		&#yellow-button {
-			color: $black;
-			background-color: $yellowbuildingcolor;
-		}
-
-		&#red-button {
-			background-color: $redbuildingcolor;
-		}
-
-		&#green-button {
-			background-color: $greenbuildingcolor;
-		}
-
-		&#blue-button {
-			background-color: $bluebuildingcolor;
-		}
+		text-decoration: none;
+		background: $grayDarkest;
 	}
 }
 
-
+#footer {
+	width: $generalwidth;
+	margin: 50px auto 0;
+	padding-bottom: 100px;
+	text-align: center;
+}

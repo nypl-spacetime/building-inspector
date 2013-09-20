@@ -1,3 +1,28 @@
 @import "drr-variables";
 
 $iconfont: $iconFontFamily;
+$mainfont: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+$buttoncolor: #f00;
+$black: #000;
+$white: #fff;
+$canvascolor: #111;
+
+$nocolor: $red; // #f00;
+$yescolor: #609846; // #016D17;
+$fixcolor: $yellow; // #ff0;
+
+$levelcolor: #BE66E7; // purple
+$mapcolor: #4D7ED5; // blueish
+
+// $splitcolor: 
+// $growcolor: 
+// $shrinkcolor: 
+
+$redbuildingcolor: rgb(207, 77, 77);
+$greenbuildingcolor: rgb(86, 158, 58);
+$bluebuildingcolor: rgb(77, 150, 207);
+$yellowbuildingcolor: rgb(197, 202, 72);
+
+$desktopwidth: 481px;
+
+$generalwidth: 345px;
