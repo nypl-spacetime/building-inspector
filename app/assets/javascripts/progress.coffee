@@ -110,7 +110,7 @@ class Progress
 						m.fitBounds(@.getBounds())
 			)
 
-			bounds = new L.LatLngBounds(new L.LatLng(40.712, -74.227))
+			bounds = new L.LatLngBounds()
 
 			if data.yes_poly.features.length>0
 				yes_json.addTo(m)
