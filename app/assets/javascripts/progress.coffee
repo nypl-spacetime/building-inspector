@@ -85,8 +85,14 @@ class Progress
 			yes_json.addTo(progress.map)
 			no_json.addTo(progress.map)
 			fix_json.addTo(progress.map)
+
 			progress.map.addLayer(markers)
-			progress.map.setZoom(17)
+			
+			bounds = yes_json.getBounds()
+			.extend(no_json.getBounds())
+			.extend(fix_json.getBounds())
+
+			progress.map.fitBounds(bounds)
 		)
 	
 	addMarker: (markers, data, icon) ->
