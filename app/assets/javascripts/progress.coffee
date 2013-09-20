@@ -5,7 +5,7 @@ class Progress
 			zoomControl: false
 			animate: true
 			attributionControl: false
-			minZoom: 13
+			minZoom: 8
 			maxZoom: 20
 			dragging: true
 		)
