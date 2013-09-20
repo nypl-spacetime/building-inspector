@@ -43,6 +43,11 @@ class Progress
 				polygonOptions:
 					stroke: false
 			
+			markers.on 'click', (a) ->
+				# console.log a.layer.getLatLng()
+				m.panTo a.layer.getLatLng()
+				m.setZoom 20
+
 			# marker icons
 			yes_icon = L.icon
 				iconUrl: '/assets/images/marker-icon-yes.png'
@@ -70,9 +75,11 @@ class Progress
 					stroke: false
 				onEachFeature: (f,l) ->
 					p.addMarker markers, f, yes_icon
-					out = for key, val of f.properties
-						"<strong>#{key}:</strong> #{val}"
-					l.bindPopup(out.join("<br />"))
+					# out = for key, val of f.properties
+					# 	"<strong>#{key}:</strong> #{val}"
+					# l.bindPopup(out.join("<br />"))
+					l.on 'click', ()->
+						m.fitBounds(@.getBounds())
 			)
 			no_json = L.geoJson(data.no_poly,
 				style: (feature) ->
@@ -82,9 +89,11 @@ class Progress
 					stroke: false
 				onEachFeature: (f,l) ->
 					p.addMarker markers, f, no_icon
-					out = for key, val of f.properties
-						"<strong>#{key}:</strong> #{val}"
-					l.bindPopup(out.join("<br />"))
+					# out = for key, val of f.properties
+					# 	"<strong>#{key}:</strong> #{val}"
+					# l.bindPopup(out.join("<br />"))
+					l.on 'click', ()->
+						m.fitBounds(@.getBounds())
 			)
 			fix_json = L.geoJson(data.fix_poly,
 				style: (feature) ->
@@ -94,9 +103,11 @@ class Progress
 					stroke: false
 				onEachFeature: (f,l) ->
 					p.addMarker markers, f, fix_icon
-					out = for key, val of f.properties
-						"<strong>#{key}:</strong> #{val}"
-					l.bindPopup(out.join("<br />"))
+					# out = for key, val of f.properties
+					# 	"<strong>#{key}:</strong> #{val}"
+					# l.bindPopup(out.join("<br />"))
+					l.on 'click', ()->
+						m.fitBounds(@.getBounds())
 			)
 
 			bounds = new L.LatLngBounds(new L.LatLng(40.712, -74.227))
@@ -125,51 +136,53 @@ class Progress
 			icon: icon
 		markers
 
-	showPolygon: () =>
-		# console.log @polyData
-		@currentIndex++
-		@map.removeLayer(@geo)
-		if @currentIndex < @polyData.length
-			$("#buttons").show()
-			@currentPolygon = @polyData[@currentIndex]
-			@geo = @makePolygon(@currentPolygon)
-			# console.log @currentPolygon #, @currentGeo
-			# console.log @geo
-			# center on the polygon
-			@geo.addTo(@map)
-			@map.fitBounds( @geo.getBounds() )
-		else
-			console.log "Loading more polygons..."
-			@mapPolygons = 0
-			@mapPolygonsSession = 0
-			@allPolygons = 0
-			@allPolygonsSession = 0
-			@getPolygons()
+	# showPolygon: () =>
+	# 	# console.log @polyData
+	# 	@currentIndex++
+	# 	@map.removeLayer(@geo)
+	# 	if @currentIndex < @polyData.length
+	# 		$("#buttons").show()
+	# 		@currentPolygon = @polyData[@currentIndex]
+	# 		@geo = @makePolygon(@currentPolygon)
+	# 		# console.log @currentPolygon #, @currentGeo
+	# 		# console.log @geo
+	# 		# center on the polygon
+	# 		@geo.addTo(@map)
+	# 		@map.fitBounds( @geo.getBounds() )
+	# 	else
+	# 		console.log "Loading more polygons..."
+	# 		@mapPolygons = 0
+	# 		@mapPolygonsSession = 0
+	# 		@allPolygons = 0
+	# 		@allPolygonsSession = 0
+	# 		@getPolygons()
 
-	makePolygon: (poly) ->
-		json = 
-			type : "Feature"
-			properties:
-				DN: poly.dn
-				color: poly.color
-				id: poly.id
-				sheet_id: poly.sheet_id
-				status: poly.status
-			geometry:
-				type: "Polygon"
-				coordinates: $.parseJSON(poly.geometry)
-		geo = L.geoJson({features:[]},
-			style: (feature) ->
-				color: '#b00'
-				weight: 4
-				opacity: 1
-				dashArray: '4,12'
-				fill: false
-			onEachFeature: (f,l) ->
-				out = for key, val of f.properties
-					"<strong>#{key}:</strong> #{val}"
-				l.bindPopup(out.join("<br />"))
-		).addData json
+	# makePolygon: (poly) ->
+	# 	json = 
+	# 		type : "Feature"
+	# 		properties:
+	# 			DN: poly.dn
+	# 			color: poly.color
+	# 			id: poly.id
+	# 			sheet_id: poly.sheet_id
+	# 			status: poly.status
+	# 		geometry:
+	# 			type: "Polygon"
+	# 			coordinates: $.parseJSON(poly.geometry)
+	# 	geo = L.geoJson({features:[]},
+	# 		style: (feature) ->
+	# 			color: '#b00'
+	# 			weight: 4
+	# 			opacity: 1
+	# 			dashArray: '4,12'
+	# 			fill: false
+	# 		onEachFeature: (f,l) ->
+	# 			out = for key, val of f.properties
+	# 				"<strong>#{key}:</strong> #{val}"
+	# 			l.bindPopup(out.join("<br />"))
+	# 			l.on 'click', ()->
+	# 				console.log @
+	# 	).addData json
 
 	onMapClick: (e) =>
 		@popup
