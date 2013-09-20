@@ -18,13 +18,25 @@ class Progress
 		window.map = @
 
 	getPolygons: () =>
-		progress = @
+		p = @
 		no_color = '#AF2228'
 		yes_color = '#609846'
 		fix_color = '#FFB92D'
 		$.getJSON('/fixer/sessionProgress.json', (data) ->
 			# console.log(data);
+			m = p.map
 			markers = new L.MarkerClusterGroup
+				iconCreateFunction: (c) ->
+					count = c.getChildCount()
+					c = 'cluster-large'
+					if count < 10
+						c = 'cluster-small'
+					else if count < 30
+						c = 'cluster-medium'
+					new L.DivIcon
+						html: count
+						className: c
+						iconSize: L.point(30, 30)
 				polygonOptions:
 					stroke: false
 			
@@ -53,7 +65,7 @@ class Progress
 					fillOpacity: 0.7
 					stroke: false
 				onEachFeature: (f,l) ->
-					progress.addMarker markers, f, yes_icon
+					p.addMarker markers, f, yes_icon
 					out = for key, val of f.properties
 						"<strong>#{key}:</strong> #{val}"
 					l.bindPopup(out.join("<br />"))
@@ -65,7 +77,7 @@ class Progress
 					fillOpacity: 0.7
 					stroke: false
 				onEachFeature: (f,l) ->
-					progress.addMarker markers, f, no_icon
+					p.addMarker markers, f, no_icon
 					out = for key, val of f.properties
 						"<strong>#{key}:</strong> #{val}"
 					l.bindPopup(out.join("<br />"))
@@ -77,22 +89,22 @@ class Progress
 					fillOpacity: 0.7
 					stroke: false
 				onEachFeature: (f,l) ->
-					progress.addMarker markers, f, fix_icon
+					p.addMarker markers, f, fix_icon
 					out = for key, val of f.properties
 						"<strong>#{key}:</strong> #{val}"
 					l.bindPopup(out.join("<br />"))
 			)
-			yes_json.addTo(progress.map)
-			no_json.addTo(progress.map)
-			fix_json.addTo(progress.map)
+			yes_json.addTo(m)
+			no_json.addTo(m)
+			fix_json.addTo(m)
 
-			progress.map.addLayer(markers)
+			m.addLayer(markers)
 			
 			bounds = yes_json.getBounds()
-			.extend(no_json.getBounds())
-			.extend(fix_json.getBounds())
+			bounds.extend(no_json.getBounds())
+			bounds.extend(fix_json.getBounds())
 
-			progress.map.fitBounds(bounds)
+			m.layer.zoomToBounds()#.fitBounds(bounds)
 		)
 	
 	addMarker: (markers, data, icon) ->

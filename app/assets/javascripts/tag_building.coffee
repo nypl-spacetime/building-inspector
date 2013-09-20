@@ -114,12 +114,24 @@ class TagBuilding
 		tagger = @
 		$.getJSON('/fixer/map.json', (data) ->
 			# console.log(data);
+			data.poly = tagger.shufflePolygons(data.poly)
 			tagger.loadedData = data
 			tagger.polyData = data.poly
 			tagger.updateScore()
 			tagger.showNextPolygon()
 		)
 	
+	shufflePolygons: (a) ->
+		# from: http://coffeescriptcookbook.com/chapters/arrays/shuffling-array-elements
+		# From the end of the list to the beginning, pick element `i`.
+		for i in [a.length-1..1]
+			# Choose random element `j` to the front of `i` to swap with.
+			j = Math.floor Math.random() * (i + 1)
+			# Swap `j` with `i`, using destructured assignment
+			[a[i], a[j]] = [a[j], a[i]]
+		# Return the shuffled array.
+		a
+
 	submitYesFlag: () =>
 		@submitFlag("yes")
 
