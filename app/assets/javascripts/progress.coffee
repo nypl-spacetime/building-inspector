@@ -23,8 +23,11 @@ class Progress
 		yes_color = '#609846'
 		fix_color = '#FFB92D'
 		$.getJSON('/fixer/sessionProgress.json', (data) ->
-			# console.log(data);
+			# console.log(data)
+			return if data.fix_poly.features.length==0 && data.no_poly.features.length==0 && data.yes_poly.features.length==0
 			m = p.map
+
+			# marker clustering layer
 			markers = new L.MarkerClusterGroup
 				iconCreateFunction: (c) ->
 					count = c.getChildCount()
@@ -40,6 +43,7 @@ class Progress
 				polygonOptions:
 					stroke: false
 			
+			# marker icons
 			yes_icon = L.icon
 				iconUrl: '/assets/images/marker-icon-yes.png'
 				iconRetinaUrl: '/assets/images/marker-icon-yes-2x.png'
@@ -94,17 +98,24 @@ class Progress
 						"<strong>#{key}:</strong> #{val}"
 					l.bindPopup(out.join("<br />"))
 			)
-			yes_json.addTo(m)
-			no_json.addTo(m)
-			fix_json.addTo(m)
+
+			bounds = new L.LatLngBounds(new L.LatLng(40.712, -74.227))
+
+			if data.yes_poly.features.length>0
+				yes_json.addTo(m)
+				bounds.extend(yes_json.getBounds())
+
+			if data.no_poly.features.length>0
+				no_json.addTo(m)
+				bounds.extend(no_json.getBounds())
+
+			if data.fix_poly.features.length>0
+				fix_json.addTo(m)
+				bounds.extend(fix_json.getBounds())
 
 			m.addLayer(markers)
 			
-			bounds = yes_json.getBounds()
-			bounds.extend(no_json.getBounds())
-			bounds.extend(fix_json.getBounds())
-
-			m.layer.zoomToBounds()#.fitBounds(bounds)
+			m.fitBounds(bounds)
 		)
 	
 	addMarker: (markers, data, icon) ->
