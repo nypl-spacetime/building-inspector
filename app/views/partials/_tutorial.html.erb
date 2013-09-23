@@ -1,13 +1,15 @@
 	<div id="map-tutorial" class="slideshow swipeshow">
 		<ul class="slides">
 			<li class="slide">
-				<p>This is some introductory text.
-				This text should introduce:</p>
+				<p>Here's how this works.</p>
 
-				<h2>The name of the Project</h2>
+				<p>We'll show you a computer-generated building outline laid over a historical city map, along with 3 buttons:</p>
+				<p>YES: for when the outline fits the building footprint perfectly (nice work, Computer!)<br />
+				FIX: for when the outline matches a building footprint, but needs correcting<br />
+				NO: for when the outline is not around a building at all (silly Computer)</p>
 
-				<p>And should say a few more things after that. Maybe a map too:</p>
-				<%= image_tag "tutorial-intro.png" %>
+
+				<p>Let's walk through a few examples…</p>
 				<p>SWIPE TO CONTINUE &#x2192;</p>
 			</li>
 			<li class="slide">
@@ -17,7 +19,7 @@
 					<a class="button">FIX</a>
 					<a class="button green">YES</a>
 				</div>
-				<p>This is a building with a correct polygon.</p>
+				<p>This outline fits the building perfectly. Hit YES.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial2.png" %>
@@ -26,7 +28,7 @@
 					<a class="button yellow">FIX</a>
 					<a class="button">YES</a>
 				</div>
-				<p>This polygon does not completely enclose the building. It needs fixing.</p>
+				<p>This outline does not entirely enclose the building. Hit FIX.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial3.png" %>
@@ -35,7 +37,7 @@
 					<a class="button">FIX</a>
 					<a class="button">YES</a>
 				</div>
-				<p>This is not a building. It is the space between buildings. This is not a correct polygon.</p>
+				<p>This outline does not fit at a building at all, but rather the space between buildings. Hit NO.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial5.png" %>
@@ -44,7 +46,7 @@
 					<a class="button yellow">FIX</a>
 					<a class="button">YES</a>
 				</div>
-				<p>Some polygons may be ambiguous. We trust your instinct.</p>
+				<p>Sometimes the computer is just a little bit off (e.g. here it missed a skylight). Hit FIX and we'll train it to recognize these in the future.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial7.png" %>
@@ -53,7 +55,7 @@
 					<a class="button">FIX</a>
 					<a class="button green">YES</a>
 				</div>
-				<p>Others have an odd shape. Notice how the mid line does not completely separate the two spaces.</p>
+				<p>Some buildings have odd shapes. When in doubt, defer to the original map. (e.g. here, the broken line indicates a single, connected building).</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial4.png" %>
@@ -62,7 +64,7 @@
 					<a class="button">FIX</a>
 					<a class="button green">YES</a>
 				</div>
-				<p>Some buildings have more than one color. This is fine as long as the polygon encloses the right shape.</p>
+				<p>Some buildings are multi-colored. That's fine, as long as the outline covers the overall footprint.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial6.png" %>
@@ -71,7 +73,7 @@
 					<a class="button yellow">FIX</a>
 					<a class="button">YES</a>
 				</div>
-				<p>If the polygon encloses more than one building, mark it to fix.</p>
+				<p>Sometimes the outline will cover more than one building. That's a fixer.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial8.png" %>
@@ -80,11 +82,12 @@
 					<a class="button">FIX</a>
 					<a class="button">YES</a>
 				</div>
-				<p>Others are just plain wrong. This is definitely an error.</p>
+				<p>Sometimes the machine is way off. Laugh at the poor computer and move on.</p>
 			</li>
 			<li class="slide">
 				<div class="overlay">
-					<p>And this is where we say goodbye!</p>
+					<p>Now you're ready to begin checking buildings! You can always refer to this tutorial again by hitting the HELP button.</p>
+					<p>Have fun! And thanks for helping The Library.</p>
 					<a href="javascript:;" id="link-exit-tutorial" class="button green centered">START</a>
 				</div>
 			</li>
