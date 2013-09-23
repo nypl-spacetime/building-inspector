@@ -1,0 +1,76 @@
+#main-container {
+	width: 100%;
+	height: 100%;
+	position: relative;
+
+	@include clearfix;
+
+	@media screen and (min-width: $desktopwidth) {
+		width: $desktopwidth;
+		height: 540px;
+		margin: 0 auto;
+	}
+}
+
+#score {
+	position: absolute;
+	z-index: 111;
+	top: 5px;
+	left: 5px;
+	font-size: 30px;
+	padding: 5px;
+	background: $grayLightest;
+
+	@include rounded-corners(5px);
+
+	a {
+		color: $orange;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
+	.progress {
+		position: relative;
+		font-size: 18px;
+		background: $grayLightest;
+		margin: 10px;
+		text-transform: uppercase;
+	}
+
+	.percent {
+		position: absolute;
+		left: 5px;
+		top: -3px;
+		color: $grayDarkest;
+	}
+
+	.bar {
+		height: 20px;
+		width: 0%;
+
+		&.level {
+			background: $levelcolor;
+		}
+
+		&.map {
+			background: $mapcolor;
+		}
+	}
+}
+
+#map-container {
+	position: relative;
+	height: 100%;
+
+	@media screen and (min-width: $desktopwidth) {
+		height: 320px;
+	}
+}
+
+#map {
+	width: 100%;
+	height: 100%;
+}
+
