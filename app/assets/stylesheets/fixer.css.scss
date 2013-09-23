@@ -31,17 +31,21 @@
 }
 
 #map-tutorial {
-	width: 95%;
-	height: 95%;
+	width: 100%;
+	height: 100%;
 	position: relative;
 	// left: 140px;
-	top: 2%;
+	// top: 2%;
 	z-index: 1;
 	background-color: $gray;
-	@include box-shadow(0, 0, 15px);
+	// @include box-shadow(0, 0, 15px);
 
 	.slides {
 		// height: 540px;
+
+		.slide {
+			padding-top: 10px;
+		}
 
 		p, h2 {
 			text-align: center;
@@ -49,6 +53,7 @@
 			margin-left: 20px;
 			margin-right: 20px;
 			margin-top: 0;
+			margin: 0 20px 10px;
 		}
 
 		img {
