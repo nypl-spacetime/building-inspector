@@ -6,8 +6,7 @@ namespace :data_import do
 		bbox = ENV['bbox']
 
 		if ENV['force']==nil
-			puts "This process was not forced (required due to destructive nature)"
-			return
+			abort "This process was not forced (required due to destructive nature)"
 		end
 
 		process_file(id, bbox)
@@ -16,23 +15,20 @@ namespace :data_import do
 	desc "Import GeoJSON sheet files based on config file"
 	task :ingest_bulk => :environment do
 		if ENV['force']==nil
-			puts "This process was not forced (required due to destructive nature)"
-			return
+			abort "This process was not forced (required due to destructive nature)"
 		end
 
 		file = "public/files/config-ingest.json"
 
 		if not File.exists?(file)
-			puts "Config file #{file} not found."
-			return
+			abort "Config file #{file} not found."
 		end
 		
 		str = IO.read(file)
 		json = JSON.parse(str)
 		
 		if json.count == 0
-			puts "Config #{file} has no sheets."
-			return
+			abort "Config #{file} has no sheets."
 		end
 		
 		json.each do |f|
