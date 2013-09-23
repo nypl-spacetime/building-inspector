@@ -20,16 +20,9 @@
 	font-size: 30px;
 	padding: 5px;
 	background: $grayLightest;
+	color: $orange;
 
 	@include rounded-corners(5px);
-
-	a {
-		color: $orange;
-
-		&:hover {
-			text-decoration: none;
-		}
-	}
 
 	.progress {
 		position: relative;

@@ -10,6 +10,9 @@ class Progress
 			dragging: true
 		)
 
+		$("#score .total").on 'click', () ->
+			location.href = "/fixer/building"
+
 		@map.on('load', @getPolygons)
 
 		# @map.on('click', @onMapClick)
@@ -31,6 +34,9 @@ class Progress
 
 			# marker clustering layer
 			markers = new L.MarkerClusterGroup
+				singleMarkerMode: true
+				spiderfyDistanceMultiplier: 2
+				disableClusteringAtZoom: 19
 				iconCreateFunction: (c) ->
 					count = c.getChildCount()
 					c = 'cluster-large'
@@ -51,23 +57,23 @@ class Progress
 				m.setZoom 20
 
 			# marker icons
-			yes_icon = L.icon
-				iconUrl: '/assets/images/marker-icon-yes.png'
-				iconRetinaUrl: '/assets/images/marker-icon-yes-2x.png'
-				iconSize: [25, 41]
-				iconAnchor: [12, 41]
+			# yes_icon = L.icon
+			# 	iconUrl: '/assets/images/marker-icon-yes.png'
+			# 	iconRetinaUrl: '/assets/images/marker-icon-yes-2x.png'
+			# 	iconSize: [25, 41]
+			# 	iconAnchor: [12, 41]
 
-			no_icon = L.icon
-				iconUrl: '/assets/images/marker-icon-no.png'
-				iconRetinaUrl: '/assets/images/marker-icon-no-2x.png'
-				iconSize: [25, 41]
-				iconAnchor: [12, 41]
+			# no_icon = L.icon
+			# 	iconUrl: '/assets/images/marker-icon-no.png'
+			# 	iconRetinaUrl: '/assets/images/marker-icon-no-2x.png'
+			# 	iconSize: [25, 41]
+			# 	iconAnchor: [12, 41]
 			
-			fix_icon = L.icon
-				iconUrl: '/assets/images/marker-icon-fix.png'
-				iconRetinaUrl: '/assets/images/marker-icon-fix-2x.png'
-				iconSize: [25, 41]
-				iconAnchor: [12, 41]
+			# fix_icon = L.icon
+			# 	iconUrl: '/assets/images/marker-icon-fix.png'
+			# 	iconRetinaUrl: '/assets/images/marker-icon-fix-2x.png'
+			# 	iconSize: [25, 41]
+			# 	iconAnchor: [12, 41]
 			
 			yes_json = L.geoJson(data.yes_poly,
 				style: (feature) ->
@@ -76,7 +82,7 @@ class Progress
 					fillOpacity: 0.7
 					stroke: false
 				onEachFeature: (f,l) ->
-					p.addMarker markers, f, yes_icon
+					p.addMarker markers, f
 					# out = for key, val of f.properties
 					# 	"<strong>#{key}:</strong> #{val}"
 					# l.bindPopup(out.join("<br />"))
@@ -90,7 +96,7 @@ class Progress
 					fillOpacity: 0.7
 					stroke: false
 				onEachFeature: (f,l) ->
-					p.addMarker markers, f, no_icon
+					p.addMarker markers, f
 					# out = for key, val of f.properties
 					# 	"<strong>#{key}:</strong> #{val}"
 					# l.bindPopup(out.join("<br />"))
@@ -104,7 +110,7 @@ class Progress
 					fillOpacity: 0.7
 					stroke: false
 				onEachFeature: (f,l) ->
-					p.addMarker markers, f, fix_icon
+					p.addMarker markers, f
 					# out = for key, val of f.properties
 					# 	"<strong>#{key}:</strong> #{val}"
 					# l.bindPopup(out.join("<br />"))
@@ -131,11 +137,11 @@ class Progress
 			m.fitBounds(bounds)
 		)
 	
-	addMarker: (markers, data, icon) ->
+	addMarker: (markers, data) ->
 		latlng = L.geoJson(data).getBounds().getCenter()#new L.LatLng(data.geometry.coordinates[0][0][1],data.geometry.coordinates[0][0][0])
 		# console.log latlng
-		markers.addLayer new L.Marker latlng,
-			icon: icon
+		markers.addLayer new L.Marker latlng
+			# icon: icon
 		markers
 
 	onMapClick: (e) =>

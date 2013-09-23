@@ -2,15 +2,38 @@
 		<ul class="slides">
 			<li class="slide">
 				<p>Here's how this works.</p>
-
 				<p>We'll show you a computer-generated building outline laid over a historical city map, along with 3 buttons:</p>
-				<p>YES: for when the outline fits the building footprint perfectly (nice work, Computer!)<br />
-				FIX: for when the outline matches a building footprint, but needs correcting<br />
-				NO: for when the outline is not around a building at all (silly Computer)</p>
-
-
-				<p>Let's walk through a few examples…</p>
+				<div class="wrapper">
+					<a class="button red">NO</a>
+					<a class="button yellow">FIX</a>
+					<a class="button green">YES</a>
+				</div>
 				<p>SWIPE TO CONTINUE &#x2192;</p>
+			</li>
+			<li class="slide">
+				<p>YES: for when the outline fits the building footprint perfectly (nice work, Computer!)</p>
+				<div class="wrapper">
+					<a class="button">NO</a>
+					<a class="button">FIX</a>
+					<a class="button green">YES</a>
+				</div>
+			</li>
+			<li class="slide">
+				<p>FIX: for when the outline matches a building footprint, but needs correcting</p>
+				<div class="wrapper">
+					<a class="button">NO</a>
+					<a class="button yellow">FIX</a>
+					<a class="button">YES</a>
+				</div>
+			</li>
+			<li class="slide">
+				<p>NO: for when the outline is not around a building at all (silly Computer)</p>
+				<div class="wrapper">
+					<a class="button red">NO</a>
+					<a class="button">FIX</a>
+					<a class="button">YES</a>
+				</div>
+				<p>Let's walk through a few examples…</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial1.png" %>

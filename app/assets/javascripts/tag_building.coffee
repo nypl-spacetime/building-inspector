@@ -34,6 +34,9 @@ class TagBuilding
 		$("#no-button").on("click", @submitNoFlag)
 		$("#fix-button").on("click", @submitFixFlag)
 
+		$("#score .total").on 'click', () ->
+			location.href = "/fixer/progress"
+
 		# @map.on('click', @onMapClick)
 
 		window.map = @
@@ -71,7 +74,7 @@ class TagBuilding
 
 		# console.log "level:", level, mapScore
 		
-		$("#score .total a").text(@allPolygonsSession)
+		$("#score .total").text(@allPolygonsSession)
 
 		levelDOM = $("#level-bar")
 		levelDOM.find(".percent").text("Level: " + @level)
