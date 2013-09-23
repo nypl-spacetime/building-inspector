@@ -2,6 +2,7 @@
 @import "button-mixins";
 @import "compass/utilities/general/clearfix";
 @import "variables";
+@import "score";
 
 
 #link-help {
@@ -26,20 +27,6 @@
 
 	&:hover {
 		text-decoration: none;
-	}
-}
-
-#main-container {
-	width: 100%;
-	height: 100%;
-	position: relative;
-
-	@include clearfix;
-
-	@media screen and (min-width: $desktopwidth) {
-		width: $desktopwidth;
-		height: 540px;
-		margin: 10px auto;
 	}
 }
 
@@ -80,87 +67,19 @@
 	}
 }
 
+#loader {
+	width: 100%;
+	height: 100%;
+	background: $white;
+	font-size: 30px;
+	line-height: 120px;
+	z-index: 131;
+	position: absolute;
+}
+
 #link-exit-tutorial {
 	font-size: 32px;
 	width: 200px;
-}
-
-#score {
-	position: absolute;
-	z-index: 111;
-	top: 5px;
-	left: 5px;
-
-	a {
-		font-size: 30px;
-		color: $orange;
-
-		&:hover {
-			text-decoration: none;
-		}
-	}
-	// bottom: 120px;
-	// width: 100%;
-
-	// @media screen and (min-width: $desktopwidth) {
-	// 	bottom: 220px;
-	// }
-
-	.level-animation {
-		// position: absolute;
-		// left: 165px;
-		// top: 0px;
-		// width: 300px;
-		font-size: 60px;
-		z-index: 112;
-		color: red;
-		text-align: center;
-		text-transform: uppercase;
-		margin-bottom: 40px;
-	}
-
-	.progress {
-		position: relative;
-		// width: 160px;
-		font-size: 18px;
-		background: $grayLightest;
-		margin: 10px;
-		text-transform: uppercase;
-	}
-
-	.percent {
-		position: absolute;
-		left: 5px;
-		top: -3px;
-		color: $grayDarkest;
-	}
-
-	.bar {
-		height: 20px;
-		width: 0%;
-
-		&.level {
-			background: $levelcolor;
-		}
-
-		&.map {
-			background: $mapcolor;
-		}
-	}
-}
-
-#map-container {
-	position: relative;
-	height: 100%;
-
-	@media screen and (min-width: $desktopwidth) {
-		height: 320px;
-	}
-}
-
-#map {
-	width: 100%;
-	height: 100%;
 }
 
 #buttons, .slide {

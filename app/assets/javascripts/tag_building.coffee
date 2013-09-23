@@ -87,7 +87,7 @@ class TagBuilding
 		.show().fadeOut(1000)
 
 	invokeTutorial: () =>
-		$("#map-tutorial").unswipeshow
+		$("#map-tutorial").unswipeshow()
 		$("#map-tutorial").show()
 		$("#map-container").hide()
 		$("#score").hide()
@@ -114,6 +114,7 @@ class TagBuilding
 		tagger = @
 		$.getJSON('/fixer/map.json', (data) ->
 			# console.log(data);
+			$("#loader").remove()
 			data.poly = tagger.shufflePolygons(data.poly)
 			tagger.loadedData = data
 			tagger.polyData = data.poly

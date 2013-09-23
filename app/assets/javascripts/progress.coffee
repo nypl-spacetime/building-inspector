@@ -12,7 +12,6 @@ class Progress
 
 		@map.on('load', @getPolygons)
 
-
 		# @map.on('click', @onMapClick)
 
 		window.map = @
@@ -25,6 +24,9 @@ class Progress
 		$.getJSON('/fixer/sessionProgress.json', (data) ->
 			# console.log(data)
 			return if data.fix_poly.features.length==0 && data.no_poly.features.length==0 && data.yes_poly.features.length==0
+
+			$("#score .total").text(data.all_polygons_session)
+
 			m = p.map
 
 			# marker clustering layer
@@ -135,54 +137,6 @@ class Progress
 		markers.addLayer new L.Marker latlng,
 			icon: icon
 		markers
-
-	# showPolygon: () =>
-	# 	# console.log @polyData
-	# 	@currentIndex++
-	# 	@map.removeLayer(@geo)
-	# 	if @currentIndex < @polyData.length
-	# 		$("#buttons").show()
-	# 		@currentPolygon = @polyData[@currentIndex]
-	# 		@geo = @makePolygon(@currentPolygon)
-	# 		# console.log @currentPolygon #, @currentGeo
-	# 		# console.log @geo
-	# 		# center on the polygon
-	# 		@geo.addTo(@map)
-	# 		@map.fitBounds( @geo.getBounds() )
-	# 	else
-	# 		console.log "Loading more polygons..."
-	# 		@mapPolygons = 0
-	# 		@mapPolygonsSession = 0
-	# 		@allPolygons = 0
-	# 		@allPolygonsSession = 0
-	# 		@getPolygons()
-
-	# makePolygon: (poly) ->
-	# 	json = 
-	# 		type : "Feature"
-	# 		properties:
-	# 			DN: poly.dn
-	# 			color: poly.color
-	# 			id: poly.id
-	# 			sheet_id: poly.sheet_id
-	# 			status: poly.status
-	# 		geometry:
-	# 			type: "Polygon"
-	# 			coordinates: $.parseJSON(poly.geometry)
-	# 	geo = L.geoJson({features:[]},
-	# 		style: (feature) ->
-	# 			color: '#b00'
-	# 			weight: 4
-	# 			opacity: 1
-	# 			dashArray: '4,12'
-	# 			fill: false
-	# 		onEachFeature: (f,l) ->
-	# 			out = for key, val of f.properties
-	# 				"<strong>#{key}:</strong> #{val}"
-	# 			l.bindPopup(out.join("<br />"))
-	# 			l.on 'click', ()->
-	# 				console.log @
-	# 	).addData json
 
 	onMapClick: (e) =>
 		@popup

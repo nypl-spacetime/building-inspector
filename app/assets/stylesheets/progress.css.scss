@@ -2,35 +2,8 @@
 @import "button-mixins";
 @import "compass/utilities/general/clearfix";
 @import "variables";
+@import "score";
 
-
-#main-container {
-	width: 100%;
-	height: 100%;
-	position: relative;
-
-	@include clearfix;
-
-	@media screen and (min-width: $desktopwidth) {
-		width: $desktopwidth;
-		height: 540px;
-		margin: 10px auto;
-	}
-}
-
-#map-container {
-	position: relative;
-	height: 100%;
-
-	@media screen and (min-width: $desktopwidth) {
-		height: 320px;
-	}
-}
-
-#map {
-	width: 100%;
-	height: 100%;
-}
 
 .cluster-small, .cluster-medium, .cluster-large {
 	width: 30px;
@@ -41,7 +14,7 @@
 	font-size: 16px;
 	line-height: 30px;
 	border: 2px solid $grayLighter;
-	@include border-radius(15px);
+	@include rounded-corners(15px);
 }
 
 .cluster-medium {

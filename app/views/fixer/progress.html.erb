@@ -11,8 +11,13 @@
 	<%= javascript_include_tag "leaflet.markercluster" %>
 <% end %>
 
+
 <div id="main-container">
-	<div id="map-container">
-		<div id="map"></div>
+	<%= render :partial => "partials/score" %>
+	
+	<div id="main-container">
+		<div id="map-container">
+			<div id="map"></div>
+		</div>
 	</div>
 </div>
