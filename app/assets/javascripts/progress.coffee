@@ -5,10 +5,14 @@ class Progress
 			zoomControl: false
 			animate: true
 			attributionControl: false
-			minZoom: 8
+			minZoom: 12
 			maxZoom: 20
 			dragging: true
+			maxBounds: new L.LatLngBounds(new L.LatLng(40.791289,-74.040598), new L.LatLng(40.683883,-73.942495))
 		)
+	# var NE = new L.LatLng(41.0053,-74.4234),
+ #    SW = new L.LatLng(40.3984,-73.5212),
+ #    NYCbounds = new L.LatLngBounds(SW, NE);
 
 		$("#score .total").on 'click', () ->
 			location.href = "/fixer/building"
