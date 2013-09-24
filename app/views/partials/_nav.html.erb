@@ -1,6 +1,6 @@
 <div id="top-nav">
-	<% if @current_page != 'homepage' %><%= link_to "Home", "/" %> &middot; <% end %>
+	<%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", :id => "link-nypl" %>
+	<% if @current_page != 'homepage' %><%= link_to "Home", "/", :id => "link-home" %><% end %>
 	<!-- <%= link_to "Polygonzo!", "/fixer/building" %> &middot; -->
-	<%= link_to "About", "/general/about" %> &middot;
-	<%= link_to "Help", "/general/help" %>
+	<%= link_to "Tutorial", "javascript:;", :id => "link-help" %>
 </div>

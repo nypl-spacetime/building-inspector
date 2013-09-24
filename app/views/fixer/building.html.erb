@@ -11,8 +11,6 @@
 	<%= javascript_include_tag "tag_building", {:id => "tagbuildingjs", "data-session" => "#{@isNew}"} %>
 <% end %>
 
-<%= link_to "Tutorial", "javascript:;", :id => "link-help" %>
-
 <div id="main-container">
 	<div id="loader">LOADING</div>
 	<%= render :partial => "partials/tutorial" %>

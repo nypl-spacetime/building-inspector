@@ -2,6 +2,7 @@
 @import "button-mixins";
 @import "compass/utilities/general/clearfix";
 @import "variables";
+@import "compass/css3/border-radius";
 
 #main-container {
 	width: 100%;
@@ -20,21 +21,21 @@
 #score {
 	position: absolute;
 	z-index: 111;
-	top: 5px;
-	left: 5px;
+	top: 0;
+	left: 0;
 	font-size: 30px;
-	padding: 5px;
-	background: $grayLightest;
+	padding: 5px 10px;
+	background: $white;
 	color: $orange;
 	cursor: pointer;
 
-	@include rounded-corners(5px);
+	@include border-bottom-right-radius(5px);
 
 	.progress {
 		position: relative;
 		font-size: 18px;
-		background: $grayLightest;
-		margin: 10px;
+		background: $grayDarkest;
+		margin: 5px 0;
 		text-transform: uppercase;
 	}
 
@@ -42,19 +43,19 @@
 		position: absolute;
 		left: 5px;
 		top: -3px;
-		color: $grayDarkest;
+		color: $orange;
 	}
 
 	.bar {
-		height: 20px;
+		height: 3px;
 		width: 0%;
 
 		&.level {
-			background: $levelcolor;
+			background: $orange;
 		}
 
 		&.map {
-			background: $mapcolor;
+			background: $orange;
 		}
 	}
 }

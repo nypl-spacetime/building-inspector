@@ -8,11 +8,8 @@ class Progress
 			minZoom: 12
 			maxZoom: 20
 			dragging: true
-			maxBounds: new L.LatLngBounds(new L.LatLng(40.791289,-74.040598), new L.LatLng(40.683883,-73.942495))
+			maxBounds: new L.LatLngBounds(new L.LatLng(40.65563874006115,-74.13093566894531), new L.LatLng(40.81640757520087,-73.83087158203125))
 		)
-	# var NE = new L.LatLng(41.0053,-74.4234),
- #    SW = new L.LatLng(40.3984,-73.5212),
- #    NYCbounds = new L.LatLngBounds(SW, NE);
 
 		$("#score .total").on 'click', () ->
 			location.href = "/fixer/building"
@@ -33,6 +30,8 @@ class Progress
 			return if data.fix_poly.features.length==0 && data.no_poly.features.length==0 && data.yes_poly.features.length==0
 
 			$("#score .total").text(data.all_polygons_session)
+
+			p.updateScore(data.all_polygons_session, data.all_polygons)
 
 			m = p.map
 
@@ -141,6 +140,12 @@ class Progress
 			m.fitBounds(bounds)
 		)
 	
+	updateScore: (current, total) =>
+		mapScore = if total > 0 then Math.round(current*100/total) else 0
+
+		mapDOM = $("#map-bar")
+		mapDOM.find(".bar").css("width", mapScore + "%")
+
 	addMarker: (markers, data) ->
 		latlng = L.geoJson(data).getBounds().getCenter()#new L.LatLng(data.geometry.coordinates[0][0][1],data.geometry.coordinates[0][0][0])
 		# console.log latlng

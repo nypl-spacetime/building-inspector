@@ -36,14 +36,6 @@ p {
 	}
 }
 
-#nypl-header {
-	display: none;
-
-	@media screen and (min-width: $desktopwidth) {
-		display: block;
-	}
-}
-
 #top-nav {
 	@include clearfix;
 
@@ -61,7 +53,65 @@ p {
 		width: 100%;
 		z-index: 110;
 	}
+
+	#link-nypl {
+		display: block;
+		height: 41px;
+		overflow: hidden;
+		width: 41px;
+		line-height: 41px;
+
+		&:before {
+			content: attr(data-icon);
+			font-family:$iconfont;
+			color: $grayDarkest;
+			// background: $grayDarkest;
+			// position: absolute;
+			-webkit-font-smoothing: antialiased;
+			content: 'N';
+			font-size: 40px;
+			// top: 12px;
+			// left: -2px;
+		}
+
+		&:hover {
+			text-decoration: none;
+		}
+
+		span {
+			display: none;
+		}
+	}
+
+	#link-help {
+		display: block;
+		height: 30px;
+		width: 100px;
+		text-align: center;
+		text-transform: uppercase;
+		background-color: $grayDarker;
+		color: $grayLight;
+		margin: 10px auto;
+		padding-top: 4px;
+		
+		@include rounded-corners(5px);
+
+		@media screen and (max-width: $desktopwidth) {
+			position: absolute;
+			right: 10px;
+			top: 25px;
+			z-index: 111;
+		}
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
 }
+
+
+
 
 #main-container {
 	width: $generalwidth;

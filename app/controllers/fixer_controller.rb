@@ -35,6 +35,7 @@ class FixerController < ApplicationController
 			end
 		end
 		@progress = {}
+		@progress[:all_polygons] = Polygon.count
 		@progress[:all_polygons_session] = Flag.flags_for_session(session)
 		@progress[:fix_poly] = { :type => "FeatureCollection", :features => fix_poly }
 		@progress[:no_poly] = { :type => "FeatureCollection", :features => no_poly }
