@@ -5,9 +5,7 @@ class FixerController < ApplicationController
 	def building
 		@isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
 		cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
-		if cookies[:session] == nil
-			cookies[:session] = { :value => request.session_options[:id], :expires => 365.days.from_now }
-		end			
+		session = getSession()
 	end
 
 	def progress
@@ -17,11 +15,7 @@ class FixerController < ApplicationController
 	def sessionProgress
 		# returns a GeoJSON object with the flags the session has sent so far
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
-		if cookies[:session] != nil
-			session = cookies[:session]
-		else
-			session = request.session_options[:id]
-		end
+		session = getSession()
 		all_polygons = Flag.progress_for_session(session)
 		yes_poly = []
 		no_poly = []
@@ -45,15 +39,12 @@ class FixerController < ApplicationController
 	end
 
 	def randomMap
-		if cookies[:session] != nil
-			session = cookies[:session]
-		else
-			session = request.session_options[:id]
-		end
+		session = getSession()
 		@map = {}
 		@map[:map] = Sheet.random
 		@map[:poly] = @map[:map].mini(session)
 		@map[:status] = {}
+		@map[:status][:session_id] = session
 		@map[:status][:map_polygons] = @map[:map].polygons.count
 		@map[:status][:map_polygons_session] = @map[:poly].count
 		@map[:status][:all_sheets] = Sheet.count
@@ -63,17 +54,25 @@ class FixerController < ApplicationController
 	end
 
 	def flagPolygon
+		session = getSession()
 		@flag = Flag.new
 		@flag[:is_primary] = true
 		@flag[:polygon_id] = params[:i]
 		@flag[:flag_value] = params[:f]
-		@flag[:session_id] = request.session_options[:id]
+		@flag[:session_id] = session
 		@flag[:flag_type] = "geometry"
 		if @flag.save
 			respond_with( @flag )
 		else
 			respond_with( @flag.errors )
 		end
+	end
+
+	def getSession
+		if cookies[:session] == nil
+			cookies[:session] = { :value => request.session_options[:id], :expires => 365.days.from_now }
+		end
+		cookies[:session]
 	end
 
 	def color
