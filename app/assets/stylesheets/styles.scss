@@ -64,36 +64,36 @@ p {
 	}
 
 	#link-nypl {
-		display: block;
-		height: 31px;
-		overflow: hidden;
-		width: 31px;
-		line-height: 31px;
-		margin: 5px;
 		float: left;
+		margin: 5px;
+		line-height: 31px;
+	}
+}
 
-		&:before {
-			content: attr(data-icon);
-			font-family:$iconfont;
-			color: $grayDarkest;
-			// background: $grayDarkest;
-			// position: absolute;
-			-webkit-font-smoothing: antialiased;
-			content: 'N';
-			font-size: 30px;
-			// top: 12px;
-			// left: -2px;
-		}
+#link-nypl {
+	display: block;
+	height: 31px;
+	overflow: hidden;
+	width: 31px;
+	line-height: 31px;
+	margin: 0 auto;
 
-		&:hover {
-			text-decoration: none;
-		}
-
-		span {
-			display: none;
-		}
+	&:before {
+		content: attr(data-icon);
+		font-family:$iconfont;
+		color: $grayDarkest;
+		-webkit-font-smoothing: antialiased;
+		content: 'N';
+		font-size: 30px;
 	}
 
+	&:hover {
+		text-decoration: none;
+	}
+
+	span {
+		display: none;
+	}
 }
 
 .close {
@@ -106,7 +106,7 @@ p {
 	top: 5px;
 	right: 5px;
 	z-index: 111;
-	
+
 	&:before {
 		content: attr(data-icon);
 		font-family:$iconfont;

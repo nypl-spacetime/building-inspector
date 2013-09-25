@@ -11,6 +11,13 @@
 	<%= javascript_include_tag "tag_building", {:id => "tagbuildingjs", "data-session" => "#{@isNew}"} %>
 <% end %>
 
+<div id="top-nav">
+	<%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", :id => "link-nypl" %>
+	<!-- <%= link_to "Polygonzo!", "/fixer/building" %> &middot; -->
+	<%= link_to "Tutorial", "javascript:;", :id => "link-help" %>
+	<%= link_to "About", "javascript:;", :id => "link-about" %>
+</div>
+
 <div id="main-container">
 	<div id="loader">LOADING</div>
 	<%= render :partial => "partials/tutorial" %>
