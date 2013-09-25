@@ -16,6 +16,7 @@ class TagBuilding
 
 	constructor: () ->
 		$("#map-tutorial").hide()
+		$("#map-about").hide()
 		$("#buttons").hide()
 		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859/859spec.json', 
 			zoomControl: false
@@ -26,9 +27,29 @@ class TagBuilding
 			dragging: false
 		)
 
+		# @map.on('click', @onMapClick)
+
+		window.map = @
+
+		@addEventListeners()
+
+		@tID = window.setTimeout(
+				() ->
+					tagger.invokeTutorial()
+				, 1000
+		) if @tutorialOn
+		# console.log @tutorialOn
+
+	addEventListeners: () =>
+		tagger = @
+
 		@map.on('load', @getPolygons)
 
 		$("#link-help").on("click", @invokeTutorial)
+		$("#link-help-close").on("click", @hideTutorial)
+
+		$("#link-about").on("click", @invokeAbout)
+		$("#link-about-close").on("click", @hideAbout)
 
 		$("#yes-button").on("click", @submitYesFlag)
 		$("#no-button").on("click", @submitNoFlag)
@@ -37,18 +58,12 @@ class TagBuilding
 		$("#score .total").on 'click', () ->
 			location.href = "/fixer/progress"
 
-		# @map.on('click', @onMapClick)
+		$("#link-exit-about").on "click", () ->
+			tagger.hideTutorial()
 
-		window.map = @
+		$("#link-exit-tutorial").on "click", () ->
+			tagger.hideTutorial()
 
-		tagger = @
-
-		@tID = window.setTimeout(
-				() ->
-					tagger.invokeTutorial()
-				, 1000
-		) if @tutorialOn
-		# console.log @tutorialOn
 
 	updateScore: () =>
 		if @mapPolygons == 0 && @allPolygons == 0
@@ -90,29 +105,36 @@ class TagBuilding
 		el.text("Level " + @level + "!")
 		.show().fadeOut(1000)
 
-	invokeTutorial: () =>
-		$("#map-tutorial").unswipeshow()
-		$("#map-tutorial").show()
+	hideOthers: () ->
 		$("#map-container").hide()
 		$("#score").hide()
-		$("#link-help").hide()
 		$("#buttons").hide()
+
+	showOthers: () ->
+		$("#map-container").show()
+		$("#score").show()
+		$("#buttons").show()
+
+	invokeAbout: () =>
+		@hideOthers()
+		$("#map-about").show()
+
+	hideAbout: () =>
+		@showOthers()
+		$("#map-about").hide()
+
+	invokeTutorial: () =>
+		@hideOthers()
+		$("#map-tutorial").unswipeshow()
+		$("#map-tutorial").show()
 		$("#map-tutorial").swipeshow
 			mouse: true
 			autostart: false
 		.goTo 0
 
-		fixer = @
-		$("#link-exit-tutorial").on "click", () ->
-			console.log "hi"
-			fixer.hideTutorial()
-
 	hideTutorial: () =>
+		@showOthers()
 		$("#map-tutorial").hide()
-		$("#score").show()
-		$("#map-container").show()
-		$("#link-help").show()
-		$("#buttons").show()
 
 	getPolygons: () =>
 		tagger = @

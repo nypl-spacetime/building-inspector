@@ -11,7 +11,7 @@
 	position: relative;
 	// left: 140px;
 	// top: 2%;
-	z-index: 1;
+	z-index: 110;
 	background-color: $gray;
 	// @include box-shadow(0, 0, 15px);
 
@@ -60,6 +60,15 @@
 #link-exit-tutorial {
 	font-size: 32px;
 	width: 200px;
+}
+
+#map-about {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	z-index: 110;
+	background-color: $gray;
+	color: $grayLightest;
 }
 
 #buttons, .slide {

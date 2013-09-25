@@ -4,6 +4,15 @@
 @import "variables";
 @import "score";
 
+#score {
+	top: 0;
+}
+
+#link-progress-close {
+	&:before {
+		color: $grayDarkest;
+	}
+}
 
 .cluster-small, .cluster-medium, .cluster-large {
 	width: 30px;

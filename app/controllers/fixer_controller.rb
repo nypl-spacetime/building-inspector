@@ -11,6 +11,7 @@ class FixerController < ApplicationController
 	end
 
 	def progress
+	  	@current_page = "progress"
 	end
 
 	def sessionProgress

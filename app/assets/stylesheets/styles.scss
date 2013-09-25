@@ -41,10 +41,18 @@ p {
 
 	width: $generalwidth;
 	margin: 20px auto;
-	text-align: center;
+	text-align: right;
+	background: $grayLightest;
+	text-transform: uppercase;
 
 	a {
-		color: $blue;
+		color: $grayDark;
+		line-height: 38px;
+		margin-right: 10px;
+	}
+
+	a:hover {
+		text-decoration: none;
 	}
 
 	@media screen and (max-width: $desktopwidth) {
@@ -52,14 +60,17 @@ p {
 		top: 0;
 		width: 100%;
 		z-index: 110;
+		margin: 0;
 	}
 
 	#link-nypl {
 		display: block;
-		height: 41px;
+		height: 31px;
 		overflow: hidden;
-		width: 41px;
-		line-height: 41px;
+		width: 31px;
+		line-height: 31px;
+		margin: 5px;
+		float: left;
 
 		&:before {
 			content: attr(data-icon);
@@ -69,7 +80,7 @@ p {
 			// position: absolute;
 			-webkit-font-smoothing: antialiased;
 			content: 'N';
-			font-size: 40px;
+			font-size: 30px;
 			// top: 12px;
 			// left: -2px;
 		}
@@ -83,33 +94,36 @@ p {
 		}
 	}
 
-	#link-help {
-		display: block;
-		height: 30px;
-		width: 100px;
-		text-align: center;
-		text-transform: uppercase;
-		background-color: $grayDarker;
-		color: $grayLight;
-		margin: 10px auto;
-		padding-top: 4px;
-		
-		@include rounded-corners(5px);
-
-		@media screen and (max-width: $desktopwidth) {
-			position: absolute;
-			right: 10px;
-			top: 25px;
-			z-index: 111;
-		}
-
-		&:hover {
-			text-decoration: none;
-		}
-	}
-
 }
 
+.close {
+	display: block;
+	height: 31px;
+	overflow: hidden;
+	width: 31px;
+	line-height: 31px;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	z-index: 111;
+	
+	&:before {
+		content: attr(data-icon);
+		font-family:$iconfont;
+		color: $grayLightest;
+		-webkit-font-smoothing: antialiased;
+		content: 'x';
+		font-size: 30px;
+	}
+
+	&:hover {
+		text-decoration: none;
+	}
+
+	span {
+		display: none;
+	}
+}
 
 
 

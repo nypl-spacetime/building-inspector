@@ -1,6 +1,8 @@
 class Progress
 
 	constructor: () ->
+		NW = new L.LatLng(40.65563874006115,-74.13093566894531)
+		SE = new L.LatLng(40.81640757520087,-73.83087158203125)
 		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859/859spec.json', 
 			zoomControl: false
 			animate: true
@@ -8,10 +10,13 @@ class Progress
 			minZoom: 12
 			maxZoom: 20
 			dragging: true
-			maxBounds: new L.LatLngBounds(new L.LatLng(40.65563874006115,-74.13093566894531), new L.LatLng(40.81640757520087,-73.83087158203125))
+			maxBounds: new L.LatLngBounds(NW, SE)
 		)
 
 		$("#score .total").on 'click', () ->
+			location.href = "/fixer/building"
+
+		$("#link-progress-close").on 'click', () ->
 			location.href = "/fixer/building"
 
 		@map.on('load', @getPolygons)
