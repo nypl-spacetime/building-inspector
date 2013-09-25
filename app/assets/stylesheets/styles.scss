@@ -136,11 +136,18 @@ p {
 #intro {
 	position: relative;
 	margin: 20px 0;
-	padding: 5px 0 20px;
-	background: lighten($orange, 10%);
+	padding: 5px 0 0;
 
 	h1 {
-		color: darken($orange, 20%);
+		width: 200px;
+		height: 240px;
+		background: asset-url("logo.svg", image) center no-repeat;
+		background-size: 100%;
+		margin: 0 auto;
+
+		span {
+			display: none;
+		}
 	}
 }
 
