@@ -4,6 +4,15 @@
 @import "variables";
 @import "score";
 
+h1 {
+	width: 200px;
+	height: 40px;
+	background-size: 50%;
+	position: absolute;
+	margin: 0 auto;
+	top: 0;
+	left: 0;
+}
 
 #map-tutorial {
 	width: 100%;
@@ -45,6 +54,10 @@
 		bottom: 0;
 		right: 0;
 	}
+
+	.dots {
+		bottom: 0;
+	}
 }
 
 #loader {
@@ -67,8 +80,12 @@
 	height: 100%;
 	position: relative;
 	z-index: 110;
-	background-color: $gray;
-	color: $grayLightest;
+	background-color: $white;
+	color: $grayDarkest;
+
+	.close:before {
+		color: $grayDarkest;
+	}
 }
 
 #buttons, .slide {
@@ -162,4 +179,3 @@
 		}
 	}
 }
-

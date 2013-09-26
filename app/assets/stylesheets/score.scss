@@ -58,6 +58,10 @@
 			background: $orange;
 		}
 	}
+
+	@media screen and (min-width: $desktopwidth) {
+		top: 0;
+	}
 }
 
 #map-container {

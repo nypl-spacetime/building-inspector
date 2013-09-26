@@ -118,9 +118,9 @@
   font-family: $fontFamily;
   src: url('#{$path}#{$fontFilename}.eot');
   src: url('#{$path}#{$fontFilename}.eot?#iefix') format('embedded-opentype'),
+       url('#{$path}#{$fontFilename}.svg##{$fontFilename}') format('svg'),
        url('#{$path}#{$fontFilename}.woff') format('woff'),
-       url('#{$path}#{$fontFilename}.ttf') format('truetype'),
-       url('#{$path}#{$fontFilename}.svg') format('svg');
+       url('#{$path}#{$fontFilename}.ttf') format('truetype');
 }
 @mixin opacity($opacity: 0.5) {
   filter:         alpha(opacity=($opacity * 100));

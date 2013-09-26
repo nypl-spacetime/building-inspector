@@ -109,6 +109,8 @@ class TagBuilding
 		$("#map-container").hide()
 		$("#score").hide()
 		$("#buttons").hide()
+		$("#map-tutorial").hide()
+		$("#map-about").hide()
 
 	showOthers: () ->
 		$("#map-container").show()

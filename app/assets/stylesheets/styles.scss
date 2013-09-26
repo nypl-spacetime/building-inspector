@@ -39,8 +39,8 @@ p {
 #top-nav {
 	@include clearfix;
 
-	width: $generalwidth;
-	margin: 20px auto;
+	width: auto;
+	margin-bottom: 20px;
 	text-align: right;
 	background: $grayLightest;
 	text-transform: uppercase;
@@ -67,16 +67,29 @@ p {
 		float: left;
 		margin: 5px;
 		line-height: 31px;
+		height: 31px;
+		width: 31px;
+		line-height: 31px;
+
+		&:before {
+			font-size: 30px;
+		}
+
+		span {
+			display: none;
+		}
 	}
 }
 
 #link-nypl {
 	display: block;
-	height: 31px;
+	height: 41px;
 	overflow: hidden;
-	width: 31px;
-	line-height: 31px;
-	margin: 0 auto;
+	width: 245px;
+	line-height: 41px;
+	margin: 20px auto 0;
+	text-align: right;
+	color: $grayDarkest;
 
 	&:before {
 		content: attr(data-icon);
@@ -84,15 +97,13 @@ p {
 		color: $grayDarkest;
 		-webkit-font-smoothing: antialiased;
 		content: 'N';
-		font-size: 30px;
+		font-size: 40px;
+		display: block;
+		position: absolute;
 	}
 
 	&:hover {
 		text-decoration: none;
-	}
-
-	span {
-		display: none;
 	}
 }
 
@@ -125,36 +136,42 @@ p {
 	}
 }
 
-
+#logo-background {
+	background: asset-url("logo-building.jpg", image) no-repeat;
+	background-position: -6px -11px;
+}
 
 #main-container {
 	width: $generalwidth;
 	margin: 0 auto;
 	text-align: center;
+
+	@media screen and (max-width: $desktopwidth) {
+		width: auto;
+	}
 }
 
 #intro {
 	position: relative;
-	margin: 20px 0;
-	padding: 5px 0 0;
+	margin: 0 20px;
+}
 
-	h1 {
-		width: 200px;
-		height: 240px;
-		background: asset-url("logo.svg", image) center no-repeat;
-		background-size: 100%;
-		margin: 0 auto;
+h1 {
+	width: 200px;
+	height: 180px;
+	background: asset-url("logo.svg", image) center no-repeat;
+	background-size: 100%;
+	margin-left: 50px;
 
-		span {
-			display: none;
-		}
+	span {
+		display: none;
 	}
 }
 
 #link-try {
 	display: block;
 	width: 150px;
-	margin: 20px auto;
+	margin: 10px auto;
 	padding: 15px 0;
 	font-size: 24px;
 	text-transform: uppercase;
@@ -177,4 +194,8 @@ p {
 	margin: 50px auto 0;
 	padding-bottom: 100px;
 	text-align: center;
+
+	@media screen and (max-width: $desktopwidth) {
+		width: auto;
+	}
 }
