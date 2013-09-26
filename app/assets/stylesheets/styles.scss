@@ -37,8 +37,7 @@ p {
 }
 
 #top-nav {
-	@include clearfix;
-
+	height: 40px;
 	width: auto;
 	margin-bottom: 20px;
 	text-align: right;
@@ -83,7 +82,7 @@ p {
 
 #link-nypl {
 	display: block;
-	height: 41px;
+	height: 40px;
 	overflow: hidden;
 	width: 245px;
 	line-height: 41px;
