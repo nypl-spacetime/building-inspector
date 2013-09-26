@@ -63,8 +63,10 @@ p {
 	}
 
 	#link-nypl {
+		position: static;
 		float: left;
 		margin: 5px;
+		padding: 0;
 		line-height: 31px;
 		height: 31px;
 		width: 31px;
@@ -86,9 +88,13 @@ p {
 	overflow: hidden;
 	width: 245px;
 	line-height: 41px;
-	margin: 20px auto 0;
+	// margin: 0 auto;
 	text-align: right;
 	color: $grayDarkest;
+	position: absolute;
+	right: 0;
+	background: $grayLightest;
+	padding: 5px 10px;
 
 	&:before {
 		content: attr(data-icon);
@@ -136,31 +142,49 @@ p {
 }
 
 #logo-background {
-	background: asset-url("logo-building.jpg", image) no-repeat;
-	background-position: -6px -11px;
+	height: 100%;
+	background: asset-url("logo-building.jpg", image);
+	background-position: -20px -80px;
 }
 
 #main-container {
 	width: $generalwidth;
 	margin: 0 auto;
 	text-align: center;
+	position: relative;
+	overflow: hidden;
 
 	@media screen and (max-width: $desktopwidth) {
 		width: auto;
+		height: 100%;
 	}
 }
 
 #intro {
-	position: relative;
-	margin: 0 20px;
+	position: absolute;
+	left: 200px;
+	top: 110px;
+	width: 130px;
+	text-align: left;
+
+	p {
+		line-height: 1em;
+		margin-top: 5px;
+		padding: 5px;
+		font-size: 14px;
+	}
 }
 
 h1 {
-	width: 200px;
-	height: 180px;
+	width: 181px;
+	height: 176px;
 	background: asset-url("logo.svg", image) center no-repeat;
 	background-size: 100%;
-	margin-left: 50px;
+	position: absolute;
+
+	left: 12px;
+	top: 51px;
+	margin: 0;
 
 	span {
 		display: none;
@@ -169,9 +193,9 @@ h1 {
 
 #link-try {
 	display: block;
-	width: 150px;
-	margin: 10px auto;
-	padding: 15px 0;
+	width: 60px;
+	margin: 0;
+	padding: 10px 12px;
 	font-size: 24px;
 	text-transform: uppercase;
 	text-align: center;
@@ -189,12 +213,15 @@ h1 {
 }
 
 #footer {
-	width: $generalwidth;
-	margin: 50px auto 0;
-	padding-bottom: 100px;
-	text-align: center;
+	width: 245px;
+	padding: 5px 10px;
+	text-align: right;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	background: $grayLightest;
 
-	@media screen and (max-width: $desktopwidth) {
-		width: auto;
+	p {
+		margin: 0;
 	}
 }

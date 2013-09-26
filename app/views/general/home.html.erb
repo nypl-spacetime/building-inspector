@@ -1,19 +1,17 @@
 <% content_for :page_title do %>Building Inspector<% end %>
 
-<%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:id => "link-nypl", :title => "Visit NYPL.org"} %>
-
 <div id="main-container">
+	<div id="logo-background">
+		<%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:id => "link-nypl", :title => "Visit NYPL.org"} %>
 
-    <div id="intro">
-    	<p>Help trace New York City's past!</p>
-    	
-		<div id="logo-background"><h1><span>Building Inspector</span></h1></div>
+		<h1><span>Building Inspector</span></h1>
 
-	    <%= link_to "Try it", "/fixer/building", :id => "link-try" %>
-	    <%= link_to "Tutorial", "/fixer/building?tutorial=true" %>
+	    <div id="intro">
+		    <%= link_to "GO!", "/fixer/building", :id => "link-try" %>
+	    	<p>Help trace New York City's past!</p>
+		    <%# link_to "Tutorial", "/fixer/building?tutorial=true" %>
+	    </div>
 
-	    <p>The New York Public Library is training computers how to recognize building shapes and other information from old city maps. Help clean up the data for use in research, teaching and civic hacking.</p>
-	    <p>Current source: <a href="http://digitalcollections.nypl.org/search/index?filters%5Btitle_uuid_s%5D%5B%5D=Maps%20of%20the%20city%20of%20New%20York.%7C%7C06fd4630-c603-012f-17f8-58d385a7bc34&keywords=&layout=false"> Maps of the City of New York, 1857-62</a>. Surveyed under directions of insurance companies of said city by William Perris, Civil Engineer and Surveyor.</p>
-
-    </div>
+	<%= render :partial => "partials/footer" %>
+	</div>
 </div>
