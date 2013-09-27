@@ -89,17 +89,18 @@ p {
 
 #link-nypl {
 	display: block;
-	height: 40px;
+	height: 22px;
 	overflow: hidden;
-	width: 245px;
-	line-height: 41px;
+	width: auto;
+	line-height: 23px;
 	// margin: 0 auto;
 	text-align: right;
 	color: $grayDarkest;
 	// position: absolute;
-	right: 0;
-	background: $grayLightest;
+	// right: 0;
+	// background: $grayLightest;
 	padding: 5px 10px;
+	font-size: 14px;
 
 	&:before {
 		content: attr(data-icon);
@@ -107,7 +108,7 @@ p {
 		color: $grayDarkest;
 		-webkit-font-smoothing: antialiased;
 		content: 'N'; //N W
-		font-size: 40px;
+		font-size: 22px;
 		display: block;
 		position: absolute;
 	}
@@ -123,7 +124,7 @@ p {
 	overflow: hidden;
 	width: 31px;
 	line-height: 31px;
-	position: absolute;
+	position: fixed;
 	top: 5px;
 	right: 5px;
 	z-index: 111;
@@ -131,7 +132,7 @@ p {
 	&:before {
 		content: attr(data-icon);
 		font-family:$iconfont;
-		color: $grayLightest;
+		color: $grayDarkest;
 		-webkit-font-smoothing: antialiased;
 		content: 'x';
 		font-size: 30px;
@@ -149,7 +150,7 @@ p {
 #logo-background {
 	// height: 100%;
 	background: asset-url("logo-building.jpg", image);
-	background-position: -20px -80px;
+	// background-position: 50px -120px;
 }
 
 #main-container {
@@ -167,10 +168,13 @@ p {
 
 #intro {
 	// position: absolute;
-	left: 200px;
-	top: 110px;
-	width: 130px;
-	text-align: left;
+	// left: 200px;
+	// top: 110px;
+	width: 220px;
+	padding: 10px;
+	// text-align: left;
+	margin: 0 auto;
+	background: rgba(255,255,255,0.65);
 
 	p {
 		line-height: 1em;
@@ -187,9 +191,10 @@ h1 {
 	background-size: 100%;
 	// position: absolute;
 
-	left: 12px;
-	top: 51px;
+	// left: 12px;
+	// top: 51px;
 	margin: 0;
+	margin-left: 83px;
 
 	span {
 		display: none;
@@ -199,7 +204,7 @@ h1 {
 #link-try {
 	display: block;
 	width: 60px;
-	margin: 0;
+	margin: 0 auto 20px;
 	padding: 10px 12px;
 	font-size: 24px;
 	text-transform: uppercase;
@@ -218,13 +223,13 @@ h1 {
 }
 
 #footer {
-	width: 245px;
+	// width: 245px;
 	padding: 5px 10px;
-	text-align: right;
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	background: $grayLightest;
+	// text-align: right;
+	// position: absolute;
+	// bottom: 0;
+	// right: 0;
+	// background: $grayLightest;
 
 	p {
 		margin: 0;

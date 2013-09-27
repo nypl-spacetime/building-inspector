@@ -1,17 +1,25 @@
 <% content_for :page_title do %>Building Inspector<% end %>
-
+<% content_for :dynamic_js do %>
+	<script type="text/javascript">
+	// scroll to top (hide bar in ios)
+	window.addEventListener("load",function() {
+		setTimeout(function(){
+			window.scrollTo(0, 1);
+		}, 0);
+	});
+	</script>
+<% end %>
 <div id="main-container">
 	<div id="logo-background">
-		<%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:id => "link-nypl", :title => "Visit NYPL.org"} %>
-
 		<h1><span>Building Inspector</span></h1>
 
-	    <div id="intro">
-		    <%= link_to "GO!", "/fixer/building", :id => "link-try" %>
-	    	<p>Help trace New York City's past</p>
-		    <p>NYPL Labs and the Lionel Pincus and Princess Firyal Map Division at The New York Public Library</p>
-	    </div>
+	    <%= link_to "GO!", "/fixer/building", :id => "link-try" %>
 
-	<%= render :partial => "partials/footer" %>
+	    <div id="intro">
+	    	<p>Help trace New York City's past</p>
+		    <p>NYPL Labs and the Lionel Pincus and Princess Firyal Map Division at:</p>
+			<%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:id => "link-nypl", :title => "Visit NYPL.org"} %>
+			<%= render :partial => "partials/footer" %>
+	    </div>
 	</div>
 </div>

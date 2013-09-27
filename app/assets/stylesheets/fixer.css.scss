@@ -4,7 +4,7 @@
 @import "variables";
 @import "score";
 
-h1 {
+#top-nav h1 {
 	width: 100px;
 	height: 41px;
 	background-size: 100%;
@@ -36,10 +36,7 @@ h1 {
 	z-index: 110;
 	background-color: $white;
 	color: $grayDarkest;
-
-	.close:before {
-		color: $grayDarkest;
-	}
+	overflow: scroll;
 }
 
 #map-tutorial {
