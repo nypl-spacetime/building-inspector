@@ -91,7 +91,7 @@ p {
 	// margin: 0 auto;
 	text-align: right;
 	color: $grayDarkest;
-	position: absolute;
+	// position: absolute;
 	right: 0;
 	background: $grayLightest;
 	padding: 5px 10px;
@@ -101,7 +101,7 @@ p {
 		font-family:$iconfont;
 		color: $grayDarkest;
 		-webkit-font-smoothing: antialiased;
-		content: 'N';
+		content: 'N'; //N W
 		font-size: 40px;
 		display: block;
 		position: absolute;
@@ -142,7 +142,7 @@ p {
 }
 
 #logo-background {
-	height: 100%;
+	// height: 100%;
 	background: asset-url("logo-building.jpg", image);
 	background-position: -20px -80px;
 }
@@ -156,12 +156,12 @@ p {
 
 	@media screen and (max-width: $desktopwidth) {
 		width: auto;
-		height: 100%;
+		// height: 100%;
 	}
 }
 
 #intro {
-	position: absolute;
+	// position: absolute;
 	left: 200px;
 	top: 110px;
 	width: 130px;
@@ -180,7 +180,7 @@ h1 {
 	height: 176px;
 	background: asset-url("logo.svg", image) center no-repeat;
 	background-size: 100%;
-	position: absolute;
+	// position: absolute;
 
 	left: 12px;
 	top: 51px;

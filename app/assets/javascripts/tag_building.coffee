@@ -21,9 +21,9 @@ class TagBuilding
 		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859/859spec.json', 
 			zoomControl: false
 			animate: true
-			attributionControl: false
-			minZoom: 20
-			maxZoom: 20
+			attributionControl: true
+			minZoom: 18
+			maxZoom: 21
 			dragging: false
 		)
 

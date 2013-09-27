@@ -35,7 +35,7 @@
 		position: relative;
 		font-size: 18px;
 		background: $grayDarkest;
-		margin: 5px 0;
+		margin: 5px 0 0;
 		text-transform: uppercase;
 	}
 
@@ -62,6 +62,11 @@
 	@media screen and (min-width: $desktopwidth) {
 		top: 0;
 	}
+}
+
+#map-total {
+	color: $grayDarkest;
+	font-size: 12px;
 }
 
 #map-container {

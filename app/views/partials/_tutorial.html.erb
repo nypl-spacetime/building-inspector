@@ -1,38 +1,30 @@
 	<div id="map-tutorial" class="slideshow swipeshow">
 		<ul class="slides">
 			<li class="slide">
-				<p>Here's how this works.</p>
-				<p>We'll show you a computer-generated building outline laid over a historical city map, along with 3 buttons:</p>
-				<div class="wrapper">
-					<a class="button red">NO</a>
-					<a class="button yellow">FIX</a>
-					<a class="button green">YES</a>
-				</div>
+				<p>The New York Public Library is training computers how to recognize building shapes and other information from old city maps. We need your help clean up the data so the Library can open it up for use in research, teaching and civic hacking.</p>
 				<p>&#x2190; SWIPE TO CONTINUE</p>
 			</li>
 			<li class="slide">
-				<div class="wrapper">
-					<a class="button">NO</a>
-					<a class="button">FIX</a>
-					<a class="button green">YES</a>
-				</div>
-				<p>YES: for when the outline fits the building footprint perfectly (nice work, Computer!)</p>
+				<p>Currently we're working on: 
+<a href="http://digitalcollections.nypl.org/search/index?filters%5Btitle_uuid_s%5D%5B%5D=Maps%20of%20the%20city%20of%20New%20York.%7C%7C06fd4630-c603-012f-17f8-58d385a7bc34&keywords=&layout=false" target="new">Maps of the City of New York, 1857-62</a>. Surveyed under directions of insurance companies of said city by William Perris, Civil Engineer and Surveyor.</p>
 			</li>
 			<li class="slide">
-				<div class="wrapper">
-					<a class="button">NO</a>
-					<a class="button yellow">FIX</a>
-					<a class="button">YES</a>
-				</div>
-				<p>FIX: for when the outline matches a building footprint, but needs correcting</p>
+				<p>Here's how the app works...</p>
+				<%= image_tag "slide3.jpg" %>
+				<p>We'll show you one computer-generated building outline at a time, laid over the original map.</p>
 			</li>
 			<li class="slide">
+				<p>Along with 3 buttons:</p>
 				<div class="wrapper">
 					<a class="button red">NO</a>
-					<a class="button">FIX</a>
-					<a class="button">YES</a>
+					<a class="button yellow">FIX</a>
+					<a class="button green">YES</a>
 				</div>
-				<p>NO: for when the outline is not around a building at all (silly Computer)</p>
+				<p>YES: for when the outline matches a building footprint</p>
+				<p>FIX: for when the outline mostly matches, but needs correcting</p>
+				<p>NO: for when the outline is not around a building</p>
+			</li>
+			<li class="slide">
 				<p>Let's walk through a few examples…</p>
 			</li>
 			<li class="slide">
@@ -42,7 +34,7 @@
 					<a class="button">FIX</a>
 					<a class="button green">YES</a>
 				</div>
-				<p>This outline fits the building perfectly. Hit YES.</p>
+				<p>This outline matches the original building footprint.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial2.png" %>
@@ -51,7 +43,7 @@
 					<a class="button yellow">FIX</a>
 					<a class="button">YES</a>
 				</div>
-				<p>This outline does not entirely enclose the building. Hit FIX.</p>
+				<p>This outline got snagged on a piece of text and does not enclose the whole building.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial3.png" %>
@@ -60,7 +52,7 @@
 					<a class="button">FIX</a>
 					<a class="button">YES</a>
 				</div>
-				<p>This outline does not fit at a building at all, but rather the space between buildings. Hit NO.</p>
+				<p>This outline does't match a building at all, but rather the space between buildings.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial5.png" %>
@@ -69,7 +61,16 @@
 					<a class="button yellow">FIX</a>
 					<a class="button">YES</a>
 				</div>
-				<p>Sometimes the computer is just a little bit off (e.g. here it missed a skylight). Hit FIX and we'll train it to recognize these in the future.</p>
+				<p>Sometimes the computer is just a little bit off (e.g. here it missed a skylight).Your input can help us to train it to recognize these in the future.</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "slide10.jpg" %>
+				<div class="wrapper">
+					<a class="button">NO</a>
+					<a class="button">FIX</a>
+					<a class="button green">YES</a>
+				</div>
+				<p>But don't let perfect be the enemy of good.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial7.png" %>
@@ -78,7 +79,7 @@
 					<a class="button">FIX</a>
 					<a class="button green">YES</a>
 				</div>
-				<p>Some buildings have odd shapes. When in doubt, defer to the original map. (e.g. here, the broken line indicates a single, connected building).</p>
+				<p>Some buildings have multiple parts. When in doubt, refer to the original map. Broken lines mean connected structures. Solid lines mean separate ones.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial4.png" %>
@@ -87,7 +88,7 @@
 					<a class="button">FIX</a>
 					<a class="button green">YES</a>
 				</div>
-				<p>Some buildings are multi-colored. That's fine, as long as the outline covers the overall footprint.</p>
+				<p>Same goes for multi-colored buildings. Again, defer to those original lines (broken vs. solid).</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial6.png" %>
@@ -96,7 +97,25 @@
 					<a class="button yellow">FIX</a>
 					<a class="button">YES</a>
 				</div>
-				<p>Sometimes the outline will cover more than one building. That's a fixer.</p>
+				<p>This one is actually two separate buildings.</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "slide14.jpg" %>
+				<div class="wrapper">
+					<a class="button">NO</a>
+					<a class="button yellow">FIX</a>
+					<a class="button">YES</a>
+				</div>
+				<p>Occasionally a crease or seam in the map throws off the computer.</p>
+			</li>
+			<li class="slide">
+				<%= image_tag "slide15.jpg" %>
+				<div class="wrapper">
+					<a class="button red">NO</a>
+					<a class="button">FIX</a>
+					<a class="button">YES</a>
+				</div>
+				<p>Sometimes the computer makes a mess.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial8.png" %>
@@ -105,12 +124,12 @@
 					<a class="button">FIX</a>
 					<a class="button">YES</a>
 				</div>
-				<p>Sometimes the machine is way off. Laugh at the poor computer and move on.</p>
+				<p>Laugh at the poor computer and move on.</p>
 			</li>
 			<li class="slide">
 				<div class="overlay">
-					<p>Now you're ready to begin checking buildings! You can always refer to this tutorial again by hitting the TUTORIAL button.</p>
-					<p>Have fun! And thanks for helping The Library.</p>
+					<p>Now you're ready to begin checking buildings! You can always refer to this tutorial again by hitting the ? button.</p>
+					<p>Have fun! And thanks for helping The New York Public Library.</p>
 					<a href="javascript:;" id="link-exit-tutorial" class="button green centered">START</a>
 				</div>
 			</li>

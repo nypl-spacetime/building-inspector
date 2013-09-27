@@ -6,7 +6,7 @@ class Progress
 		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859/859spec.json', 
 			zoomControl: false
 			animate: true
-			attributionControl: false
+			attributionControl: true
 			minZoom: 12
 			maxZoom: 20
 			dragging: true
@@ -33,8 +33,6 @@ class Progress
 		$.getJSON('/fixer/sessionProgress.json', (data) ->
 			# console.log(data)
 			return if data.fix_poly.features.length==0 && data.no_poly.features.length==0 && data.yes_poly.features.length==0
-
-			$("#score .total").text(data.all_polygons_session)
 
 			p.updateScore(data.all_polygons_session, data.all_polygons)
 
@@ -150,6 +148,8 @@ class Progress
 
 		mapDOM = $("#map-bar")
 		mapDOM.find(".bar").css("width", mapScore + "%")
+		$("#score .total").text(current)
+		$("#map-total").text(total + " shapes")
 
 	addMarker: (markers, data) ->
 		latlng = L.geoJson(data).getBounds().getCenter()#new L.LatLng(data.geometry.coordinates[0][0][1],data.geometry.coordinates[0][0][0])
