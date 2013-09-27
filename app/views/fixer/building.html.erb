@@ -1,6 +1,11 @@
 <% content_for :page_title do %>Polygons<% end %>
 
 <% content_for :dynamic_js do %>
+	<script type="text/javascript">
+	var addToHomeConfig = {
+		lifespan:4000
+	};
+	</script>
 	<%= stylesheet_link_tag    "add2home", :media => "all" %>
 	<%= javascript_include_tag "add2home" %>
 
@@ -14,8 +19,8 @@
 <div id="top-nav">
 	<%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:id => "link-nypl", :title => "Visit NYPL.org"} %>
 	<h1><span>Building Inspector</span></h1>
-	<%= link_to "Tutorial", "javascript:;", :id => "link-help" %>
-	<%= link_to "About", "javascript:;", :id => "link-about" %>
+	<%= link_to "?", "javascript:;", {:id => "link-help", :class => "icon"} %>
+	<%= link_to "i", "javascript:;", {:id => "link-about", :class => "icon"} %>
 </div>
 
 <div id="main-container">

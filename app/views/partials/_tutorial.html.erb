@@ -16,9 +16,9 @@
 			<li class="slide">
 				<p>Along with 3 buttons:</p>
 				<div class="wrapper">
-					<a class="button red">NO</a>
-					<a class="button yellow">FIX</a>
-					<a class="button green">YES</a>
+					<span class="button red">NO</span>
+					<span class="button yellow">FIX</span>
+					<span class="button green">YES</span>
 				</div>
 				<p>YES: for when the outline matches a building footprint</p>
 				<p>FIX: for when the outline mostly matches, but needs correcting</p>
@@ -30,99 +30,99 @@
 			<li class="slide">
 				<%= image_tag "tutorial1.png" %>
 				<div class="wrapper">
-					<a class="button">NO</a>
-					<a class="button">FIX</a>
-					<a class="button green">YES</a>
+					<span class="button">NO</span>
+					<span class="button">FIX</span>
+					<span class="button green">YES</span>
 				</div>
 				<p>This outline matches the original building footprint.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial2.png" %>
 				<div class="wrapper">
-					<a class="button">NO</a>
-					<a class="button yellow">FIX</a>
-					<a class="button">YES</a>
+					<span class="button">NO</span>
+					<span class="button yellow">FIX</span>
+					<span class="button">YES</span>
 				</div>
 				<p>This outline got snagged on a piece of text and does not enclose the whole building.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial3.png" %>
 				<div class="wrapper">
-					<a class="button red">NO</a>
-					<a class="button">FIX</a>
-					<a class="button">YES</a>
+					<span class="button red">NO</span>
+					<span class="button">FIX</span>
+					<span class="button">YES</span>
 				</div>
 				<p>This outline does't match a building at all, but rather the space between buildings.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial5.png" %>
 				<div class="wrapper">
-					<a class="button">NO</a>
-					<a class="button yellow">FIX</a>
-					<a class="button">YES</a>
+					<span class="button">NO</span>
+					<span class="button yellow">FIX</span>
+					<span class="button">YES</span>
 				</div>
 				<p>Sometimes the computer is just a little bit off (e.g. here it missed a skylight).Your input can help us to train it to recognize these in the future.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "slide10.jpg" %>
 				<div class="wrapper">
-					<a class="button">NO</a>
-					<a class="button">FIX</a>
-					<a class="button green">YES</a>
+					<span class="button">NO</span>
+					<span class="button">FIX</span>
+					<span class="button green">YES</span>
 				</div>
 				<p>But don't let perfect be the enemy of good.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial7.png" %>
 				<div class="wrapper">
-					<a class="button">NO</a>
-					<a class="button">FIX</a>
-					<a class="button green">YES</a>
+					<span class="button">NO</span>
+					<span class="button">FIX</span>
+					<span class="button green">YES</span>
 				</div>
 				<p>Some buildings have multiple parts. When in doubt, refer to the original map. Broken lines mean connected structures. Solid lines mean separate ones.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial4.png" %>
 				<div class="wrapper">
-					<a class="button">NO</a>
-					<a class="button">FIX</a>
-					<a class="button green">YES</a>
+					<span class="button">NO</span>
+					<span class="button">FIX</span>
+					<span class="button green">YES</span>
 				</div>
 				<p>Same goes for multi-colored buildings. Again, defer to those original lines (broken vs. solid).</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial6.png" %>
 				<div class="wrapper">
-					<a class="button">NO</a>
-					<a class="button yellow">FIX</a>
-					<a class="button">YES</a>
+					<span class="button">NO</span>
+					<span class="button yellow">FIX</span>
+					<span class="button">YES</span>
 				</div>
 				<p>This one is actually two separate buildings.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "slide14.jpg" %>
 				<div class="wrapper">
-					<a class="button">NO</a>
-					<a class="button yellow">FIX</a>
-					<a class="button">YES</a>
+					<span class="button">NO</span>
+					<span class="button yellow">FIX</span>
+					<span class="button">YES</span>
 				</div>
 				<p>Occasionally a crease or seam in the map throws off the computer.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "slide15.jpg" %>
 				<div class="wrapper">
-					<a class="button red">NO</a>
-					<a class="button">FIX</a>
-					<a class="button">YES</a>
+					<span class="button red">NO</span>
+					<span class="button">FIX</span>
+					<span class="button">YES</span>
 				</div>
 				<p>Sometimes the computer makes a mess.</p>
 			</li>
 			<li class="slide">
 				<%= image_tag "tutorial8.png" %>
 				<div class="wrapper">
-					<a class="button red">NO</a>
-					<a class="button">FIX</a>
-					<a class="button">YES</a>
+					<span class="button red">NO</span>
+					<span class="button">FIX</span>
+					<span class="button">YES</span>
 				</div>
 				<p>Laugh at the poor computer and move on.</p>
 			</li>
@@ -130,7 +130,9 @@
 				<div class="overlay">
 					<p>Now you're ready to begin checking buildings! You can always refer to this tutorial again by hitting the ? button.</p>
 					<p>Have fun! And thanks for helping The New York Public Library.</p>
-					<a href="javascript:;" id="link-exit-tutorial" class="button green centered">START</a>
+					<div class="wrapper">
+						<a id="link-exit-tutorial" class="button green centered">START</a>
+					</div>
 				</div>
 			</li>
 		</ul>

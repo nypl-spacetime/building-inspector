@@ -42,12 +42,18 @@ p {
 	margin-bottom: 20px;
 	text-align: right;
 	background: $grayLightest;
-	text-transform: uppercase;
 
 	a {
 		color: $grayDark;
 		line-height: 38px;
 		margin-right: 10px;
+		font-size: 20px;
+
+		&.icon {
+			content: attr(data-icon);
+			font-family:$iconfont;
+			-webkit-font-smoothing: antialiased;
+		}
 	}
 
 	a:hover {
@@ -70,7 +76,6 @@ p {
 		line-height: 31px;
 		height: 31px;
 		width: 31px;
-		line-height: 31px;
 
 		&:before {
 			font-size: 30px;
