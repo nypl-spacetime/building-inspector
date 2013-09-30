@@ -178,10 +178,3 @@
 		display: block;
 	}
 }
-
-// override leaflet +/- zoom for small screen
-@media screen and (max-width: $desktopwidth) {
-	.leaflet-top.leaflet-right {
-		top: 40px;
-	}
-}
