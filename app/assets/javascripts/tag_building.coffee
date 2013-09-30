@@ -20,12 +20,17 @@ class TagBuilding
 		$("#buttons").hide()
 		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859/859spec.json', 
 			zoomControl: false
+			scrollWheelZoom: false
 			animate: true
 			attributionControl: true
 			minZoom: 18
 			maxZoom: 21
 			dragging: false
 		)
+
+		L.control.zoom(
+			position: 'topright'
+		).addTo(@map)
 
 		# @map.on('click', @onMapClick)
 

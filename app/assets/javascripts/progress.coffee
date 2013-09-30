@@ -13,6 +13,10 @@ class Progress
 			maxBounds: new L.LatLngBounds(NW, SE)
 		)
 
+		L.control.zoom(
+			position: 'topright'
+		).addTo(@map)
+
 		$("#score .total").on 'click', () ->
 			location.href = "/fixer/building"
 
