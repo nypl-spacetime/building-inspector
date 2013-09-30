@@ -13,9 +13,8 @@
 	<%= stylesheet_link_tag    "jquery.swipeshow", :media => "all" %>
 	<%= stylesheet_link_tag    "slideshow-theme", :media => "all" %>
 	<%= javascript_include_tag "jquery.swipeshow.min" %>
-	<%= javascript_include_tag "tag_building", {:id => "tagbuildingjs", "data-session" => "#{@isNew}"} %>
+	<%= javascript_include_tag "tag_building", {:id => "tagbuildingjs", "data-session" => "#{@isNew}", "data-map" => "#{@map}"} %>
 <% end %>
-
 <div id="top-nav">
 	<%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:id => "link-nypl", :title => "Visit NYPL.org"} %>
 	<h1><span>Building Inspector</span></h1>

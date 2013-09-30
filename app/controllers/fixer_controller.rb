@@ -5,6 +5,7 @@ class FixerController < ApplicationController
 	def building
 		@isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
 		cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
+		@map = getMap().to_json
 		session = getSession()
 	end
 
@@ -38,18 +39,23 @@ class FixerController < ApplicationController
 		respond_with( @progress )
 	end
 
-	def randomMap
+	def getMap
 		session = getSession()
-		@map = {}
-		@map[:map] = Sheet.random
-		@map[:poly] = @map[:map].mini(session)
-		@map[:status] = {}
-		@map[:status][:session_id] = session
-		@map[:status][:map_polygons] = @map[:map].polygons.count
-		@map[:status][:map_polygons_session] = @map[:poly].count
-		@map[:status][:all_sheets] = Sheet.count
-		@map[:status][:all_polygons] = Polygon.count
-		@map[:status][:all_polygons_session] = Flag.flags_for_session(session)
+		map = {}
+		map[:map] = Sheet.random
+		map[:poly] = map[:map].mini(session)
+		map[:status] = {}
+		map[:status][:session_id] = session
+		map[:status][:map_polygons] = map[:map].polygons.count
+		map[:status][:map_polygons_session] = map[:poly].count
+		map[:status][:all_sheets] = Sheet.count
+		map[:status][:all_polygons] = Polygon.count
+		map[:status][:all_polygons_session] = Flag.flags_for_session(session)
+		return map
+	end
+
+	def randomMap
+		@map = getMap()
 		respond_with( @map )
 	end
 

@@ -13,6 +13,7 @@ class TagBuilding
 	allPolygons: 0
 	allPolygonsSession: 0
 	level: 0
+	firstLoad: true
 
 	constructor: () ->
 		$("#map-tutorial").hide()
@@ -37,6 +38,8 @@ class TagBuilding
 		window.map = @
 
 		@addEventListeners()
+
+		tagger = @
 
 		@tID = window.setTimeout(
 				() ->
@@ -155,15 +158,25 @@ class TagBuilding
 
 	getPolygons: () =>
 		tagger = @
-		$.getJSON('/fixer/map.json', (data) ->
-			# console.log(data);
+		if @firstLoad
+			@firstLoad = false
+			mapdata = $('#tagbuildingjs').data("map")
 			$("#loader").remove()
-			data.poly = tagger.shufflePolygons(data.poly)
-			tagger.loadedData = data
-			tagger.polyData = data.poly
-			tagger.updateScore()
-			tagger.showNextPolygon()
-		)
+			mapdata.poly = @shufflePolygons(mapdata.poly)
+			@loadedData = mapdata
+			@polyData = mapdata.poly
+			@updateScore()
+			@showNextPolygon()
+		else
+			$.getJSON('/fixer/map.json', (data) ->
+				# console.log(data);
+				$("#loader").remove()
+				data.poly = tagger.shufflePolygons(data.poly)
+				tagger.loadedData = data
+				tagger.polyData = data.poly
+				tagger.updateScore()
+				tagger.showNextPolygon()
+			)
 	
 	shufflePolygons: (a) ->
 		# from: http://coffeescriptcookbook.com/chapters/arrays/shuffling-array-elements
