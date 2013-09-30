@@ -60,6 +60,16 @@ class TagBuilding
 		$("#no-button").on("click", @submitNoFlag)
 		$("#fix-button").on("click", @submitFixFlag)
 
+		$("body").keyup (e)->
+			# console.log "key", e.which
+			switch e.which
+				when 49 then tagger.submitNoFlag()
+				when 97 then tagger.submitNoFlag()
+				when 50 then tagger.submitFixFlag()
+				when 98 then tagger.submitFixFlag()
+				when 51 then tagger.submitYesFlag()
+				when 99 then tagger.submitYesFlag()
+
 		$("#score .total").on 'click', () ->
 			location.href = "/fixer/progress"
 
