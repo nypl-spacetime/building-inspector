@@ -12,5 +12,6 @@
 		</div>
 		<% if @current_page=="progress" %>
 		<div id="map-total"></div>
+		<%= link_to "T", "", {:onclick=>"//recordOutboundLink(this, 'Outbound Links', 'Twitter');return false;",:id => "tweet", :title => "Share on Twitter"} %>
 		<% end %>
 	</div>

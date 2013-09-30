@@ -151,6 +151,13 @@ class Progress
 		$("#score .total").text(current)
 		$("#map-total").text(total + " shapes")
 
+		url = $('#progressjs').data("server")
+		tweet = current + " buildings checked! Data mining old maps with the Building Inspector from @NYPLMaps + @nypl_labs"
+		twitterurl = "https://twitter.com/share?url=" + url + "&text=" + tweet
+
+
+		$("#tweet").attr "href", twitterurl
+
 	addMarker: (markers, data) ->
 		latlng = L.geoJson(data).getBounds().getCenter()#new L.LatLng(data.geometry.coordinates[0][0][1],data.geometry.coordinates[0][0][0])
 		# console.log latlng

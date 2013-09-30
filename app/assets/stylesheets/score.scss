@@ -69,6 +69,21 @@
 	font-size: 12px;
 }
 
+a#tweet {
+	display: block;
+	position: absolute;
+	right: -30px;
+	top: 5px;
+	color: $grayDarkest;
+	width: 20px;
+	height: 20px;
+	font-size: 20px;
+	content: attr(data-icon);
+	font-family:$iconfont;
+	-webkit-font-smoothing: antialiased;
+}
+
+
 #map-container {
 	position: relative;
 	height: 100%;
