@@ -113,10 +113,10 @@ class Progress
 				polygonOptions:
 					stroke: false
 			
-			markers.on 'click', (a) ->
-				# console.log a.layer.getLatLng()
-				m.panTo a.layer.getLatLng()
-				m.setZoom 20
+			# markers.on 'click', (a) ->
+			# 	console.log a.layer.getLatLng()
+			# 	m.panTo a.layer.getLatLng()
+			# 	m.setZoom 20
 
 			# marker icons
 			# yes_icon = L.icon
@@ -148,8 +148,8 @@ class Progress
 					# out = for key, val of f.properties
 					# 	"<strong>#{key}:</strong> #{val}"
 					# l.bindPopup(out.join("<br />"))
-					l.on 'click', ()->
-						m.fitBounds(@.getBounds())
+					# l.on 'click', ()->
+					# 	m.fitBounds(@.getBounds())
 			)
 			no_json = L.geoJson(data.no_poly,
 				style: (feature) ->
@@ -162,8 +162,8 @@ class Progress
 					# out = for key, val of f.properties
 					# 	"<strong>#{key}:</strong> #{val}"
 					# l.bindPopup(out.join("<br />"))
-					l.on 'click', ()->
-						m.fitBounds(@.getBounds())
+					# l.on 'click', ()->
+					# 	m.fitBounds(@.getBounds())
 			)
 			fix_json = L.geoJson(data.fix_poly,
 				style: (feature) ->
@@ -176,8 +176,8 @@ class Progress
 					# out = for key, val of f.properties
 					# 	"<strong>#{key}:</strong> #{val}"
 					# l.bindPopup(out.join("<br />"))
-					l.on 'click', ()->
-						m.fitBounds(@.getBounds())
+					# l.on 'click', ()->
+					# 	m.fitBounds(@.getBounds())
 			)
 
 			bounds = new L.LatLngBounds()
