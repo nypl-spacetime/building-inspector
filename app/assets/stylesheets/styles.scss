@@ -421,4 +421,8 @@ h1.logo {
 }
 .progress .leaflet-top.leaflet-right {
 	top: 40px;
+
+	@media screen and (max-width: $desktopwidth) {
+		top: 70px;
+	}
 }
