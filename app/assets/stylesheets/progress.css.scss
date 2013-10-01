@@ -4,10 +4,6 @@
 @import "variables";
 @import "score";
 
-#score {
-	top: 0;
-}
-
 #link-progress-close {
 	&:before {
 		color: $grayDarkest;

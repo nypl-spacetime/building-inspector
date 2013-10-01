@@ -1,6 +1,8 @@
 class Progress
 
 	constructor: () ->
+		$("#map-tutorial").hide()
+		$("#map-about").hide()
 		NW = new L.LatLng(40.65563874006115,-74.13093566894531)
 		SE = new L.LatLng(40.81640757520087,-73.83087158203125)
 		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859/859spec.json', 
@@ -17,17 +19,67 @@ class Progress
 			position: 'topright'
 		).addTo(@map)
 
+		@map.on('load', @getPolygons)
+
+		@addEventListeners()
+
+		window.map = @
+
+	addEventListeners: () =>
+		p = @
+
+		@map.on('load', @getPolygons)
+
+		$("#link-help").on("click", @invokeTutorial)
+		$("#link-help-close").on("click", @hideTutorial)
+
+		$("#link-about").on("click", @invokeAbout)
+		$("#link-about-close").on("click", @hideAbout)
+
 		$("#score .total").on 'click', () ->
 			location.href = "/fixer/building"
 
 		$("#link-progress-close").on 'click', () ->
 			location.href = "/fixer/building"
 
-		@map.on('load', @getPolygons)
+		$("#link-exit-about").on "click", () ->
+			p.hideTutorial()
 
-		# @map.on('click', @onMapClick)
+		$("#link-exit-tutorial").on "click", () ->
+			p.hideTutorial()
 
-		window.map = @
+	hideOthers: () ->
+		$("#map-container").hide()
+		$("#score").hide()
+		$("#buttons").hide()
+		$("#map-tutorial").hide()
+		$("#map-about").hide()
+
+	showOthers: () ->
+		$("#map-container").show()
+		$("#score").show()
+		$("#buttons").show()
+
+	invokeAbout: () =>
+		@hideOthers()
+		$("#map-about").show()
+
+	hideAbout: () =>
+		@showOthers()
+		$("#map-about").hide()
+
+	invokeTutorial: () =>
+		@hideOthers()
+		$("#map-tutorial").unswipeshow()
+		$("#map-tutorial").show()
+		$("#map-tutorial").swipeshow
+			mouse: true
+			autostart: false
+		.goTo 0
+
+	hideTutorial: () =>
+		@showOthers()
+		$("#map-tutorial").hide()
 
 	getPolygons: () =>
 		p = @
