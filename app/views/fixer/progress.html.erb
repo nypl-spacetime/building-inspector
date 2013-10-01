@@ -26,6 +26,7 @@
 
 	<%= render :partial => "partials/score" %>
 
+	<%= link_to (content_tag "span", "CLOSE"), "javascript:;", {:id => "link-progress-close", :class => "close"} %>
 	<div id="main-container">
 		<div id="map-container" class="progress">
 			<div id="map"></div>

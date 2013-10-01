@@ -50,6 +50,7 @@ class Progress
 
 	hideOthers: () ->
 		$("#map-container").hide()
+		$("#link-progress-close").hide()
 		$("#score").hide()
 		$("#buttons").hide()
 		$("#map-tutorial").hide()
@@ -57,6 +58,7 @@ class Progress
 
 	showOthers: () ->
 		$("#map-container").show()
+		$("#link-progress-close").show()
 		$("#score").show()
 		$("#buttons").show()
 
