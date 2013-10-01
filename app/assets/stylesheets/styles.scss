@@ -129,6 +129,10 @@ p {
 	right: 5px;
 	z-index: 111;
 
+	@media screen and (min-width: $desktopwidth) {
+		position: absolute;
+	}
+
 	&:before {
 		content: attr(data-icon);
 		font-family:$iconfont;
@@ -151,6 +155,13 @@ p {
 	// height: 100%;
 	background: asset-url("logo-building.jpg", image);
 	// background-position: 50px -120px;
+
+	// &.about {
+	// 	@media screen and (min-width: $desktopwidth) {
+	// 		background-attachment: fixed;
+	// 		background-position: 124px 60px;
+	// 	}
+	// }
 }
 
 #main-container {
