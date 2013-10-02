@@ -13,6 +13,8 @@ Webappmini::Application.routes.draw do
 
   resources :sheets
 
+  get "cookie_test" => "fixer#cookie_test"
+
   get "fixer/building"
 
   get "fixer/color"

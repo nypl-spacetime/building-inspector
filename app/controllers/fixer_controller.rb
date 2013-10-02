@@ -1,5 +1,6 @@
 class FixerController < ApplicationController
 	
+	before_filter :cookies_required, :except => :cookie_test
 	respond_to :json
 
 	def building
@@ -83,4 +84,29 @@ class FixerController < ApplicationController
 
 	def color
 	end
+
+	# checks for presence of "cookie_test" cookie
+	# (should have been set by cookies_required before_filter)
+	# if cookie is present, continue normal operation
+	# otherwise show cookie warning at "shared/cookies_required"
+	def cookie_test
+		if cookies["cookie_test"].blank?
+			logger.warn("=== cookies are disabled")
+			render :template => "shared/cookies_required"
+		else
+			redirect_to(building_path)
+		end
+	end
+
+protected
+
+	# checks for presence of "cookie_test" cookie.
+	# If not present, redirects to cookies_test action
+	def cookies_required
+		return true unless cookies["cookie_test"].blank?
+		cookies["cookie_test"] = Time.now
+		session[:return_to] = request.original_url
+		redirect_to(cookie_test_path)
+	end
+
 end
