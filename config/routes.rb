@@ -4,6 +4,8 @@ Webappmini::Application.routes.draw do
   get "general/about"
   
   get "general/help"
+  
+  get "general/win"
 
   devise_for :users
 
@@ -15,11 +17,14 @@ Webappmini::Application.routes.draw do
 
   get "cookie_test" => "fixer#cookie_test"
 
+  get "fixer/winPoly"
+
   get "fixer/building"
 
   get "fixer/color"
 
   get "fixer/progress"
+
   get "fixer/sessionProgress"
 
   match "fixer/map" => "fixer#randomMap"
