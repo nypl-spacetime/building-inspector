@@ -5,9 +5,11 @@
 @import "score";
 
 #link-progress-close {
-	@media screen and (max-width: $desktopwidth) {
-		top: 45px;
-	}
+	top: 45px;
+
+	// @media screen and (max-width: $desktopwidth) {
+	// 	top: 45px;
+	// }
 
 	&:before {
 		color: $grayDarkest;

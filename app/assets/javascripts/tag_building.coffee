@@ -199,6 +199,7 @@ class TagBuilding
 		@submitFlag("fix")
 
 	submitFlag: (type) =>
+		_gaq.push(['_trackEvent', 'Flag', type])
 		$("#buttons").hide()
 		@mapPolygonsSession--
 		@allPolygonsSession++

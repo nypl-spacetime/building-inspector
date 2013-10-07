@@ -38,10 +38,15 @@ p {
 
 #top-nav {
 	height: 40px;
-	width: auto;
+	// width: auto;
 	margin-bottom: 20px;
 	text-align: right;
 	background: $grayLightest;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 110;
+	margin: 0;
 
 	a {
 		color: $grayDark;
@@ -60,13 +65,13 @@ p {
 		text-decoration: none;
 	}
 
-	@media screen and (max-width: $desktopwidth) {
-		position: absolute;
-		top: 0;
-		width: 100%;
-		z-index: 110;
-		margin: 0;
-	}
+	// @media screen and (max-width: $desktopwidth) {
+	// 	position: absolute;
+	// 	top: 0;
+	// 	width: 100%;
+	// 	z-index: 110;
+	// 	margin: 0;
+	// }
 
 	#link-nypl {
 		position: static;
@@ -112,6 +117,10 @@ p {
 	padding: 5px 10px;
 	font-size: 14px;
 
+	@media screen and (min-width: $desktopwidth) {
+		width: 210px;
+	}
+
 	&:before {
 		content: attr(data-icon);
 		font-family:$iconfont;
@@ -129,19 +138,20 @@ p {
 }
 
 .close {
+	position: absolute;
 	display: block;
 	height: 31px;
 	overflow: hidden;
 	width: 31px;
 	line-height: 31px;
-	position: fixed;
+	// position: fixed;
 	top: 5px;
 	right: 5px;
 	z-index: 111;
 
-	@media screen and (min-width: $desktopwidth) {
-		position: absolute;
-	}
+	// @media screen and (min-width: $desktopwidth) {
+	// 	position: absolute;
+	// }
 
 	&:before {
 		content: attr(data-icon);
@@ -175,16 +185,17 @@ p {
 }
 
 #main-container {
-	width: $generalwidth;
+	// width: $generalwidth;
+	width: auto;
 	margin: 0 auto;
 	text-align: center;
 	position: relative;
 	overflow: hidden;
 
-	@media screen and (max-width: $desktopwidth) {
-		width: auto;
-		// height: 100%;
-	}
+	// @media screen and (max-width: $desktopwidth) {
+	// 	width: auto;
+	// 	// height: 100%;
+	// }
 }
 
 #intro {
@@ -196,6 +207,10 @@ p {
 	// text-align: left;
 	margin: 0 auto;
 	background: rgba(255,255,255,0.65);
+
+	@media screen and (min-width: $desktopwidth) {
+		width: $desktopwidth;
+	}
 
 	p {
 		line-height: 1.25em;
@@ -288,6 +303,10 @@ h1.logo {
 
 		.slide {
 			padding-top: 0;
+
+			@media screen and (min-width: $desktopwidth) {
+				padding-top: 40px;
+			}
 		}
 
 		p, h2 {
@@ -297,6 +316,14 @@ h1.logo {
 			margin-right: 20px;
 			margin-top: 0;
 			margin: 0 10px 10px;
+		}
+
+		p {
+			@media screen and (min-width: $desktopwidth) {
+				width: $desktopwidth;
+				margin-left: auto;
+				margin-right: auto;
+			}
 		}
 
 		p:first-child {
@@ -345,11 +372,11 @@ h1.logo {
 
 	@include clearfix;
 
-	@media screen and (min-width: $desktopwidth) {
-		position: relative;
-		bottom: auto;
-		margin-top: 10px;
-	}
+	// @media screen and (min-width: $desktopwidth) {
+	// 	position: relative;
+	// 	bottom: auto;
+	// 	margin-top: 10px;
+	// }
 
 	.wrapper {
 		width: 290px;
@@ -357,9 +384,9 @@ h1.logo {
 
 		@include clearfix;
 	
-		@media screen and (min-width: $desktopwidth) {
-			margin: 0 auto;
-		}
+		// @media screen and (min-width: $desktopwidth) {
+		// 	margin: 0 auto;
+		// }
 	}
 }
 
@@ -415,14 +442,17 @@ h1.logo {
 
 // override leaflet +/- zoom for small screen
 .leaflet-top.leaflet-right {
-	@media screen and (max-width: $desktopwidth) {
-		top: 40px;
-	}
-}
-.progress .leaflet-top.leaflet-right {
 	top: 40px;
 
-	@media screen and (max-width: $desktopwidth) {
-		top: 70px;
-	}
+	// @media screen and (max-width: $desktopwidth) {
+	// 	top: 40px;
+	// }
+}
+.progress .leaflet-top.leaflet-right {
+	top: 70px;
+	// top: 40px;
+
+	// @media screen and (max-width: $desktopwidth) {
+	// 	top: 70px;
+	// }
 }

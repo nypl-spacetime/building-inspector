@@ -11,11 +11,11 @@
 
 	@include clearfix;
 
-	@media screen and (min-width: $desktopwidth) {
-		width: $desktopwidth;
-		height: 540px;
-		margin: 0 auto;
-	}
+	// @media screen and (min-width: $desktopwidth) {
+	// 	width: $desktopwidth;
+	// 	height: 540px;
+	// 	margin: 0 auto;
+	// }
 }
 
 #score {
@@ -59,9 +59,9 @@
 		}
 	}
 
-	@media screen and (min-width: $desktopwidth) {
-		top: 0;
-	}
+	// @media screen and (min-width: $desktopwidth) {
+	// 	top: 0;
+	// }
 }
 
 #map-total {
@@ -88,9 +88,9 @@ a#tweet {
 	position: relative;
 	height: 100%;
 
-	@media screen and (min-width: $desktopwidth) {
-		height: 320px;
-	}
+	// @media screen and (min-width: $desktopwidth) {
+	// 	height: 320px;
+	// }
 }
 
 #map {
