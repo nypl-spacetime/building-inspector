@@ -1,0 +1,16 @@
+<% content_for :page_title do %>WIN!<% end %>
+<% content_for :dynamic_js do %>
+    <%= javascript_include_tag "http://d3js.org/d3.v3.min.js" %>
+    <%= javascript_include_tag "http://d3js.org/queue.v1.min.js" %>
+    <%= javascript_include_tag "http://d3js.org/topojson.v1.min.js" %>
+    <%= javascript_include_tag "win", {:id => "data", "data-polys" => "#{@json}"} %>
+<% end %>
+
+<div id="win"></div>
+
+<style type="text/css">
+#win {
+	width: 500px;
+	height: 500px;
+}
+</style>

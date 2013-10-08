@@ -19,6 +19,10 @@ Webappmini::Application.routes.draw do
 
   get "fixer/winPoly"
 
+  get "fixer/status"
+
+  get "fixer/allPolygons"
+
   get "fixer/building"
 
   get "fixer/color"

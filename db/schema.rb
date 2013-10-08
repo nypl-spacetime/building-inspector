@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130827202543) do
+ActiveRecord::Schema.define(:version => 20131008213500) do
 
   create_table "flags", :force => true do |t|
     t.string   "flag_type"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(:version => 20130827202543) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "flags", ["session_id"], :name => "index_flags_on_session_id"
 
   create_table "polygons", :force => true do |t|
     t.text     "geometry"

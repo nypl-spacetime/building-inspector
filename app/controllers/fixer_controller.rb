@@ -14,6 +14,10 @@ class FixerController < ApplicationController
 	  	@current_page = "progress"
 	end
 
+	def status
+	  	@current_page = "status"
+	end
+
 	def sessionProgress
 		# returns a GeoJSON object with the flags the session has sent so far
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
@@ -38,6 +42,11 @@ class FixerController < ApplicationController
 		@progress[:no_poly] = { :type => "FeatureCollection", :features => no_poly }
 		@progress[:yes_poly] = { :type => "FeatureCollection", :features => yes_poly }
 		respond_with( @progress )
+	end
+
+	def allPolygons
+		all_polygons = Polygon.select("status, id, sheet_id, geometry, dn")
+		respond_with( all_polygons )
 	end
 
 	def getMap

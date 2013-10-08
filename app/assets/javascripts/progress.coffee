@@ -19,7 +19,7 @@ class Progress
 			position: 'topright'
 		).addTo(@map)
 
-		@map.on('load', @getPolygons)
+		# @map.on('load', @getPolygons)
 
 		@addEventListeners()
 
