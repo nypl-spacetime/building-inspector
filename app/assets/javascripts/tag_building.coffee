@@ -190,17 +190,36 @@ class TagBuilding
 		a
 
 	submitYesFlag: () =>
+		@activateButton("yes")
 		@submitFlag("yes")
 
 	submitNoFlag: () =>
+		@activateButton("no")
 		@submitFlag("no")
 
 	submitFixFlag: () =>
+		@activateButton("fix")
 		@submitFlag("fix")
+
+	activateButton: (button) =>
+		@resetButtons()
+		$("#no-button").addClass("inactive") if button != "no"
+		$("#yes-button").addClass("inactive") if button != "yes"
+		$("#fix-button").addClass("inactive") if button != "fix"
+		$("#no-button").addClass("active") if button = "no"
+		$("#yes-button").addClass("active") if button = "yes"
+		$("#fix-button").addClass("active") if button = "fix"
+
+	resetButtons: () ->
+		$("#no-button").removeClass("inactive")
+		$("#yes-button").removeClass("inactive")
+		$("#fix-button").removeClass("inactive")
+		$("#no-button").removeClass("active")
+		$("#yes-button").removeClass("active")
+		$("#fix-button").removeClass("active")
 
 	submitFlag: (type) =>
 		_gaq.push(['_trackEvent', 'Flag', type])
-		$("#buttons").hide()
 		@mapPolygonsSession--
 		@allPolygonsSession++
 		@updateScore()
@@ -209,16 +228,18 @@ class TagBuilding
 		# 	@showNextPolygon()
 		# 	return
 		tagger = @
-		$.get("/fixer/flag", 
-			i: @currentPolygon.id
-			f: type
-			, () ->
-				tagger.showNextPolygon()
-		# ).done( () ->
-		# 	tagger.showNextPolygon()
-		# ).fail( () ->
-		# 	tagger.showNextPolygon()
-		)
+		$("#buttons").fadeOut 200 , () ->
+			$.get("/fixer/flag", 
+				i: tagger.currentPolygon.id
+				f: type
+				, () ->
+					tagger.resetButtons()
+					tagger.showNextPolygon()
+			# ).done( () ->
+			# 	tagger.showNextPolygon()
+			# ).fail( () ->
+			# 	tagger.showNextPolygon()
+			)
 	
 	showNextPolygon: () =>
 		# console.log @polyData
@@ -258,7 +279,7 @@ class TagBuilding
 				color: '#b00'
 				weight: 4
 				opacity: 1
-				dashArray: '4,12'
+				dashArray: '4,16'
 				fill: false
 			# onEachFeature: (f,l) ->
 			# 	out = for key, val of f.properties

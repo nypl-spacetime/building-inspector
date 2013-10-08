@@ -76,7 +76,7 @@ class FixerController < ApplicationController
 	end
 
 	def getSession
-		if cookies[:session] == nil
+		if cookies[:session] == nil || cookies[:session] == ""
 			cookies[:session] = { :value => request.session_options[:id], :expires => 365.days.from_now }
 		end
 		cookies[:session]

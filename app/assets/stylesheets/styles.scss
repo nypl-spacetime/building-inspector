@@ -428,6 +428,14 @@ h1.logo {
 	&#yes-button, &.green {
 		background-color: $yescolor;
 	}
+	&#no-button.active, &#fix-button.active, &#yes-button.active {
+		font-size: 24px;
+	}
+
+	&#no-button.inactive, &#fix-button.inactive, &#yes-button.inactive {
+		color: transparent;
+		background-color: transparent;
+	}
 
 	&.building {
 		// width: 80px;
