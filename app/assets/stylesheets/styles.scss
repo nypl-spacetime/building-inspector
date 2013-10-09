@@ -17,7 +17,7 @@ table td, table th {
 }
 
 p {
-	margin-bottom: 2em;
+	margin-bottom: 1em;
 }
 
 #nav-admin {
@@ -119,6 +119,7 @@ p {
 
 	@media screen and (min-width: $desktopwidth) {
 		width: 210px;
+		margin-left: 120px;
 	}
 
 	&:before {
@@ -176,6 +177,14 @@ p {
 	background: asset-url("logo-building.jpg", image);
 	// background-position: 50px -120px;
 
+	@media screen and (min-width: $desktopwidth) {
+		height: 100%;
+	}
+
+	@media screen and (min-width: $desktopwidth*2) {
+		background: asset-url("logo-building@2x.jpg", image);
+	}
+
 	// &.about {
 	// 	@media screen and (min-width: $desktopwidth) {
 	// 		background-attachment: fixed;
@@ -191,11 +200,6 @@ p {
 	text-align: center;
 	position: relative;
 	overflow: hidden;
-
-	// @media screen and (max-width: $desktopwidth) {
-	// 	width: auto;
-	// 	// height: 100%;
-	// }
 }
 
 #intro {
@@ -208,16 +212,20 @@ p {
 	margin: 0 auto;
 	background: rgba(255,255,255,0.65);
 
-	@media screen and (min-width: $desktopwidth) {
-		width: $desktopwidth;
-	}
-
 	p {
-		line-height: 1.25em;
+		line-height: 1.5em;
 		margin-top: 5px;
 		padding: 5px;
 		font-size: 14px;
-		text-align: left;
+		text-align: center;
+	}
+
+	@media screen and (min-width: $desktopwidth) {
+		width: $desktopwidth;
+
+		p {
+			font-size: 16px;
+		}
 	}
 }
 
@@ -252,6 +260,13 @@ h1.logo {
 
 	@include rounded-corners(5px);
 
+	@media screen and (min-width: $desktopwidth) {
+		padding: 20px 4px;
+		width: 120px;
+		font-size: 36px;
+		@include rounded-corners(10px);
+	}
+
 	&:hover {
 		color: $white;
 		text-decoration: none;
@@ -279,13 +294,13 @@ h1.logo {
 }
 
 #map-about {
-	width: 100%;
-	height: 100%;
+	// width: 100%;
+	// height: 100%;
 	position: relative;
 	z-index: 110;
 	background-color: $white;
 	color: $grayDarkest;
-	overflow: scroll;
+	// overflow: scroll;
 }
 
 #map-tutorial {

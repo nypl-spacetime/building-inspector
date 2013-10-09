@@ -5,11 +5,14 @@
 @import "compass/css3/border-radius";
 
 #main-container {
-	width: 100%;
-	height: 100%;
-	position: relative;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
 
 	@include clearfix;
+	overflow: scroll;
 
 	// @media screen and (min-width: $desktopwidth) {
 	// 	width: $desktopwidth;

@@ -47,12 +47,14 @@ class Status
 					out = for key, val of f.properties
 						"<strong>#{key}:</strong> #{val}"
 					l.bindPopup(out.join("<br />"))
+					l.on 'click', ()->
+						m.fitBounds(@.getBounds())
 			)
 
 			for poly in data
 				geo.addData p.makePolygon(poly)
 
-			console.log geo
+			# console.log geo
 
 			geo.addTo(m)
 		)

@@ -162,22 +162,21 @@ class TagBuilding
 			@firstLoad = false
 			mapdata = $('#tagbuildingjs').data("map")
 			$("#loader").remove()
-			mapdata.poly = @shufflePolygons(mapdata.poly)
-			@loadedData = mapdata
-			@polyData = mapdata.poly
-			@updateScore()
-			@showNextPolygon()
+			@processPolygons(mapdata)
 		else
 			$.getJSON('/fixer/map.json', (data) ->
-				# console.log(data);
+				# console.log(d);
 				$("#loader").remove()
-				data.poly = tagger.shufflePolygons(data.poly)
-				tagger.loadedData = data
-				tagger.polyData = data.poly
-				tagger.updateScore()
-				tagger.showNextPolygon()
+				tagger.processPolygons(data)
 			)
 	
+	processPolygons: (data) ->
+		data.poly = @shufflePolygons(data.poly)
+		@loadedData = data
+		@polyData = data.poly
+		@updateScore()
+		@showNextPolygon()
+
 	shufflePolygons: (a) ->
 		# from: http://coffeescriptcookbook.com/chapters/arrays/shuffling-array-elements
 		# From the end of the list to the beginning, pick element `i`.
