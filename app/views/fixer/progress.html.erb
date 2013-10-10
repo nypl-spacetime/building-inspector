@@ -1,18 +1,19 @@
-<% content_for :page_title do %>Progress<% end %>
+<% content_for :page_title do %>Bldg Inspector<% end %>
 
 <% content_for :dynamic_js do %>
-	<%= javascript_include_tag "progress", {:id => "progressjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}")} %>
-
 	<%= stylesheet_link_tag    "jquery.swipeshow", :media => "all" %>
 	<%= stylesheet_link_tag    "slideshow-theme", :media => "all" %>
-	<%= javascript_include_tag "jquery.swipeshow.min" %>
-
 	<%= stylesheet_link_tag    "progress", :media => "all" %>
 	<%= stylesheet_link_tag    "MarkerCluster", :media => "all" %>
 	<%= stylesheet_link_tag    "MarkerCluster.Default", :media => "all" %>
 	<!--[if lte IE 8]>
 	<%= stylesheet_link_tag    "MarkerCluster.Default.ie", :media => "all" %>
 	<![endif]-->
+
+	<%= javascript_include_tag "progress", {:id => "progressjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}")} %>
+
+	<%= javascript_include_tag "jquery.swipeshow.min" %>
+
 	<%= javascript_include_tag "leaflet.markercluster" %>
 <% end %>
 
