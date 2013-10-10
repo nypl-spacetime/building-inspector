@@ -151,8 +151,8 @@ class Progress
 					# out = for key, val of f.properties
 					# 	"<strong>#{key}:</strong> #{val}"
 					# l.bindPopup(out.join("<br />"))
-					# l.on 'click', ()->
-					# 	m.fitBounds(@.getBounds())
+					l.on 'click', ()->
+						m.fitBounds(@.getBounds())
 			)
 			no_json = L.geoJson(data.no_poly,
 				style: (feature) ->
