@@ -22,7 +22,11 @@ class FixerController < ApplicationController
 		# returns a GeoJSON object with the flags the session has sent so far
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
 		session = getSession()
-		all_polygons = Flag.progress_for_session(session)
+		if user_signed_in?
+      all_polygons = Flag.progress_for_user(current_user.id)
+    else
+      all_polygons = Flag.progress_for_session(session)
+    end 
 		yes_poly = []
 		no_poly = []
 		fix_poly = []
@@ -36,8 +40,12 @@ class FixerController < ApplicationController
 			end
 		end
 		@progress = {}
-		@progress[:all_polygons] = Polygon.count
-		@progress[:all_polygons_session] = Flag.flags_for_session(session)
+		@progress[:all_polygons] = Polygon.count		
+		if user_signed_in?
+      @progress[:all_polygons_session] = Flag.flags_for_user(current_user.id)
+    else
+      @progress[:all_polygons_session] = Flag.flags_for_session(session)
+    end 
 		@progress[:fix_poly] = { :type => "FeatureCollection", :features => fix_poly }
 		@progress[:no_poly] = { :type => "FeatureCollection", :features => no_poly }
 		@progress[:yes_poly] = { :type => "FeatureCollection", :features => yes_poly }
@@ -60,7 +68,11 @@ class FixerController < ApplicationController
 		map[:status][:map_polygons_session] = map[:poly].count
 		map[:status][:all_sheets] = Sheet.count
 		map[:status][:all_polygons] = Polygon.count
-		map[:status][:all_polygons_session] = Flag.flags_for_session(session)
+		if user_signed_in?
+		  map[:status][:all_polygons_session] = Flag.flags_for_user(current_user.id)
+		else
+		  map[:status][:all_polygons_session] = Flag.flags_for_session(session)
+		end		
 		return map
 	end
 
@@ -86,8 +98,9 @@ class FixerController < ApplicationController
 
 	def getSession
 		if cookies[:session] == nil || cookies[:session] == ""
-			cookies[:session] = { :value => request.session_options[:id], :expires => 365.days.from_now }
+			cookies[:session] = { :value => request.session_options[:id], :expires => 365.days.from_now }			
 		end
+		Usersession.register_user_session(current_user.id, cookies[:session]) if user_signed_in?
 		cookies[:session]
 	end
 
