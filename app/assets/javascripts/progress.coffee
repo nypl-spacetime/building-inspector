@@ -8,7 +8,7 @@ class Progress
 		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859/859spec.json', 
 			zoomControl: false
 			animate: true
-			scrollWheelZoom: false
+			scrollWheelZoom: true
 			attributionControl: true
 			minZoom: 12
 			maxZoom: 20
