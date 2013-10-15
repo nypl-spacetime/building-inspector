@@ -14,82 +14,73 @@
 	position: absolute;
 }
 
-	#buttons {
-		.wrapper {
-			width: 290px;
-			margin: 0 auto;
+#buttons {
+	.wrapper {
+		width: 290px;
+		margin: 0 auto;
 
-			@include clearfix;
-		}
+		@include clearfix;
+	}
+}
+
+#buttons a, .wrapper a, .wrapper span {
+	width: 80px;
+	height: 45px;
+	margin: 10px;
+	padding-top: 20px;
+	float: left;
+	text-align: center;
+	text-decoration: none;
+	color: $white;
+
+	@include rounded-corners(10px);
+
+	&:first-child {
+		margin-left: 5px;
 	}
 
-	#buttons a, .wrapper a, .wrapper span {
-		width: 80px;
-		height: 45px;
-		margin: 10px;
-		padding-top: 20px;
-		float: left;
-		text-align: center;
-		text-decoration: none;
-		color: $white;
-
-		@include rounded-corners(10px);
-
-		&:first-child {
-			margin-left: 5px;
-		}
-
-		&:last-child {
-			margin-right: 5px;
-		}
-
-		&.button {
-			background-color: $grayDarker;
-		}
-
-		&#no-button, &.red {
-			background-color: $nocolor;
-		}
-
-		&#fix-button, &.yellow {
-			// height: 65px;
-			// padding-top: 25px;
-			// color: $black;
-			background-color: $fixcolor;
-		}
-
-		&#yes-button, &.green {
-			background-color: $yescolor;
-		}
-		&#no-button.active, &#fix-button.active, &#yes-button.active {
-			font-size: 24px;
-		}
-
-		&#no-button.inactive, &#fix-button.inactive, &#yes-button.inactive {
-			color: transparent;
-			background-color: transparent;
-		}
-
-		&.building {
-			// width: 80px;
-		}
-
-		&.centered {
-			margin: 50px auto 0;
-			float: none;
-			display: block;
-		}
-
-		&#yes-button:hover, &#no-button:hover, &#fix-button:hover {
-			background: $grayDarker;
-		}
+	&:last-child {
+		margin-right: 5px;
 	}
 
-	// override leaflet +/- zoom for small screen
-	.leaflet-top.leaflet-right {
-		top: 40px;
-
-		// @media screen and (max-width: $desktopwidth) {
-		// 	top: 40px;
-		// }
+	&.button {
+		background-color: $grayDarker;
 	}
+
+	&#no-button, &.red {
+		background-color: $nocolor;
+	}
+
+	&#fix-button, &.yellow {
+		// height: 65px;
+		// padding-top: 25px;
+		// color: $black;
+		background-color: $fixcolor;
+	}
+
+	&#yes-button, &.green {
+		background-color: $yescolor;
+	}
+	&#no-button.active, &#fix-button.active, &#yes-button.active {
+		font-size: 24px;
+	}
+
+	&#no-button.inactive, &#fix-button.inactive, &#yes-button.inactive {
+		color: transparent;
+		background-color: transparent;
+	}
+
+	&.building {
+		// width: 80px;
+	}
+
+	&.centered {
+		margin: 50px auto 0;
+		float: none;
+		display: block;
+	}
+
+	&#yes-button:hover, &#no-button:hover, &#fix-button:hover {
+		background: $grayDarker;
+	}
+}

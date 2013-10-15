@@ -208,7 +208,7 @@ class Progress
 		mapDOM = $("#map-bar")
 		mapDOM.find(".bar").css("width", mapScore + "%")
 		$("#score .total").text(current)
-		$("#map-total").text(total + " shapes")
+		$("#map-total").text("of " + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " shapes")
 
 		url = $('#progressjs').data("server")
 		tweet = current + " buildings checked! Data mining old maps with the Building Inspector from @NYPLMaps + @nypl_labs"
