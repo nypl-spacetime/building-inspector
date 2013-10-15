@@ -1,8 +1,8 @@
 <% content_for :page_title do %>Bldg Inspector<% end %>
 
 <% content_for :dynamic_js do %>
-	<%= stylesheet_link_tag    "jquery.swipeshow", :media => "all" %>
-	<%= stylesheet_link_tag    "slideshow-theme", :media => "all" %>
+	<%# stylesheet_link_tag    "jquery.swipeshow", :media => "all" %>
+	<%# stylesheet_link_tag    "slideshow-theme", :media => "all" %>
 	<%= stylesheet_link_tag    "progress", :media => "all" %>
 	<%= stylesheet_link_tag    "MarkerCluster", :media => "all" %>
 	<%= stylesheet_link_tag    "MarkerCluster.Default", :media => "all" %>
@@ -12,7 +12,7 @@
 
 	<%= javascript_include_tag "progress", {:id => "progressjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}")} %>
 
-	<%= javascript_include_tag "jquery.swipeshow.min" %>
+	<%# javascript_include_tag "jquery.swipeshow.min" %>
 
 	<%= javascript_include_tag "leaflet.markercluster" %>
 <% end %>
@@ -21,16 +21,10 @@
 <%= render :partial => "partials/nav" %>
 
 <div id="main-container">
-	<%= render :partial => "partials/tutorial" %>
-
-	<%= render :partial => "partials/about" %>
-
-	<%= render :partial => "partials/score" %>
-
-	<%= link_to (content_tag "span", "CLOSE"), "javascript:;", {:id => "link-progress-close", :class => "close"} %>
-	<div id="main-container">
-		<div id="map-container" class="progress">
-			<div id="map"></div>
-		</div>
+	<div id="map-container" class="progress">
+		<div id="map"></div>
 	</div>
+</div>
+<div id="controls">
+	<%= render :partial => "partials/score" %>
 </div>

@@ -5,40 +5,46 @@
 @import "compass/css3/border-radius";
 
 #main-container {
-	position: absolute;
-	left: 0;
-	top: 0;
-	right: 0;
-	bottom: 0;
-
 	@include clearfix;
-	overflow: scroll;
+	position: absolute;
+	top: 100px;
+	bottom: 150px;
+	left: 0;
+	right: 0;
 
-	// @media screen and (min-width: $desktopwidth) {
-	// 	width: $desktopwidth;
-	// 	height: 540px;
-	// 	margin: 0 auto;
-	// }
+	#map-container, #map {
+		width: 100%;
+		height: 100%;
+	}
+}
+
+#controls {
+	position: absolute;
+	height: 150px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: $gray;
 }
 
 #score {
-	position: absolute;
-	z-index: 111;
-	top: 40px;
-	left: 0;
-	font-size: 30px;
+	font-size: 20px;
 	padding: 5px 10px;
-	background: $white;
-	color: $orange;
-	cursor: pointer;
+	background: $grayLight;
+	color: $white;
+	width: 260px;
+	margin: 0 auto;
+	text-align: center;
+	line-height: normal;
 
-	@include border-bottom-right-radius(5px);
+	@include border-radius(0 0 10px 10px);
+	@include clearfix;
 
 	.progress {
 		position: relative;
 		font-size: 18px;
 		background: $grayDarkest;
-		margin: 5px 0 0;
+		margin: 5px 0;
 		text-transform: uppercase;
 	}
 
@@ -46,7 +52,7 @@
 		position: absolute;
 		left: 5px;
 		top: -3px;
-		color: $orange;
+		color: lighten($orange, 10%);
 	}
 
 	.bar {
@@ -54,12 +60,34 @@
 		width: 0%;
 
 		&.level {
-			background: $orange;
+			background: lighten($orange, 10%);
 		}
 
 		&.map {
-			background: $orange;
+			background: lighten($orange, 10%);
 		}
+	}
+
+	#score-save, #score-progress {
+		float: left;
+		width: 100px;
+		color: $grayDarker;
+		font-size: 12px;
+		padding: 5px 0;
+		cursor: pointer;
+
+		a {
+			color: $grayDarker;
+		
+			&:hover {
+				color: $white;
+				text-decoration: none;
+			}
+		}
+	}
+
+	#score-progress {
+		float: right;
 	}
 
 	// @media screen and (min-width: $desktopwidth) {
@@ -85,19 +113,3 @@ a#tweet {
 	font-family:$iconfont;
 	-webkit-font-smoothing: antialiased;
 }
-
-
-#map-container {
-	position: relative;
-	height: 100%;
-
-	// @media screen and (min-width: $desktopwidth) {
-	// 	height: 320px;
-	// }
-}
-
-#map {
-	width: 100%;
-	height: 100%;
-}
-

@@ -1,5 +1,5 @@
 	<div id="score">
-		<div class="total">0</div>
+		<div class="total" title="Buildings you have processed">0</div>
 		<!-- <div id="level-bar" class="progress">
 			<span class="percent">0%</span>
 			<div class="bar level"></div>
@@ -10,6 +10,8 @@
 			<!-- <span class="percent">0%</span> -->
 			<div class="bar map"></div>
 		</div>
+		<div id="score-save">SAVE SCORE</div>
+		<div id="score-progress"><a href="/fixer/progress">VIEW PROGRESS</a></div>
 		<% if @current_page=="progress" %>
 		<div id="map-total"></div>
 		<%= link_to "T", "", {:onclick=>"//recordOutboundLink(this, 'Outbound Links', 'Twitter');return false;",:id => "tweet", :title => "Share on Twitter"} %>

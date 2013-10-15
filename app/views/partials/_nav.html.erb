@@ -1,6 +1,8 @@
 <div id="top-nav">
 	<%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:id => "link-nypl", :title => "Visit NYPL.org"} %>
-	<h1 class="logo"><span>Building Inspector</span></h1>
-	<%= link_to "?", "javascript:;", {:id => "link-help", :class => "icon"} %>
-	<%= link_to "i", "javascript:;", {:id => "link-about", :class => "icon"} %>
+	<h1 class="logo"><a href="/"><span>Building Inspector</span></a></h1>
+	<div id="links-service">
+		<%= link_to "HELP", "javascript:;", {:id => "link-help", :class => "icon"} %>
+		<%= link_to "ABOUT", "javascript:;", {:id => "link-about", :class => "icon"} %>
+	</div>
 </div>

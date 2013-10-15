@@ -56,8 +56,8 @@ class TagBuilding
 		$("#link-help").on("click", @invokeTutorial)
 		$("#link-help-close").on("click", @hideTutorial)
 
-		$("#link-about").on("click", @invokeAbout)
-		$("#link-about-close").on("click", @hideAbout)
+		# $("#link-about").on("click", @invokeAbout)
+		# $("#link-about-close").on("click", @hideAbout)
 
 		$("#yes-button").on("click", @submitYesFlag)
 		$("#no-button").on("click", @submitNoFlag)
@@ -73,11 +73,11 @@ class TagBuilding
 				when 51 then tagger.submitYesFlag()
 				when 99 then tagger.submitYesFlag()
 
-		$("#score .total").on 'click', () ->
-			location.href = "/fixer/progress"
+		# $("#score .total").on 'click', () ->
+		# 	location.href = "/fixer/progress"
 
-		$("#link-exit-about").on "click", () ->
-			tagger.hideTutorial()
+		# $("#link-exit-about").on "click", () ->
+		# 	tagger.hideTutorial()
 
 		$("#link-exit-tutorial").on "click", () ->
 			tagger.hideTutorial()
@@ -144,17 +144,17 @@ class TagBuilding
 		$("#map-about").hide()
 
 	invokeTutorial: () =>
-		@hideOthers()
-		$("#map-tutorial").unswipeshow()
-		$("#map-tutorial").show()
-		$("#map-tutorial").swipeshow
-			mouse: true
-			autostart: false
-		.goTo 0
+		# @hideOthers()
+		# $("#map-tutorial").unswipeshow()
+		# $("#map-tutorial").show()
+		# $("#map-tutorial").swipeshow
+		# 	mouse: true
+		# 	autostart: false
+		# .goTo 0
 
 	hideTutorial: () =>
-		@showOthers()
-		$("#map-tutorial").hide()
+		# @showOthers()
+		# $("#map-tutorial").hide()
 
 	getPolygons: () =>
 		tagger = @

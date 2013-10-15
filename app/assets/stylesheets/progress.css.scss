@@ -16,6 +16,19 @@
 	}
 }
 
+.leaflet-container {
+	background: $grayLight;
+}
+
+.progress .leaflet-top.leaflet-right {
+	top: 70px;
+	// top: 40px;
+
+	// @media screen and (max-width: $desktopwidth) {
+	// 	top: 70px;
+	// }
+}
+
 .cluster-small, .cluster-medium, .cluster-large {
 	width: 30px;
 	height: 30px;

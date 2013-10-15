@@ -37,32 +37,60 @@ p {
 }
 
 #top-nav {
-	height: 40px;
-	// width: auto;
-	margin-bottom: 20px;
-	text-align: right;
+	height: 100px;
 	background: $grayLightest;
 	position: absolute;
 	top: 0;
-	width: 100%;
+	right: 0;
+	left: 0;
 	z-index: 110;
-	margin: 0;
 
 	a {
 		color: $grayDark;
-		line-height: 38px;
-		margin-right: 10px;
-		font-size: 20px;
+
 
 		&.icon {
-			content: attr(data-icon);
-			font-family:$iconfont;
-			-webkit-font-smoothing: antialiased;
+			display: inline-block;
+			padding: 5px 10px;
+			background: $grayLighter;
+			font-size: 12px;
+
+			&:hover {
+				background: $grayDark;
+				color: $grayLighter;
+			}
+
+			&#link-help {
+				@include border-radius(10px 0 0 10px);
+				&:before {
+					content: "?";
+				}
+			}
+
+			&#link-about {
+				@include border-radius(0 10px 10px 0);
+				&:before {
+					content: "i";
+				}
+			}
+
+			&:before {
+				margin-right: 10px;
+				font-size: 12px;
+				content: attr(data-icon);
+				font-family:$iconfont;
+				-webkit-font-smoothing: antialiased;
+			}			
 		}
 	}
 
 	a:hover {
 		text-decoration: none;
+	}
+
+	#links-service {
+		float: right;
+		margin: 30px 20px;
 	}
 
 	// @media screen and (max-width: $desktopwidth) {
@@ -76,7 +104,7 @@ p {
 	#link-nypl {
 		position: static;
 		float: left;
-		margin: 5px;
+		margin: 35px 20px;
 		padding: 0;
 		line-height: 31px;
 		height: 31px;
@@ -91,14 +119,21 @@ p {
 		}
 	}
 
-	h1 {
-		width: 100px;
-		height: 41px;
+	h1.logo {
+		background: asset-url("logo-gray.svg", image) center no-repeat;
+		width: 200px;
+		height: 170px;
 		background-size: 100%;
 		position: absolute;
 		margin: 0 auto;
 		top: 0;
-		left: 40px;
+		left: 60px;
+
+		a {
+			display: inline-block;
+			width: 100%;
+			height: 100%;
+		}
 	}
 }
 
@@ -288,11 +323,6 @@ h1.logo {
 	}
 }
 
-#link-exit-tutorial {
-	font-size: 32px;
-	width: 200px;
-}
-
 #map-about {
 	// width: 100%;
 	// height: 100%;
@@ -303,179 +333,3 @@ h1.logo {
 	// overflow: scroll;
 }
 
-#map-tutorial {
-	width: 100%;
-	height: 100%;
-	position: relative;
-	// left: 140px;
-	// top: 2%;
-	z-index: 110;
-	background-color: $gray;
-	// @include box-shadow(0, 0, 15px);
-
-	.slides {
-		// height: 540px;
-
-		.slide {
-			padding-top: 0;
-
-			@media screen and (min-width: $desktopwidth) {
-				padding-top: 40px;
-			}
-		}
-
-		p, h2 {
-			text-align: center;
-			color: $grayLightest;
-			margin-left: 20px;
-			margin-right: 20px;
-			margin-top: 0;
-			margin: 0 10px 10px;
-		}
-
-		p {
-			@media screen and (min-width: $desktopwidth) {
-				width: $desktopwidth;
-				margin-left: auto;
-				margin-right: auto;
-			}
-		}
-
-		p:first-child {
-			padding-top: 40px;
-		}
-
-		img {
-			display: block;
-			margin: 0 auto;
-		}
-
-		a {
-			color: $white;
-		}
-	}
-
-	.wrapper {
-		margin-top: 0;
-
-		span {
-			height: 45px;
-			padding-top: 20px;
-		}
-	}
-
-	.overlay {
-		z-index: 12;
-		position: absolute;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
-
-		@include clearfix;
-	}
-
-	.dots {
-		bottom: 0;
-	}
-}
-
-#buttons, .slide {
-	position: absolute;
-	bottom: 10px;
-	width: 100%;
-
-	@include clearfix;
-
-	// @media screen and (min-width: $desktopwidth) {
-	// 	position: relative;
-	// 	bottom: auto;
-	// 	margin-top: 10px;
-	// }
-
-	.wrapper {
-		width: 290px;
-		margin: 0 auto;
-
-		@include clearfix;
-	
-		// @media screen and (min-width: $desktopwidth) {
-		// 	margin: 0 auto;
-		// }
-	}
-}
-
-#buttons a, .wrapper a, .wrapper span {
-	width: 80px;
-	height: 55px;
-	margin: 10px;
-	padding-top: 35px;
-	float: left;
-	text-align: center;
-	text-decoration: none;
-	color: $white;
-
-	@include rounded-corners(10px);
-
-	&:first-child {
-		margin-left: 5px;
-	}
-
-	&:last-child {
-		margin-right: 5px;
-	}
-
-	&.button {
-		background-color: $grayDarker;
-	}
-
-	&#no-button, &.red {
-		background-color: $nocolor;
-	}
-
-	&#fix-button, &.yellow {
-		// height: 65px;
-		// padding-top: 25px;
-		// color: $black;
-		background-color: $fixcolor;
-	}
-
-	&#yes-button, &.green {
-		background-color: $yescolor;
-	}
-	&#no-button.active, &#fix-button.active, &#yes-button.active {
-		font-size: 24px;
-	}
-
-	&#no-button.inactive, &#fix-button.inactive, &#yes-button.inactive {
-		color: transparent;
-		background-color: transparent;
-	}
-
-	&.building {
-		// width: 80px;
-	}
-
-	&.centered {
-		margin: 50px auto 0;
-		float: none;
-		display: block;
-	}
-}
-
-// override leaflet +/- zoom for small screen
-.leaflet-top.leaflet-right {
-	top: 40px;
-
-	// @media screen and (max-width: $desktopwidth) {
-	// 	top: 40px;
-	// }
-}
-.progress .leaflet-top.leaflet-right {
-	top: 70px;
-	// top: 40px;
-
-	// @media screen and (max-width: $desktopwidth) {
-	// 	top: 70px;
-	// }
-}
