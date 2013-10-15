@@ -22,8 +22,8 @@
 #map-highlight {
 	position: absolute;
 	// z-index: 1;
-	left: 20%;
-	right: 20%;
+	left: 30%;
+	right: 30%;
 	top: 20%;
 	bottom: 20%;
 }
@@ -143,4 +143,27 @@ a#tweet {
 	content: attr(data-icon);
 	font-family:$iconfont;
 	-webkit-font-smoothing: antialiased;
+}
+
+// introjs overrides
+.introjs-overlay {
+	opacity: .5;
+}
+
+.introjs-prevbutton {
+	display: none;
+}
+
+.introjs-helperLayer {
+	border: 10px solid $grayLightest;
+	background: transparent;
+}
+
+.introjs-helperLayer.noMap {
+	border: none;
+	background: rgba(255,255,255,.9);
+
+	.introjs-nextbutton {
+		display: none;
+	}
 }
