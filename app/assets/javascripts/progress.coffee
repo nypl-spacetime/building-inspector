@@ -3,6 +3,7 @@ class Progress
 	constructor: () ->
 		$("#map-tutorial").hide()
 		$("#map-about").hide()
+		$("#tweet").hide()
 		NW = new L.LatLng(40.65563874006115,-74.13093566894531)
 		SE = new L.LatLng(40.81640757520087,-73.83087158203125)
 		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859/859spec.json', 
@@ -31,23 +32,23 @@ class Progress
 
 		@map.on('load', @getPolygons)
 
-		$("#link-help").on("click", @invokeTutorial)
-		$("#link-help-close").on("click", @hideTutorial)
+		# $("#link-help").on("click", @invokeTutorial)
+		# $("#link-help-close").on("click", @hideTutorial)
 
-		$("#link-about").on("click", @invokeAbout)
-		$("#link-about-close").on("click", @hideAbout)
+		# $("#link-about").on("click", @invokeAbout)
+		# $("#link-about-close").on("click", @hideAbout)
 
-		$("#score .total").on 'click', () ->
-			location.href = "/fixer/building"
+		# $("#score .total").on 'click', () ->
+		# 	location.href = "/fixer/building"
 
-		$("#link-progress-close").on 'click', () ->
-			location.href = "/fixer/building"
+		# $("#link-progress-close").on 'click', () ->
+		# 	location.href = "/fixer/building"
 
-		$("#link-exit-about").on "click", () ->
-			p.hideTutorial()
+		# $("#link-exit-about").on "click", () ->
+		# 	p.hideTutorial()
 
-		$("#link-exit-tutorial").on "click", () ->
-			p.hideTutorial()
+		# $("#link-exit-tutorial").on "click", () ->
+		# 	p.hideTutorial()
 
 	hideOthers: () ->
 		$("#map-container").hide()
@@ -214,6 +215,7 @@ class Progress
 		tweet = current + " buildings checked! Data mining old maps with the Building Inspector from @NYPLMaps + @nypl_labs"
 		twitterurl = "https://twitter.com/share?url=" + url + "&text=" + tweet
 
+		$("#tweet").show()
 
 		$("#tweet").attr "href", twitterurl
 
