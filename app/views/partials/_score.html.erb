@@ -13,7 +13,9 @@
 			<!-- <span class="percent">0%</span> -->
 			<div class="bar map"></div>
 		</div>
-		<div id="score-save">SAVE SCORE</div>
+		<div id="score-save">
+			<%= link_to "SAVE SCORE", user_omniauth_authorize_path(:google_oauth2) %>
+		</div>
 		<% if @current_page=="progress" %>
 		<div id="score-progress"><a href="/fixer/building">INSPECT MORE</a></div>
 		<% else %>
