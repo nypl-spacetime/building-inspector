@@ -7,6 +7,7 @@
 #main-container {
 	@include clearfix;
 	position: absolute;
+	margin-top: 0;
 	top: 100px;
 	bottom: 150px;
 	left: 0;
@@ -89,6 +90,7 @@
 
 	#score-save, #score-progress {
 		float: left;
+		text-align: left;
 		width: 100px;
 		color: $grayDarker;
 		font-size: 12px;
@@ -107,6 +109,7 @@
 
 	#score-progress {
 		float: right;
+		text-align: right;
 	}
 
 	// @media screen and (min-width: $desktopwidth) {
