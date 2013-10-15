@@ -8,8 +8,17 @@ class Flag < ActiveRecord::Base
 	def self.flags_for_session(session_id)
 		Flag.where(:session_id => session_id).count
 	end
+	
+	def self.flags_for_user(user_id)
+    Flag.select("DISTINCT flags.id").joins('INNER JOIN usersessions ON usersessions.session_id = flags.session_id').where('usersessions.user_id = ?', user_id).count    
+  end
 
 	def self.progress_for_session(session_id)
 		Flag.select("DISTINCT polygons.geometry, flags.*").joins(:polygon).where(:session_id => session_id)
 	end
+	
+	def self.progress_for_user(user_id)
+    Flag.select("DISTINCT polygons.geometry, flags.*").joins(:polygon).joins('INNER JOIN usersessions ON usersessions.session_id = flags.session_id').where('usersessions.user_id = ?', user_id)
+  end
+  
 end

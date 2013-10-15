@@ -226,6 +226,15 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
+  
+  require "omniauth-google-oauth2"  
+  if Rails.env.development?
+    # authorized for localhost:3000
+    config.omniauth :google_oauth2, "424787999120-mvsuuk1r3v8p8iqkjjev7o8fest4qtq1.apps.googleusercontent.com", "cErgNLLJEbR7RDxOcxrjoOw3", { access_type: "offline", approval_prompt: "" }
+  else
+    # authorized for buildinginspector.nypl.org
+    config.omniauth :google_oauth2, "424787999120.apps.googleusercontent.com", "SWjUrRp2cBNV5Vm0-ZE_Xb1L", { access_type: "offline", approval_prompt: "" }
+  end
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
