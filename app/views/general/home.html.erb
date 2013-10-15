@@ -14,16 +14,16 @@
 	}
 	</style>
 <% end %>
+
+<%= render :partial => "partials/nav" %>
+
 <div id="main-container">
 	<div id="logo-background">
-		<h1 class="logo"><span>Building Inspector</span></h1>
+		<%= link_to "GO!", "/fixer/building", :id => "link-try" %>
+	</div>
 
-	    <%= link_to "GO!", "/fixer/building", :id => "link-try" %>
-
-	    <div id="intro">
-	    	<p>Help trace New York City's past</p>
-		    <p>NYPL Labs and the Lionel Pincus and Princess Firyal Map Division at:</p>
-			<%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:id => "link-nypl", :title => "Visit NYPL.org"} %>
-	    </div>
+	<div id="intro">
+		<h3>Help trace New York City's past</h3>
+		<p>Brought to you by NYPL Labs and the Lionel Pincus and Princess Firyal Map Division</p>
 	</div>
 </div>

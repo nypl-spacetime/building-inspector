@@ -36,6 +36,19 @@ p {
 	}
 }
 
+.nypl-logo {
+	&:before {
+		content: attr(data-icon);
+		font-family:$iconfont;
+		color: $grayDarkest;
+		-webkit-font-smoothing: antialiased;
+		content: 'N'; //N W
+		display: block;
+		position: absolute;
+		font-size: 30px;
+	}
+}
+
 #top-nav {
 	height: 100px;
 	background: $grayLightest;
@@ -102,7 +115,10 @@ p {
 	// }
 
 	#link-nypl {
+		display: block;
+		overflow: hidden;
 		position: static;
+		color: $grayDarkest;
 		float: left;
 		margin: 35px 20px;
 		padding: 0;
@@ -110,12 +126,12 @@ p {
 		height: 31px;
 		width: 31px;
 
-		&:before {
-			font-size: 30px;
-		}
-
 		span {
 			display: none;
+		}
+
+		&:hover {
+			text-decoration: none;
 		}
 	}
 
@@ -134,42 +150,6 @@ p {
 			width: 100%;
 			height: 100%;
 		}
-	}
-}
-
-#link-nypl {
-	display: block;
-	height: 22px;
-	overflow: hidden;
-	width: auto;
-	line-height: 23px;
-	// margin: 0 auto;
-	text-align: right;
-	color: $grayDarkest;
-	// position: absolute;
-	// right: 0;
-	// background: $grayLightest;
-	padding: 5px 10px;
-	font-size: 14px;
-
-	@media screen and (min-width: $desktopwidth) {
-		width: 210px;
-		margin-left: 120px;
-	}
-
-	&:before {
-		content: attr(data-icon);
-		font-family:$iconfont;
-		color: $grayDarkest;
-		-webkit-font-smoothing: antialiased;
-		content: 'N'; //N W
-		font-size: 22px;
-		display: block;
-		position: absolute;
-	}
-
-	&:hover {
-		text-decoration: none;
 	}
 }
 
@@ -209,16 +189,19 @@ p {
 
 #logo-background {
 	// height: 100%;
+
 	background: asset-url("logo-building.jpg", image);
 	// background-position: 50px -120px;
 
-	@media screen and (min-width: $desktopwidth) {
-		height: 100%;
-	}
+	display: inline-block;
+	margin: 150px auto 40px;
+	padding: 40px;
+	@include border-radius(40px);
+	// height: 100%;
 
-	@media screen and (min-width: $desktopwidth*2) {
-		background: asset-url("logo-building@2x.jpg", image);
-	}
+	// @media screen and (min-width: $desktopwidth*2) {
+	// 	background: asset-url("logo-building@2x.jpg", image);
+	// }
 
 	// &.about {
 	// 	@media screen and (min-width: $desktopwidth) {
@@ -235,13 +218,14 @@ p {
 	text-align: center;
 	position: relative;
 	overflow: hidden;
+	background: $grayLight;
 }
 
 #intro {
 	// position: absolute;
 	// left: 200px;
 	// top: 110px;
-	width: 220px;
+	width: $desktopwidth;
 	padding: 10px;
 	// text-align: left;
 	margin: 0 auto;
@@ -251,40 +235,20 @@ p {
 		line-height: 1.5em;
 		margin-top: 5px;
 		padding: 5px;
-		font-size: 14px;
+		font-size: 16px;
 		text-align: center;
 	}
 
-	@media screen and (min-width: $desktopwidth) {
-		width: $desktopwidth;
-
-		p {
-			font-size: 16px;
-		}
-	}
 }
 
-h1.logo {
-	width: 181px;
-	height: 176px;
-	background: asset-url("logo.svg", image) center no-repeat;
-	background-size: 100%;
-	// position: absolute;
-
-	// left: 12px;
-	// top: 51px;
-	margin: 0;
-	margin-left: 83px;
-
-	span {
-		display: none;
-	}
+h1.logo span {
+	display: none;
 }
 
 #link-try {
 	display: block;
 	width: 60px;
-	margin: 0 auto 20px;
+	margin: 0;
 	padding: 10px 12px;
 	font-size: 24px;
 	text-transform: uppercase;
