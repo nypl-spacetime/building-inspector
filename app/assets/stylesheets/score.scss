@@ -19,6 +19,15 @@
 	}
 }
 
+#map-highlight {
+	position: absolute;
+	// z-index: 1;
+	left: 20%;
+	right: 20%;
+	top: 20%;
+	bottom: 20%;
+}
+
 #controls {
 	position: absolute;
 	height: 150px;
