@@ -100,11 +100,17 @@
 	#score-save, #score-progress {
 		float: left;
 		text-align: left;
-		width: 100px;
+		width: 120px;
 		color: $grayDarker;
 		font-size: 12px;
 		padding: 5px 0;
 		cursor: pointer;
+		text-transform: uppercase;
+		
+		small {
+		  font-size: 10px;
+		  white-space: nowrap;
+		}
 
 		a {
 			color: $grayDarker;
