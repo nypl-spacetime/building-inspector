@@ -3,6 +3,8 @@
 @import "compass/utilities/general/clearfix";
 @import "variables";
 @import "compass/css3/border-radius";
+@import "compass/css3/text-shadow";
+@import "compass/css3/box-shadow";
 
 #main-container {
 	@include clearfix;
@@ -19,9 +21,15 @@
 	}
 }
 
+#app-highlight {
+	position: absolute;
+	left: 49%;
+	right: 49%;
+	top: 0;
+}
+
 #map-highlight {
 	position: absolute;
-	// z-index: 1;
 	left: 30%;
 	right: 30%;
 	top: 20%;
@@ -153,8 +161,39 @@ a#tweet {
 }
 
 // introjs overrides
+.tutorial {
+	font-family: $mainfont;
+
+	strong {
+		font-weight: normal;
+		color: $orange;
+	}
+
+	.introjs-button {
+		border: none;
+		padding: 5px 10px;
+		@include border-radius(5px);
+		@include text-shadow(none);
+		@include single-box-shadow(none);
+		background: $grayLight;
+		line-height: 13px;
+		text-transform: uppercase;
+		color: $white;
+		text-decoration: none;
+
+		&:hover {
+			color: $grayLight;
+			background: $white;
+		}
+	}
+
+	.introjs-skipbutton {
+		background: $grayLighter;
+	}
+}
+
 .introjs-overlay {
-	opacity: .5;
+	opacity: .5 !important;
 }
 
 .introjs-prevbutton {
@@ -172,5 +211,9 @@ a#tweet {
 
 	.introjs-nextbutton {
 		display: none;
+	}
+
+	&.yesNext .introjs-nextbutton {
+		display: inline-block;
 	}
 }

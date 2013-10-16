@@ -68,9 +68,12 @@ class TagBuilding
 		$("#link-help").on("click", @invokeTutorial)
 		$("#link-help-close").on("click", @hideTutorial)
 
-		# $("#link-about").on("click", @invokeAbout)
-		# $("#link-about-close").on("click", @hideAbout)
+		@addButtonListeners()
 
+		$("#link-exit-tutorial").on "click", () ->
+			tagger.hideTutorial()
+
+	addButtonListeners: () =>
 		$("#yes-button").on("click", @submitYesFlag)
 		$("#no-button").on("click", @submitNoFlag)
 		$("#fix-button").on("click", @submitFixFlag)
@@ -85,15 +88,11 @@ class TagBuilding
 				when 51 then tagger.submitYesFlag()
 				when 99 then tagger.submitYesFlag()
 
-		# $("#score .total").on 'click', () ->
-		# 	location.href = "/fixer/progress"
-
-		# $("#link-exit-about").on "click", () ->
-		# 	tagger.hideTutorial()
-
-		$("#link-exit-tutorial").on "click", () ->
-			tagger.hideTutorial()
-
+	removeButtonListeners: () =>
+		$("#yes-button").unbind()
+		$("#no-button").unbind()
+		$("#fix-button").unbind()
+		$("body").unbind("keyup")
 
 	updateScore: () =>
 		if @mapPolygons == 0 && @allPolygons == 0
@@ -181,10 +180,16 @@ class TagBuilding
 			#@intro.exit() if @stepAutomated and @tutorialStep > 1
 			@intro.setOptions(
 				skipLabel: "Exit tutorial"
+				tooltipClass: "tutorial"
 				steps: [
 						{
 							element: "#map-highlight"
-							intro: "Polygons show up here"
+							intro: "<strong>Here's how the app works</strong><br />We'll show you one computer-generated building outline at a time, laid over the original map."
+							position: "bottom"
+						}
+						{
+							element: "#buttons .wrapper"
+							intro: "Along with 3 buttons:<br />YES: (keyboard 3) for when the outline matches a building footprint<br />FIX: (keyboard 2) for when the outline mostly matches, but needs correcting<br />NO: (keyboard 1) for when the outline is not around a building"
 							position: "top"
 						}
 						{
@@ -223,14 +228,9 @@ class TagBuilding
 							position: "top"
 						}
 						{
-							element: "#score"
-							intro: "Watch your score"
-							position: "top"
-						}
-						{
 							element: "h1.logo"
 							intro: "End tutorial"
-							position: "right"
+							position: "bottom"
 						}
 				]
 			).onchange (e) ->
@@ -239,7 +239,7 @@ class TagBuilding
 				tagger.hideTutorial()
 			.onexit () ->
 				tagger.hideTutorial()
-			.goToStep(@tutorialStep).start()
+			.start()
 		else
 			@intro.goToStep(@tutorialStep)
 			
@@ -250,14 +250,20 @@ class TagBuilding
 		@stepAutomated = false
 		console.log @tutorialStep
 		$(".introjs-helperLayer").removeClass("noMap")
-		
+		$(".introjs-helperLayer").removeClass("yesNext")
+		@removeButtonListeners()
+
 		switch @tutorialStep
-			when 2, 4, 6, 8
+			when 2 
+				$(".introjs-helperLayer").addClass("noMap yesNext")
+			when 3, 5, 7, 9, 10
 				$(".introjs-helperLayer").addClass("noMap")
+				@addButtonListeners()
 		@
 
 	hideTutorial: () =>
 		console.log "end of tutorial"
+		@removeButtonListeners()
 		@tutorialOn = false
 		@polyData = @clone @_polyData
 		@currentIndex = @_currentIndex
@@ -267,6 +273,7 @@ class TagBuilding
 		# $("#map-tutorial").hide()
 		@intro.exit() if @intro
 		@intro = null
+		@addButtonListeners()
 
 	getPolygons: () =>
 		tagger = @
