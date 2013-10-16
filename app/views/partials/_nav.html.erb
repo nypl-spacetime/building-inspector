@@ -2,7 +2,11 @@
 	<%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:id => "link-nypl", :class => "nypl-logo", :title => "Visit NYPL.org"} %>
 	<h1 class="logo"><a href="/"><span>Building Inspector</span></a></h1>
 	<div id="links-service">
-		<%= link_to "HELP", "javascript:;", {:id => "link-help", :class => "icon"} %>
+		<%
+		help_link = "/building?tutorial=true"
+		help_link = "javascript:;" if @current_page=="fixer"
+		%>
+		<%= link_to "HELP", "#{help_link}", {:id => "link-help", :class => "icon"} %>
 		<%= link_to "ABOUT", "/general/about", {:id => "link-about", :class => "icon"} %>
 	</div>
 </div>

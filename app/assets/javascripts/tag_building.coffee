@@ -48,17 +48,22 @@ class TagBuilding
 
 		tagger = @
 
-		@tID = window.setTimeout(
-				() ->
-					tagger.invokeTutorial()
-				, 1000
-		) if @tutorialOn
+		if @tutorialOn
+			@map.on('load', () ->
+				tagger.getPolygons()
+				tagger.tID = window.setTimeout(
+						() ->
+							tagger.invokeTutorial()
+						, 1000
+				)
+			)
+		else
+			@map.on('load', @getPolygons)
+
 		# console.log @tutorialOn
 
 	addEventListeners: () =>
 		tagger = @
-
-		@map.on('load', @getPolygons)
 
 		$("#link-help").on("click", @invokeTutorial)
 		$("#link-help-close").on("click", @hideTutorial)

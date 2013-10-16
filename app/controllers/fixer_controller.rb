@@ -4,6 +4,7 @@ class FixerController < ApplicationController
 	respond_to :json
 
 	def building
+	  	@current_page = "fixer"
 		@isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
 		cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
 		@map = getMap().to_json
