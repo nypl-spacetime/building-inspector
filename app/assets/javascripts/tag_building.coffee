@@ -216,9 +216,14 @@ class TagBuilding
 						position: "top"
 					}
 					{
-						element: "#score"
+						element: "#map-highlight"
 						intro: "Watch your score"
 						position: "top"
+					}
+					{
+						element: "h1.logo"
+						intro: "End tutorial"
+						position: "right"
 					}
 			]
 		).onchange (e) ->
