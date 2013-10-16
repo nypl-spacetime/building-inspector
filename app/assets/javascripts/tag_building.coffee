@@ -265,7 +265,8 @@ class TagBuilding
 		@showNextPolygon()
 		# @showOthers()
 		# $("#map-tutorial").hide()
-		introJs().exit()
+		@intro.exit() if @intro
+		@intro = null
 
 	getPolygons: () =>
 		tagger = @
