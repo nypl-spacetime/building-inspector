@@ -9,7 +9,7 @@
 	position: absolute;
 	margin-top: 0;
 	top: 100px;
-	bottom: 150px;
+	bottom: 160px;
 	left: 0;
 	right: 0;
 
@@ -30,7 +30,7 @@
 
 #controls {
 	position: absolute;
-	height: 150px;
+	height: 160px;
 	bottom: 0;
 	left: 0;
 	right: 0;
@@ -100,7 +100,7 @@
 	#score-save, #score-progress {
 		float: left;
 		text-align: left;
-		width: 125px;
+		width: 130px;
 		color: $grayDarker;
 		font-size: 12px;
 		padding: 5px 0;
@@ -110,6 +110,7 @@
 		small {
 		  font-size: 10px;
 		  white-space: nowrap;
+		  line-height: 11px;
 		}
 
 		a {

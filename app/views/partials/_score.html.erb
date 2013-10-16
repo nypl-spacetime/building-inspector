@@ -15,7 +15,7 @@
 		</div>
 		<div id="score-save">
 		  <% if user_signed_in? %>
-		    <%= truncate(current_user.name, :length => 12, :omission => '…') %> <small><%= link_to 'EXIT', destroy_user_session_path, method: :delete %></small>
+		    <%= truncate(current_user.name, :length => 14, :omission => '…') %> <small><%= link_to 'EXIT', destroy_user_session_path, method: :delete %></small>
 		  <% else %>
 			 <%= link_to "SAVE SCORE", user_omniauth_authorize_path(:google_oauth2) %>
 			<% end %>
