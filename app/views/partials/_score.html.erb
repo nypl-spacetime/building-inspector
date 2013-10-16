@@ -14,7 +14,11 @@
 			<div class="bar map"></div>
 		</div>
 		<div id="score-save">
-			<%= link_to "SAVE SCORE", user_omniauth_authorize_path(:google_oauth2) %>
+		  <% if user_signed_in? %>
+		    HI, <%= current_user.name %> <small>(<%= link_to 'SIGN OUT', destroy_user_session_path, method: :delete %>)</small>
+		  <% else %>
+			 <%= link_to "SAVE SCORE", user_omniauth_authorize_path(:google_oauth2) %>
+			<% end %>
 		</div>
 		<% if @current_page=="progress" %>
 		<div id="score-progress"><a href="/fixer/building">INSPECT MORE</a></div>
