@@ -150,11 +150,8 @@ class TagBuilding
 		# 	mouse: true
 		# 	autostart: false
 		# .goTo 0
-		console.log "1", @_polyData
 		@_polyData = @clone @polyData
-		console.log "2", @_polyData
 		@polyData = @clone @tutorialData.poly
-		console.log "3", @_polyData
 		@_currentIndex = @currentIndex - 1
 		@currentIndex = -1
 		@showNextPolygon()
@@ -317,7 +314,7 @@ class TagBuilding
 		@
 
 	hideTutorial: () =>
-		console.log "end of tutorial"
+		# console.log "end of tutorial"
 		@intro.exit() if @intro
 		@intro = null
 		@removeButtonListeners()
@@ -429,7 +426,7 @@ class TagBuilding
 			@map.fitBounds( @geo.getBounds() )
 		else
 			return if @tutorialOn
-			console.log "Loading more polygons..."
+			# console.log "Loading more polygons..."
 			@mapPolygons = 0
 			@mapPolygonsSession = 0
 			@allPolygons = 0
