@@ -235,6 +235,15 @@ Devise.setup do |config|
     # authorized for buildinginspector.nypl.org
     config.omniauth :google_oauth2, "424787999120.apps.googleusercontent.com", "SWjUrRp2cBNV5Vm0-ZE_Xb1L", { access_type: "offline", approval_prompt: "" }
   end
+  
+  require "omniauth-facebook"
+  if Rails.env.development?
+    # authorized for localhost:3000
+    config.omniauth :facebook, "1436015846625485", "707c201d4edc99a24e6c8dee35191fd2"
+  else
+    # authorized for buildinginspector.nypl.org
+    config.omniauth :facebook, "192831357570461", "c1e0058d1ec125f5cc2b3ee0705c0016"
+  end
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

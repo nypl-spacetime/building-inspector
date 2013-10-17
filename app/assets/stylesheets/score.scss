@@ -114,6 +114,7 @@
 		padding: 5px 0;
 		cursor: pointer;
 		text-transform: uppercase;
+		position: relative;
 		
 		small {
 		  font-size: 10px;
@@ -129,6 +130,43 @@
 				text-decoration: none;
 			}
 		}
+	}
+	
+	#score-save {
+	  .sign-in-options {
+	    position: absolute;
+	    top: -90px;
+	    left: -60px;
+	    background: $grayLightest;
+	    padding: 12px;
+	    width: 160px;
+	    display: none;
+	    @include border-radius(6px);
+	    .sign-in-link {
+	      background: $grayLighter;
+	      display: block;
+	      margin-top: 6px;
+	      padding: 6px;
+	      @include border-radius(6px);
+	      &:first-child {
+	        margin-top: 0;
+	      }
+	      &:hover {
+          background: $grayDark;
+          color: $grayLighter;
+        }
+	    }
+	    .sign-in-callout {
+	      position: absolute;
+	      bottom: -10px;
+	      left: 80px;
+	      width: 0; 
+        height: 0; 
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;        
+        border-top: 10px solid $grayLightest;
+	    }
+	  }
 	}
 
 	#score-progress {

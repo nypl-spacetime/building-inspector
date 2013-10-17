@@ -68,6 +68,9 @@ class TagBuilding
 
 		$("#link-exit-tutorial").on "click", () ->
 			tagger.hideTutorial()
+			
+		$(".score-save-link").on("click", @toggleSigninOptions)
+		$("body").on("click", @onBodyClick)
 
 	addButtonListeners: () =>
 		$("#yes-button").on("click", @submitYesFlag)
@@ -402,6 +405,14 @@ class TagBuilding
 			.setLatLng(e.latlng)
 			.setContent("You clicked the map at " + e.latlng.toString())
 			.openOn(@map)
+			
+	toggleSigninOptions: (e) =>
+		$('.sign-in-options').toggle()
+		e.stopPropagation()
+		
+	onBodyClick: (e) =>
+    if !$(e.target).closest('.sign-in-options').length
+    	$('.sign-in-options').hide()
 
 	# deep copy method
 	# see: http://coffeescriptcookbook.com/chapters/classes_and_objects/cloning
