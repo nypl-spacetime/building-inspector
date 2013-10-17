@@ -284,17 +284,17 @@ class TagBuilding
 						}
 						{
 							element: "#no-button"
-							intro: "Press NO."
+							intro: "Teach that computer a lesson. Press NO."
 							position: "top"
 						}
 						{
 							element: "#map-highlight"
-							intro: "Laugh at the poor computer and move on."
+							intro: "Yikes! It really screwed that one up."
 							position: "top"
 						}
 						{
 							element: "#no-button"
-							intro: "Press NO."
+							intro: "Laugh at the poor computer and move on. Press NO."
 							position: "top"
 						}
 						{
