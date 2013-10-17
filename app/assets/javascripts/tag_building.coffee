@@ -181,6 +181,7 @@ class TagBuilding
 				skipLabel: "Exit tutorial"
 				tooltipClass: "tutorial"
 				showStepNumbers: false
+				exitOnOverlayClick: false
 				steps: [
 						{
 							element: "#map-highlight"
