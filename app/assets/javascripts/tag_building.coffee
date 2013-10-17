@@ -185,7 +185,17 @@ class TagBuilding
 						}
 						{
 							element: "#buttons .wrapper"
-							intro: "Along with 3 buttons:<br />YES: (keyboard 3) for when the outline matches a building footprint<br />FIX: (keyboard 2) for when the outline mostly matches, but needs correcting<br />NO: (keyboard 1) for when the outline is not around a building"
+							intro: "Along with 3 buttons:<br /><strong>YES</strong> (keyboard 3) for when the outline matches a building footprint<br /><strong>FIX</strong> (keyboard 2) for when the outline mostly matches, but needs correcting<br /><strong>NO</strong> (keyboard 1) for when the outline is not around a building"
+							position: "top"
+						}
+						{
+							element: "#buttons .wrapper"
+							intro: "Let's walk through a few examples…"
+							position: "top"
+						}
+						{
+							element: "#map-highlight"
+							intro: "This outline matches the original building footprint."
 							position: "top"
 						}
 						{
@@ -195,7 +205,17 @@ class TagBuilding
 						}
 						{
 							element: "#map-highlight"
-							intro: "Another polygon"
+							intro: "This outline does't match a building at all, but rather the <strong>space between buildings</strong>."
+							position: "top"
+						}
+						{
+							element: "#no-button"
+							intro: "Press NO to tag it."
+							position: "top"
+						}
+						{
+							element: "#map-highlight"
+							intro: "Sometimes the computer is just a little bit off (e.g. here it missed a skylight). Your input can help us to train it to recognize these in the future."
 							position: "top"
 						}
 						{
@@ -205,28 +225,78 @@ class TagBuilding
 						}
 						{
 							element: "#map-highlight"
-							intro: "Yet another polygon"
-							position: "top"
-						}
-						{
-							element: "#no-button"
-							intro: "Press NO to indicate so."
-							position: "top"
-						}
-						{
-							element: "#map-highlight"
-							intro: "Yup... polygon"
+							intro: "But don't let perfect be the enemy of good."
 							position: "top"
 						}
 						{
 							element: "#yes-button"
-							intro: "Press YES."
+							intro: "Press YES continue to the next one."
 							position: "top"
 						}
 						{
-							element: "h1.logo"
-							intro: "End tutorial"
-							position: "bottom"
+							element: "#map-highlight"
+							intro: "Some buildings have multiple parts. When in doubt, refer to the original map. <strong>Broken lines mean connected structures.</strong> Solid lines mean separate ones."
+							position: "top"
+						}
+						{
+							element: "#fix-button"
+							intro: "Press FIX."
+							position: "top"
+						}
+						{
+							element: "#map-highlight"
+							intro: "Same goes for <strong>multi-colored buildings</strong>. Again, defer to those original lines (broken vs. solid)."
+							position: "top"
+						}
+						{
+							element: "#yes-button"
+							intro: "Press YES continue to the next one."
+							position: "top"
+						}
+						{
+							element: "#map-highlight"
+							intro: "Good!<br />This one is actually <strong>two separate</strong> buildings."
+							position: "top"
+						}
+						{
+							element: "#fix-button"
+							intro: "Press FIX."
+							position: "top"
+						}
+						{
+							element: "#map-highlight"
+							intro: "Easy, right?<br />Occasionally a <strong>crease or seam in the map</strong> throws off the computer."
+							position: "top"
+						}
+						{
+							element: "#fix-button"
+							intro: "Press FIX."
+							position: "top"
+						}
+						{
+							element: "#map-highlight"
+							intro: "Sometimes the computer makes a mess."
+							position: "top"
+						}
+						{
+							element: "#no-button"
+							intro: "Press NO."
+							position: "top"
+						}
+						{
+							element: "#map-highlight"
+							intro: "Laugh at the poor computer and move on."
+							position: "top"
+						}
+						{
+							element: "#no-button"
+							intro: "Press NO."
+							position: "top"
+						}
+						{
+							element: "#links-service"
+							intro: "<strong>Now you're ready to begin checking buildings!</strong><br />You can always refer to this tutorial again by hitting the HELP button.<br />Have fun! And thanks for helping The New York Public Library."
+							position: "left"
 						}
 				]
 			).onchange (e) ->
@@ -239,15 +309,14 @@ class TagBuilding
 		@
 
 	parseTutorial: (e) ->
-		console.log @intro._currentStep
 		$(".introjs-helperLayer").removeClass("noMap")
 		$(".introjs-helperLayer").removeClass("yesNext")
 		@removeButtonListeners()
 
 		switch @intro._currentStep
-			when 1 
+			when 1, 2, 23
 				$(".introjs-helperLayer").addClass("noMap yesNext")
-			when 2, 4, 6, 8, 9
+			when 4, 6, 8, 10, 12, 14, 16, 18, 18, 20
 				$(".introjs-helperLayer").addClass("noMap")
 				@addButtonListeners()
 		@
