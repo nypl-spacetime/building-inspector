@@ -177,6 +177,7 @@ class TagBuilding
 			@intro.setOptions(
 				skipLabel: "Exit tutorial"
 				tooltipClass: "tutorial"
+				showStepNumbers: false
 				steps: [
 						{
 							element: "#map-highlight"
@@ -239,8 +240,8 @@ class TagBuilding
 							position: "top"
 						}
 						{
-							element: "#fix-button"
-							intro: "Press FIX."
+							element: "#yes-button"
+							intro: "Press YES. That's a LARGE building!"
 							position: "top"
 						}
 						{
@@ -314,9 +315,9 @@ class TagBuilding
 		@removeButtonListeners()
 
 		switch @intro._currentStep
-			when 1, 2, 23
+			when 1, 2
 				$(".introjs-helperLayer").addClass("noMap yesNext")
-			when 4, 6, 8, 10, 12, 14, 16, 18, 18, 20
+			when 4, 6, 8, 10, 12, 14, 16, 18, 20, 22
 				$(".introjs-helperLayer").addClass("noMap")
 				@addButtonListeners()
 		@
