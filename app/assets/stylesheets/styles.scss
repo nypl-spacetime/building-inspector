@@ -290,16 +290,18 @@ h3 {
 }
 
 #footer {
-	// width: 245px;
-	padding: 5px 10px;
-	// text-align: right;
-	// position: absolute;
-	// bottom: 0;
-	// right: 0;
-	// background: $grayLightest;
+	padding: 50px 100px;
+	background: $gray;
 
 	p {
-		margin: 0;
+		text-align: center;
+		margin: 0 auto 2em;
+		width: 500px;
+		font-size: 12px;
+
+		a {
+			color: $grayLighter;
+		}
 	}
 }
 
