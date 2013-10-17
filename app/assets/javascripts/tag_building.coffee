@@ -74,6 +74,7 @@ class TagBuilding
 
 	addButtonListeners: () =>
 		tagger = @
+		$("#link-help").on("click", @invokeTutorial)
 		$("#yes-button").on("click", @submitYesFlag)
 		$("#no-button").on("click", @submitNoFlag)
 		$("#fix-button").on("click", @submitFixFlag)
@@ -89,6 +90,7 @@ class TagBuilding
 				when 99 then tagger.submitYesFlag()
 
 	removeButtonListeners: () =>
+		$("#link-help").unbind()
 		$("#yes-button").unbind()
 		$("#no-button").unbind()
 		$("#fix-button").unbind()
@@ -296,7 +298,7 @@ class TagBuilding
 							position: "top"
 						}
 						{
-							element: "#links-service"
+							element: "#link-help"
 							intro: "<strong>Now you're ready to begin checking buildings!</strong><br />You can always refer to this tutorial again by hitting the HELP button.<br />Have fun! And thanks for helping The New York Public Library."
 							position: "left"
 						}
