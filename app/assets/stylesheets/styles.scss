@@ -8,7 +8,7 @@
 
 body {
 	font-family: $mainfont;
-	background: $grayLight;
+	background: $gray;
 	color: $grayDarker;
 }
 
@@ -143,7 +143,7 @@ h3 {
 	h1.logo {
 		background: asset-url("logo-gray.svg", image) center no-repeat;
 		width: 200px;
-		height: 170px;
+		height: 174px;
 		background-size: 100%;
 		position: absolute;
 		margin: 0 auto;
@@ -227,7 +227,7 @@ h3 {
 	text-align: center;
 	// overflow: hidden;
 	background: $grayLight;
-	margin-top: 200px;
+	padding-top: 200px;
 }
 
 .intro {
@@ -290,7 +290,7 @@ h3 {
 }
 
 #footer {
-	padding: 50px 100px;
+	padding: 20px 0;
 	background: $gray;
 
 	p {
