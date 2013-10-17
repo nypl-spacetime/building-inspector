@@ -244,6 +244,15 @@ Devise.setup do |config|
     # authorized for buildinginspector.nypl.org
     config.omniauth :facebook, "192831357570461", "c1e0058d1ec125f5cc2b3ee0705c0016"
   end
+  
+  require "omniauth-twitter"
+  if Rails.env.development?
+    # authorized for 127.0.0.1:3000
+    config.omniauth :twitter, "jv8Z144Sf5EtNU9tEVHT6w", "YkKLylkuUXIMj5KzkGYbh8ADJqYJerPyz8YvYtIWss"
+  else
+    # authorized for buildinginspector.nypl.org
+    config.omniauth :twitter, "9MYd08nfDxW2N8qZpVQ", "Di4NWgyX7gtqhg690bgTIHysAeFeKZWPlhZ1cz65g"
+  end
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

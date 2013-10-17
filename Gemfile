@@ -25,6 +25,7 @@ gem 'will_paginate', '~> 3.0'
 
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 
 # gem 'introjs-rails'
 

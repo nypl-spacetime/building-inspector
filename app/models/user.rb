@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   # :validatable, :recoverable, :trackable, 
   devise :database_authenticatable, :registerable, :rememberable,
-         :omniauthable, :omniauth_providers => [:google_oauth2, :facebook]
+         :omniauthable, :omniauth_providers => [:google_oauth2, :facebook, :twitter]
          
   has_many :usersessions
 
@@ -31,8 +31,24 @@ class User < ActiveRecord::Base
       user = User.create(
         name: auth.extra.raw_info.name,
         provider: auth.provider,
-        uid:auth.uid,
-        email: auth.info.email,
+        uid: auth.uid,
+        email: "#{auth.info.nickname}@facebook.com", # make sure this is unique
+        password: Devise.friendly_token[0,20]
+      )
+    end
+    user
+  end
+  
+  # Retrieve user from twitter auth
+  def self.find_for_twitter_oauth(auth, signed_in_resource=nil)
+    user = User.where(:provider => auth.provider, :uid => auth.uid).first
+    # Create user if not exists
+    unless user
+      user = User.create(
+        name: auth.extra.raw_info.name,
+        provider: auth.provider,
+        uid: auth.uid,
+        email: "#{auth.info.nickname}@twitter.com", # make sure this is unique
         password: Devise.friendly_token[0,20]
       )
     end
