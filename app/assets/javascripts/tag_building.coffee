@@ -61,14 +61,8 @@ class TagBuilding
 	addEventListeners: () =>
 		tagger = @
 
-		$("#link-help").on("click", @invokeTutorial)
-		$("#link-help-close").on("click", @hideTutorial)
-
 		@addButtonListeners()
 
-		$("#link-exit-tutorial").on "click", () ->
-			tagger.hideTutorial()
-			
 		$(".score-save-link").on("click", @toggleSigninOptions)
 		$("body").on("click", @onBodyClick)
 
@@ -148,14 +142,6 @@ class TagBuilding
 		$("#score").show()
 		$("#buttons").show()
 
-	invokeAbout: () ->
-		@hideOthers()
-		$("#map-about").show()
-
-	hideAbout: () ->
-		@showOthers()
-		$("#map-about").hide()
-
 	invokeTutorial: () =>
 		# @hideOthers()
 		# $("#map-tutorial").unswipeshow()
@@ -164,10 +150,12 @@ class TagBuilding
 		# 	mouse: true
 		# 	autostart: false
 		# .goTo 0
+		console.log "1", @_polyData
 		@_polyData = @clone @polyData
+		console.log "2", @_polyData
 		@polyData = @clone @tutorialData.poly
+		console.log "3", @_polyData
 		@_currentIndex = @currentIndex - 1
-		# @_currentPolygon = @currentPolygon
 		@currentIndex = -1
 		@showNextPolygon()
 		@buildTutorial()
@@ -313,7 +301,7 @@ class TagBuilding
 			.start()
 		@
 
-	parseTutorial: (e) ->
+	parseTutorial: (e) =>
 		$(".introjs-helperLayer").removeClass("noMap")
 		$(".introjs-helperLayer").removeClass("yesNext")
 		@removeButtonListeners()
@@ -330,16 +318,13 @@ class TagBuilding
 
 	hideTutorial: () =>
 		console.log "end of tutorial"
+		@intro.exit() if @intro
+		@intro = null
 		@removeButtonListeners()
 		@tutorialOn = false
 		@polyData = @clone @_polyData
 		@currentIndex = @_currentIndex
-		# @currentPolygon = @_currentPolygon
 		@showNextPolygon()
-		# @showOthers()
-		# $("#map-tutorial").hide()
-		@intro.exit() if @intro
-		@intro = null
 		@addButtonListeners()
 
 	getPolygons: () =>
@@ -356,7 +341,7 @@ class TagBuilding
 				tagger.processPolygons(data)
 			)
 	
-	processPolygons: (data) ->
+	processPolygons: (data) =>
 		data.poly = @shufflePolygons(data.poly)
 		@loadedData = data
 		@polyData = data.poly
@@ -429,7 +414,7 @@ class TagBuilding
 			# 	tagger.showNextPolygon()
 			)
 	
-	showNextPolygon: () ->
+	showNextPolygon: () =>
 		# console.log @polyData
 		@currentIndex++
 		@map.removeLayer(@geo)
