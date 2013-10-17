@@ -73,6 +73,7 @@ class TagBuilding
 		$("body").on("click", @onBodyClick)
 
 	addButtonListeners: () =>
+		tagger = @
 		$("#yes-button").on("click", @submitYesFlag)
 		$("#no-button").on("click", @submitNoFlag)
 		$("#fix-button").on("click", @submitFixFlag)
