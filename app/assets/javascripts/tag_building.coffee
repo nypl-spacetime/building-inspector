@@ -200,12 +200,12 @@ class TagBuilding
 						}
 						{
 							element: "#no-button"
-							intro: "Press NO to tag it."
+							intro: "Press NO to tag it as wrong."
 							position: "top"
 						}
 						{
 							element: "#map-highlight"
-							intro: "Sometimes that space has a darker shade."
+							intro: "Sometimes that inter-building space has a darker shade."
 							position: "top"
 						}
 						{
@@ -215,7 +215,7 @@ class TagBuilding
 						}
 						{
 							element: "#map-highlight"
-							intro: "Sometimes the computer is just a little bit off (e.g. here it missed a skylight). Your input can help us to train it to recognize these in the future."
+							intro: "Sometimes the computer is just a little bit off (e.g. here it missed a skylight).<br />Your input can help us to train it to recognize these in the future."
 							position: "top"
 						}
 						{
@@ -230,7 +230,7 @@ class TagBuilding
 						}
 						{
 							element: "#yes-button"
-							intro: "Press YES continue to the next one."
+							intro: "This one's good enough. Press YES and keep going."
 							position: "top"
 						}
 						{
@@ -240,7 +240,7 @@ class TagBuilding
 						}
 						{
 							element: "#yes-button"
-							intro: "Press YES. That's a LARGE building!"
+							intro: "Press YES. (That's a large building!)"
 							position: "top"
 						}
 						{
@@ -250,7 +250,7 @@ class TagBuilding
 						}
 						{
 							element: "#yes-button"
-							intro: "Press YES continue to the next one."
+							intro: "That's a YES!"
 							position: "top"
 						}
 						{
@@ -260,22 +260,22 @@ class TagBuilding
 						}
 						{
 							element: "#fix-button"
-							intro: "Press FIX."
+							intro: "That's a FIXer."
 							position: "top"
 						}
 						{
 							element: "#map-highlight"
-							intro: "Easy, right?<br />Occasionally a <strong>crease or seam in the map</strong> throws off the computer."
+							intro: "Easy, right?<br />But keep an eye out.. Occasionally a <strong>crease or seam in the map</strong> throws off the computer."
 							position: "top"
 						}
 						{
 							element: "#fix-button"
-							intro: "Press FIX."
+							intro: "Those are FIXes."
 							position: "top"
 						}
 						{
 							element: "#map-highlight"
-							intro: "Sometimes the computer makes a mess."
+							intro: "Sometimes the computer makes a real mess."
 							position: "top"
 						}
 						{
@@ -285,7 +285,7 @@ class TagBuilding
 						}
 						{
 							element: "#map-highlight"
-							intro: "Yikes! It really screwed that one up."
+							intro: "Yikes! It really screwed this one up."
 							position: "top"
 						}
 						{
