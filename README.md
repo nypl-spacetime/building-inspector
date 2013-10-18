@@ -1,6 +1,6 @@
 ## NYPL Labs Map Polygon fixer
 
-Author: [Mauricio Giraldo Arteaga] / NYPL Labs
+Authors: [Mauricio Giraldo Arteaga] / NYPL Labs
 
 ### First ingest
 
