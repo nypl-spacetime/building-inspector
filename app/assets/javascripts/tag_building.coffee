@@ -24,7 +24,7 @@ class TagBuilding
 		$("#map-tutorial").hide()
 		$("#map-about").hide()
 		$("#buttons").hide()
-		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859/859spec.json', 
+		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859-final/859spec.json', 
 			zoomControl: false
 			scrollWheelZoom: false
 			animate: true
