@@ -1,6 +1,6 @@
 ## NYPL Labs Map Polygon fixer
 
-Author: Mauricio Giraldo Arteaga / NYPL Labs
+Author: [Mauricio Giraldo Arteaga] / NYPL Labs
 
 ### First ingest
 
@@ -17,3 +17,5 @@ This assumes the presence of `public/files/config-ingest.json` with a list of ID
 `rake data_import:ingest_geojson id=SOMEID bb=SOMEBOUNDINGBOX force=true`
 
 This imports polygons from a file `public/files/SOMEID-traced.json` into the database **replacing** any polygons (and its corresponding flags) that are associated to ID `SOMEID`.
+
+[Mauricio Giraldo Arteaga]: https://twitter.com/mgiraldo
