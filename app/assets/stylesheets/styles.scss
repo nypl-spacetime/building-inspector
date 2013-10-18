@@ -42,17 +42,50 @@ h3 {
 }
 
 .nypl-logo {
+	color: $grayLighter;
+	text-align: center;
+	display: block;
+	width: 200px;
+	margin: 0 auto 10px;
+
+	&:hover {
+		color: $grayLighter;
+		text-decoration: none;
+	}
+
 	&:before {
 		content: attr(data-icon);
 		font-family:$iconfont;
-		color: $grayDarkest;
+		color: $grayLighter;
 		-webkit-font-smoothing: antialiased;
-		content: 'N'; //N W
+		content: 'W'; //N W
 		display: block;
-		position: absolute;
 		font-size: 30px;
+		margin-bottom: 5px;
 	}
 }
+
+	// #link-nypl {
+	// 	display: block;
+	// 	overflow: hidden;
+	// 	position: static;
+	// 	color: $grayDarkest;
+	// 	float: left;
+	// 	margin: 35px 20px;
+	// 	padding: 0;
+	// 	line-height: 31px;
+	// 	height: 31px;
+	// 	width: 31px;
+
+	// 	span {
+	// 		display: none;
+	// 	}
+
+	// 	&:hover {
+	// 		text-decoration: none;
+	// 	}
+	// }
+
 
 #top-nav {
 	height: 100px;
@@ -118,27 +151,6 @@ h3 {
 	// 	z-index: 110;
 	// 	margin: 0;
 	// }
-
-	#link-nypl {
-		display: block;
-		overflow: hidden;
-		position: static;
-		color: $grayDarkest;
-		float: left;
-		margin: 35px 20px;
-		padding: 0;
-		line-height: 31px;
-		height: 31px;
-		width: 31px;
-
-		span {
-			display: none;
-		}
-
-		&:hover {
-			text-decoration: none;
-		}
-	}
 
 	h1.logo {
 		background: asset-url("logo-gray.svg", image) center no-repeat;

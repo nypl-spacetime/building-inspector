@@ -1,5 +1,6 @@
 <% content_for :page_title do %>Building Inspector<% end %>
 <% content_for :dynamic_js do %>
+	<%= stylesheet_link_tag    "home", :media => "all" %>
 	<script type="text/javascript">
 	// scroll to top (hide bar in ios)
 	window.addEventListener("load",function() {
@@ -8,28 +9,12 @@
 		}, 0);
 	});
 	</script>
-	<style>
-		#top-nav h1.logo {
-			left: 40%;
-			width: 230px;
-			height: 202px;
-			top: -10px;
-		}
-		#top-nav #link-nypl {
-			width: 230px;
-			text-align: right;
-			overflow: inherit;
-		}
-		#top-nav #link-nypl span {
-			display: block;
-		}
-	</style>
 <% end %>
 
 <%= render :partial => "partials/nav" %>
 
 <div id="main-container">
-	<h3>Help trace New York City's past</h3>
+	<h3>Help trace<br />New York City's<br />past</h3>
 	<div id="logo-background">
 		<%= link_to "GO!", "/fixer/building", :id => "link-try" %>
 	</div>

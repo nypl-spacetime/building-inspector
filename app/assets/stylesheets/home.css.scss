@@ -1,0 +1,38 @@
+@import "css3-mixins";
+@import "button-mixins";
+@import "compass/utilities/general/clearfix";
+@import "variables";
+@import "compass/css3/transform";
+
+#top-nav {
+	h1.logo {
+		/*left: 40%;*/
+		width: 230px;
+		height: 202px;
+		top: -10px;
+	}
+
+	#link-nypl {
+		width: 230px;
+		text-align: right;
+		overflow: inherit;
+	}
+
+	#link-nypl span {
+		display: block;
+	}
+}
+
+#main-container {
+	background: url(/assets/pattern-block.svg) $grayLight -50px 120px no-repeat;
+
+	h3 {
+		font-size: 40px;
+		line-height: 40px;
+		margin-bottom: 0;
+		// text-align: left;
+		// width: 300px;
+		// margin: 0 auto;
+		// @include rotate(29deg);
+	}
+}

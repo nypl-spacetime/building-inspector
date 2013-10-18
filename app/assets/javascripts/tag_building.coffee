@@ -462,10 +462,10 @@ class TagBuilding
 				opacity: 1
 				dashArray: '4,16'
 				fill: false
-			onEachFeature: (f,l) ->
-				out = for key, val of f.properties
-					"<strong>#{key}:</strong> #{val}"
-				l.bindPopup(out.join("<br />"))
+			# onEachFeature: (f,l) ->
+			# 	out = for key, val of f.properties
+			# 		"<strong>#{key}:</strong> #{val}"
+			# 	l.bindPopup(out.join("<br />"))
 		).addData json
 
 	onMapClick: (e) =>
