@@ -86,7 +86,6 @@ h3 {
 	// 	}
 	// }
 
-
 #top-nav {
 	height: 100px;
 	background: $grayLightest;
@@ -171,6 +170,34 @@ h3 {
 		span {
 			display: none;
 		}
+	}
+
+	.nypl-logo {
+        display: block;
+        overflow: hidden;
+        position: static;
+        color: $grayDarkest;
+        float: left;
+        margin: 35px 20px;
+        padding: 0;
+        line-height: 31px;
+        height: 31px;
+        width: 31px;
+
+		span {
+			display: none;
+		}
+
+        &:before {
+                content: attr(data-icon);
+                font-family:$iconfont;
+                color: $grayDarkest;
+                -webkit-font-smoothing: antialiased;
+                content: 'N'; //N W
+                display: block;
+                position: absolute;
+                font-size: 30px;
+        }
 	}
 }
 
