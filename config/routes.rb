@@ -5,9 +5,11 @@ Webappmini::Application.routes.draw do
   
   get "general/help"
   
-  get "general/win"
+  get "general/win"  
 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  
+  resources :users
 
   resources :polygons
 
