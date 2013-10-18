@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   has_many :usersessions
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :provider, :uid
+  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :provider, :uid, :role
   # attr_accessible :title, :body
   
   # Make the name the email address before "@"

@@ -1,6 +1,6 @@
 class PolygonsController < ApplicationController
   layout "admin"
-  before_filter :authenticate_user! #, :only => [:index, :edit, :destroy]
+  before_filter :check_admin! #, :only => [:index, :edit, :destroy]
   # GET /polygons
   # GET /polygons.json
   def index

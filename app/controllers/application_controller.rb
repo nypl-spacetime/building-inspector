@@ -9,4 +9,11 @@ class ApplicationController < ActionController::Base
     root_path
   end
   
+  def check_admin!
+    # admin if (1) User is signed in and (2) Does not have an omniauth provider or has a role as 'admin'
+    unless user_signed_in? and (current_user.provider.empty? or current_user.role=='admin')
+      redirect_to new_user_session_path
+    end
+  end
+  
 end
