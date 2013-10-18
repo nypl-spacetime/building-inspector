@@ -246,11 +246,11 @@ h3 {
 	// position: absolute;
 	// left: 200px;
 	// top: 110px;
-	width: $desktopwidth;
-	padding: 10px;
-	// text-align: left;
+	width: $desktopwidth - 60;
+	padding: 30px;
 	margin: 0 auto;
-	// background: rgba(255,255,255,0.65);
+	background: $grayLightest;
+	@include border-radius(30px 30px 0 0);
 
 	p {
 		line-height: 1.5em;
@@ -261,7 +261,7 @@ h3 {
 	}
 
 	a {
-		color: $grayLightest;
+		color: $gray;
 	}
 
 }

@@ -24,11 +24,17 @@
 }
 
 #main-container {
-	background: url(/assets/pattern-block.svg) $grayLight -50px 120px no-repeat;
+	background: url(/assets/pattern.svg) $grayLight -50px 120px;
+	background-size: 40%;
+
+	strong {
+		font-weight: normal;
+		color: $orange;
+	}
 
 	h3 {
-		font-size: 40px;
-		line-height: 40px;
+		font-size: 30px;
+		line-height: 30px;
 		margin-bottom: 0;
 		// text-align: left;
 		// width: 300px;
