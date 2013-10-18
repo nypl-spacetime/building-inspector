@@ -21,7 +21,7 @@
   </div>
   <div class="field">
     <%= f.label :role %><br />
-    <%= f.text_field :role %>
+    <%= f.select :role, [["Administrator","admin"], ["Inspector","inspector"]] %>
   </div>
   <div class="field">
     <%= f.label :provider %><br />
