@@ -68,6 +68,8 @@ class TagBuilding
 
 	addButtonListeners: () =>
 		tagger = @
+		$("#link-help-close").on("click", @hideTutorial)
+		$("#link-exit-tutorial").on("click", @hideTutorial)
 		$("#link-help").on("click", @invokeTutorial)
 		$("#yes-button").on("click", @submitYesFlag)
 		$("#no-button").on("click", @submitNoFlag)
@@ -131,31 +133,45 @@ class TagBuilding
 		.show().fadeOut(1000)
 
 	hideOthers: () ->
-		$("#map-container").hide()
-		$("#score").hide()
-		$("#buttons").hide()
+		$("#main-container").hide()
+		$("#controls").hide()
 		$("#map-tutorial").hide()
-		$("#map-about").hide()
 
 	showOthers: () ->
-		$("#map-container").show()
-		$("#score").show()
-		$("#buttons").show()
+		$("#main-container").show()
+		$("#controls").show()
+		$("#map-tutorial").hide()
+
+	hideTutorial: () =>
+		# console.log "end of tutorial"
+		if (window.innerWidth < 500)
+			@showOthers()
+		else
+			@intro.exit() if @intro
+			@intro = null
+			@removeButtonListeners()
+			@polyData = @clone @_polyData
+			@currentIndex = @_currentIndex
+			@showNextPolygon()
+			@addButtonListeners()
+		@tutorialOn = false
 
 	invokeTutorial: () =>
-		# @hideOthers()
-		# $("#map-tutorial").unswipeshow()
-		# $("#map-tutorial").show()
-		# $("#map-tutorial").swipeshow
-		# 	mouse: true
-		# 	autostart: false
-		# .goTo 0
-		@_polyData = @clone @polyData
-		@polyData = @clone @tutorialData.poly
-		@_currentIndex = @currentIndex - 1
-		@currentIndex = -1
-		@showNextPolygon()
-		@buildTutorial()
+		if (window.innerWidth < 500)
+			@hideOthers()
+			$("#map-tutorial").unswipeshow()
+			$("#map-tutorial").show()
+			$("#map-tutorial").swipeshow
+				mouse: true
+				autostart: false
+			.goTo 0
+		else
+			@_polyData = @clone @polyData
+			@polyData = @clone @tutorialData.poly
+			@_currentIndex = @currentIndex - 1
+			@currentIndex = -1
+			@showNextPolygon()
+			@buildTutorial()
 		@tutorialOn = true
 
 	buildTutorial: () =>
@@ -322,17 +338,6 @@ class TagBuilding
 			when 25
 				$(".introjs-helperLayer").addClass("noMap")
 		@
-
-	hideTutorial: () =>
-		# console.log "end of tutorial"
-		@intro.exit() if @intro
-		@intro = null
-		@removeButtonListeners()
-		@tutorialOn = false
-		@polyData = @clone @_polyData
-		@currentIndex = @_currentIndex
-		@showNextPolygon()
-		@addButtonListeners()
 
 	getPolygons: () =>
 		tagger = @

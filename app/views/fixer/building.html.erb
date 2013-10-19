@@ -8,16 +8,17 @@
 	</script>
 	<%# stylesheet_link_tag    "add2home", :media => "all" %>
 	<%= stylesheet_link_tag    "fixer", :media => "all" %>
-	<%# stylesheet_link_tag    "jquery.swipeshow", :media => "all" %>
-	<%# stylesheet_link_tag    "slideshow-theme", :media => "all" %>
+	<%= stylesheet_link_tag    "jquery.swipeshow", :media => "all" %>
+	<%= stylesheet_link_tag    "slideshow-theme", :media => "all" %>
 
 	<%# javascript_include_tag "add2home" %>
 
-	<%# javascript_include_tag "jquery.swipeshow.min" %>
+	<%= javascript_include_tag "jquery.swipeshow.min" %>
 	<%= javascript_include_tag "tag_building", {:id => "tagbuildingjs", "data-session" => "#{@isNew}", "data-map" => "#{@map}"} %>
 <% end %>
 
 <%= render :partial => "partials/nav" %>
+<%= render :partial => "partials/tutorial" %>
 
 <div id="main-container">
 	<div id="loader">LOADING</div>

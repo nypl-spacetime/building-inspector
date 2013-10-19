@@ -10,6 +10,13 @@
 		width: 230px;
 		height: 202px;
 		top: -10px;
+
+		@media screen and (max-width: $desktopwidth) {
+			height: 140px;
+			width: 167px;
+			background-position-y: 0;
+			top: 45px;
+		}
 	}
 }
 
@@ -26,9 +33,20 @@
 		font-size: 30px;
 		line-height: 30px;
 		margin-bottom: 0;
-		// text-align: left;
-		// width: 300px;
-		// margin: 0 auto;
-		// @include rotate(29deg);
+
+		@media screen and (max-width: $desktopwidth) {
+			font-size: 20px;
+			line-height: 20px;
+		}
+	}
+
+	.intro {
+
+		@media screen and (max-width: $desktopwidth) {
+			width: auto;
+			padding: 10px;
+			margin: 0 20px;
+			@include border-radius(0);
+		}
 	}
 }

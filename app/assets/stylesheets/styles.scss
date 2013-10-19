@@ -65,27 +65,6 @@ h3 {
 	}
 }
 
-	// #link-nypl {
-	// 	display: block;
-	// 	overflow: hidden;
-	// 	position: static;
-	// 	color: $grayDarkest;
-	// 	float: left;
-	// 	margin: 35px 20px;
-	// 	padding: 0;
-	// 	line-height: 31px;
-	// 	height: 31px;
-	// 	width: 31px;
-
-	// 	span {
-	// 		display: none;
-	// 	}
-
-	// 	&:hover {
-	// 		text-decoration: none;
-	// 	}
-	// }
-
 #top-nav {
 	height: 100px;
 	background: $grayLightest;
@@ -94,6 +73,10 @@ h3 {
 	right: 0;
 	left: 0;
 	z-index: 110;
+
+	@media screen and (max-width: $desktopwidth) {
+		height: 40px;
+	}
 
 	a {
 		color: $grayDark;
@@ -131,6 +114,11 @@ h3 {
 				font-family:$iconfont;
 				-webkit-font-smoothing: antialiased;
 			}			
+
+			@media screen and (max-width: $desktopwidth) {
+				// background: $grayLightest;
+				padding: 2px 4px;
+			}
 		}
 	}
 
@@ -141,15 +129,11 @@ h3 {
 	#links-service {
 		float: right;
 		margin: 30px 20px;
-	}
 
-	// @media screen and (max-width: $desktopwidth) {
-	// 	position: absolute;
-	// 	top: 0;
-	// 	width: 100%;
-	// 	z-index: 110;
-	// 	margin: 0;
-	// }
+		@media screen and (max-width: $desktopwidth) {
+			margin: 5px;
+		}
+	}
 
 	h1.logo {
 		background: asset-url("logo-gray.svg", image) center no-repeat;
@@ -169,6 +153,12 @@ h3 {
 
 		span {
 			display: none;
+		}
+
+		@media screen and (max-width: $desktopwidth) {
+			height: 40px;
+			width: 90px;
+			background-position-y: -16px;
 		}
 	}
 
@@ -198,6 +188,10 @@ h3 {
                 position: absolute;
                 font-size: 30px;
         }
+
+		@media screen and (max-width: $desktopwidth) {
+			margin: 5px;
+		}
 	}
 }
 
@@ -236,37 +230,26 @@ h3 {
 }
 
 #logo-background {
-	// height: 100%;
-
 	background: asset-url("logo-building.jpg", image);
-	// background-position: 50px -120px;
-
 	display: inline-block;
 	margin: 20px auto;
 	padding: 40px;
 	@include border-radius(40px);
-	// height: 100%;
 
-	// @media screen and (min-width: $desktopwidth*2) {
-	// 	background: asset-url("logo-building@2x.jpg", image);
-	// }
-
-	// &.about {
-	// 	@media screen and (min-width: $desktopwidth) {
-	// 		background-attachment: fixed;
-	// 		background-position: 124px 60px;
-	// 	}
-	// }
+	@media screen and (max-width: $desktopwidth) {
+		padding: 20px;
+		@include border-radius(20px);
+	}
 }
 
 #main-container {
-	// width: $generalwidth;
-	// width: auto;
-	// margin: 0 auto;
 	text-align: center;
-	// overflow: hidden;
 	background: $grayLight;
 	padding-top: 200px;
+
+	@media screen and (max-width: $desktopwidth) {
+		padding-top: 194px;
+	}
 }
 
 .intro {
@@ -285,6 +268,10 @@ h3 {
 		padding: 5px;
 		font-size: 14px;
 		text-align: center;
+
+		@media screen and (max-width: $desktopwidth) {
+			font-size: 10px;
+		}
 	}
 
 	a {
@@ -340,6 +327,11 @@ h3 {
 
 		a {
 			color: $grayLighter;
+		}
+
+		@media screen and (max-width: $desktopwidth) {
+			width: auto;
+			margin: 0 10px 1em;
 		}
 	}
 }
