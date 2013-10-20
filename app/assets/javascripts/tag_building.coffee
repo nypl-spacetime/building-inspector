@@ -463,9 +463,9 @@ class TagBuilding
 		geo = L.geoJson({features:[]},
 			style: (feature) ->
 				color: '#b00'
-				weight: 4
+				weight: 5
 				opacity: 1
-				dashArray: '4,16'
+				dashArray: '1,16'
 				fill: false
 			# onEachFeature: (f,l) ->
 			# 	out = for key, val of f.properties
