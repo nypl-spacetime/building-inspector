@@ -13,6 +13,7 @@ class General
 				".sign-in-link"
 				".score-link"
 				"#link-try"
+				"#link-back"
 			]
 			@mobileClick id for id in overrides
 
