@@ -32,6 +32,7 @@ class TagBuilding
 			minZoom: 18
 			maxZoom: 21
 			dragging: false
+			touchZoom: false
 		)
 
 		L.control.zoom(
@@ -68,12 +69,23 @@ class TagBuilding
 
 	addButtonListeners: () =>
 		tagger = @
+		@removeButtonListeners()
 		$("#link-help-close").on("click", @hideTutorial)
 		$("#link-exit-tutorial").on("click", @hideTutorial)
 		$("#link-help").on("click", @invokeTutorial)
 		$("#yes-button").on("click", @submitYesFlag)
 		$("#no-button").on("click", @submitNoFlag)
 		$("#fix-button").on("click", @submitFixFlag)
+
+		$("#yes-button").on("dblclick", (e) ->
+			e.preventDefault()
+		)
+		$("#no-button").on("dblclick", (e) ->
+			e.preventDefault()
+		)
+		$("#fix-button").on("dblclick", (e) ->
+			e.preventDefault()
+		)
 
 		$("body").keyup (e)->
 			# console.log "key", e.which
@@ -371,15 +383,21 @@ class TagBuilding
 		# Return the shuffled array.
 		a
 
-	submitYesFlag: () =>
+	submitYesFlag: (e) =>
+		@removeButtonListeners()
+		e.preventDefault()
 		@activateButton("yes") unless @tutorialOn
 		@submitFlag("yes")
 
-	submitNoFlag: () =>
+	submitNoFlag: (e) =>
+		@removeButtonListeners()
+		e.preventDefault()
 		@activateButton("no") unless @tutorialOn
 		@submitFlag("no")
 
-	submitFixFlag: () =>
+	submitFixFlag: (e) =>
+		@removeButtonListeners()
+		e.preventDefault()
 		@activateButton("fix") unless @tutorialOn
 		@submitFlag("fix")
 
@@ -391,6 +409,7 @@ class TagBuilding
 		$("#no-button").addClass("active") if button = "no"
 		$("#yes-button").addClass("active") if button = "yes"
 		$("#fix-button").addClass("active") if button = "fix"
+		@addButtonListeners()
 
 	resetButtons: () ->
 		$("#no-button").removeClass("inactive")
