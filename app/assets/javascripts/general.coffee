@@ -3,6 +3,7 @@ class General
 	constructor: () ->
 
 		if (window.innerWidth < 500)
+			document.title = "Bldg Inspector"
 			overrides = [
 				"#home-logo"
 				"#link-help"
