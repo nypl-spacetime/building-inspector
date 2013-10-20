@@ -9,8 +9,10 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require reset
+ *= require lib/reset
  *= require styles
- *= require mapbox
- *= require introjs
+ *= require lib/mapbox
+ *= require lib/introjs
+ *= require lib/jquery.swipeshow
+ *= require lib/slideshow-theme
  */

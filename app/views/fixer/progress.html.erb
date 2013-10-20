@@ -4,17 +4,17 @@
 	<%# stylesheet_link_tag    "jquery.swipeshow", :media => "all" %>
 	<%# stylesheet_link_tag    "slideshow-theme", :media => "all" %>
 	<%= stylesheet_link_tag    "progress", :media => "all" %>
-	<%= stylesheet_link_tag    "MarkerCluster", :media => "all" %>
-	<%= stylesheet_link_tag    "MarkerCluster.Default", :media => "all" %>
+	<%= stylesheet_link_tag    "lib/MarkerCluster", :media => "all" %>
+	<%= stylesheet_link_tag    "lib/MarkerCluster.Default", :media => "all" %>
 	<!--[if lte IE 8]>
-	<%= stylesheet_link_tag    "MarkerCluster.Default.ie", :media => "all" %>
+	<%= stylesheet_link_tag    "lib/MarkerCluster.Default.ie", :media => "all" %>
 	<![endif]-->
 
 	<%= javascript_include_tag "progress", {:id => "progressjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}")} %>
 
 	<%# javascript_include_tag "jquery.swipeshow.min" %>
 
-	<%= javascript_include_tag "leaflet.markercluster" %>
+	<%= javascript_include_tag "lib/leaflet.markercluster" %>
 <% end %>
 
 

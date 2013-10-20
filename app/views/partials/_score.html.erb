@@ -8,7 +8,7 @@
 		</div>
 		<div id="score-save">
 		  <% if user_signed_in? %>
-		    <%= truncate(current_user.name, :length => 14, :omission => '…') %> <small><%= link_to 'EXIT', destroy_user_session_path, method: :delete %></small>
+		    <%= truncate(current_user.name, :length => 14, :omission => '…') %> <small><%= link_to 'EXIT', destroy_user_session_path, method: :delete, :id => "logout-link" %></small>
 		  <% else %>
 		    <%= link_to "SAVE SCORE", "#save-score", {:class => "score-save-link"} %>
 		    <div class="sign-in-options">
@@ -20,9 +20,9 @@
 			<% end %>
 		</div>
 		<% if @current_page=="progress" %>
-		<div id="score-progress"><a href="/fixer/building">INSPECT MORE</a></div>
+		<div id="score-progress"><a href="/fixer/building" class="score-link">INSPECT MORE</a></div>
 		<% else %>
-		<div id="score-progress"><a href="/fixer/progress">VIEW PROGRESS</a></div>
+		<div id="score-progress"><a href="/fixer/progress" class="score-link">VIEW PROGRESS</a></div>
 		<% end %>
 		<% if @current_page=="progress" %>
 		<%= link_to "T", "", {:onclick=>"recordOutboundLink(this, 'Outbound Links', 'Twitter');return false;",:id => "tweet", :title => "Share on Twitter"} %>
