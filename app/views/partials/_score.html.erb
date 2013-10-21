@@ -8,9 +8,9 @@
 		</div>
 		<div id="score-save">
 		  <% if user_signed_in? %>
-		    <%= truncate(current_user.name, :length => 14, :omission => '…') %> <small><%= link_to 'EXIT', destroy_user_session_path, method: :delete, :id => "logout-link" %></small>
+		    <%= truncate(current_user.name, :length => 14, :omission => '…') %><small><%= link_to 'x', destroy_user_session_path, method: :delete, :id => "link-exit" %></small>
 		  <% else %>
-		    <%= link_to "SAVE SCORE", "#save-score", {:class => "score-save-link"} %>
+		    <%= link_to "SAVE SCORE", "javascript:;", {:id => "link-score-save", :class => "score-save-link"} %>
 		    <div class="sign-in-options">
           <%= link_to "Sign In With Gmail", user_omniauth_authorize_path(:google_oauth2), {:class => "sign-in-link"} %>
           <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), {:class => "sign-in-link"} %>
@@ -24,7 +24,5 @@
 		<% else %>
 		<div id="score-progress"><a href="/fixer/progress" class="score-link">VIEW PROGRESS</a></div>
 		<% end %>
-		<% if @current_page=="progress" %>
-		<%= link_to "T", "", {:onclick=>"recordOutboundLink(this, 'Outbound Links', 'Twitter');return false;",:id => "tweet", :title => "Share on Twitter"} %>
-		<% end %>
+		<%= link_to "T", "", {:onclick=>"javascript:_gaq.push(['_trackEvent', 'Tweet']);e=this;setTimeout(function(){document.location.href = e.href, 100});return false;",:id => "tweet", :title => "Share on Twitter"} %>
 	</div>

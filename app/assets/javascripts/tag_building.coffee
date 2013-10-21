@@ -24,6 +24,7 @@ class TagBuilding
 		$("#map-tutorial").hide()
 		$("#map-about").hide()
 		$("#buttons").hide()
+		$("#tweet").hide()
 		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859-final/859spec.json', 
 			zoomControl: false
 			scrollWheelZoom: false
@@ -63,9 +64,6 @@ class TagBuilding
 		tagger = @
 
 		@addButtonListeners()
-
-		$(".score-save-link").on("click", @toggleSigninOptions)
-		$("body").on("click", @onBodyClick)
 
 	addButtonListeners: () =>
 		tagger = @
@@ -138,6 +136,14 @@ class TagBuilding
 		mapDOM = $("#map-bar")
 		mapDOM.find(".percent").text( "Next level: " + mapScore + "%")
 		mapDOM.find(".bar").css("width", mapScore + "%")
+
+		url = $('#progressjs').data("server")
+		tweet = @allPolygonsSession + " buildings checked! Data mining old maps with the Building Inspector from @NYPLMaps @nypl_labs"
+		twitterurl = "https://twitter.com/share?url=" + url + "&text=" + tweet
+
+		$("#tweet").show()
+
+		$("#tweet").attr "href", twitterurl
 
 	animateLevel: () =>
 		el = $("#score .level-animation")
@@ -492,20 +498,12 @@ class TagBuilding
 			# 	l.bindPopup(out.join("<br />"))
 		).addData json
 
-	onMapClick: (e) =>
-		@popup
-			.setLatLng(e.latlng)
-			.setContent("You clicked the map at " + e.latlng.toString())
-			.openOn(@map)
-			
-	toggleSigninOptions: (e) =>
-		$('.sign-in-options').toggle()
-		e.stopPropagation()
+	# onMapClick: (e) =>
+	# 	@popup
+	# 		.setLatLng(e.latlng)
+	# 		.setContent("You clicked the map at " + e.latlng.toString())
+	# 		.openOn(@map)
 		
-	onBodyClick: (e) =>
-    if !$(e.target).closest('.sign-in-options').length
-    	$('.sign-in-options').hide()
-
 	# deep copy method
 	# see: http://coffeescriptcookbook.com/chapters/classes_and_objects/cloning
 	clone: (obj) ->

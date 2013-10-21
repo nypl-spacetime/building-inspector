@@ -32,24 +32,6 @@ class Progress
 
 		@map.on('load', @getPolygons)
 
-		# $("#link-help").on("click", @invokeTutorial)
-		# $("#link-help-close").on("click", @hideTutorial)
-
-		# $("#link-about").on("click", @invokeAbout)
-		# $("#link-about-close").on("click", @hideAbout)
-
-		# $("#score .total").on 'click', () ->
-		# 	location.href = "/fixer/building"
-
-		# $("#link-progress-close").on 'click', () ->
-		# 	location.href = "/fixer/building"
-
-		# $("#link-exit-about").on "click", () ->
-		# 	p.hideTutorial()
-
-		# $("#link-exit-tutorial").on "click", () ->
-		# 	p.hideTutorial()
-
 	hideOthers: () ->
 		$("#map-container").hide()
 		$("#link-progress-close").hide()
@@ -123,23 +105,23 @@ class Progress
 			# 	m.setZoom 20
 
 			# marker icons
-			# yes_icon = L.icon
-			# 	iconUrl: '/assets/images/marker-icon-yes.png'
-			# 	iconRetinaUrl: '/assets/images/marker-icon-yes-2x.png'
-			# 	iconSize: [25, 41]
-			# 	iconAnchor: [12, 41]
+			yes_icon = L.icon
+				iconUrl: '/assets/images/marker-icon-yes.png'
+				iconRetinaUrl: '/assets/images/marker-icon-yes-2x.png'
+				iconSize: [25, 41]
+				iconAnchor: [12, 41]
 
-			# no_icon = L.icon
-			# 	iconUrl: '/assets/images/marker-icon-no.png'
-			# 	iconRetinaUrl: '/assets/images/marker-icon-no-2x.png'
-			# 	iconSize: [25, 41]
-			# 	iconAnchor: [12, 41]
+			no_icon = L.icon
+				iconUrl: '/assets/images/marker-icon-no.png'
+				iconRetinaUrl: '/assets/images/marker-icon-no-2x.png'
+				iconSize: [25, 41]
+				iconAnchor: [12, 41]
 			
-			# fix_icon = L.icon
-			# 	iconUrl: '/assets/images/marker-icon-fix.png'
-			# 	iconRetinaUrl: '/assets/images/marker-icon-fix-2x.png'
-			# 	iconSize: [25, 41]
-			# 	iconAnchor: [12, 41]
+			fix_icon = L.icon
+				iconUrl: '/assets/images/marker-icon-fix.png'
+				iconRetinaUrl: '/assets/images/marker-icon-fix-2x.png'
+				iconSize: [25, 41]
+				iconAnchor: [12, 41]
 			
 			yes_json = L.geoJson(data.yes_poly,
 				style: (feature) ->
@@ -212,7 +194,7 @@ class Progress
 		$("#map-total").text("of " + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " shapes")
 
 		url = $('#progressjs').data("server")
-		tweet = current + " buildings checked! Data mining old maps with the Building Inspector from @NYPLMaps + @nypl_labs"
+		tweet = current + " buildings checked! Data mining old maps with the Building Inspector from @NYPLMaps @nypl_labs"
 		twitterurl = "https://twitter.com/share?url=" + url + "&text=" + tweet
 
 		$("#tweet").show()

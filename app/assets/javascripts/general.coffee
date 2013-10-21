@@ -2,6 +2,10 @@ class General
 
 	constructor: () ->
 
+		$("#link-score-save").on("click", @toggleBottomSigninOptions)
+		$("#link-login").on("click", @toggleTopSigninOptions)
+		$("body").on("click", @onBodyClick)
+
 		if (window.innerWidth < 500)
 			document.title = "Bldg Inspector"
 			overrides = [
@@ -25,5 +29,17 @@ class General
 			e.preventDefault()
 			window.location.href = link;
 
+	toggleBottomSigninOptions: (e) ->
+		$('#score-save .sign-in-options').toggle()
+		e.stopPropagation()
+
+	toggleTopSigninOptions: (e) ->
+		$('#links-account .sign-in-options').toggle()
+		e.stopPropagation()
+
+	onBodyClick: (e) ->
+		if !$(e.target).closest('.sign-in-options').length
+			$('.sign-in-options').hide()
+
 $ ->
-	window._general = new General()
+	window._gen = new General()

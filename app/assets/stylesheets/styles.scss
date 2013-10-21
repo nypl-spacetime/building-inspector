@@ -93,8 +93,15 @@ h3 {
 				color: $grayLighter;
 			}
 
-			&#link-help {
+			&#link-login {
 				@include border-radius(10px 0 0 10px);
+				&:before {
+					content: "0";
+				}
+			}
+
+			&#link-help {
+				margin-right: 1px;
 				&:before {
 					content: "?";
 				}
@@ -109,14 +116,19 @@ h3 {
 
 			&:before {
 				margin-right: 10px;
-				font-size: 12px;
+				font-size: 11px;
 				content: attr(data-icon);
 				font-family:$iconfont;
 				-webkit-font-smoothing: antialiased;
+
+				@media screen and (max-width: $desktopwidth) {
+					font-size: 9px;
+					margin-right: 2px;
+				}
 			}			
 
 			@media screen and (max-width: $desktopwidth) {
-				// background: $grayLightest;
+				font-size: 9px;
 				padding: 2px 4px;
 			}
 		}
@@ -159,6 +171,7 @@ h3 {
 			height: 40px;
 			width: 90px;
 			background-position-y: -16px;
+			left: 40px;
 		}
 	}
 
@@ -344,6 +357,148 @@ h3 {
 	background-color: $white;
 	color: $grayDarkest;
 	// overflow: scroll;
+}
+
+.sign-in-options {
+	position: absolute;
+	bottom: 30px;
+	left: -60px;
+	background: $grayLightest;
+	padding: 12px;
+	width: 180px;
+	display: none;
+	@include border-radius(10px);
+
+	@media screen and (max-width: $desktopwidth) {
+		width: 160px;
+		left: 0;
+		bottom: inherit;
+		top: 24px;
+	}
+
+	.sign-in-link {
+		background: $grayLighter;
+		display: block;
+		margin-top: 6px;
+		padding: 6px;
+		@include border-radius(6px);
+
+		@media screen and (max-width: $desktopwidth) {
+			padding: 12px 6px;
+		}
+		
+		&:first-child {
+			margin-top: 0;
+		}
+		&:hover {
+			background: $grayDark;
+			color: $grayLighter;
+		}
+	}
+	.sign-in-callout {
+		position: absolute;
+		bottom: -10px;
+		left: 80px;
+		width: 0; 
+		height: 0; 
+		border-left: 10px solid transparent;
+		border-right: 10px solid transparent;
+		border-top: 10px solid $grayLightest;
+
+		@media screen and (max-width: $desktopwidth) {
+			left: 10px;
+			bottom: inherit;
+			top: -10px;
+			border-top: none;
+			border-bottom: 10px solid $grayLightest;
+		}
+	}
+}
+
+small {
+	content: attr(data-icon);
+	font-family:$iconfont;
+	-webkit-font-smoothing: antialiased;
+	text-transform: none;
+}
+
+#links-account {
+	font-size: 12px;
+	display: inline-block;
+	background: $grayLighter;
+	margin-right: 1px;
+	text-transform: uppercase;
+	@include border-radius(10px 0 0 10px);
+	position: relative;
+
+	.signed-in {
+		display: inline-block;
+		padding: 5px 10px;
+
+		@media screen and (max-width: $desktopwidth) {
+			padding: 2px 4px;
+		}
+	}
+
+	@media screen and (max-width: $desktopwidth) {
+		font-size: 9px;
+	}
+
+	small {
+		font-size: 13px;
+		padding-right: 4px;
+
+		@media screen and (max-width: $desktopwidth) {
+			font-size: 11px;
+		}
+		
+		a {
+			&:hover {
+				color: $grayDarkest;
+				text-decoration: none;
+			}
+		}
+	}
+
+	.sign-in-options {
+		top: 40px;
+		bottom: inherit;
+		left: -50%;
+		background: $grayDark;
+		font-size: 12px;
+		line-height: 12px;
+
+		@media screen and (max-width: $desktopwidth) {
+			font-size: 10px;
+			left: inherit;
+			right: 10px;
+			top: 35px;
+		}
+
+		.sign-in-link {
+
+			@media screen and (max-width: $desktopwidth) {
+				padding: 12px 6px;
+			}
+			
+			&:hover {
+				background: $grayDark;
+				color: $grayLighter;
+			}
+		}
+
+		.sign-in-callout {
+			border-top: none;
+			border-bottom: 10px solid $grayDark;
+			top: -10px;
+			bottom: inherit;
+
+			@media screen and (max-width: $desktopwidth) {
+				left: inherit;
+				right: 10px;
+			}
+		}
+	}
 }
 
 #admin-container {
