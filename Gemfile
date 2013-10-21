@@ -17,7 +17,7 @@ gem 'pg'
 
 gem 'compass-rails'
 
-gem 'unicorn'
+gem 'thin'
 
 gem 'devise'
 
