@@ -642,6 +642,10 @@
     targetElm.appendChild(overlayLayer);
 
     overlayLayer.onclick = function() {
+      // Hack: should make pull request to intro.js
+      if(!self._options.exitOnOverlayClick) {
+        return;
+      }
       if(self._options.exitOnOverlayClick == true) {
         _exitIntro.call(self, targetElm);
       }
