@@ -90,12 +90,12 @@ class TagBuilding
 		$("body").keyup (e)->
 			# console.log "key", e.which
 			switch e.which
-				when 49 then tagger.submitNoFlag()
-				when 97 then tagger.submitNoFlag()
-				when 50 then tagger.submitFixFlag()
-				when 98 then tagger.submitFixFlag()
-				when 51 then tagger.submitYesFlag()
-				when 99 then tagger.submitYesFlag()
+				when 49 then tagger.submitNoFlag(e)
+				when 97 then tagger.submitNoFlag(e)
+				when 50 then tagger.submitFixFlag(e)
+				when 98 then tagger.submitFixFlag(e)
+				when 51 then tagger.submitYesFlag(e)
+				when 99 then tagger.submitYesFlag(e)
 
 	removeButtonListeners: () =>
 		$("#link-help").unbind()
