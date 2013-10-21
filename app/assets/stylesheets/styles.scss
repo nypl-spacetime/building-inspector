@@ -447,9 +447,11 @@ small {
 	small {
 		font-size: 13px;
 		padding-right: 4px;
+		line-height: 13px;
 
 		@media screen and (max-width: $desktopwidth) {
 			font-size: 11px;
+			line-height: 11px;
 		}
 		
 		a {
