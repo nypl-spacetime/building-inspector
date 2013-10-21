@@ -8,7 +8,7 @@
 		</div>
 		<div id="score-save">
 		  <% if user_signed_in? %>
-		    <%= truncate(current_user.name, :length => 14, :omission => '…') %><small><%= link_to 'x', destroy_user_session_path, method: :delete, :id => "link-exit" %></small>
+		    <%= truncate(current_user.name, :length => 12, :omission => '…') %><small><%= link_to 'x', destroy_user_session_path, method: :delete, :id => "link-exit" %></small>
 		  <% else %>
 		    <%= link_to "SAVE SCORE", "javascript:;", {:id => "link-score-save", :class => "score-save-link"} %>
 		    <div class="sign-in-options">
