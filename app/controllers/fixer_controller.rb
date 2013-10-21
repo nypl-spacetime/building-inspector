@@ -101,6 +101,7 @@ class FixerController < ApplicationController
 		if cookies[:session] == nil || cookies[:session] == ""
 			cookies[:session] = { :value => request.session_options[:id], :expires => 365.days.from_now }			
 		end
+		check_for_user_session(cookies[:session]) unless user_signed_in?
 		Usersession.register_user_session(current_user.id, cookies[:session]) if user_signed_in?
 		cookies[:session]
 	end
@@ -119,6 +120,16 @@ class FixerController < ApplicationController
 		else
 			redirect_to(building_path)
 		end
+	end
+	
+	def check_for_user_session(session)
+	  if session
+	    user = Usersession.find_user_by_session_id(session)
+	    if user
+	      @user = user
+	      sign_in @user, :event => :authentication
+	    end
+	  end
 	end
 
 protected

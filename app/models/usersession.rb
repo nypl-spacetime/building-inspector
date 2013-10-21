@@ -2,6 +2,14 @@ class Usersession < ActiveRecord::Base
   belongs_to :user
   attr_accessible :user_id, :session_id
   
+  def self.find_user_by_session_id(session_id)
+    user = nil
+    if session_id
+      user = User.joins(:usersessions).where(usersessions: {session_id: session_id}).first
+    end
+    user
+  end
+  
   def self.register_user_session(user_id, session_id)
     session = nil
     if session_id and user_id
