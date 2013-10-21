@@ -423,13 +423,14 @@ small {
 }
 
 #links-account {
-	font-size: 12px;
+	position: relative;
 	display: inline-block;
+	padding: 0;
 	background: $grayLighter;
 	margin-right: 1px;
+	font-size: 12px;
 	text-transform: uppercase;
 	@include border-radius(10px 0 0 10px);
-	position: relative;
 
 	.signed-in {
 		display: inline-block;
