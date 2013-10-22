@@ -12,6 +12,10 @@
 	line-height: 120px;
 	z-index: 131;
 	position: absolute;
+
+	@media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
+		display: none;
+	}
 }
 
 #buttons {
@@ -94,6 +98,10 @@
 	z-index: 110;
 	background-color: $gray;
 	// @include box-shadow(0, 0, 15px);
+
+	@media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
+		display: none !important;
+	}
 
 	#link-exit-tutorial {
 		font-size: 30px;

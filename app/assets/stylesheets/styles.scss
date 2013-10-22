@@ -78,6 +78,10 @@ h3 {
 		height: 40px;
 	}
 
+	@media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
+		display: none;
+	}
+
 	a {
 		color: $grayDark;
 
@@ -263,6 +267,10 @@ h3 {
 	@media screen and (max-width: $desktopwidth) {
 		padding-top: 194px;
 	}
+
+	@media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
+		display: none;
+	}
 }
 
 .intro {
@@ -346,6 +354,10 @@ h3 {
 			width: auto;
 			margin: 0 10px 1em;
 		}
+	}
+
+	@media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
+		display: none;
 	}
 }
 
@@ -509,3 +521,23 @@ small {
   background: $white;
 }
 
+
+#landscape-alert {
+	display: none;
+	text-transform: uppercase;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	color: $grayLightest;
+	text-align: center;
+
+	p {
+		margin: 100px 100px 0;
+	}
+
+	@media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
+		display: block;
+	}
+}
