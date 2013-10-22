@@ -6,6 +6,8 @@ class FlagsController < ApplicationController
   def index
     @flags = Flag.paginate(:page => params[:page])
 
+    @total = Flag.count
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @flags }

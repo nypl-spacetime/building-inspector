@@ -210,6 +210,9 @@ a#tweet {
 		font-weight: normal;
 		color: $orange;
 	}
+	.introjs-tooltipbuttons {
+		min-width: 240px;
+	}
 
 	.introjs-button {
 		border: none;
@@ -232,14 +235,23 @@ a#tweet {
 	.introjs-skipbutton {
 		background: $grayLighter;
 	}
+
+	.introjs-prevbutton {
+		@include border-radius(5px 0 0 5px);
+	}
+
+	.introjs-nextbutton {
+		@include border-radius(0 5px 5px 0);
+	}
+
+	.introjs-disabled, .introjs-disabled:hover {
+		color: $white;
+		background: $grayLightest;
+	}
 }
 
 .introjs-overlay {
 	opacity: .15 !important;
-}
-
-.introjs-prevbutton {
-	display: none;
 }
 
 .introjs-helperLayer {
@@ -259,3 +271,4 @@ a#tweet {
 		display: inline-block;
 	}
 }
+
