@@ -228,31 +228,13 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
   
   require "omniauth-google-oauth2"  
-  if Rails.env.development?
-    # authorized for localhost:3000
-    config.omniauth :google_oauth2, "424787999120-mvsuuk1r3v8p8iqkjjev7o8fest4qtq1.apps.googleusercontent.com", "cErgNLLJEbR7RDxOcxrjoOw3", { access_type: "offline", approval_prompt: "" }
-  else
-    # authorized for buildinginspector.nypl.org
-    config.omniauth :google_oauth2, "424787999120.apps.googleusercontent.com", "SWjUrRp2cBNV5Vm0-ZE_Xb1L", { access_type: "offline", approval_prompt: "" }
-  end
+  config.omniauth :google_oauth2, ENV['GOOGLE_KEY'], ENV['GOOGLE_SECRET'], { access_type: "offline", approval_prompt: "" }
   
   require "omniauth-facebook"
-  if Rails.env.development?
-    # authorized for localhost:3000
-    config.omniauth :facebook, "1436015846625485", "707c201d4edc99a24e6c8dee35191fd2"
-  else
-    # authorized for buildinginspector.nypl.org
-    config.omniauth :facebook, "192831357570461", "c1e0058d1ec125f5cc2b3ee0705c0016"
-  end
+  config.omniauth :facebook, ENV['FACEBOOK_KEY'], ENV['FACEBOOK_SECRET']
   
   require "omniauth-twitter"
-  if Rails.env.development?
-    # authorized for 127.0.0.1:3000
-    config.omniauth :twitter, "jv8Z144Sf5EtNU9tEVHT6w", "YkKLylkuUXIMj5KzkGYbh8ADJqYJerPyz8YvYtIWss"
-  else
-    # authorized for buildinginspector.nypl.org
-    config.omniauth :twitter, "9MYd08nfDxW2N8qZpVQ", "Di4NWgyX7gtqhg690bgTIHysAeFeKZWPlhZ1cz65g"
-  end
+  config.omniauth :twitter, ENV['TWITTER_KEY'], ENV['TWITTER_SECRET']
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

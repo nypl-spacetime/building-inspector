@@ -14,4 +14,7 @@
 /log
 /tmp
 .DS_Store
+
+# Ignore application configuration
 /config/database.yml
+/config/application.yml
