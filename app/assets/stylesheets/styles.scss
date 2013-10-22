@@ -98,7 +98,6 @@ h3 {
 			}
 
 			&#link-login {
-				@include border-radius(10px 0 0 10px);
 				&:before {
 					content: "0";
 				}
@@ -112,10 +111,17 @@ h3 {
 			}
 
 			&#link-about {
-				@include border-radius(0 10px 10px 0);
 				&:before {
 					content: "i";
 				}
+			}
+			
+			&:first-child {
+				@include border-radius(10px 0 0 10px);
+			}
+			
+			&:last-child {
+				@include border-radius(0 10px 10px 0);
 			}
 
 			&:before {
