@@ -55,6 +55,10 @@
 		background: transparent;
 		height: 100px;
 	}
+
+	@media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
+		display: none;
+	}
 }
 
 #score {
