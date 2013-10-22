@@ -49,12 +49,12 @@ $textColorInverse:      $grayLightest;
 
 // Typography
 // -------------------------
-$mainFontFamily:        "Lato Regular", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-$heavyFontFamily:       "Lato Black", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$mainFontFamily:        Verdana, "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$heavyFontFamily:       Verdana, "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 $iconFontFamily:        "Icomoon";
 $baseFontFamily:        $mainFontFamily;
 $headingsFontFamily:    $heavyFontFamily;
-$headingsFontWeight:    normal;
+$headingsFontWeight:    bold;
 $headingsColor:         inherit;
 $headingsTransform:     uppercase;
 

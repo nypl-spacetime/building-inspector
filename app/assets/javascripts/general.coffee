@@ -1,7 +1,9 @@
 class General
 
 	constructor: () ->
-
+		# // scroll to top (hide bar in ios)
+		window.scrollTo(0, 1)
+		
 		$("#link-score-save").on("click", @toggleBottomSigninOptions)
 		$("#link-login").on("click", @toggleTopSigninOptions)
 		$("body").on("click", @onBodyClick)
