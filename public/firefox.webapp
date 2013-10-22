@@ -4,7 +4,9 @@
   "launch_path": "/",
   "icons": {
     "128": "/icon-128.png",
-    "60": "/icon-60.png"
+    "60": "/icon-60.png",
+    "32": "/icon-32.png",
+    "256": "/icon-256.png"
   },
   "developer": {
     "name": "NYPL Labs",
@@ -12,7 +14,7 @@
   },
   "default_locale": "en",
   "fullscreen":"true",
-  "orientation": ["portrait"],
+  "orientation": ["portrait","landscape-secondary"],
   "type":"web",
   "chrome": { "navigation": false }
 }
