@@ -1,9 +1,10 @@
 {
-  "name": "NYPL Labs Building Inspector",
-  "description": "Kill Time. Make History. The New York Public Library is training computers how to recognize building shapes and other information from old city maps. Help us clean up the data so that it can be used in research, teaching and civic hacking.",
+  "name": "BldgInspector by NYPL Labs",
+  "description": "Kill Time, Make History with the NYPL Labs Building Inspector. The New York Public Library is training computers how to recognize building shapes and other information from old city maps. Help us clean up the data so that it can be used in research, teaching and civic hacking.",
   "launch_path": "/",
   "icons": {
-    "128": "/apple-touch-icon-iphone4.png"
+    "128": "/icon-128.png",
+    "60": "/icon-60.png"
   },
   "developer": {
     "name": "NYPL Labs",
