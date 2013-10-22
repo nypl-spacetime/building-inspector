@@ -16,6 +16,13 @@
 	}
 }
 
+#controls {
+	@media screen and (max-width: $desktopwidth) {
+		height: 1px;
+	}
+}
+
+
 .leaflet-container {
 	background: $grayLight;
 }
