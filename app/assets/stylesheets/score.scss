@@ -237,6 +237,7 @@ a#tweet {
 	}
 
 	.introjs-prevbutton {
+		margin-right: 1px;
 		@include border-radius(5px 0 0 5px);
 	}
 
@@ -264,7 +265,7 @@ a#tweet {
 	background: rgba(255,255,255,.9);
 
 	.introjs-nextbutton {
-		display: none;
+		// display: none;
 	}
 
 	&.yesNext .introjs-nextbutton {

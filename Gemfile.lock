@@ -56,6 +56,9 @@ GEM
     execjs (2.0.0)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
+    figaro (0.7.0)
+      bundler (~> 1.0)
+      rails (>= 3, < 5)
     fssm (0.2.10)
     hashie (1.2.0)
     hike (1.2.3)
@@ -162,6 +165,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   compass-rails
   devise
+  figaro
   jquery-rails
   newrelic_rpm
   omniauth-facebook
