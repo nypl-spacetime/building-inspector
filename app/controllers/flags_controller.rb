@@ -8,6 +8,9 @@ class FlagsController < ApplicationController
 
     @total = Flag.count
 
+    @unique = Flag.select("DISTINCT polygon_id").count
+
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @flags }
