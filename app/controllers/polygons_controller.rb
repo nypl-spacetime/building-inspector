@@ -5,6 +5,7 @@ class PolygonsController < ApplicationController
   # GET /polygons.json
   def index
     @polygons = Polygon.paginate(:page => params[:page])
+    @total = Polygon.count
 
     respond_to do |format|
       format.html # index.html.erb
