@@ -82,6 +82,34 @@ class FixerController < ApplicationController
 		respond_with( @map )
 	end
 
+	def flagManyPolygons
+		session = getSession()
+		# assuming json like so:
+		# poly: "[ [id, flag], [id, flag], ... ]"
+		poly = JSON.parse(params[:poly])
+		if poly == nil || poly.count <= 0
+			respond_with( "empty_poly" )
+			return
+		end
+		ids = []
+		poly.each do |p|
+			if p[0] == nil || p[1] == nil
+				next
+			end
+			flag = Flag.new
+			flag[:is_primary] = true
+			flag[:polygon_id] = p[0]
+			flag[:flag_value] = p[1]
+			flag[:session_id] = session
+			flag[:flag_type] = "geometry"
+			if flag.save
+				ids.push(p[0])
+			end
+		end
+		fl = Polygon.connection.execute("UPDATE polygons SET flag_count = flag_count+1 WHERE id IN (#{ids.join(',')})")
+		respond_with( "flag_success" )
+	end
+
 	def flagPolygon
 		session = getSession()
 		@flag = Flag.new

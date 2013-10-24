@@ -37,6 +37,8 @@ Webappmini::Application.routes.draw do
 
   match "fixer/flag" => "fixer#flagPolygon"
 
+  match "fixer/multiflag" => "fixer#flagManyPolygons"
+
   match "color" => "fixer#color"
   match "building" => "fixer#building"
   
