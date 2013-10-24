@@ -91,6 +91,7 @@ class FixerController < ApplicationController
 		@flag[:session_id] = session
 		@flag[:flag_type] = "geometry"
 		if @flag.save
+			fl = Polygon.connection.execute("UPDATE polygons SET flag_count = flag_count+1 WHERE id = #{params[:i]}")
 			respond_with( @flag )
 		else
 			respond_with( @flag.errors )

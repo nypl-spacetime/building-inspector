@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131018154000) do
+ActiveRecord::Schema.define(:version => 20131024030523) do
 
   create_table "flags", :force => true do |t|
     t.string   "flag_type"
@@ -31,9 +31,10 @@ ActiveRecord::Schema.define(:version => 20131018154000) do
     t.text     "vectorizer_json"
     t.integer  "sheet_id"
     t.string   "color"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.integer  "dn"
+    t.integer  "flag_count",      :default => 0
   end
 
   create_table "sheets", :force => true do |t|

@@ -88,7 +88,7 @@ class TagBuilding
 		)
 
 		$("body").keyup (e)->
-			# console.log "key", e.which
+			console.log "key", e.which
 			switch e.which
 				when 49 then tagger.submitNoFlag(e)
 				when 97 then tagger.submitNoFlag(e)
