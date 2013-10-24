@@ -1,4 +1,5 @@
 	<div id="score">
+		<div id="offline-mode"><%= link_to "GO OFFLINE", "javascript:;", {:rel => "nofollow"} %></div>
 		<div id="score-number" class="total" title="Buildings you have processed">0</div>
 		<% if @current_page=="progress" %>
 		<div id="map-total"></div>
@@ -8,7 +9,7 @@
 		</div>
 		<div id="score-save">
 		  <% if user_signed_in? %>
-		    <%= truncate(current_user.name, :length => 12, :omission => '…') %><small><%= link_to 'x', destroy_user_session_path, method: :delete, :id => "link-exit" %></small>
+		    <span class="username"><%= current_user.name %></span><small><%= link_to 'x', destroy_user_session_path, method: :delete, :id => "link-exit" %></small>
 		  <% else %>
 		    <%= link_to "SAVE SCORE", "javascript:;", {:id => "link-score-save", :class => "score-save-link"} %>
 		    <div class="sign-in-options">
@@ -19,10 +20,12 @@
         </div>	 
 			<% end %>
 		</div>
+		<div id="score-progress">
 		<% if @current_page=="progress" %>
-		<div id="score-progress"><a href="/fixer/building" class="score-link">INSPECT MORE</a></div>
+			<a href="/fixer/building" class="score-link">INSPECT MORE</a>
 		<% else %>
-		<div id="score-progress"><a href="/fixer/progress" class="score-link">VIEW PROGRESS</a></div>
+			<a href="/fixer/progress" class="score-link">VIEW PROGRESS</a>
 		<% end %>
+		</div>
 		<%= link_to "T", "", {:onclick=>"javascript:_gaq.push(['_trackEvent', 'Tweet']);",:id => "tweet", :title => "Share on Twitter"} %>
 	</div>

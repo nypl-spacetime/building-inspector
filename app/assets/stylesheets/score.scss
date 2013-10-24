@@ -135,6 +135,44 @@
 		}
 	}
 
+	.username {
+		display: block;
+		float: left;
+		width: 110px;
+		margin-right: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+
+		@media screen and (max-width: $desktopwidth) {
+			width: 70px;
+			margin-right: 2px;
+		}
+	}
+
+	#offline-mode {
+		position: absolute;
+		top: 5px;
+		right: 11px;
+		font-size: 9px;
+		width: 50px;
+		text-align: right;
+		line-height: 9px;
+
+		a {
+			color: $grayDarkest;
+
+			&:hover {
+				color: $white;
+				text-decoration: none;
+			}
+		}
+
+		@media screen and (min-width: $desktopwidth) {
+			display: none;
+		}
+	}
+
 	#score-save, #score-progress {
 		float: left;
 		text-align: left;
@@ -142,14 +180,13 @@
 		color: $grayDarker;
 		font-size: 12px;
 		padding: 5px 0;
-		cursor: pointer;
 		text-transform: uppercase;
 		position: relative;
 		
 
 		@media screen and (max-width: $desktopwidth) {
 			font-size: 10px;
-			width: 100px;
+			width: 80px;
 			padding: 0;
 		}
 
@@ -158,6 +195,9 @@
 			line-height: 12px;
 
 			@media screen and (max-width: $desktopwidth) {
+				display: block;
+				float: left;
+				margin-top: 2px;
 				font-size: 9px;
 				line-height: 9px;
 			}
@@ -180,11 +220,11 @@
 	#score-progress {
 		float: right;
 		text-align: right;
-	}
 
-	// @media screen and (min-width: $desktopwidth) {
-	// 	top: 0;
-	// }
+		@media screen and (max-width: $desktopwidth) {
+			width: 125px;
+		}
+	}
 }
 
 #map-total {
