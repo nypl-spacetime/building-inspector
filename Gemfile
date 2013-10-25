@@ -30,8 +30,6 @@ gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'figaro'
 
-gem "rmagick", :require => 'RMagick'
-
 # gem 'introjs-rails'
 
 # Gems used only for assets and not required

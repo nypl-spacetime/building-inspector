@@ -11,6 +11,10 @@ class FixerController < ApplicationController
 		session = getSession()
 	end
 
+	def dbtest
+	  	@current_page = "progress"
+	end
+
 	def progress
 	  	@current_page = "progress"
 	end

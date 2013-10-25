@@ -27,6 +27,8 @@ Webappmini::Application.routes.draw do
 
   get "fixer/building"
 
+  get "fixer/dbtest"
+
   get "fixer/color"
 
   get "fixer/progress"
@@ -42,8 +44,5 @@ Webappmini::Application.routes.draw do
   match "color" => "fixer#color"
   match "building" => "fixer#building"
   
-  match 'getimagedata', :to => 'images#getimagedata', :as => "getimagedata"
-  match 'getpixels', :to => 'images#getpixels', :as => "getpixels"
-
   root :to => "general#home"
 end

@@ -51,22 +51,22 @@ var systemDB;
 (function () {
   try {
     if (!window.openDatabase) {
-      alert('not supported');
+      console.log('not supported');
     } else {
       var shortName = 'building-inspector-local-db';
       var version = '1.0';
       var displayName = 'Building Inspector Local DB';
       var maxSize = 65536000; // in bytes
       var myDB = openDatabase(shortName, version, displayName, maxSize);
-      console.log(myDB);
+      console.log("database:",myDB);
     }
   } catch(e) {
     // Error handling code goes here.
     if (e == INVALID_STATE_ERR) {
       // Version number mismatch.
-	    alert("Invalid database version.");
+	    console.log("Invalid database version.");
     } else {
-	    alert("Unknown error "+e+".");
+	    console.log("Unknown error "+e+".");
     }
     return;
   }
@@ -76,7 +76,7 @@ var systemDB;
 
 /*! Mark a file as "delete"*/
 function reallyDelete(id) {
-	// alert('delete ID: '+id);
+	// console.log('delete ID: '+id);
 	var myDB = systemDB;
 	myDB.transaction(
 	    new Function("transaction", "transaction.executeSql('UPDATE files set deleted=1 where id=?;', [ " +id+" ], /* array of values for the ? placeholders */"+
@@ -102,7 +102,7 @@ function insertNewBlob(data, foldera, folderb, filename) {
 	var myDB = systemDB;
 	myDB.transaction(
 		function (transaction) {
-      transaction.executeSql('INSERT INTO filedata (datablob, foldera, folderb, filename) VALUES (?, ?, ?, ?);', [data, foldera, folderb, filename], nullDataHandler, errorHandler);
+      transaction.executeSql('INSERT INTO filedata (datablob, folderA, folderB, filename) VALUES (?, ?, ?, ?);', [data, foldera, folderb, filename], nullDataHandler, errorHandler);
 		}
 	);
 }
@@ -145,20 +145,16 @@ function createTables(db) {
 /* To wipe out the table (if you are still experimenting with schemas,
    for example), enable this block. 
 */
-  if (0) {
-	  db.transaction(
-	    function (transaction) {
-		    transaction.executeSql('DROP TABLE files;');
-		    transaction.executeSql('DROP TABLE filedata;');
-	    }
-	  );
-  }
+  console.log("creating tables for", db);
+  db.transaction(
+    function (transaction) {
+	    transaction.executeSql('DROP TABLE filedata;');
+    }
+  );
   
   db.transaction(
     function (transaction) {
-      transaction.executeSql('CREATE TABLE IF NOT EXISTS files(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, filedata_id INTEGER NOT NULL, deleted INTEGER NOT NULL DEFAULT 0);', [], nullDataHandler, killTransaction);
-      transaction.executeSql('DROP TABLE filedata; CREATE TABLE IF NOT EXISTS filedata(id INTEGER NOT NULL AUTOINCREMENT, datablob TEXT NOT NULL DEFAULT, folderA TEXT NOT NULL, folderB TEXT NOT NULL, filename TEXT NOT NULL "");', [], nullDataHandler, errorHandler);
-      transaction.executeSql('CREATE TABLE IF NOT EXISTS flags(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, flag INTEGER "");', [], nullDataHandler, errorHandler);
+      transaction.executeSql('CREATE TABLE IF NOT EXISTS filedata(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, datablob TEXT NOT NULL DEFAULT "", folderA INTEGER NOT NULL, folderB INTEGER NOT NULL, filename INTEGER NOT NULL);', [], nullDataHandler, errorHandler);
     }
   ); 
 }
@@ -171,7 +167,7 @@ function killTransaction(transaction, error) {
 /*! When passed as the error handler, this causes a transaction to fail with a warning message. */
 function errorHandler(transaction, error) {
     // Error is a human-readable string.
-    alert('Oops.  Error was '+error.message+' (Code '+error.code+')');
+    console.log('Oops.  Error was '+error.message+' (Code '+error.code+')');
     // Handle errors here
     var we_think_this_error_is_fatal = true;
     if (we_think_this_error_is_fatal) return true;
@@ -184,9 +180,9 @@ function errorHandler(transaction, error) {
 function nullDataHandler(transaction, results) { 
   if (!results.rowsAffected) {
     // Previous insert failed. Bail.
-    alert('No rows affected!');
-    return false;
+    console.log('No rows affected!');
   }
+  console.log('insert ID was '+results.insertId);
 }
 
 /* This sets up an onbeforeunload handler to avoid 
@@ -219,6 +215,10 @@ function getBlobs(tiles) {
   console.log(count);
 }
 
+function getBlob(url) {
+
+}
+
 function truncateFileData() {
 	var myDB = systemDB;
   myDB.transaction(function (transaction) {
@@ -231,7 +231,7 @@ function setImage(id) {
   var blob = loadFile(id);
 }
 
-truncateFileData();
-getBlobs(tiles);
+// truncateFileData();
+// getBlobs(tiles);
 
 
