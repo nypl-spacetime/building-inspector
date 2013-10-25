@@ -169,15 +169,15 @@ class Progress
 			bounds = new L.LatLngBounds()
 
 			if data.yes_poly.features.length>0
-				yes_json.addTo(m)
+				# yes_json.addTo(m)
 				bounds.extend(yes_json.getBounds())
 
 			if data.no_poly.features.length>0
-				no_json.addTo(m)
+				# no_json.addTo(m)
 				bounds.extend(no_json.getBounds())
 
 			if data.fix_poly.features.length>0
-				fix_json.addTo(m)
+				# fix_json.addTo(m)
 				bounds.extend(fix_json.getBounds())
 
 			m.addLayer(markers)
