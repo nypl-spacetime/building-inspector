@@ -1,4 +1,5 @@
 class OfflineDB
+
   constructor: () ->
     try
       if (!window.openDatabase)
@@ -32,16 +33,22 @@ class OfflineDB
     )
 
   insertNewBlob: (data, foldera, folderb, filename) ->
-  	@myDB.transaction (transaction) ->
-      transaction.executeSql "INSERT INTO filedata (datablob, folderA, folderB, filename) VALUES (?, ?, ?, ?);", [data, foldera, folderb, filename], nullDataHandler, errorHandler
+  	@systemDB.transaction((transaction) ->
+      transaction.executeSql "INSERT INTO filedata (datablob, folderA, folderB, filename) VALUES (?, ?, ?, ?);", [data, foldera, folderb, filename], @nullDataHandler, @errorHandler
+    )
 
   loadFile: (id) ->
-    @myDB.transaction (transaction) ->
-      transaction.executeSql "SELECT datablob FROM filedata WHERE id = ?;", [id], loadFileData, errorHandler
+    console.log "loading id", id
+    t = @
+    @systemDB.transaction( (transaction) ->
+          transaction.executeSql "SELECT datablob FROM filedata WHERE id = ?;", [id], t.loadFileData, @errorHandler
+    )
 
   loadFileData: (transaction, results) ->
-    for blob in results
-      base64blob = results
+    console.log "putting image in DOM", results
+    for r, i in results.rows
+      console.log "blob:", results.rows.item(i)
+      base64blob = results.rows.item(i)
       image = document.createElement 'img'
       image.src = base64blob.datablob
       document.body.appendChild image
