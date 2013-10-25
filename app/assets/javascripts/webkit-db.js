@@ -124,7 +124,7 @@ function loadFileData(transaction, results) {
     var base64blob = results.rows.item(i);
     console.log(base64blob);
     var image = document.createElement('img');
-    image.src = 'data:image/png;base64,'+ base64blob;
+    image.src = base64blob.datablob;
     document.body.appendChild(image);
   }
 }
