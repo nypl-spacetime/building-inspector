@@ -31,6 +31,10 @@ class OfflineDB
       transaction.executeSql 'CREATE TABLE IF NOT EXISTS filedata(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, datablob TEXT NOT NULL DEFAULT "", folderA INTEGER NOT NULL, folderB INTEGER NOT NULL, filename INTEGER NOT NULL);', [], @nullDataHandler, @errorHandler
     )
 
+  insertNewBlob: (data, foldera, folderb, filename) ->
+  	@myDB.transaction (transaction) ->
+      transaction.executeSql "INSERT INTO filedata (datablob, folderA, folderB, filename) VALUES (?, ?, ?, ?);", [data, foldera, folderb, filename], nullDataHandler, errorHandler
+
   loadFile: (id) ->
     @myDB.transaction (transaction) ->
       transaction.executeSql "SELECT datablob FROM filedata WHERE id = ?;", [id], loadFileData, errorHandler
