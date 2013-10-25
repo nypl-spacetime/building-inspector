@@ -18,6 +18,10 @@ class OfflineDB
     @createTables(myDB)
     @systemDB = myDB
 
+  goOffline: () ->
+    tiles = _bbox.getTiles()
+    @getImages(tiles)
+
   createTables: (db) ->
     console.log "creating tables for", db
     db.transaction((transaction) ->
@@ -62,7 +66,8 @@ class OfflineDB
         success: (data) ->
           console.log data 
           t.insertNewBlob data.data, val[0], val[1], val[2]
-      )
+        )
+      
 $ ->
   window._odb = new OfflineDB()
          
