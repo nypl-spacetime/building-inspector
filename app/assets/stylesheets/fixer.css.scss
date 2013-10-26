@@ -21,18 +21,12 @@
 
 #buttons {
 	.wrapper {
-		width: 290px;
-		margin: 0 auto;
 		position: relative;
+		width: 290px;
+		height: 80px;
+		margin: 0 auto;
 
 		@include clearfix;
-		overflow: visible;
-
-		a {
-			@include transition-property(left,top);
-			@include transition-duration(.2s);
-			@include transition-timing-function(ease-out); 
-		}
 	}
 
 	#one-hand {
@@ -55,6 +49,16 @@
 	}
 
 	@media screen and (max-width: $desktopwidth) {
+		.wrapper {
+			overflow: visible;
+		}
+
+		a {
+			@include transition-property(left,top);
+			@include transition-duration(.2s);
+			@include transition-timing-function(ease-out); 
+		}
+
 		#yes-button, #no-button, #fix-button {
 			position: absolute;
 		}
@@ -191,6 +195,7 @@
 }
 
 #map-tutorial {
+	display: none;
 	width: 100%;
 	height: 100%;
 	position: relative;

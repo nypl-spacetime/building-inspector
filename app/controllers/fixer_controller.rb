@@ -8,7 +8,6 @@ class FixerController < ApplicationController
 		@isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
 		cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
 		@map = getMap().to_json
-		session = getSession()
 	end
 
 	def progress

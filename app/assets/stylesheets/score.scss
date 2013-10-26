@@ -148,6 +148,7 @@
 			width: 70px;
 			margin-right: 2px;
 		}
+
 	}
 
 	#score-save, #score-progress {
@@ -164,7 +165,7 @@
 
 		@media screen and (max-width: $desktopwidth) {
 			font-size: 10px;
-			width: 80px;
+			width: 100px;
 			padding: 0;
 		}
 
@@ -200,8 +201,22 @@
 		text-align: right;
 
 		@media screen and (max-width: $desktopwidth) {
-			width: 125px;
+			width: 100px;
 		}
+	}
+}
+
+#link-exit {
+	content: attr(data-icon);
+	content: ' x';
+	font-family:$iconfont;
+	-webkit-font-smoothing: antialiased;
+	text-transform: none;
+	font-size: 11px;
+
+	@media screen and (max-width: $desktopwidth) {
+		font-size: 9px;
+		padding: 2px 4px;
 	}
 }
 
