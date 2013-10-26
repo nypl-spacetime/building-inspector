@@ -24,10 +24,10 @@ class FixerController < ApplicationController
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
 		session = getSession()
 		if user_signed_in?
-      all_polygons = Flag.progress_for_user(current_user.id)
-    else
-      all_polygons = Flag.progress_for_session(session)
-    end 
+			all_polygons = Flag.progress_for_user(current_user.id)
+		else
+			all_polygons = Flag.progress_for_session(session)
+		end 
 		yes_poly = []
 		no_poly = []
 		fix_poly = []

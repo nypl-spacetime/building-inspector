@@ -135,6 +135,21 @@
 		}
 	}
 
+	.username {
+		display: block;
+		float: left;
+		width: 110px;
+		margin-right: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+
+		@media screen and (max-width: $desktopwidth) {
+			width: 70px;
+			margin-right: 2px;
+		}
+	}
+
 	#score-save, #score-progress {
 		float: left;
 		text-align: left;
@@ -149,7 +164,7 @@
 
 		@media screen and (max-width: $desktopwidth) {
 			font-size: 10px;
-			width: 100px;
+			width: 80px;
 			padding: 0;
 		}
 
@@ -158,6 +173,9 @@
 			line-height: 12px;
 
 			@media screen and (max-width: $desktopwidth) {
+				display: block;
+				float: left;
+				margin-top: 2px;
 				font-size: 9px;
 				line-height: 9px;
 			}
@@ -180,11 +198,11 @@
 	#score-progress {
 		float: right;
 		text-align: right;
-	}
 
-	// @media screen and (min-width: $desktopwidth) {
-	// 	top: 0;
-	// }
+		@media screen and (max-width: $desktopwidth) {
+			width: 125px;
+		}
+	}
 }
 
 #map-total {

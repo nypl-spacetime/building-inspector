@@ -29,6 +29,20 @@
 	<%= render :partial => "partials/score" %>
 	<div id="buttons">
 		<div class="wrapper">
+		<% if user_signed_in? %>
+<%
+is_beta = false
+beta_emails = ["mauricio.giraldo","mauriciogiraldo","mshuster"]
+beta_emails.each do |email|
+	current_user.email.index(email) != nil
+	is_beta = true
+	break  
+end
+if is_beta
+%>
+			<a href="javascript:;" id="one-hand" rel="nofollow">.</a>
+<% end %>
+<% end %>
 			<a href="javascript:;" id="no-button" title="Keyboard shortcut: 1" rel="nofollow">NO</a>
 			<a href="javascript:;" id="fix-button" title="Keyboard shortcut: 2" rel="nofollow">FIX</a>
 			<a href="javascript:;" id="yes-button" title="Keyboard shortcut: 3" rel="nofollow">YES</a>
