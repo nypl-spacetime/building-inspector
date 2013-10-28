@@ -2,7 +2,7 @@
 <p>
     <strong>
         Current counts: 
-        <% @consensus.each do |c| %>
+        <% @consensus_counts.each do |c| %>
         <%= c["consensus"].capitalize %>: <%= (c["percent"].to_f * 100).round(1) %>% 
         <% end %>
         of <%= @consensus_total %> polygons
