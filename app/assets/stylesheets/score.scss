@@ -186,7 +186,7 @@
 
 		@media screen and (max-width: $desktopwidth) {
 			font-size: 10px;
-			width: 80px;
+			width: 100px;
 			padding: 0;
 		}
 
@@ -220,10 +220,20 @@
 	#score-progress {
 		float: right;
 		text-align: right;
+	}
+}
 
-		@media screen and (max-width: $desktopwidth) {
-			width: 125px;
-		}
+#link-exit {
+	content: attr(data-icon);
+	content: ' x';
+	font-family:$iconfont;
+	-webkit-font-smoothing: antialiased;
+	text-transform: none;
+	font-size: 11px;
+
+	@media screen and (max-width: $desktopwidth) {
+		font-size: 9px;
+		padding: 2px 4px;
 	}
 }
 

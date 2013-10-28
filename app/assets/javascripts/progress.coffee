@@ -6,7 +6,7 @@ class Progress
 		$("#tweet").hide()
 		NW = new L.LatLng(40.65563874006115,-74.13093566894531)
 		SE = new L.LatLng(40.81640757520087,-73.83087158203125)
-		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859-final/859spec.json', 
+		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859/859spec.json', 
 			zoomControl: false
 			animate: true
 			scrollWheelZoom: true
@@ -169,15 +169,15 @@ class Progress
 			bounds = new L.LatLngBounds()
 
 			if data.yes_poly.features.length>0
-				yes_json.addTo(m)
+				# yes_json.addTo(m)
 				bounds.extend(yes_json.getBounds())
 
 			if data.no_poly.features.length>0
-				no_json.addTo(m)
+				# no_json.addTo(m)
 				bounds.extend(no_json.getBounds())
 
 			if data.fix_poly.features.length>0
-				fix_json.addTo(m)
+				# fix_json.addTo(m)
 				bounds.extend(fix_json.getBounds())
 
 			m.addLayer(markers)

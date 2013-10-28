@@ -8,7 +8,6 @@ class FixerController < ApplicationController
 		@isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
 		cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
 		@map = getMap().to_json
-		session = getSession()
 	end
 
 	def dbtest
@@ -28,10 +27,10 @@ class FixerController < ApplicationController
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
 		session = getSession()
 		if user_signed_in?
-      all_polygons = Flag.progress_for_user(current_user.id)
-    else
-      all_polygons = Flag.progress_for_session(session)
-    end 
+			all_polygons = Flag.progress_for_user(current_user.id)
+		else
+			all_polygons = Flag.progress_for_session(session)
+		end 
 		yes_poly = []
 		no_poly = []
 		fix_poly = []

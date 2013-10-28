@@ -1,6 +1,7 @@
 @import "lib/css3-mixins";
 @import "lib/button-mixins";
 @import "compass/utilities/general/clearfix";
+@import "compass/css3/transition";
 @import "variables";
 @import "score";
 
@@ -20,14 +21,116 @@
 
 #buttons {
 	.wrapper {
+		position: relative;
 		width: 290px;
+		height: 80px;
 		margin: 0 auto;
 
 		@include clearfix;
 	}
+
+	#one-hand {
+		display: none;
+		position: absolute;
+		margin: 0;
+		padding: 0;
+		top: -70px;
+		left: 10px;
+		width: 30px;
+		height: 30px;
+		background: $grayLight;
+		line-height: 21px;
+		font-size: 16px;
+		@include border-radius(20px);
+
+		@media screen and (max-width: $desktopwidth) {
+			display: block;
+		}
+	}
+
+	@media screen and (max-width: $desktopwidth) {
+		.wrapper {
+			overflow: visible;
+		}
+
+		a {
+			@include transition-property(left,top);
+			@include transition-duration(.2s);
+			@include transition-timing-function(ease-out); 
+		}
+
+		#yes-button, #no-button, #fix-button {
+			position: absolute;
+		}
+
+		#yes-button {
+			left: 200px;
+			top: 0;
+		}
+
+		#no-button {
+			left: 0;
+			top: 0;
+		}
+
+		#fix-button {
+			left: 100px;
+			top: 0;
+		}
+	}
+
+	&.left, &.right {
+		#yes-button, #no-button, #fix-button {
+			width: 70px;
+			@include border-radius(40px);
+		}
+	}
+
+	&.left {
+		#one-hand {
+			left: 10px;
+			top: 40px;
+		}
+
+		#yes-button {
+			left: 100px;
+		}
+
+		#no-button {
+			left: 0;
+			top: -100px;
+		}
+
+		#fix-button {
+			left: 71px;
+			top: -71px;
+		}
+	}
+
+	&.right {
+		#one-hand {
+			left: 230px;
+			top: 40px;
+		}
+
+		#yes-button {
+			left: 210px;
+			top: -100px;
+		}
+
+		#no-button {
+			top: 0;
+			left: 80px;
+		}
+
+		#fix-button {
+			left: 126px;
+			top: -71px;
+		}
+	}
 }
 
-#buttons a, .wrapper a, .wrapper span {
+.wrapper a, .wrapper span {
 	width: 80px;
 	height: 45px;
 	margin: 10px;
@@ -52,6 +155,7 @@
 	}
 
 	&#no-button, &.red {
+		margin-left: 5px;
 		background-color: $nocolor;
 	}
 
@@ -63,6 +167,7 @@
 	}
 
 	&#yes-button, &.green {
+		margin-right: 5px;
 		background-color: $yescolor;
 	}
 	&#no-button.active, &#fix-button.active, &#yes-button.active {
@@ -90,6 +195,7 @@
 }
 
 #map-tutorial {
+	display: none;
 	width: 100%;
 	height: 100%;
 	position: relative;
@@ -139,6 +245,7 @@
 			margin-right: 20px;
 			margin-top: 0;
 			margin: 0 10px 10px;
+			clear: both;
 		}
 
 		p:first-child {

@@ -13,9 +13,9 @@
 		  <% else %>
 		    <%= link_to "SAVE SCORE", "javascript:;", {:id => "link-score-save", :class => "score-save-link"} %>
 		    <div class="sign-in-options">
-          <%= link_to "Sign In With Gmail", user_omniauth_authorize_path(:google_oauth2), {:class => "sign-in-link"} %>
-          <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), {:class => "sign-in-link"} %>
-          <%= link_to "Sign in with Twitter", user_omniauth_authorize_path(:twitter), {:class => "sign-in-link"} %>
+          <%= link_to "Sign In With Gmail", user_omniauth_authorize_path(:google_oauth2), {:class => "sign-in-link", :rel=>"nofollow"} %>
+          <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), {:class => "sign-in-link", :rel=>"nofollow"} %>
+          <%= link_to "Sign in with Twitter", user_omniauth_authorize_path(:twitter), {:class => "sign-in-link", :rel=>"nofollow"} %>
           <div class="sign-in-callout"></div>
         </div>	 
 			<% end %>
