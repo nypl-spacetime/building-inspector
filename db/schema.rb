@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131028193159) do
+ActiveRecord::Schema.define(:version => 20131028211242) do
 
   create_table "flags", :force => true do |t|
     t.string   "flag_type"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(:version => 20131028193159) do
     t.integer  "dn"
     t.integer  "flag_count",      :default => 0
     t.string   "consensus"
+    t.string   "centroid"
   end
 
   add_index "polygons", ["sheet_id", "consensus"], :name => "consensus_index"

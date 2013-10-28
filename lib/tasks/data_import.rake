@@ -36,6 +36,30 @@ namespace :data_import do
 		end
 	end
 
+	desc "Import GeoJSON centroid sheet files based on config file"
+	task :ingest_centroid_bulk => :environment do
+		if ENV['force']==nil
+			abort "This process was not forced (required due to destructive nature)"
+		end
+
+		file = "public/files/config-ingest.json"
+
+		if not File.exists?(file)
+			abort "Config file #{file} not found."
+		end
+		
+		str = IO.read(file)
+		json = JSON.parse(str)
+		
+		if json.count == 0
+			abort "Config #{file} has no sheets."
+		end
+		
+		json.each do |f|
+			process_centroid(f["id"].to_i)
+		end
+	end
+
 end
 
 def process_file(id, bbox)
@@ -74,6 +98,39 @@ def process_file(id, bbox)
 		polygon[:color] = f['properties']['Color']
 		polygon[:geometry] = f['geometry']['coordinates'].to_json
 		polygon[:dn] = f['properties']['DN']
+		polygon.save
+	end
+end
+
+def process_centroid(id)
+	file = "public/files/#{id}-centroid.json"
+
+	if not File.exists?(file)
+		puts "Sheet ID #{id} not found."
+		return
+	end
+	
+	str = IO.read(file)
+	json = JSON.parse(str)
+	
+	if json["features"] == nil
+		puts "Sheet ID #{id} has no features."
+		return
+	end
+	
+	# now we can update the sheet polygons
+
+	#first check if sheet exists
+	sheet = Sheet.where(:map_id => id)
+
+	if (sheet == nil)
+		puts "Sheet does not exist. Do a base ingest first."
+		return
+	end
+
+	json["features"].each do |f|
+		polygon = Polygon.where(:DN => f['properties']['DN']).first
+		polygon[:centroid] = f['geometry']['coordinates'].to_json
 		polygon.save
 	end
 end

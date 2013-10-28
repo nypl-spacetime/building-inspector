@@ -28,6 +28,14 @@
     <%= f.text_area :vectorizer_json %>
   </div>
   <div class="field">
+    <%= f.label :centroid %><br />
+    <%= f.text_area :centroid %>
+  </div>
+  <div class="field">
+    <%= f.label :consensus %><br />
+    <%= f.select :consensus, [["Yes","yes"], ["Fix","fix"], ["No","no"]] %>
+  </div>
+  <div class="field">
     <%= f.label :sheet_id %><br />
     <%= f.number_field :sheet_id %>
   </div>
