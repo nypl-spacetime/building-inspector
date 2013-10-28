@@ -1,11 +1,11 @@
 <h1>Listing <%= number_with_delimiter(@total) %> polygons</h1>
 <p>
     <strong>
-        Current counts: 
+        Current counts:<br/>
         <% @consensus_counts.each do |c| %>
         <%= c["consensus"].capitalize %>: <%= (c["percent"].to_f * 100).round(1) %>% 
         <% end %>
-        of <%= @consensus_total %> polygons
+        of <%= number_with_delimiter(@consensus_total) %> polygons with consensus
     </strong>
 </p>
 
