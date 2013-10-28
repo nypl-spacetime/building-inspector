@@ -129,8 +129,11 @@ def process_centroid(id)
 	end
 
 	json["features"].each do |f|
-		polygon = Polygon.where(:DN => f['properties']['DN']).first
-		polygon[:centroid] = f['geometry']['coordinates'].to_json
-		polygon.save
+		polygon = Polygon.where(:dn => f['properties']['DN']).first
+		if polygon
+			puts "Processed sheet: #{id}, dn #{polygon[:dn]} with #{f['geometry']['coordinates']}"
+			polygon[:centroid] = f['geometry']['coordinates'].to_json
+			polygon.save
+		end
 	end
 end
