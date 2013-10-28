@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131028211242) do
+ActiveRecord::Schema.define(:version => 20131028225506) do
 
   create_table "flags", :force => true do |t|
     t.string   "flag_type"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20131028211242) do
     t.datetime "updated_at", :null => false
   end
 
+  add_index "flags", ["polygon_id"], :name => "polygon_index"
   add_index "flags", ["session_id"], :name => "index_flags_on_session_id"
 
   create_table "polygons", :force => true do |t|
@@ -36,7 +37,8 @@ ActiveRecord::Schema.define(:version => 20131028211242) do
     t.integer  "dn"
     t.integer  "flag_count",      :default => 0
     t.string   "consensus"
-    t.string   "centroid"
+    t.float    "centroid_lat"
+    t.float    "centroid_lon"
   end
 
   add_index "polygons", ["sheet_id", "consensus"], :name => "consensus_index"

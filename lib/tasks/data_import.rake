@@ -129,10 +129,13 @@ def process_centroid(id)
 	end
 
 	json["features"].each do |f|
-		polygon = Polygon.where(:dn => f['properties']['DN']).first
-		if polygon
-			polygon[:centroid] = f['geometry']['coordinates'].to_json
-			polygon.save
+		if f['geometry']['coordinates'] != nil
+			polygon = Polygon.where(:dn => f['properties']['DN']).first
+			if polygon
+				polygon[:centroid_lat] = f['geometry']['coordinates'][1].to_f
+				polygon[:centroid_lon] = f['geometry']['coordinates'][0].to_f
+				polygon.save
+			end
 		end
 	end
 end
