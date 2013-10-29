@@ -8,20 +8,23 @@ class General
 		$("#link-login").on("click", @toggleTopSigninOptions)
 		$("body").on("click", @onBodyClick)
 
+		# console.log (window.ontouchstart is null)
 		if (window.innerWidth < 500)
+			console.log "YEAH!"
 			document.title = "Bldg Inspector"
-			overrides = [
-				"#home-logo"
-				"#link-help"
-				"#link-about"
-				"#logout-link"
-				".score-save-link"
-				".sign-in-link"
-				".score-link"
-				"#link-try"
-				"#link-back"
-			]
-			@mobileClick id for id in overrides
+		
+		overrides = [
+			"#home-logo"
+			"#link-help"
+			"#link-about"
+			"#logout-link"
+			".score-save-link"
+			".sign-in-link"
+			".score-link"
+			"#link-try"
+			"#link-back"
+		]
+		@mobileClick id for id in overrides
 
 	mobileClick: (id) ->
 		elem = $(id)
