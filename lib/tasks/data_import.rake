@@ -56,7 +56,7 @@ namespace :data_import do
 		end
 		
 		json.each do |f|
-			process_centroid(f["id"].to_i)
+			process_centroids(f["id"].to_i)
 		end
 	end
 
@@ -102,7 +102,7 @@ def process_file(id, bbox)
 	end
 end
 
-def process_centroid(id)
+def process_centroids(id)
 	file = "public/files/#{id}-centroid.json"
 
 	if not File.exists?(file)
@@ -128,14 +128,28 @@ def process_centroid(id)
 		return
 	end
 
+	nilcentroids = 0
 	json["features"].each do |f|
-		if f['geometry']['coordinates'] != nil
-			polygon = Polygon.where(:dn => f['properties']['DN']).first
-			if polygon
-				polygon[:centroid_lat] = f['geometry']['coordinates'][1].to_f
-				polygon[:centroid_lon] = f['geometry']['coordinates'][0].to_f
-				polygon.save
+		polygon = Polygon.where("dn = ? and sheets.map_id = ?", f['properties']['DN'], id).joins(:sheet).readonly(false)
+		if polygon
+			if polygon.count > 1
+				puts "Polygon #{f['properties']['DN']} in sheet #{id} has twin sibling."
+				next
 			end
+			p = polygon.first
+			if f['geometry']['coordinates'] != nil
+				p[:centroid_lat] = f['geometry']['coordinates'][1].to_f
+				p[:centroid_lon] = f['geometry']['coordinates'][0].to_f
+			else
+				nilcentroids = nilcentroids + 1
+				geo = JSON.parse(p.geometry)
+				point = geo[0][geo[0].count/2]
+				p[:centroid_lat] = point[1]
+				p[:centroid_lon] = point[0]
+			end
+			p.save
 		end
 	end
+	puts "Found #{nilcentroids} nil centroids in #{id}." if nilcentroids > 0
 end
+
