@@ -8,11 +8,10 @@ class General
 		$("#link-login").on("click", @toggleTopSigninOptions)
 		$("body").on("click", @onBodyClick)
 
-		# console.log (window.ontouchstart is null)
 		if (window.innerWidth < 500)
 			console.log "YEAH!"
 			document.title = "Bldg Inspector"
-		
+
 		overrides = [
 			"#home-logo"
 			"#link-help"
