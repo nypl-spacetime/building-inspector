@@ -42,10 +42,10 @@ class FixerController < ApplicationController
 		@progress = {}
 		@progress[:all_polygons] = Polygon.count		
 		if user_signed_in?
-      @progress[:all_polygons_session] = Flag.flags_for_user(current_user.id)
-    else
-      @progress[:all_polygons_session] = Flag.flags_for_session(session)
-    end 
+			@progress[:all_polygons_session] = Flag.flags_for_user(current_user.id)
+		else
+			@progress[:all_polygons_session] = Flag.flags_for_session(session)
+		end 
 		@progress[:fix_poly] = { :type => "FeatureCollection", :features => fix_poly }
 		@progress[:no_poly] = { :type => "FeatureCollection", :features => no_poly }
 		@progress[:yes_poly] = { :type => "FeatureCollection", :features => yes_poly }

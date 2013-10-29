@@ -1,4 +1,16 @@
+<% content_for :dynamic_js do %>
+	<style type="text/css">
+		#map {
+			width: 800px;
+			height: 600px;
+		}
+	</style>
+	<%= javascript_include_tag "sheet", {:id => "sheetdata", "data-map" => "#{@map.to_json}"} %>
+<% end %>
+
 <p id="notice"><%= notice %></p>
+
+<div id="map"></div>
 
 <p>
   <b>Status:</b>

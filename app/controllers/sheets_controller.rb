@@ -16,6 +16,31 @@ class SheetsController < ApplicationController
   # GET /sheets/1.json
   def show
     @sheet = Sheet.find(params[:id])
+    
+    all_polygons = @sheet.polygons
+    
+    fix_poly = []
+    yes_poly = []
+    no_poly = []
+    nil_poly = []
+
+    all_polygons.each do |p|
+      if p[:consensus]=="fix"
+        fix_poly.push({ :type => "Feature", :properties => { :consensus => p[:consensus], :id => p[:id], :dn => p[:dn], :sheet_id => p[:sheet_id] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
+      elsif p[:consensus]=="yes"
+        yes_poly.push({ :type => "Feature", :properties => { :consensus => p[:consensus], :id => p[:id], :dn => p[:dn], :sheet_id => p[:sheet_id] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
+      elsif p[:consensus]=="no"
+        no_poly.push({ :type => "Feature", :properties => { :consensus => p[:consensus], :id => p[:id], :dn => p[:dn], :sheet_id => p[:sheet_id] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
+      else
+        nil_poly.push({ :type => "Feature", :properties => { :consensus => p[:consensus], :id => p[:id], :dn => p[:dn], :sheet_id => p[:sheet_id] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
+      end
+    end
+
+    @map = {}
+    @map[:fix_poly] = { :type => "FeatureCollection", :features => fix_poly }
+    @map[:no_poly] = { :type => "FeatureCollection", :features => no_poly }
+    @map[:yes_poly] = { :type => "FeatureCollection", :features => yes_poly }
+    @map[:nil_poly] = { :type => "FeatureCollection", :features => nil_poly }
 
     respond_to do |format|
       format.html # show.html.erb
