@@ -21,11 +21,6 @@
 </p>
 
 <p>
-  <b>Consensus:</b>
-  <%= @polygon.consensus %>
-</p>
-
-<p>
   <b>Centroid:</b>
   <%= @polygon.centroid_lat %>, <%= @polygon.centroid_lon %>
 </p>
@@ -43,6 +38,18 @@
 <p>
   <b>Color:</b>
   <%= @polygon.color %>
+</p>
+
+<p>
+  <b>Flags:</b>
+  <% @polygon.flags.each do |f| %>
+  <%= f %><br />
+  <% end %>
+</p>
+
+<p>
+  <b>Consensus:</b>
+  <%= @polygon.consensus!= nil ? @polygon.consensus : "[None yet]" %>
 </p>
 
 
