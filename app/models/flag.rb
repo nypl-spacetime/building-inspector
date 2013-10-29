@@ -14,11 +14,11 @@ class Flag < ActiveRecord::Base
 	end
 
 	def self.progress_for_session(session_id)
-		Flag.select("DISTINCT polygons.id, polygons.geometry, flags.*").joins(:polygon).where(:session_id => session_id)
+		Flag.select("DISTINCT polygons.id, polygons.centroid_lat, polygons.centroid_lon, polygons.geometry, flags.*").joins(:polygon).where(:session_id => session_id)
 	end
 	
 	def self.progress_for_user(user_id)
-		Flag.select("DISTINCT polygons.id, polygons.geometry, flags.*").joins(:polygon).joins('INNER JOIN usersessions ON usersessions.session_id = flags.session_id').where('usersessions.user_id = ?', user_id)
+		Flag.select("DISTINCT polygons.id, polygons.centroid_lat, polygons.centroid_lon, polygons.geometry, flags.*").joins(:polygon).joins('INNER JOIN usersessions ON usersessions.session_id = flags.session_id').where('usersessions.user_id = ?', user_id)
 	end
   
 end

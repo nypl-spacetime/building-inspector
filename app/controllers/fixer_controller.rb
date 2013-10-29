@@ -32,11 +32,11 @@ class FixerController < ApplicationController
 		fix_poly = []
 		all_polygons.each do |p|
 			if p[:flag_value]=="fix"
-				fix_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
+				fix_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Point", :coordinates => [p[:centroid_lon], p[:centroid_lat]] } })
 			elsif p[:flag_value]=="yes"
-				yes_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
+				yes_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Point", :coordinates => [p[:centroid_lon], p[:centroid_lat]] } })
 			elsif p[:flag_value]=="no"
-				no_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
+				no_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Point", :coordinates => [p[:centroid_lon], p[:centroid_lat]] } })
 			end
 		end
 		@progress = {}
