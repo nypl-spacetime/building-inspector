@@ -1,3 +1,34 @@
+<% content_for :dynamic_js do %>
+  <style type="text/css">
+    .wrapper {
+      position: relative;
+      width: 800px;
+      height: 600px;
+    }
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+    #info {
+      position: absolute;
+      top: 0;
+      right: 0;
+      /*width: 100px;*/
+      /*height: 100px;*/
+      padding: 10px;
+      background: white;
+      z-index: 10;
+      text-align: right;
+    }
+  </style>
+  <%= javascript_include_tag "sheet_index", {:id => "sheetdata", "data-map" => "#{@sheets.to_json}"} %>
+<% end %>
+
+<div class="wrapper">
+  <div id="info"></div>
+  <div id="map"></div>
+</div>
+
 <h1>Listing sheets</h1>
 
 <table>
@@ -28,4 +59,4 @@
 
 <%= link_to 'New Sheet', new_sheet_path %>
 
-<%= will_paginate @sheets %>
+<%# will_paginate @sheets %>

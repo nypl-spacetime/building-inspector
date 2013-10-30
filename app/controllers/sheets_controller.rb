@@ -4,7 +4,8 @@ class SheetsController < ApplicationController
   # GET /sheets
   # GET /sheets.json
   def index
-    @sheets = Sheet.paginate(:page => params[:page])
+    # @sheets = Sheet.paginate(:page => params[:page])
+    @sheets = Sheet.all
 
     respond_to do |format|
       format.html # index.html.erb
