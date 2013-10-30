@@ -32,7 +32,7 @@
 		<% if user_signed_in? %>
 <%
 is_beta = false
-beta_emails = ["mauricio.giraldo","mauriciogiraldo","mshuster","davidriordan","david.riordan"]
+beta_emails = ["mshuster","davidriordan","david.riordan"]
 beta_emails.each do |email|
 	current_user.email.index(email) != nil
 	is_beta = true

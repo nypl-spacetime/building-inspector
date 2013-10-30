@@ -12,40 +12,48 @@ class FixerController < ApplicationController
 
 	def progress
 	  	@current_page = "progress"
+		# returns a GeoJSON object with the flags the session has sent so far
+		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
+		session = getSession()
+		@progress = {}
+		if user_signed_in?
+			@progress[:counts] = Flag.grouped_flags_for_user(current_user.id)
+			@progress[:all_polygons_session] = Flag.flags_for_user(current_user.id)
+		else
+			@progress[:counts] = Flag.grouped_flags_for_session(session)
+			@progress[:all_polygons_session] = Flag.flags_for_session(session)
+		end
+		@progress = @progress.to_json
 	end
 
 	def status
 	  	@current_page = "status"
 	end
 
-	def sessionProgress
-		# returns a GeoJSON object with the flags the session has sent so far
-		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
+	def session_progress_for_sheet
 		session = getSession()
+		if params[:id] == nil
+			respond_with("no id provided")
+			return
+		end
 		if user_signed_in?
-			all_polygons = Flag.progress_for_user(current_user.id)
+			all_polygons = Flag.flags_for_sheet_for_user(params[:id],current_user.id)
 		else
-			all_polygons = Flag.progress_for_session(session)
-		end 
+			all_polygons = Flag.flags_for_sheet_for_session(params[:id],session)
+		end
 		yes_poly = []
 		no_poly = []
 		fix_poly = []
 		all_polygons.each do |p|
 			if p[:flag_value]=="fix"
-				fix_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Point", :coordinates => [p[:centroid_lon], p[:centroid_lat]] } })
+				fix_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
 			elsif p[:flag_value]=="yes"
-				yes_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Point", :coordinates => [p[:centroid_lon], p[:centroid_lat]] } })
+				yes_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
 			elsif p[:flag_value]=="no"
-				no_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Point", :coordinates => [p[:centroid_lon], p[:centroid_lat]] } })
+				no_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
 			end
 		end
 		@progress = {}
-		@progress[:all_polygons] = Polygon.count		
-		if user_signed_in?
-			@progress[:all_polygons_session] = Flag.flags_for_user(current_user.id)
-		else
-			@progress[:all_polygons_session] = Flag.flags_for_session(session)
-		end 
 		@progress[:fix_poly] = { :type => "FeatureCollection", :features => fix_poly }
 		@progress[:no_poly] = { :type => "FeatureCollection", :features => no_poly }
 		@progress[:yes_poly] = { :type => "FeatureCollection", :features => yes_poly }

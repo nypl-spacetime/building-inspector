@@ -31,7 +31,11 @@ Webappmini::Application.routes.draw do
 
   get "fixer/progress"
 
-  get "fixer/sessionProgress"
+  get "fixer/sheet" => "fixer#session_progress_for_sheet"
+
+  get "viz/sheet/:id" => "visualizer#sheet_flags_json"
+
+  get "viz/sheet" => "visualizer#sheet_flags_view"
 
   match "fixer/map" => "fixer#randomMap"
 

@@ -12,9 +12,8 @@ class Sheet
 			sheet.getPolygons()
 
 	getPolygons: () =>
-		sheet = @
 		data = $('#sheetdata').data("map")
-		p = @
+
 		no_color = '#AF2228'
 		yes_color = '#609846'
 		fix_color = '#FFB92D'

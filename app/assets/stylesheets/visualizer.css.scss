@@ -1,0 +1,58 @@
+@import "lib/css3-mixins";
+@import "lib/button-mixins";
+@import "compass/utilities/general/clearfix";
+@import "variables";
+@import "score";
+
+#main-container {
+	bottom: 100px;
+}
+
+#playback-controls {
+	position: absolute;
+	bottom: 0;
+	height: 90px;
+	left: 0;
+	right: 0;
+	background: $grayDark;
+	text-align: center;
+	padding-top: 10px;
+
+	a {
+		display: inline-block;
+		background: $grayDarkest;
+		color: $grayLightest;
+		@include border-radius(5px);
+		padding: 10px;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
+
+.leaflet-container {
+	background: $grayLight;
+}
+
+.cluster-small, .cluster-medium, .cluster-large {
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	background: $grayLightest;
+	color: $grayDarker;
+	font-size: 16px;
+	line-height: 30px;
+	border: 2px solid $grayLighter;
+	@include rounded-corners(15px);
+}
+
+.cluster-medium {
+	background: $grayLighter;
+	border-color: $grayLight;
+}
+
+.cluster-large {
+	background: $grayLight;
+	border-color: $gray;
+}

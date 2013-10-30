@@ -25,173 +25,141 @@ class Progress
 
 		@addEventListeners()
 
+		@resetSheet()
+
+		L.InspectorMarker = L.Marker.extend
+			options:
+				flag_count: 0
+				sheet_id: 0
+				bounds: []
+
 		window.map = @
 
 	addEventListeners: () =>
 		p = @
 
-		@map.on('load', @getPolygons)
+		@map.on('load', @getCounts)
 
-	hideOthers: () ->
-		$("#map-container").hide()
-		$("#link-progress-close").hide()
-		$("#score").hide()
-		$("#buttons").hide()
-		$("#map-tutorial").hide()
-		$("#map-about").hide()
+	resetSheet: () ->
+		@map.removeLayer @sheet if @map.hasLayer @sheet
+		@sheet = L.geoJson({features:[]},
+			style: (feature) ->
+				color: @nil_color
+				opacity: 0
+				fillOpacity: 0.5
+				stroke: false
+		).addTo @map
 
-	showOthers: () ->
-		$("#map-container").show()
-		$("#link-progress-close").show()
-		$("#score").show()
-		$("#buttons").show()
+	getCounts: () =>
+		data = $('#progressjs').data("progress")
 
-	invokeAbout: () =>
-		@hideOthers()
-		$("#map-about").show()
+		@updateScore(data.all_polygons_session)
 
-	hideAbout: () =>
-		@showOthers()
-		$("#map-about").hide()
+		# marker clustering layer
+		markers = new L.MarkerClusterGroup
+			singleMarkerMode: true
+			disableClusteringAtZoom: 19
+			iconCreateFunction: (c) ->
+				count = 0
+				for child in c.getAllChildMarkers()
+					count = count + child.options.flag_count
+				c = 'cluster-large'
+				if count < 10
+					c = 'cluster-small'
+				else if count < 30
+					c = 'cluster-medium'
+				new L.DivIcon
+					html: count
+					className: c
+					iconSize: L.point(30, 30)
+			polygonOptions:
+				stroke: false
+		
+		p = @
 
-	invokeTutorial: () =>
-		@hideOthers()
-		$("#map-tutorial").unswipeshow()
-		$("#map-tutorial").show()
-		$("#map-tutorial").swipeshow
-			mouse: true
-			autostart: false
-		.goTo 0
+		markers.on("click", (e) ->
+			console.log "click:", e.layer
+			p.resetSheet()
+			p.map.fitBounds(e.layer.options.bounds)
+			p.getPolygons(e.layer.options.sheet_id)
+		)
 
-	hideTutorial: () =>
-		@showOthers()
-		$("#map-tutorial").hide()
+		counts = data.counts
+		@addMarker markers, count for count in counts
 
-	getPolygons: () =>
+		markers.addTo @map
+		@
+
+	addMarker: (markers, data) ->
+		# console.log data
+
+		bbox = data.bbox.split ","
+		
+		W = parseFloat(bbox[0])
+		S = parseFloat(bbox[1])
+		E = parseFloat(bbox[2])
+		N = parseFloat(bbox[3])
+
+		SW = new L.LatLng(S, W)
+		NW = new L.LatLng(N, W)
+		NE = new L.LatLng(N, E)
+		SE = new L.LatLng(S, E)
+
+		bounds = new L.LatLngBounds(SW, NE)
+		latlng = bounds.getCenter()
+
+		markers.addLayer new L.InspectorMarker latlng,
+			flag_count: data.flag_count
+			sheet_id: data.id
+			bounds: bounds
+		@
+
+	getPolygons: (sheet_id) =>
 		p = @
 		no_color = '#AF2228'
 		yes_color = '#609846'
 		fix_color = '#FFB92D'
-		$.getJSON('/fixer/sessionProgress.json', (data) ->
-			# console.log(data)
+		$.getJSON('/fixer/sheet.json?id=' + sheet_id, (data) ->
 			return if data.fix_poly.features.length==0 && data.no_poly.features.length==0 && data.yes_poly.features.length==0
 
-			p.updateScore(data.all_polygons_session, data.all_polygons)
+			m = p.sheet
 
-			m = p.map
-
-			# marker clustering layer
-			markers = new L.MarkerClusterGroup
-				singleMarkerMode: true
-				spiderfyDistanceMultiplier: 2
-				disableClusteringAtZoom: 19
-				iconCreateFunction: (c) ->
-					count = c.getChildCount()
-					c = 'cluster-large'
-					if count < 10
-						c = 'cluster-small'
-					else if count < 30
-						c = 'cluster-medium'
-					new L.DivIcon
-						html: count
-						className: c
-						iconSize: L.point(30, 30)
-				polygonOptions:
-					stroke: false
-			
-			# markers.on 'click', (a) ->
-			# 	console.log a.layer.getLatLng()
-			# 	m.panTo a.layer.getLatLng()
-			# 	m.setZoom 20
-
-			# marker icons
-			yes_icon = L.icon
-				iconUrl: '/assets/images/marker-icon-yes.png'
-				iconRetinaUrl: '/assets/images/marker-icon-yes-2x.png'
-				iconSize: [25, 41]
-				iconAnchor: [12, 41]
-
-			no_icon = L.icon
-				iconUrl: '/assets/images/marker-icon-no.png'
-				iconRetinaUrl: '/assets/images/marker-icon-no-2x.png'
-				iconSize: [25, 41]
-				iconAnchor: [12, 41]
-			
-			fix_icon = L.icon
-				iconUrl: '/assets/images/marker-icon-fix.png'
-				iconRetinaUrl: '/assets/images/marker-icon-fix-2x.png'
-				iconSize: [25, 41]
-				iconAnchor: [12, 41]
-			
 			yes_json = L.geoJson(data.yes_poly,
 				style: (feature) ->
 					fillColor: yes_color
 					opacity: 0
-					fillOpacity: 0.7
+					fillOpacity: 0.9
 					stroke: false
-				onEachFeature: (f,l) ->
-					p.addMarker markers, f
-					# out = for key, val of f.properties
-					# 	"<strong>#{key}:</strong> #{val}"
-					# l.bindPopup(out.join("<br />"))
-					l.on 'click', ()->
-						m.fitBounds(@.getBounds())
 			)
 			no_json = L.geoJson(data.no_poly,
 				style: (feature) ->
 					fillColor: no_color
 					opacity: 0
-					fillOpacity: 0.7
+					fillOpacity: 0.9
 					stroke: false
-				onEachFeature: (f,l) ->
-					p.addMarker markers, f
-					# out = for key, val of f.properties
-					# 	"<strong>#{key}:</strong> #{val}"
-					# l.bindPopup(out.join("<br />"))
-					# l.on 'click', ()->
-					# 	m.fitBounds(@.getBounds())
 			)
 			fix_json = L.geoJson(data.fix_poly,
 				style: (feature) ->
 					fillColor: fix_color
 					opacity: 0
-					fillOpacity: 0.7
+					fillOpacity: 0.9
 					stroke: false
-				onEachFeature: (f,l) ->
-					p.addMarker markers, f
-					# out = for key, val of f.properties
-					# 	"<strong>#{key}:</strong> #{val}"
-					# l.bindPopup(out.join("<br />"))
-					# l.on 'click', ()->
-					# 	m.fitBounds(@.getBounds())
 			)
 
-			bounds = new L.LatLngBounds()
+			yes_json.addTo(m)
 
-			if data.yes_poly.features.length>0
-				# yes_json.addTo(m)
-				bounds.extend(yes_json.getBounds())
+			no_json.addTo(m)
 
-			if data.no_poly.features.length>0
-				# no_json.addTo(m)
-				bounds.extend(no_json.getBounds())
-
-			if data.fix_poly.features.length>0
-				# fix_json.addTo(m)
-				bounds.extend(fix_json.getBounds())
-
-			m.addLayer(markers)
-			
-			m.fitBounds(bounds)
+			fix_json.addTo(m)
 		)
 	
-	updateScore: (current, total) =>
-		mapScore = if total > 0 then Math.round(current*100/total) else 0
+	updateScore: (current) =>
+		# mapScore = if total > 0 then Math.round(current*100/total) else 0
 
-		mapDOM = $("#map-bar")
-		mapDOM.find(".bar").css("width", mapScore + "%")
+		# mapDOM = $("#map-bar")
+		# mapDOM.find(".bar").css("width", mapScore + "%")
 		$("#score .total").text(current)
-		$("#map-total").text("of " + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " shapes")
+		# $("#map-total").text("of " + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " shapes")
 
 		url = $('#progressjs').data("server")
 		tweet = current + " buildings checked! Data mining old maps with the Building Inspector from @NYPLMaps @nypl_labs"
@@ -200,13 +168,6 @@ class Progress
 		$("#tweet").show()
 
 		$("#tweet").attr "href", twitterurl
-
-	addMarker: (markers, data) ->
-		latlng = L.geoJson(data).getBounds().getCenter()#new L.LatLng(data.geometry.coordinates[0][0][1],data.geometry.coordinates[0][0][0])
-		# console.log latlng
-		markers.addLayer new L.Marker latlng
-			# icon: icon
-		markers
 
 	onMapClick: (e) =>
 		@popup

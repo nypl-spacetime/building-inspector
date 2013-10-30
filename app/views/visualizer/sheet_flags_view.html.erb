@@ -1,0 +1,20 @@
+<% content_for :page_title do %>Building Inspector by NYPL Labs<% end %>
+
+<% content_for :dynamic_js do %>
+	<%# stylesheet_link_tag    "progress", :media => "all" %>
+	<%= stylesheet_link_tag    "visualizer", :media => "all" %>
+	<%= javascript_include_tag "visualizer", {:id => "vizdata", "data-map" => "#{@sheets.to_json}"} %>
+<% end %>
+
+
+<%= render :partial => "partials/nav" %>
+
+<div id="main-container">
+	<div id="map-container" class="visualizer">
+		<div id="map"></div>
+	</div>
+</div>
+
+<div id="playback-controls">
+	<%= link_to "PLAY", "javascript:;", {:rel => "nofollow"} %>
+</div>

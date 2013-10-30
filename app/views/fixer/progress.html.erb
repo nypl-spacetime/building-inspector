@@ -10,7 +10,7 @@
 	<%= stylesheet_link_tag    "lib/MarkerCluster.Default.ie", :media => "all" %>
 	<![endif]-->
 
-	<%= javascript_include_tag "progress", {:id => "progressjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}")} %>
+	<%= javascript_include_tag "progress", {:id => "progressjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}"), "data-progress" => @progress} %>
 
 	<%# javascript_include_tag "jquery.swipeshow.min" %>
 
