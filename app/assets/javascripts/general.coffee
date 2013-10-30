@@ -27,11 +27,9 @@ class General
 
 	mobileClick: (id) ->
 		elem = $(id)
-		link = elem.attr("href")
 		elem.click (e) ->
-			# if (link.indexOf("/")==0) #only for relative links
 			e.preventDefault()
-			window.location.href = link;
+			window.location.href = e.currentTarget.href;
 
 	toggleBottomSigninOptions: (e) ->
 		$('#score-save .sign-in-options').toggle()

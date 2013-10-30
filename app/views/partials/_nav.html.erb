@@ -8,7 +8,7 @@
 		help_link = "javascript:;" if @current_page=="fixer"
 		%>
 		<% if user_signed_in? %>
-			<%= link_to truncate(current_user.name, :length => 14, :omission => '…'), destroy_user_session_path, method: :delete, :id => "link-logout", :class=>"icon" %>
+			<%= link_to "LOG OUT", destroy_user_session_path, method: :delete, :id => "link-logout", :class=>"icon" %>
 		<% else %>
 			<%= link_to "LOG IN", "javascript:;", {:id => "link-login", :class => "icon score-save-link"} %>
 			<div class="sign-in-options">
