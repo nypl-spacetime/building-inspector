@@ -1,0 +1,16 @@
+	<div id="legend">
+		<ul>
+			<li><span class="color yes"></span> Yes</li>
+			<li><span class="color no"></span> No</li>
+			<li><span class="color fix"></span> Fix</li>
+		<% if @current_page=="progress_all" %>
+			<li><span class="color nil"></span> Pending</li>
+		<% else %>
+		<% end %>
+		</ul>
+		<% if @current_page=="progress" %>
+			<%= link_to "ALL PROGRESS", "/fixer/progress_all", :class => "legend-link" %>
+		<% else %>
+			<%= link_to "MY PROGRESS", "/fixer/progress", :class => "legend-link" %>
+		<% end %>
+	</div>
