@@ -70,7 +70,7 @@ class Progress
 			iconCreateFunction: (c) ->
 				count = 0
 				for child in c.getAllChildMarkers()
-					count = count + child.options.flag_count
+					count = count + parseInt(child.options.flag_count)
 				c = 'cluster-large'
 				if count < 10
 					c = 'cluster-small'
