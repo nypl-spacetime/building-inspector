@@ -33,6 +33,64 @@
 	}
 }
 
+#legend {
+	position: absolute;
+	width: 100px;
+	left: 10px;
+	top: 80px;
+	z-index: 1;
+	text-align: left;
+	font-size: 12px;
+
+	ul {
+		padding: 10px;
+		background: $grayLightest;
+		margin-bottom: 10px;
+		@include border-radius(5px);
+	}
+
+	.color {
+		display: inline-block;
+		width: 10px;
+		height: 10px;
+
+		&.yes {
+			background: $yescolor;
+		}
+
+		&.no {
+			background: $nocolor;
+		}
+
+		&.fix {
+			background: $fixcolor;
+		}
+
+		&.nil {
+			background: $grayLight;
+		}
+	}
+
+	.legend-link {
+		display: block;
+		font-size: 10px;
+		padding: 5px 10px;
+		background: $gray;
+		color: $grayLightest;
+		text-align: center;
+		@include border-radius(5px);
+
+		&:hover {
+			background: $grayDarkest;
+			text-decoration: none;
+		}
+	}
+}
+
+#main-container.noscore {
+	bottom: 0;
+}
+
 #controls {
 	@media screen and (max-width: $desktopwidth) {
 		height: 1px;
@@ -45,15 +103,15 @@
 }
 
 .cluster-small, .cluster-medium, .cluster-large {
-	width: 30px;
-	height: 30px;
+	width: 36px;
+	height: 36px;
 	text-align: center;
 	background: $grayLightest;
 	color: $grayDarker;
-	font-size: 16px;
+	font-size: 12px;
 	line-height: 30px;
 	border: 2px solid $grayLighter;
-	@include rounded-corners(15px);
+	@include rounded-corners(18px);
 }
 
 .cluster-medium {

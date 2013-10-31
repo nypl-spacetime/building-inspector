@@ -126,33 +126,33 @@ class TagBuilding
 			@allPolygons = @loadedData.status.all_polygons
 			@allPolygonsSession = @loadedData.status.all_polygons_session
 		
-		levelfloat = if @allPolygonsSession > 1 then Math.log(@allPolygonsSession) / Math.LN2 else Math.LN2
-		levelfloat = 0 if @allPolygonsSession == 0
-		level = Math.floor(levelfloat)
-		level = 0 if @allPolygonsSession == 0
-		maximumLevel = 16
-		levelScore = Math.round(100 * (level / maximumLevel)) #Math.round(100 * (@allPolygonsSession / @allPolygons))
-		levelScore = 100 if levelScore > 100
+		# levelfloat = if @allPolygonsSession > 1 then Math.log(@allPolygonsSession) / Math.LN2 else Math.LN2
+		# levelfloat = 0 if @allPolygonsSession == 0
+		# level = Math.floor(levelfloat)
+		# level = 0 if @allPolygonsSession == 0
+		# maximumLevel = 16
+		# levelScore = Math.round(100 * (level / maximumLevel)) #Math.round(100 * (@allPolygonsSession / @allPolygons))
+		# levelScore = 100 if levelScore > 100
 
 		# mapScore = Math.round(100 * ((@mapPolygons - @mapPolygonsSession) / @mapPolygons))
 		# mapScore = if @allPolygonsSession > 0 then Math.round((levelfloat-level)*100) else 0
-		mapScore = if @mapPolygons > 0 then Math.round(@allPolygonsSession*100/@allPolygons) else 0
+		# mapScore = if @mapPolygons > 0 then Math.round(@allPolygonsSession*100/@allPolygons) else 0
 
-		if @level != level
-			@level = level
-			@animateLevel()
+		# if @level != level
+		# 	@level = level
+		# 	@animateLevel()
 
 		# console.log "level:", level, mapScore
 		
 		$("#score .total").text(@allPolygonsSession)
 
-		levelDOM = $("#level-bar")
-		levelDOM.find(".percent").text("Level: " + @level)
-		levelDOM.find(".bar").css("width",levelScore + "%")
+		# levelDOM = $("#level-bar")
+		# levelDOM.find(".percent").text("Level: " + @level)
+		# levelDOM.find(".bar").css("width",levelScore + "%")
 		
-		mapDOM = $("#map-bar")
-		mapDOM.find(".percent").text( "Next level: " + mapScore + "%")
-		mapDOM.find(".bar").css("width", mapScore + "%")
+		# mapDOM = $("#map-bar")
+		# mapDOM.find(".percent").text( "Next level: " + mapScore + "%")
+		# mapDOM.find(".bar").css("width", mapScore + "%")
 
 		url = $('#progressjs').data("server")
 		tweet = @allPolygonsSession + " buildings checked! Data mining old maps with the Building Inspector from @NYPLMaps @nypl_labs"

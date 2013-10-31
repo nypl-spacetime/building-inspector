@@ -23,6 +23,10 @@ class Progress
 		).addTo(@map)
 
 		# @map.on('load', @getPolygons)
+		@no_color = '#AF2228'
+		@yes_color = '#609846'
+		@fix_color = '#FFB92D'
+		@nil_color = '#AAAAAA'
 
 		@addEventListeners()
 
@@ -30,7 +34,7 @@ class Progress
 
 		L.InspectorMarker = L.Marker.extend
 			options:
-				flag_count: 0
+				polygon_count: 0
 				sheet_id: 0
 				bounds: []
 
@@ -41,14 +45,7 @@ class Progress
 
 		@map.on('load', @getCounts)
 
-	clearTimers: () ->
-		# console.log "clear"
-		clearTimeout id for id in @ids
-
 	resetSheet: () ->
-		@clearTimers()
-		@map.off 'moveend', @applyHighlights
-		$(".polygon-highlight").remove()
 		@map.removeLayer @sheet if @map.hasLayer @sheet
 		@sheet = L.geoJson({features:[]},
 			style: (feature) ->
@@ -70,7 +67,7 @@ class Progress
 			iconCreateFunction: (c) ->
 				count = 0
 				for child in c.getAllChildMarkers()
-					count = count + parseInt(child.options.flag_count)
+					count = count + parseInt(child.options.polygon_count)
 				c = 'cluster-large'
 				if count < 10
 					c = 'cluster-small'
@@ -86,7 +83,7 @@ class Progress
 		p = @
 
 		markers.on("click", (e) ->
-			# console.log "click:", e.layer
+			console.log "click:", e.layer
 			p.resetSheet()
 			p.getPolygons(e.layer.options.sheet_id)
 		)
@@ -120,93 +117,35 @@ class Progress
 		latlng = bounds.getCenter()
 
 		markers.addLayer new L.InspectorMarker latlng,
-			flag_count: data.flag_count
-			sheet_id: data.id
+			polygon_count: data.polygon_count
+			sheet_id: data.sheet_id
 			bounds: bounds
 		@
 
-	getPolygons: (sheet_id) =>
-		p = @
-		no_color = '#AF2228'
-		yes_color = '#609846'
-		fix_color = '#FFB92D'
-		$.getJSON('/fixer/sheet.json?id=' + sheet_id, (data) ->
-			p.map.off 'moveend', p.applyHighlights
-
-			return if data.fix_poly.features.length==0 && data.no_poly.features.length==0 && data.yes_poly.features.length==0
-
-			m = p.sheet
-
-			p.highlights = []
-
-			yes_json = L.geoJson(data.yes_poly,
-				style: (feature) ->
-					fillColor: yes_color
-					opacity: 0
-					fillOpacity: 0.9
-					stroke: false
-				onEachFeature: (f, l) ->
-					p.highlights.push(l)
-			)
-			no_json = L.geoJson(data.no_poly,
-				style: (feature) ->
-					fillColor: no_color
-					opacity: 0
-					fillOpacity: 0.9
-					stroke: false
-				onEachFeature: (f, l) ->
-					p.highlights.push(l)
-			)
-			fix_json = L.geoJson(data.fix_poly,
-				style: (feature) ->
-					fillColor: fix_color
-					opacity: 0
-					fillOpacity: 0.9
-					stroke: false
-				onEachFeature: (f, l) ->
-					p.highlights.push(l)
-			)
-
-			bounds = new L.LatLngBounds()
-
-			if data.yes_poly.features.length>0
-				yes_json.addTo(m)
-				bounds.extend(yes_json.getBounds())
-
-			if data.no_poly.features.length>0
-				no_json.addTo(m)
-				bounds.extend(no_json.getBounds())
-
-			if data.fix_poly.features.length>0
-				fix_json.addTo(m)
-				bounds.extend(fix_json.getBounds())
-
-			p.map.fitBounds(bounds)
-
-			p.map.on 'moveend', p.applyHighlights
+	getPolygons: (sheet_id) ->
+		v = @
+		$.getJSON('/viz/sheet/' + sheet_id + '.json', (data) ->
+			console.log data
+			v.processPolygons(data)
 		)
 
-	applyHighlights: (e) =>
-		@map.off 'moveend', @applyHighlights
-		@map.panBy [0, 20]
-		@ids = (setTimeout @showHighlight, i*30, poly for poly, i in @highlights)
-		# console.log @ids
+	processPolygons: (data) ->
+		return if data.polygons.length==0
 
-	showHighlight: (polygon) =>
-		point = @map.latLngToContainerPoint polygon.getBounds().getCenter()
-		# console.log "highlighting:", point
-		elem = $('<div><div class="polygon-highlight"></div></div>')
-		elem.css("position", "absolute")
-		elem.css("top", point.y)
-		elem.css("left", point.x)
-		$("#map-container").append(elem)
-		setTimeout @killHighlight, 10, elem
-		@
+		m = @map
 
-	killHighlight: (elem) =>
-		elem.find(".polygon-highlight").addClass("scaled")
-		elem.fadeOut 500, () -> 
-			$(@).remove()
+		for polygon in data.polygons
+			json = 
+				type : "Feature"
+				properties:
+					id: polygon.id
+				geometry:
+					type: "Polygon"
+					coordinates: $.parseJSON(polygon.geometry)
+
+			@sheet.addData json
+
+		@map.fitBounds(@sheet.getBounds())
 
 	updateScore: (current) =>
 		# mapScore = if total > 0 then Math.round(current*100/total) else 0

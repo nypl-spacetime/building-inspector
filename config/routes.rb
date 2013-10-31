@@ -31,6 +31,8 @@ Webappmini::Application.routes.draw do
 
   get "fixer/progress"
 
+  get "fixer/progress_all"
+
   get "fixer/sheet" => "fixer#session_progress_for_sheet"
 
   get "viz/sheet/:id" => "visualizer#sheet_flags_json"

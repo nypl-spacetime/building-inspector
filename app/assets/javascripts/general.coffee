@@ -20,6 +20,7 @@ class General
 			".score-save-link"
 			".sign-in-link"
 			".score-link"
+			".legend-link"
 			"#link-try"
 			"#link-back"
 		]
