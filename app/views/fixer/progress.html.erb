@@ -17,14 +17,7 @@
 <%= render :partial => "partials/nav" %>
 
 <div id="main-container">
-	<div id="legend">
-		<ul>
-			<li><span class="color yes"></span> Yes</li>
-			<li><span class="color no"></span> No</li>
-			<li><span class="color fix"></span> Fix</li>
-		</ul>
-		<%= link_to "ALL PROGRESS", "/fixer/progress_all", :class => "legend-link" %>
-	</div>
+	<%= render :partial => "partials/legend" %>
 	<div id="map-container" class="progress">
 		<div id="map"></div>
 	</div>

@@ -17,15 +17,7 @@
 <%= render :partial => "partials/nav" %>
 
 <div id="main-container" class="noscore">
-	<div id="legend">
-		<ul>
-			<li><span class="color yes"></span> Yes</li>
-			<li><span class="color no"></span> No</li>
-			<li><span class="color fix"></span> Fix</li>
-			<li><span class="color nil"></span> Pending</li>
-		</ul>
-		<%= link_to "MY PROGRESS", "/fixer/progress", :class => "legend-link" %>
-	</div>
+	<%= render :partial => "partials/legend" %>
 	<div id="map-container" class="progress">
 		<div id="map"></div>
 	</div>
