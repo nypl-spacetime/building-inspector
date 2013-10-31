@@ -1,6 +1,7 @@
 @import "lib/css3-mixins";
 @import "lib/button-mixins";
 @import "compass/utilities/general/clearfix";
+@import "compass/css3/transform";
 @import "variables";
 @import "score";
 
@@ -13,6 +14,31 @@
 
 	&:before {
 		color: $grayDarkest;
+	}
+}
+
+.polygon-highlight {
+	border: 3px solid $orange;
+	width: 20px;
+	height: 20px;
+	@include border-radius(20px);
+	margin-left: -10px;
+	margin-top: -10px;
+	z-index: 1111;
+
+	@include transition(all, .5s, ease-out);
+
+	&.scaled {
+		/*General*/
+		transform: scale(2, 2);
+		/*Firefox*/
+		-moz-transform: scale(2, 2);
+		/*Microsoft Internet Explorer*/
+		-ms-transform: scale(2, 2);
+		/*Chrome, Safari*/
+		-webkit-transform: scale(2, 2);
+		/*Opera*/
+		-o-transform: scale(2, 2);
 	}
 }
 

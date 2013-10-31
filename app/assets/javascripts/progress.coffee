@@ -4,6 +4,7 @@ class Progress
 		$("#map-tutorial").hide()
 		$("#map-about").hide()
 		$("#tweet").hide()
+		@ids = []
 		NW = new L.LatLng(40.65563874006115,-74.13093566894531)
 		SE = new L.LatLng(40.81640757520087,-73.83087158203125)
 		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859-final/859spec.json', 
@@ -40,7 +41,14 @@ class Progress
 
 		@map.on('load', @getCounts)
 
+	clearTimers: () ->
+		# console.log "clear"
+		clearTimeout id for id in @ids
+
 	resetSheet: () ->
+		@clearTimers()
+		@map.off 'moveend', @applyHighlights
+		$(".polygon-highlight").remove()
 		@map.removeLayer @sheet if @map.hasLayer @sheet
 		@sheet = L.geoJson({features:[]},
 			style: (feature) ->
@@ -78,10 +86,13 @@ class Progress
 		p = @
 
 		markers.on("click", (e) ->
-			console.log "click:", e.layer
+			# console.log "click:", e.layer
 			p.resetSheet()
-			p.map.fitBounds(e.layer.options.bounds)
 			p.getPolygons(e.layer.options.sheet_id)
+		)
+
+		markers.on("clusterclick", (e) ->
+			p.resetSheet()
 		)
 
 		counts = data.counts
@@ -120,9 +131,13 @@ class Progress
 		yes_color = '#609846'
 		fix_color = '#FFB92D'
 		$.getJSON('/fixer/sheet.json?id=' + sheet_id, (data) ->
+			p.map.off 'moveend', p.applyHighlights
+
 			return if data.fix_poly.features.length==0 && data.no_poly.features.length==0 && data.yes_poly.features.length==0
 
 			m = p.sheet
+
+			p.highlights = []
 
 			yes_json = L.geoJson(data.yes_poly,
 				style: (feature) ->
@@ -130,6 +145,8 @@ class Progress
 					opacity: 0
 					fillOpacity: 0.9
 					stroke: false
+				onEachFeature: (f, l) ->
+					p.highlights.push(l)
 			)
 			no_json = L.geoJson(data.no_poly,
 				style: (feature) ->
@@ -137,6 +154,8 @@ class Progress
 					opacity: 0
 					fillOpacity: 0.9
 					stroke: false
+				onEachFeature: (f, l) ->
+					p.highlights.push(l)
 			)
 			fix_json = L.geoJson(data.fix_poly,
 				style: (feature) ->
@@ -144,15 +163,51 @@ class Progress
 					opacity: 0
 					fillOpacity: 0.9
 					stroke: false
+				onEachFeature: (f, l) ->
+					p.highlights.push(l)
 			)
 
-			yes_json.addTo(m)
+			bounds = new L.LatLngBounds()
 
-			no_json.addTo(m)
+			if data.yes_poly.features.length>0
+				yes_json.addTo(m)
+				bounds.extend(yes_json.getBounds())
 
-			fix_json.addTo(m)
+			if data.no_poly.features.length>0
+				no_json.addTo(m)
+				bounds.extend(no_json.getBounds())
+
+			if data.fix_poly.features.length>0
+				fix_json.addTo(m)
+				bounds.extend(fix_json.getBounds())
+
+			p.map.fitBounds(bounds)
+
+			p.map.on 'moveend', p.applyHighlights
 		)
-	
+
+	applyHighlights: (e) =>
+		@map.off 'moveend', @applyHighlights
+		@map.panBy [0, 20]
+		@ids = (setTimeout @showHighlight, i*30, poly for poly, i in @highlights)
+		# console.log @ids
+
+	showHighlight: (polygon) =>
+		point = @map.latLngToContainerPoint polygon.getBounds().getCenter()
+		# console.log "highlighting:", point
+		elem = $('<div><div class="polygon-highlight"></div></div>')
+		elem.css("position", "absolute")
+		elem.css("top", point.y)
+		elem.css("left", point.x)
+		$("#map-container").append(elem)
+		setTimeout @killHighlight, 10, elem
+		@
+
+	killHighlight: (elem) =>
+		elem.find(".polygon-highlight").addClass("scaled")
+		elem.fadeOut 500, () -> 
+			$(@).remove()
+
 	updateScore: (current) =>
 		# mapScore = if total > 0 then Math.round(current*100/total) else 0
 
