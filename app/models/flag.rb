@@ -17,12 +17,12 @@ class Flag < ActiveRecord::Base
 
 	def self.grouped_flags_for_session(session_id)
 		# just need the count per sheet
-		Flag.select('COUNT(DISTINCT flags.polygon_id) as flag_count, sheets.id, sheets.bbox').joins([polygon: :sheet]).where('flags.session_id = ?', session_id).group(:sheet_id)
+		Flag.select('COUNT(DISTINCT flags.polygon_id) as flag_count, sheets.id, sheets.bbox').joins([polygon: :sheet]).where('flags.session_id = ?', session_id).group("sheets.id")
 	end
 
 	def self.grouped_flags_for_user(user_id)
 		# just need the count per sheet
-		Flag.select('COUNT(DISTINCT flags.polygon_id) as flag_count, sheets.id, sheets.bbox').joins([polygon: :sheet]).joins('INNER JOIN usersessions ON usersessions.session_id = flags.session_id').where('usersessions.user_id = ?', user_id).group(:sheet_id)
+		Flag.select('COUNT(DISTINCT flags.polygon_id) as flag_count, sheets.id, sheets.bbox').joins([polygon: :sheet]).joins('INNER JOIN usersessions ON usersessions.session_id = flags.session_id').where('usersessions.user_id = ?', user_id).group("sheets.id")
 	end
 
 	def self.flags_for_session(session_id)
