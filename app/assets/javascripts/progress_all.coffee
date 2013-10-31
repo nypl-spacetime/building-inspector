@@ -46,6 +46,7 @@ class Progress
 		@map.on('load', @getCounts)
 
 	resetSheet: () ->
+		console.log "reset"
 		@map.removeLayer @sheet if @map.hasLayer @sheet
 		@sheet = L.geoJson({features:[]},
 			style: (feature) ->
@@ -83,7 +84,6 @@ class Progress
 		p = @
 
 		markers.on("click", (e) ->
-			console.log "click:", e.layer
 			p.resetSheet()
 			p.getPolygons(e.layer.options.sheet_id)
 		)
@@ -139,7 +139,7 @@ class Progress
 
 		return if data.nil_poly.features.length==0 && data.fix_poly.features.length==0 && data.no_poly.features.length==0 && data.yes_poly.features.length==0
 
-		m = @map
+		m = @sheet
 
 		yes_json = L.geoJson(data.yes_poly,
 			style: (feature) ->
@@ -188,7 +188,7 @@ class Progress
 			nil_json.addTo(m)
 			bounds.extend(nil_json.getBounds())
 
-		m.fitBounds(bounds)
+		@map.fitBounds(bounds)
 
 	updateScore: (current) =>
 		# mapScore = if total > 0 then Math.round(current*100/total) else 0
