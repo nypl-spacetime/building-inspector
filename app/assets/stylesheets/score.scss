@@ -81,7 +81,7 @@
 		top: 50px;
 		left: 10px;
 		font-size: 16px;
-		width: 205px;
+		width: 210px;
 	}
 
 	/* clearfix 
@@ -154,7 +154,7 @@
 	#score-save, #score-progress {
 		float: left;
 		text-align: left;
-		width: 130px;
+		width: 120px;
 		color: $grayDarker;
 		font-size: 12px;
 		padding: 5px 0;
@@ -201,7 +201,7 @@
 		text-align: right;
 
 		@media screen and (max-width: $desktopwidth) {
-			width: 100px;
+			width: 110px;
 		}
 	}
 }
