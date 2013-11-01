@@ -42,9 +42,7 @@ class FixerController < ApplicationController
 	end
 
 	def progress_sheet
-	    @sheet = Sheet.find(params[:id])
-	    
-	    all_polygons = @sheet.polygons
+	    all_polygons = Polygon.where(:sheet_id => params[:id])
 	    
 	    fix_poly = []
 	    yes_poly = []
