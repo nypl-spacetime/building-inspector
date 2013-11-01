@@ -27,8 +27,8 @@ class FixerController < ApplicationController
 	end
 
 	def progress_all
-		session = getSession()
 	  	@current_page = "progress_all"
+		session = getSession()
 		# returns a GeoJSON object with the flags the session has sent so far
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
 		@progress = {}
