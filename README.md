@@ -24,4 +24,14 @@ The original GeoJSON files do not have centroids (they were added and processed 
 
 This imports polygons from a file `public/files/SOMEID-traced.json` into the database **replacing** any polygons (and its corresponding flags) that are associated to ID `SOMEID`.
 
+### API querying
+
+The following API endpoints have been added to export the inspection consensus process (paginated by groups of 500). Consensus is defined by **agreement of 75% or more of three or more votes**:
+
+1. `/api/polygons/all/page/PAGENUMBER` returns all polygons in `PAGENUMBER` regardless of their consensus falue.
+1. `/api/polygons/yes/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that have been marked as correct.
+1. `/api/polygons/no/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that have been marked as *not buildings*.
+1. `/api/polygons/fix/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that need to be fixed.
+
+
 [Mauricio Giraldo Arteaga]: https://twitter.com/mgiraldo
