@@ -28,10 +28,10 @@ This imports polygons from a file `public/files/SOMEID-traced.json` into the dat
 
 The following API endpoints have been added to export the inspection consensus process (paginated by groups of 500). Consensus is defined by **agreement of 75% or more of three or more votes**:
 
-1. `/api/polygons/all/page/PAGENUMBER` returns all polygons in `PAGENUMBER` regardless of their consensus falue.
-1. `/api/polygons/yes/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that have been marked as correct.
-1. `/api/polygons/no/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that have been marked as *not buildings*.
-1. `/api/polygons/fix/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that need to be fixed.
+- `/api/polygons/all/page/PAGENUMBER` returns all polygons in `PAGENUMBER` regardless of their consensus falue.
+- `/api/polygons/yes/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that have been marked as correct.
+- `/api/polygons/no/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that have been marked as *not buildings*.
+- `/api/polygons/fix/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that need to be fixed.
 
 
 [Mauricio Giraldo Arteaga]: https://twitter.com/mgiraldo
