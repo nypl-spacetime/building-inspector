@@ -46,7 +46,7 @@ class Progress
 		@map.on('load', @getCounts)
 
 	resetSheet: () ->
-		console.log "reset"
+		# console.log "reset"
 		@map.removeLayer @sheet if @map.hasLayer @sheet
 		@sheet = L.geoJson({features:[]},
 			style: (feature) ->
@@ -85,7 +85,7 @@ class Progress
 
 		markers.on("click", (e) ->
 			p.resetSheet()
-			p.getPolygons(e.layer.options.sheet_id)
+			p.getPolygons(e)
 		)
 
 		markers.on("clusterclick", (e) ->
@@ -122,11 +122,16 @@ class Progress
 			bounds: bounds
 		@
 
-	getPolygons: (sheet_id) ->
+	getPolygons: (e) ->
 		v = @
+		el = $(e.originalEvent.target)
+		sheet_id = e.layer.options.sheet_id
+		spinner_xy = @map.layerPointToContainerPoint(e.layer.getLatLng())
+		el.append(_gen._spinner().el)
 		$.getJSON('/fixer/progress_sheet.json?id=' + sheet_id, (data) ->
-			console.log data
+			console.log el
 			v.processPolygons(data)
+			el.find('.spinner').remove()
 		)
 
 	processPolygons: (data) ->

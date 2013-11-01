@@ -15,4 +15,5 @@
 //= require lib/mapbox
 //= require lib/intro
 //= require lib/jquery.swipeshow.min
+//= require lib/spin.min
 //= require general

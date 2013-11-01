@@ -42,7 +42,7 @@ class FixerController < ApplicationController
 	end
 
 	def progress_sheet
-	    all_polygons = Polygon.where(:sheet_id => params[:id])
+	    all_polygons = Polygon.select("id, consensus, dn, sheet_id, geometry").where(:sheet_id => params[:id])
 	    
 	    fix_poly = []
 	    yes_poly = []
