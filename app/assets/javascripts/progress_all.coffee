@@ -126,6 +126,7 @@ class Progress
 		v = @
 		el = $(e.originalEvent.target)
 		sheet_id = e.layer.options.sheet_id
+		# spinner available in general.coffee
 		spinner_xy = @map.layerPointToContainerPoint(e.layer.getLatLng())
 		el.append(_gen._spinner().el)
 		$.getJSON('/fixer/progress_sheet.json?id=' + sheet_id, (data) ->

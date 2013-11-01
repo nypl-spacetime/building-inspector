@@ -88,7 +88,7 @@ class Progress
 		markers.on("click", (e) ->
 			# console.log "click:", e.layer
 			p.resetSheet()
-			p.getPolygons(e.layer.options.sheet_id)
+			p.getPolygons(e)
 		)
 
 		markers.on("clusterclick", (e) ->
@@ -125,13 +125,22 @@ class Progress
 			bounds: bounds
 		@
 
-	getPolygons: (sheet_id) =>
+	getPolygons: (e) =>
 		p = @
 		no_color = '#AF2228'
 		yes_color = '#609846'
 		fix_color = '#FFB92D'
+
+		el = $(e.originalEvent.target)
+		sheet_id = e.layer.options.sheet_id
+
+		# spinner available in general.coffee
+		spinner_xy = @map.layerPointToContainerPoint(e.layer.getLatLng())
+		el.append(_gen._spinner().el)
+
 		$.getJSON('/fixer/sheet.json?id=' + sheet_id, (data) ->
 			p.map.off 'moveend', p.applyHighlights
+			el.find('.spinner').remove()
 
 			return if data.fix_poly.features.length==0 && data.no_poly.features.length==0 && data.yes_poly.features.length==0
 
