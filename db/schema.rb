@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131028225506) do
+ActiveRecord::Schema.define(:version => 20131101165834) do
 
   create_table "flags", :force => true do |t|
     t.string   "flag_type"
@@ -32,15 +32,16 @@ ActiveRecord::Schema.define(:version => 20131028225506) do
     t.text     "vectorizer_json"
     t.integer  "sheet_id"
     t.string   "color"
-    t.datetime "created_at",                                                     :null => false
-    t.datetime "updated_at",                                                     :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.integer  "dn"
-    t.integer  "flag_count",                                      :default => 0
+    t.integer  "flag_count",      :default => 0
     t.string   "consensus"
-    t.decimal  "centroid_lat",    :precision => 15, :scale => 12
-    t.decimal  "centroid_lon",    :precision => 15, :scale => 12
+    t.float    "centroid_lat"
+    t.float    "centroid_lon"
   end
 
+  add_index "polygons", ["consensus"], :name => "consensus_index2"
   add_index "polygons", ["sheet_id", "consensus"], :name => "consensus_index"
 
   create_table "sheets", :force => true do |t|

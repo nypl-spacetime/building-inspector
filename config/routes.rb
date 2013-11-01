@@ -1,4 +1,5 @@
 Webappmini::Application.routes.draw do
+
   get "general/home"
 
   get "general/about"
@@ -20,6 +21,10 @@ Webappmini::Application.routes.draw do
   get "cookie_test" => "fixer#cookie_test"
 
   get "fixer/winPoly"
+
+  get "api/polygons"
+  get "api/polygons/:flag_type" => "api#polygons"
+  get "api/polygons/:flag_type/page/:page" => "api#polygons"
 
   get "fixer/status"
 
@@ -46,6 +51,7 @@ Webappmini::Application.routes.draw do
   match "fixer/flag" => "fixer#flagPolygon"
 
   match "color" => "fixer#color"
+
   match "building" => "fixer#building"
   
   root :to => "general#home"
