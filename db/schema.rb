@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131101165834) do
+ActiveRecord::Schema.define(:version => 20131102194559) do
 
   create_table "flags", :force => true do |t|
     t.string   "flag_type"
@@ -51,7 +51,10 @@ ActiveRecord::Schema.define(:version => 20131101165834) do
     t.string   "map_url"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "layer_id"
   end
+
+  add_index "sheets", ["layer_id"], :name => "index_sheets_on_layer_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "",          :null => false

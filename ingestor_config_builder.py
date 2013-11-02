@@ -63,7 +63,8 @@ def main(argv):
 			this_config['bbox'] = [float(W), float(S), float(E), float(N)]
 			config_list.append(this_config)
 
-	config_file = open("config-ingest.json", "w")
+	# NOTE: assumes input of folder WITH NO TRAILING SLASHES
+	config_file = open("config-ingest-" + (inputfile[inputfile.rfind("/")+1:]) + ".json", "w")
 	config_file.write(json.dumps(config_list, indent=4))
 	config_file.close()
 

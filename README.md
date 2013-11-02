@@ -8,9 +8,9 @@ After downloading, and running the proper `rake db:migrate` you need to do a bas
 
 ####All sheet data ingest
 
-`rake data_import:ingest_bulk force=true`
+`rake data_import:ingest_bulk id=LAYERID force=true`
 
-This assumes the presence of `public/files/config-ingest.json` with a list of IDs and bounding boxes to import. This **erases all sheet/polygon/flag data** for those IDs in the config file.
+This assumes the presence of `public/files/config-ingest-LAYERID.json` with a list of IDs and bounding boxes to import for the layer `LAYERID`. This **erases all sheet/polygon/flag data** for those IDs in the config file.
 
 #####Add bulk centroids
 
@@ -20,9 +20,11 @@ The original GeoJSON files do not have centroids (they were added and processed 
 
 ####Single sheet data ingest
 
-`rake data_import:ingest_geojson id=SOMEID bb=SOMEBOUNDINGBOX force=true`
+`rake data_import:ingest_geojson id=SOMEID layer_id=SOMELAYERID bbox=SOMEBOUNDINGBOX force=true`
 
-This imports polygons from a file `public/files/SOMEID-traced.json` into the database **replacing** any polygons (and its corresponding flags) that are associated to ID `SOMEID`.
+This imports polygons from a file `public/files/SOMEID-traced.json` into the database **replacing** any polygons (and its corresponding flags) that are associated to ID `SOMEID`. 
+
+**NOTE:** So far only layers 859 and 860 are provided. Layer 859 has separate GeoJSON for centroids and polygons. Layer 860 sheets have a single file with both fields. Ingesting 859 requires a separate `data_import:ingest_centroid_bulk` process for centroids.
 
 ### API querying
 

@@ -3,13 +3,14 @@ namespace :data_import do
 	desc "Import a polygon GeoJSON for a sheet file"
 	task :ingest_geojson => :environment do
 		id = ENV['id']
+		layer_id = ENV['layer_id']
 		bbox = ENV['bbox']
 
 		if ENV['force']==nil
 			abort "This process was not forced (required due to destructive nature)"
 		end
 
-		process_file(id, bbox)
+		process_file(id, bbox, layer_id)
 	end
 
 	desc "Import GeoJSON sheet files based on config file"
@@ -18,7 +19,13 @@ namespace :data_import do
 			abort "This process was not forced (required due to destructive nature)"
 		end
 
-		file = "public/files/config-ingest.json"
+		if ENV['id']==nil
+			abort "You need to specify a layer id"
+		end
+
+		id = ENV['id']
+
+		file = "public/files/config-ingest-layer#{id}.json"
 
 		if not File.exists?(file)
 			abort "Config file #{file} not found."
@@ -32,7 +39,7 @@ namespace :data_import do
 		end
 		
 		json.each do |f|
-			process_file(f["id"].to_i, f["bbox"].join(","))
+			process_file(f["id"].to_i, f["bbox"].join(","), id)
 		end
 	end
 
@@ -42,7 +49,7 @@ namespace :data_import do
 			abort "This process was not forced (required due to destructive nature)"
 		end
 
-		file = "public/files/config-ingest.json"
+		file = "public/files/config-ingest-layer#{id}.json"
 
 		if not File.exists?(file)
 			abort "Config file #{file} not found."
@@ -62,7 +69,7 @@ namespace :data_import do
 
 end
 
-def process_file(id, bbox)
+def process_file(id, bbox, layer_id)
 	file = "public/files/#{id}-traced.json"
 
 	if not File.exists?(file)
@@ -87,7 +94,7 @@ def process_file(id, bbox)
 		sheet.destroy_all
 	end
 
-	sheet = Sheet.new(:map_id => id, :bbox => bbox, :status => "unprocessed")
+	sheet = Sheet.new(:map_id => id, :bbox => bbox, :status => "unprocessed", :layer_id => layer_id)
 	sheet.save
 
 	json["features"].each do |f|
@@ -96,6 +103,8 @@ def process_file(id, bbox)
 		polygon[:status] = "unprocessed"
 		polygon[:vectorizer_json] = f.to_json
 		polygon[:color] = f['properties']['Color']
+		polygon[:centroid_lat] = f['properties']['CentroidY']
+		polygon[:centroid_lon] = f['properties']['CentroidX']
 		polygon[:geometry] = f['geometry']['coordinates'].to_json
 		polygon[:dn] = f['properties']['DN']
 		polygon.save

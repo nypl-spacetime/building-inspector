@@ -1,6 +1,6 @@
 class Sheet < ActiveRecord::Base
 	has_many :polygons, :dependent => :destroy
-	attr_accessible :bbox, :map_id, :map_url, :status
+	attr_accessible :bbox, :map_id, :map_url, :status, :layer_id
 
 	def mini(session_id = nil)
 		# only the necessary data of a sheet's polygons
