@@ -49,6 +49,12 @@ namespace :data_import do
 			abort "This process was not forced (required due to destructive nature)"
 		end
 
+		if ENV['id']==nil
+			abort "You need to specify a layer id"
+		end
+
+		id = ENV['id']
+
 		file = "public/files/config-ingest-layer#{id}.json"
 
 		if not File.exists?(file)

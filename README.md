@@ -16,7 +16,7 @@ This assumes the presence of `public/files/config-ingest-LAYERID.json` with a li
 
 The original GeoJSON files do not have centroids (they were added and processed later). To create the centroids of the polygons in the database you need to run:
 
-`rake data_import:ingest_centroid_bulk force=true`
+`rake data_import:ingest_centroid_bulk id=LAYERID force=true`
 
 ####Single sheet data ingest
 
