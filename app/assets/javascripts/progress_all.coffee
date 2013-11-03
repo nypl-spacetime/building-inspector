@@ -75,7 +75,7 @@ class Progress
 				else if count < 30
 					c = 'cluster-medium'
 				new L.DivIcon
-					html: count
+					html: Humanize.compactInteger(count)
 					className: c
 					iconSize: L.point(30, 30)
 			polygonOptions:

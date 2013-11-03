@@ -42,11 +42,33 @@
 	text-align: left;
 	font-size: 12px;
 
+	@media screen and (max-width: $desktopwidth) {
+		bottom: 10px;
+		top: auto;
+		right: 10px;
+		width: auto;
+		height: auto;
+	}
+
 	ul {
 		padding: 10px;
 		background: $grayLightest;
 		margin-bottom: 10px;
 		@include border-radius(5px);
+		@include clearfix;
+	
+		@media screen and (max-width: $desktopwidth) {
+			float: left;
+			width: 40%;
+			margin-right: 5px;
+		}
+	}
+
+	li {
+		@media screen and (max-width: $desktopwidth) {
+			float: left;
+			margin-right: 5px;
+		}
 	}
 
 	.color {
@@ -81,9 +103,22 @@
 		text-align: center;
 		@include border-radius(5px);
 
+		@media screen and (max-width: $desktopwidth) {
+			float: left;
+			width: 40%;
+			margin-bottom: 0;
+			background: transparent;
+			color: $grayDarkest;
+			background: rgba(144,139,133,0.75);
+		}
+
 		&:hover {
 			background: $grayDarkest;
 			text-decoration: none;
+
+			@media screen and (max-width: $desktopwidth) {
+				background: rgba(144,139,133,0.75);
+			}
 		}
 	}
 }
@@ -93,6 +128,18 @@
 
 	#legend {
 		top: 10px;
+
+		@media screen and (max-width: $desktopwidth) {
+			top: auto;
+
+			.legend-link {
+				@include border-radius(5px 5px 0 0);
+
+				&:last-child {
+					@include border-radius(0 0 5px 5px);
+				}
+			}
+		}
 	}
 }
 
