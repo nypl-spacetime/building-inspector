@@ -9,7 +9,6 @@ class General
 		$("body").on("click", @onBodyClick)
 
 		if (window.innerWidth < 500)
-			console.log "YEAH!"
 			document.title = "Bldg Inspector"
 
 		overrides = [
