@@ -18,6 +18,17 @@ class Progress
 			maxBounds: new L.LatLngBounds(NW, SE)
 		)
 
+		@map2 = L.mapbox.map('map2', 'nypllabs.g6ei9mm0', 
+			zoomControl: false
+			animate: true
+			scrollWheelZoom: false
+			attributionControl: false
+			minZoom: 12
+			maxZoom: 20
+			dragging: false
+			maxBounds: new L.LatLngBounds(NW, SE)
+		)
+
 		L.control.zoom(
 			position: 'topright'
 		).addTo(@map)
@@ -44,6 +55,13 @@ class Progress
 		p = @
 
 		@map.on('load', @getCounts)
+		@map.on('move', @syncMaps)
+		@map.on('zoomend', @syncMaps)
+		@map.on('drag', @syncMaps)
+
+	syncMaps: (e) =>
+		@map2.setView @map.getCenter(), @map.getZoom(), {reset: false}, true
+
 
 	resetSheet: () ->
 		# console.log "reset"

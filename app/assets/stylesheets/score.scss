@@ -16,10 +16,19 @@
 	left: 0;
 	right: 0;
 
-	#map-container, #map {
+	#map-container, #map, #map2 {
 		width: 100%;
 		height: 100%;
 		// background: asset-url("map-load-tile.svg", image);
+	}
+
+	#map, #map2 {
+		position: absolute;
+		background: transparent;
+	}
+
+	#map2 {
+		// background: $grayLighter;
 	}
 
 	@media screen and (max-width: $desktopwidth) {
