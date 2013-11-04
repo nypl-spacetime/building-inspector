@@ -7,7 +7,8 @@ class Progress
 		@ids = []
 		NW = new L.LatLng(40.65563874006115,-74.13093566894531)
 		SE = new L.LatLng(40.81640757520087,-73.83087158203125)
-		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859-final/859spec.json', 
+		bounds = new L.LatLngBounds(NW, SE)
+		@map = L.mapbox.map('map', 'nypllabs.g6ei9mm0', #'https://s3.amazonaws.com/maptiles.nypl.org/859-final/859spec.json', 
 			zoomControl: false
 			animate: true
 			scrollWheelZoom: true
@@ -15,33 +16,30 @@ class Progress
 			minZoom: 12
 			maxZoom: 20
 			dragging: true
-			maxBounds: new L.LatLngBounds(NW, SE)
+			maxBounds: bounds
 		)
 
-		@map2 = L.mapbox.map('map2', 'nypllabs.g6ei9mm0', 
-			zoomControl: false
-			animate: true
-			scrollWheelZoom: false
-			attributionControl: false
-			minZoom: 12
-			maxZoom: 20
-			dragging: false
-			maxBounds: new L.LatLngBounds(NW, SE)
-		)
+		@addEventListeners()
+
+
+		# @map2 = L.mapbox.map('map2', 'nypllabs.g6ei9mm0', 
+		# 	zoomControl: false
+		# 	animate: true
+		# 	scrollWheelZoom: false
+		# 	attributionControl: false
+		# 	minZoom: 12
+		# 	maxZoom: 20
+		# 	dragging: false
+		# 	maxBounds: new L.LatLngBounds(NW, SE)
+		# )
+
+		overlay = L.mapbox.tileLayer('https://s3.amazonaws.com/maptiles.nypl.org/859-final/859spec.json',
+			zIndex: 2
+		).addTo(@map)
 
 		L.control.zoom(
 			position: 'topright'
 		).addTo(@map)
-
-		# @map.on('load', @getPolygons)
-		@no_color = '#AF2228'
-		@yes_color = '#609846'
-		@fix_color = '#FFB92D'
-		@nil_color = '#AAAAAA'
-
-		@addEventListeners()
-
-		@resetSheet()
 
 		L.InspectorMarker = L.Marker.extend
 			options:
@@ -49,18 +47,20 @@ class Progress
 				sheet_id: 0
 				bounds: []
 
+		# @map.on('load', @getPolygons)
+		@no_color = '#AF2228'
+		@yes_color = '#609846'
+		@fix_color = '#FFB92D'
+		@nil_color = '#AAAAAA'
+
+		@resetSheet()
+
 		window.map = @
 
 	addEventListeners: () =>
 		p = @
 
 		@map.on('load', @getCounts)
-		@map.on('move', @syncMaps)
-		@map.on('zoomend', @syncMaps)
-		@map.on('drag', @syncMaps)
-
-	syncMaps: (e) =>
-		@map2.setView @map.getCenter(), @map.getZoom(), {reset: false}, true
 
 
 	resetSheet: () ->
@@ -78,6 +78,11 @@ class Progress
 		data = $('#progressjs').data("progress")
 
 		# console.log data
+
+		NW = new L.LatLng(40.65563874006115,-74.13093566894531)
+		SE = new L.LatLng(40.81640757520087,-73.83087158203125)
+		bounds = new L.LatLngBounds(NW, SE)
+		@map.fitBounds bounds
 
 		# marker clustering layer
 		markers = new L.MarkerClusterGroup
