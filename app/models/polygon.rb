@@ -6,4 +6,8 @@ class Polygon < ActiveRecord::Base
 	def self.grouped_by_sheet
 		Polygon.select("COUNT(polygons.id) AS polygon_count, sheet_id, sheets.bbox").joins(:sheet).group("polygons.sheet_id, sheets.bbox")
 	end
+
+	def to_geojson
+	   { :type => "Feature", :properties => { :consensus => self[:consensus], :id => self[:id], :dn => self[:dn], :sheet_id => self[:sheet_id] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(self[:geometry]) } }
+	end
 end

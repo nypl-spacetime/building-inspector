@@ -45,13 +45,13 @@ class FixerController < ApplicationController
 
 	    all_polygons.each do |p|
 	      if p[:consensus]=="fix"
-	        fix_poly.push({ :type => "Feature", :properties => { :consensus => p[:consensus], :id => p[:id], :dn => p[:dn], :sheet_id => p[:sheet_id] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
+	        fix_poly.push(p.to_geojson)
 	      elsif p[:consensus]=="yes"
-	        yes_poly.push({ :type => "Feature", :properties => { :consensus => p[:consensus], :id => p[:id], :dn => p[:dn], :sheet_id => p[:sheet_id] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
+	        yes_poly.push(p.to_geojson)
 	      elsif p[:consensus]=="no"
-	        no_poly.push({ :type => "Feature", :properties => { :consensus => p[:consensus], :id => p[:id], :dn => p[:dn], :sheet_id => p[:sheet_id] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
+	        no_poly.push(p.to_geojson)
 	      else
-	        nil_poly.push({ :type => "Feature", :properties => { :consensus => p[:consensus], :id => p[:id], :dn => p[:dn], :sheet_id => p[:sheet_id] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
+	        nil_poly.push(p.to_geojson)
 	      end
 	    end
 

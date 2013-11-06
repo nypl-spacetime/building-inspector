@@ -27,11 +27,18 @@ class ApiController < ApplicationController
 			poly = Polygon.select(columns).limit(per_page).offset(offset)
 		end
 		msg = "List for informative purposes only. This is not a definitive list. This URL may be changed at any time without prior notice."
+	
+		geojson = []
+		poly.each do |p|
+			geojson.push(p.to_geojson)
+		end
+
 		output = {}
 		output[:message] = msg
 		output[:polygon_count] = count
 		output[:page] = page
-		output[:polygons] = poly
+		output[:type] = "FeatureCollection"
+		output[:features] = geojson
 		render json: output
 	end
 
