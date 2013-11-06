@@ -37,6 +37,10 @@ class Progress
 			zIndex: 2
 		).addTo(@map)
 
+		overlay2 = L.mapbox.tileLayer('https://s3.amazonaws.com/maptiles.nypl.org/860/860spec.json',
+			zIndex: 3
+		).addTo(@map)
+
 		L.control.zoom(
 			position: 'topright'
 		).addTo(@map)
