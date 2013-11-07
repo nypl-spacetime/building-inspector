@@ -33,12 +33,17 @@ class TagBuilding
 			zoomControl: false
 			scrollWheelZoom: false
 			animate: true
-			attributionControl: true
+			attributionControl: false
 			minZoom: 18
 			maxZoom: 21
 			dragging: false
 			touchZoom: false
 		)
+
+		L.control.attribution(
+			position: 'bottomright'
+			prefix: "From: <a href='http://digitalcollections.nypl.org/search/index?filters[title_uuid_s][]=Maps%20of%20the%20city%20of%20New%20York.||06fd4630-c603-012f-17f8-58d385a7bc34&keywords=&layout=false%22%3E'>NYPL Digital Collections</a> | <a href='http://maps.nypl.org/warper/layers/859/'>Warper</a>"
+		).addTo(@map)
 
 		L.control.zoom(
 			position: 'topright'

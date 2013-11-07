@@ -131,6 +131,7 @@
 
 		@media screen and (max-width: $desktopwidth) {
 			top: auto;
+			bottom: 20px;
 
 			.legend-link {
 				@include border-radius(5px 5px 0 0);
@@ -156,10 +157,6 @@
 
 .leaflet-container {
 	background: transparent;
-}
-
-.leaflet-bottom.leaflet-right {
-	bottom: -10px;
 }
 
 .cluster-small, .cluster-medium, .cluster-large {
