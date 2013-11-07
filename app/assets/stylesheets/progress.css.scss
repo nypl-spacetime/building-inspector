@@ -158,6 +158,10 @@
 	background: transparent;
 }
 
+.leaflet-bottom.leaflet-right {
+	bottom: -10px;
+}
+
 .cluster-small, .cluster-medium, .cluster-large {
 	width: 36px;
 	height: 36px;

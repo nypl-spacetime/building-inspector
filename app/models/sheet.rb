@@ -6,7 +6,7 @@ class Sheet < ActiveRecord::Base
 		# only the necessary data of a sheet's polygons
 		if session_id != nil
 			# all polygons with no consensus that a given session has not processed in a sheet
-			Polygon.select("polygons.id, color, geometry, sheet_id, status, dn").joins("LEFT JOIN flags ON polygons.id = flags.polygon_id AND session_id = " + Sheet.sanitize(session_id) ).where("sheet_id = ? AND session_id IS NULL AND consensus IS NULL", self[:id])
+			Polygon.select("polygons.id, color, geometry, sheet_id, status, dn").joins("LEFT JOIN flags ON polygons.id = flags.polygon_id AND session_id = " + Sheet.sanitize(session_id) ).where("sheet_id = ? AND session_id IS NULL", self[:id]) # removed from where: AND consensus IS NULL
 		else
 			# all polygons in a sheet
 			Polygon.select("polygons.id, color, geometry, sheet_id, status, dn").where("sheet_id = ?", self[:id])
