@@ -18,6 +18,7 @@ class Progress
 			maxBounds: new L.LatLngBounds(NW, SE)
 		)
 
+		t = @
 
 		@overlay = L.mapbox.tileLayer('https://s3.amazonaws.com/maptiles.nypl.org/859-final/859spec.json',
 			zIndex: 2

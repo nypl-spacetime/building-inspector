@@ -7,7 +7,7 @@ class Sheet
 			maxZoom: 21
 		)
 
-		overlay = L.mapbox.tileLayer('https://s3.amazonaws.com/maptiles.nypl.org/860/860spec.json',
+		@overlay2 = L.mapbox.tileLayer('https://s3.amazonaws.com/maptiles.nypl.org/860/860spec.json',
 			zIndex: 3
 		).addTo(@map)
 

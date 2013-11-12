@@ -26,7 +26,7 @@
   <tr>
     <td><%= polygon.dn %></td>
     <td><%= polygon.status %></td>
-    <td><%= polygon.sheet_id %></td>
+    <td><%= link_to polygon.sheet_id, sheet_path(polygon.sheet_id) %></td>
     <td><%= polygon.flag_count %></td>
     <td><%= polygon.consensus %></td>
     <td><%= polygon.color %></td>

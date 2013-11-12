@@ -16,7 +16,7 @@
 <% @flags.each do |flag| %>
   <tr>
     <td><%= flag.flag_type %></td>
-    <td><%= flag.polygon_id %></td>
+    <td><%= link_to flag.polygon_id, polygon_path(flag.polygon_id) %></td>
     <td><%= flag.session_id %></td>
     <td><%= flag.flag_value %></td>
     <td><%= flag.is_primary %></td>

@@ -194,6 +194,25 @@
 	}
 }
 
+#map-inspecting {
+	display: none;
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	top: 35%;
+	z-index: 101;
+
+	span {
+		display: inline-block;
+		width: 200px;
+		margin: 0 auto;
+		padding: 10px;
+		color: $white;
+		background: rgba(144,139,133,0.75);
+		@include border-radius(10px);
+	}
+}
+
 #map-tutorial {
 	display: none;
 	width: 100%;
