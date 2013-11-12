@@ -208,7 +208,7 @@
 		margin: 0 auto;
 		padding: 10px;
 		color: $white;
-		background: rgba(144,139,133,0.75);
+		background: $grayDarker;
 		@include border-radius(10px);
 	}
 }

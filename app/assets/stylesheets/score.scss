@@ -84,7 +84,7 @@
 	@include border-radius(0 0 10px 10px);
 
 	@media screen and (max-width: $desktopwidth) {
-		background: $grayDark;
+		background: rgba(144,139,133,0.75);
 		@include border-radius(10px);
 		position: fixed;
 		top: 50px;
