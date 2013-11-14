@@ -2,8 +2,8 @@
 
 Authors: [Mauricio Giraldo Arteaga] / NYPL Labs
 
-1. [First ingest](first)
-1. [API querying](api)
+- [First ingest](first)
+- [API querying](api)
 
 ### <a name="first"></a>First ingest
 
