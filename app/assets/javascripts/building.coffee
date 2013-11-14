@@ -6,6 +6,7 @@ class Building
 	_currentIndex: -1
 	currentPolygon: {}
 	_currentPolygon: {}
+	layer_id: 0
 	geo: {}
 	popup: L.popup()
 	verticalOffset: 100 # pixels to offset the polygon from the center
@@ -146,10 +147,12 @@ class Building
 		$("#tweet").attr "href", twitterurl
 
 	animateSheet: () =>
+		return if @layer_id == @loadedData.map.layer_id
+		@layer_id = @loadedData.map.layer_id
 		msg = "BROOKLYN"
-		msg = "MANHATTAN" if @loadedData.map.layer_id == 859 # hack // eventually add to sheet table
+		msg = "MANHATTAN" if @layer_id == 859 # hack // eventually add to sheet table
 		el = $("#map-inspecting")
-		el.html("<span>INSPECTING " + msg + "!</span>")
+		el.html("<span>NOW INSPECTING " + msg + "!</span>")
 		.show().delay(1000).fadeOut(1000)
 
 	hideOthers: () ->
