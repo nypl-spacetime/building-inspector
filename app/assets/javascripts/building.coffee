@@ -490,6 +490,8 @@ class Building
 		else
 			return if @tutorialOn
 			# console.log "Loading more polygons..."
+			@currentIndex = -1
+			@currentPolygon = {}
 			@mapPolygons = 0
 			@mapPolygonsSession = 0
 			@allPolygons = 0
