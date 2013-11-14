@@ -2,10 +2,12 @@
 
 Authors: [Mauricio Giraldo Arteaga] / NYPL Labs
 
-- [First ingest](#first)
+- [Data ingest](#ingest)
 - [API querying](#api)
 
-### <a name="first"></a>First ingest
+### <a name="ingest"></a>Data ingest
+
+#### First ingest
 
 After downloading, and running the proper `rake db:migrate` you need to do a base ingest of data using the included rake task.
 
