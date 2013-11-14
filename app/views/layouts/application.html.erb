@@ -21,6 +21,13 @@
 	<!--[if lte IE 8]>
 	<%= stylesheet_link_tag "lib/mapbox.ie", :media => "all" %>
 	<![endif]-->
+	<style type="text/css">
+	<!--[if lte IE 8]>
+	#ie8 {
+		display: block;
+	}
+	<![endif]-->
+	</style>
 
 	<%= javascript_include_tag "application" %>
 
@@ -31,6 +38,9 @@
 </head>
 <body>
 
+<div id="ie8">
+	<p>Building Inspector is not compatible with Internet Explorer 8 or earlier. Please <a href="http://microsoft.com/ie">download a more recent version</a>.</p>
+</div>
 <%= render :partial => "partials/landscape-alert" %>
 <%= yield %>
 
