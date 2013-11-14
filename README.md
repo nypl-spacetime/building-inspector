@@ -39,8 +39,7 @@ Accepts types: `all`, `yes`, `no`, `fix` with numeric paging (500 records per pa
 - `/api/polygons/no/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that have been marked as *not buildings*.
 - `/api/polygons/fix/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that need to be *fixed*.
 
-
-**Copyright 2013 The New York Public Library**
+### Copyright 2013 The New York Public Library
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
