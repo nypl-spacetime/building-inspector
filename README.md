@@ -2,7 +2,10 @@
 
 Authors: [Mauricio Giraldo Arteaga] / NYPL Labs
 
-### First ingest
+1. [First ingest](first)
+1. [API querying](api)
+
+### <a name="first"></a>First ingest
 
 After downloading, and running the proper `rake db:migrate` you need to do a base ingest of data using the included rake task.
 
@@ -26,7 +29,7 @@ This imports polygons from a file `public/files/SOMEID-traced.json` into the dat
 
 **NOTE:** So far only layers 859 and 860 are provided. Layer 859 has separate GeoJSON for centroids and polygons. Layer 860 sheets have a single file with both fields. Ingesting 859 requires a separate `data_import:ingest_centroid_bulk` process for centroids.
 
-### API querying
+### <a name="api"></a>API querying
 
 The following API endpoints have been added to export the inspection consensus process (paginated by groups of 500). Consensus is defined by **agreement of 75% or more of three or more votes**:
 
