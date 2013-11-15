@@ -71,7 +71,7 @@ class Building
 				)
 		)
 
-		return if !!(window.history && window.history.pushState) # ie screws up all
+		return if not (window.history && window.history.pushState) # ie screws up all
 		
 		history.replaceState("fixer","inspector","building") 
 
@@ -150,13 +150,13 @@ class Building
 		$("#tweet").attr "href", twitterurl
 
 	animateSheet: () =>
-		return if @layer_id == @loadedData.map.layer_id
+		return if @layer_id == @loadedData.map.layer_id or @tutorialOn
 		@layer_id = @loadedData.map.layer_id
-		msg = "BROOKLYN"
-		msg = "MANHATTAN" if @layer_id == 859 # hack // eventually add to sheet table
+		msg = "Now inspecting:<br/>Brooklyn, 1855"
+		msg = "Now inspecting:<br/>Manhattan, 1857-62" if @layer_id == 859 # hack // eventually add to sheet table
 		el = $("#map-inspecting")
-		el.html("<span>NOW INSPECTING " + msg + "!</span>")
-		.show().delay(1000).fadeOut(1000)
+		el.html("<span>" + msg + "</span>")
+		.show().delay(2000).fadeOut(1000)
 
 	hideOthers: () ->
 		$("#main-container").hide()
