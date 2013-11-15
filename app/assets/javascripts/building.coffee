@@ -29,8 +29,6 @@ class Building
 		$("#map-about").hide()
 		$("#buttons").hide()
 		$("#tweet").hide()
-		if (window.history && window.history.pushState && window.history.replaceState)
-			history.replaceState("fixer","inspector","building") 
 		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859-final/859spec.json', 
 			zoomControl: false
 			scrollWheelZoom: false
@@ -72,6 +70,10 @@ class Building
 						, 1000
 				)
 		)
+
+		return if !!(window.history && window.history.pushState) # ie screws up all
+		
+		history.replaceState("fixer","inspector","building") 
 
 		# console.log @tutorialOn
 
