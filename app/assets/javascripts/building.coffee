@@ -103,9 +103,14 @@ class Building
 			e.preventDefault()
 		)
 
+		$("body").keydown (e)->
+			switch e.which
+				when 32 then tagger.hideDotted(e)
+
 		$("body").keyup (e)->
 			# console.log "key", e.which
 			switch e.which
+				when 32 then tagger.showDotted(e)
 				when 49 then tagger.submitNoFlag(e)
 				when 97 then tagger.submitNoFlag(e)
 				when 50 then tagger.submitFixFlag(e)
@@ -529,12 +534,23 @@ class Building
 			# 	l.bindPopup(out.join("<br />"))
 		).addData json
 
-	# onMapClick: (e) =>
-	# 	@popup
-	# 		.setLatLng(e.latlng)
-	# 		.setContent("You clicked the map at " + e.latlng.toString())
-	# 		.openOn(@map)
-		
+	showDotted: (e) =>
+		console.log "showDotted"
+		@geo.setStyle (feature) ->
+			color: '#b00'
+			weight: 5
+			opacity: 1
+			dashArray: '1,16'
+			fill: false
+
+	hideDotted: (e) =>
+		console.log "hideDotted"
+		@geo.setStyle (feature) ->
+			color: '#b00'
+			opacity: 0
+			fill: false
+
+
 	# deep copy method
 	# see: http://coffeescriptcookbook.com/chapters/classes_and_objects/cloning
 	clone: (obj) ->
