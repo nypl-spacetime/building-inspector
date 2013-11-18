@@ -535,7 +535,7 @@ class Building
 		).addData json
 
 	showDotted: (e) =>
-		console.log "showDotted"
+		# console.log "showDotted"
 		@geo.setStyle (feature) ->
 			color: '#b00'
 			weight: 5
@@ -544,7 +544,7 @@ class Building
 			fill: false
 
 	hideDotted: (e) =>
-		console.log "hideDotted"
+		# console.log "hideDotted"
 		@geo.setStyle (feature) ->
 			color: '#b00'
 			opacity: 0
