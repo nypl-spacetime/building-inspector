@@ -1,12 +1,13 @@
 class Progress
 
+	_SW: new L.LatLng(40.62563874006115,-74.13093566894531)
+	_NE: new L.LatLng(40.81640757520087,-73.83087158203125)
+
 	constructor: () ->
 		$("#map-tutorial").hide()
 		$("#map-about").hide()
 		$("#tweet").hide()
 		@ids = []
-		NW = new L.LatLng(40.65563874006115,-74.13093566894531)
-		SE = new L.LatLng(40.81640757520087,-73.83087158203125)
 		@map = L.mapbox.map('map', 'nypllabs.g6ei9mm0', 
 			zoomControl: false
 			animate: true
@@ -15,7 +16,7 @@ class Progress
 			minZoom: 12
 			maxZoom: 20
 			dragging: true
-			maxBounds: new L.LatLngBounds(NW, SE)
+			maxBounds: new L.LatLngBounds(@_SW, @_NE).pad(1)
 		)
 
 		t = @
@@ -73,12 +74,10 @@ class Progress
 	getCounts: () =>
 		data = $('#progressjs').data("progress")
 
-		NW = new L.LatLng(40.65563874006115,-74.13093566894531)
-		SE = new L.LatLng(40.81640757520087,-73.83087158203125)
-		bounds = new L.LatLngBounds(NW, SE)
+		bounds = new L.LatLngBounds(@_SW, @_NE)
 		@map.fitBounds bounds
 
-		@updateScore(data.all_polygons_session)
+		@updateScore(data.all_polygons_Nession)
 
 		# marker clustering layer
 		markers = new L.MarkerClusterGroup

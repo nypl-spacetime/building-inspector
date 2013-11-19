@@ -1,13 +1,14 @@
 class Progress
 
+	_SW: new L.LatLng(40.62563874006115,-74.13093566894531)
+	_NE: new L.LatLng(40.81640757520087,-73.83087158203125)
+
 	constructor: () ->
 		$("#map-tutorial").hide()
 		$("#map-about").hide()
 		$("#tweet").hide()
 		@ids = []
-		NW = new L.LatLng(40.65563874006115,-74.13093566894531)
-		SE = new L.LatLng(40.81640757520087,-73.83087158203125)
-		bounds = new L.LatLngBounds(NW, SE)
+		bounds = new L.LatLngBounds(@_SW, @_NE).pad(1)
 		@map = L.mapbox.map('map', 'nypllabs.g6ei9mm0', #'https://s3.amazonaws.com/maptiles.nypl.org/859-final/859spec.json', 
 			zoomControl: false
 			animate: true
@@ -76,9 +77,7 @@ class Progress
 
 		# console.log data
 
-		NW = new L.LatLng(40.65563874006115,-74.13093566894531)
-		SE = new L.LatLng(40.81640757520087,-73.83087158203125)
-		bounds = new L.LatLngBounds(NW, SE)
+		bounds = new L.LatLngBounds(@_SW, @_NE)
 		@map.fitBounds bounds
 
 		# marker clustering layer
