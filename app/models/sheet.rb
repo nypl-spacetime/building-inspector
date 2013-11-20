@@ -14,7 +14,7 @@ class Sheet < ActiveRecord::Base
 	end
 
 	def self.random_unprocessed
-		w = "status IS 'unprocessed'"
+		w = "status = 'unprocessed'"
 		c = Sheet.where(w).count
 		Sheet.where(w).find(:first, :offset =>rand(c))
 	end
