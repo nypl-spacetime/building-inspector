@@ -15,5 +15,6 @@ namespace :db do
     yes_query = Flag.connection.execute("UPDATE polygons SET consensus = 'yes' WHERE consensus IS NULL AND flag_count >= 3 AND ((SELECT COUNT(id) FROM flags WHERE flags.polygon_id = polygons.id AND flags.flag_value = 'yes')::float/polygons.flag_count::float) >= 0.75")
     no_query = Flag.connection.execute("UPDATE polygons SET consensus = 'no' WHERE consensus IS NULL AND flag_count >= 3 AND ((SELECT COUNT(id) FROM flags WHERE flags.polygon_id = polygons.id AND flags.flag_value = 'no')::float/polygons.flag_count::float) >= 0.75")
     fix_query = Flag.connection.execute("UPDATE polygons SET consensus = 'fix' WHERE consensus IS NULL AND flag_count >= 3 AND ((SELECT COUNT(id) FROM flags WHERE flags.polygon_id = polygons.id AND flags.flag_value = 'fix')::float/polygons.flag_count::float) >= 0.75")
+    undecided_query = Flag.connection.execute("UPDATE polygons SET consensus = 'fix' WHERE consensus IS NULL AND flag_count >= 10")
   end
 end
