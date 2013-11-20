@@ -393,16 +393,20 @@ class Building
 
 	getPolygons: () =>
 		tagger = @
-		if @firstLoad
+		mapdata = $('#buildingjs').data("map")
+		if @firstLoad && mapdata.poly.length > 0
 			@firstLoad = false
-			mapdata = $('#buildingjs').data("map")
 			$("#loader").remove()
 			@processPolygons(mapdata)
 		else
 			$.getJSON('/fixer/map.json', (data) ->
 				# console.log(d);
-				$("#loader").remove()
-				tagger.processPolygons(data)
+				if data.poly.length > 0
+					$("#loader").remove()
+					tagger.processPolygons(data)
+				else
+					# retry until you find a good map
+					tagger.getPolygons()
 			)
 	
 	processPolygons: (data) =>
@@ -479,10 +483,6 @@ class Building
 				, () ->
 					tagger.resetButtons()
 					tagger.showNextPolygon()
-			# ).done( () ->
-			# 	tagger.showNextPolygon()
-			# ).fail( () ->
-			# 	tagger.showNextPolygon()
 			)
 	
 	showNextPolygon: () =>
@@ -528,10 +528,6 @@ class Building
 				opacity: 1
 				dashArray: '1,16'
 				fill: false
-			# onEachFeature: (f,l) ->
-			# 	out = for key, val of f.properties
-			# 		"<strong>#{key}:</strong> #{val}"
-			# 	l.bindPopup(out.join("<br />"))
 		).addData json
 
 	showDotted: (e) =>
