@@ -14,8 +14,31 @@
 
 <p>
   <b>Flags:</b>
+  <% 
+  yes_count = 0
+  no_count = 0
+  fix_count = 0
+  all_count = 0
+  %>
   <% @polygon.flags.each do |f| %>
   <%= f.flag_value %><br />
+  <% 
+  if f.flag_value == "yes"
+    yes_count = yes_count + 1
+  end
+  if f.flag_value == "no"
+    no_count = no_count + 1
+  end
+  if f.flag_value == "fix"
+    fix_count = fix_count + 1
+  end
+  all_count = all_count + 1
+  %>
+  <% end %>
+  <% if all_count > 0 %>
+  yes: <%= (yes_count / all_count)*100 %>%<br />
+  no: <%= (no_count / all_count)*100 %>%<br />
+  fix: <%= (fix_count / all_count)*100 %>%<br />
   <% end %>
 </p>
 
