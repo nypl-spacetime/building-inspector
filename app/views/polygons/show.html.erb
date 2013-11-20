@@ -37,9 +37,9 @@
   <% end %>
   <% if all_count > 0 %>
   <br />
-  yes: <%= yes_count %> (<%= (yes_count / all_count)*100 %>%)<br />
-  no: <%= no_count %> (<%= (no_count / all_count)*100 %>%)<br />
-  fix: <%= fix_count %> (<%= (fix_count / all_count)*100 %>%)<br />
+  yes: <%= yes_count %> (<%= (yes_count.to_f / all_count.to_f)*100 %>%)<br />
+  no: <%= no_count %> (<%= (no_count.to_f / all_count.to_f)*100 %>%)<br />
+  fix: <%= fix_count %> (<%= (fix_count.to_f / all_count.to_f)*100 %>%)<br />
   <% end %>
 </p>
 
