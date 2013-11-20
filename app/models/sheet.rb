@@ -13,6 +13,12 @@ class Sheet < ActiveRecord::Base
 		end
 	end
 
+	def self.random_unprocessed
+		w = "status IS 'unprocessed'"
+		c = Sheet.where(w).count
+		Sheet.where(w).find(:first, :offset =>rand(c))
+	end
+
 	def flags
 		Flag.find_all_by_polygon_id(self.polygons, :order => :created_at)
 	end

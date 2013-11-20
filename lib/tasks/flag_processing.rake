@@ -10,11 +10,16 @@ namespace :db do
     end
   end
 
-  desc "Process consensus (nightly)"
+  desc "Process consensus in POLYGONS (recurring)"
   task :calculate_consensus => :environment do
     yes_query = Flag.connection.execute("UPDATE polygons SET consensus = 'yes' WHERE consensus IS NULL AND flag_count >= 3 AND ((SELECT COUNT(id) FROM flags WHERE flags.polygon_id = polygons.id AND flags.flag_value = 'yes')::float/polygons.flag_count::float) >= 0.75")
     no_query = Flag.connection.execute("UPDATE polygons SET consensus = 'no' WHERE consensus IS NULL AND flag_count >= 3 AND ((SELECT COUNT(id) FROM flags WHERE flags.polygon_id = polygons.id AND flags.flag_value = 'no')::float/polygons.flag_count::float) >= 0.75")
     fix_query = Flag.connection.execute("UPDATE polygons SET consensus = 'fix' WHERE consensus IS NULL AND flag_count >= 3 AND ((SELECT COUNT(id) FROM flags WHERE flags.polygon_id = polygons.id AND flags.flag_value = 'fix')::float/polygons.flag_count::float) >= 0.75")
     undecided_query = Flag.connection.execute("UPDATE polygons SET consensus = 'fix' WHERE consensus IS NULL AND flag_count >= 10")
+  end
+
+  desc "Process consensus in SHEETS (recurring)"
+  task :sheet_consensus => :environment do
+    query = Sheet.connection.execute("UPDATE sheets SET status='done' WHERE id IN ( SELECT S.id FROM sheets S LEFT JOIN polygons P ON P.sheet_id=S.id WHERE P.consensus IS NULL GROUP BY S.id HAVING COUNT(*)=0 )")
   end
 end

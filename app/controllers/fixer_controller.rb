@@ -105,7 +105,8 @@ class FixerController < ApplicationController
 	def getMap
 		session = getSession()
 		map = {}
-		map[:map] = Sheet.random
+		# map[:map] = Sheet.random
+		map[:map] = Sheet.random_unprocessed
 		map[:poly] = map[:map].mini(session)
 		map[:status] = {}
 		map[:status][:session_id] = session
