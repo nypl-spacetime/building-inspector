@@ -1,4 +1,23 @@
+<% content_for :dynamic_js do %>
+  <style type="text/css">
+    #map {
+      width: 300px;
+      height: 300px;
+    }
+  </style>
+  <%= javascript_include_tag "polygon", {:id => "polydata", "data-map" => "#{@map.to_json}"} %>
+<% end %>
+
 <p id="notice"><%= notice %></p>
+
+<div id="map"></div>
+
+<p>
+  <b>Flags:</b>
+  <% @polygon.flags.each do |f| %>
+  <%= f.flag_value %><br />
+  <% end %>
+</p>
 
 <p>
   <b>DN:</b>
@@ -40,12 +59,6 @@
   <%= @polygon.color %>
 </p>
 
-<p>
-  <b>Flags:</b>
-  <% @polygon.flags.each do |f| %>
-  <%= f.flag_value %><br />
-  <% end %>
-</p>
 
 <p>
   <b>Consensus:</b>

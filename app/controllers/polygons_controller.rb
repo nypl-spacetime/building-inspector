@@ -19,6 +19,7 @@ class PolygonsController < ApplicationController
   # GET /polygons/1.json
   def show
     @polygon = Polygon.find(params[:id])
+    @map = @polygon.as_feature
 
     respond_to do |format|
       format.html # show.html.erb

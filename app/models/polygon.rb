@@ -10,4 +10,8 @@ class Polygon < ActiveRecord::Base
 	def to_geojson
 	   { :type => "Feature", :properties => { :consensus => self[:consensus], :id => self[:id], :dn => self[:dn], :sheet_id => self[:sheet_id] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(self[:geometry]) } }
 	end
+
+	def as_feature
+	   { :type => "FeatureCollection", :features => [JSON.parse(self[:vectorizer_json])] }
+	end
 end
