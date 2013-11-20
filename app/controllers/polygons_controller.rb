@@ -1,13 +1,15 @@
 class PolygonsController < ApplicationController
   layout "admin"
   before_filter :check_admin! #, :only => [:index, :edit, :destroy]
+  helper_method :sort_column, :sort_direction
+
   # GET /polygons
   # GET /polygons.json
   def index
-    @polygons = Polygon.order("id").paginate(:page => params[:page])
+    @polygons = Polygon.order(sort_column + " " + sort_direction).paginate(:page => params[:page])
     @total = Polygon.count
     @consensus_total = Polygon.where("consensus IS NOT NULL").count
-    @consensus_counts = Polygon.connection.execute("SELECT P.consensus, COUNT(*)::float/(SELECT COUNT(*) FROM polygons WHERE consensus IS NOT NULL)::float AS percent FROM polygons P WHERE consensus IS NOT NULL GROUP BY P.consensus")
+    @consensus_counts = [] #Polygon.connection.execute("SELECT P.consensus, COUNT(*)::float/(SELECT COUNT(*) FROM polygons WHERE consensus IS NOT NULL)::float AS percent FROM polygons P WHERE consensus IS NOT NULL GROUP BY P.consensus")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -86,4 +88,15 @@ class PolygonsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+  
+  def sort_column
+    Polygon.column_names.include?(params[:sort]) ? params[:sort] : "id"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+
 end
