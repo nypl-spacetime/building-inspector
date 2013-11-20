@@ -418,6 +418,7 @@ class Building
 		@showNextPolygon()
 
 	shufflePolygons: (a) ->
+		if a.length == 1 return a
 		# from: http://coffeescriptcookbook.com/chapters/arrays/shuffling-array-elements
 		# From the end of the list to the beginning, pick element `i`.
 		for i in [a.length-1..1]
