@@ -4,7 +4,7 @@ namespace :data_import do
 	task :ingest_geojson => :environment do
 		id = ENV['id']
 		layer_id = ENV['layer_id']
-		bbox = ENV['bbox']
+		bbox = ENV['bbox'] # W,S,E,N
 
 		if ENV['force']==nil
 			abort "This process was not forced (required due to destructive nature)"
