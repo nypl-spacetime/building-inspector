@@ -145,7 +145,7 @@ class Building
 		
 		$("#score .total").text(@allPolygonsSession)
 
-		url = $('#progressjs').data("server")
+		url = $('#buildingjs').data("server")
 		tweet = @allPolygonsSession + " buildings checked! Data mining old maps with the Building Inspector from @NYPLMaps @nypl_labs"
 		twitterurl = "https://twitter.com/share?url=" + url + "&text=" + tweet
 
