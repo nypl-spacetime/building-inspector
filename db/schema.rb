@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131102194559) do
+ActiveRecord::Schema.define(:version => 20131122211028) do
 
   create_table "flags", :force => true do |t|
     t.string   "flag_type"
@@ -32,28 +32,34 @@ ActiveRecord::Schema.define(:version => 20131102194559) do
     t.text     "vectorizer_json"
     t.integer  "sheet_id"
     t.string   "color"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.integer  "dn"
-    t.integer  "flag_count",      :default => 0
+    t.integer  "flag_count",        :default => 0
     t.string   "consensus"
     t.float    "centroid_lat"
     t.float    "centroid_lon"
+    t.string   "consensus_numbers"
   end
 
   add_index "polygons", ["consensus"], :name => "consensus_index2"
   add_index "polygons", ["sheet_id", "consensus"], :name => "consensus_index"
+  add_index "polygons", ["sheet_id", "consensus_numbers"], :name => "consensus_numbers_index"
 
   create_table "sheets", :force => true do |t|
     t.string   "status"
     t.string   "bbox"
     t.integer  "map_id"
     t.string   "map_url"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
     t.integer  "layer_id"
+    t.string   "consensus"
+    t.string   "consensus_numbers"
   end
 
+  add_index "sheets", ["consensus"], :name => "sheet_consensus_index"
+  add_index "sheets", ["consensus_numbers"], :name => "sheet_consensus_numbers_index"
   add_index "sheets", ["layer_id"], :name => "index_sheets_on_layer_id"
 
   create_table "users", :force => true do |t|

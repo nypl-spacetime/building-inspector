@@ -20,6 +20,6 @@ namespace :db do
 
   desc "Process consensus in SHEETS (recurring)"
   task :sheet_consensus => :environment do
-    query = Sheet.connection.execute("UPDATE sheets SET status='done' WHERE id IN ( SELECT S.id FROM sheets S WHERE S.id NOT IN (SELECT DISTINCT P.sheet_id  FROM polygons P WHERE  P.consensus IS NULL) )")
+    query = Sheet.connection.execute("UPDATE sheets SET consensus='done' WHERE id IN ( SELECT S.id FROM sheets S WHERE S.id NOT IN (SELECT DISTINCT P.sheet_id  FROM polygons P WHERE  P.consensus IS NULL) )")
   end
 end

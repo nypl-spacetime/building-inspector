@@ -14,6 +14,8 @@ Webappmini::Application.routes.draw do
 
   resources :polygons
 
+  get "polygon_consensus" => "polygons#consensus"
+
   resources :flags
 
   resources :sheets

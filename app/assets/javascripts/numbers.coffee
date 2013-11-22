@@ -1,6 +1,8 @@
 class Numbers
 
 	constructor: () ->
+    @geo = {}
+    @firstLoad = true
     @buttonMode = 0
     $("#map-tutorial").hide()
     $("#buttons").hide()
@@ -54,13 +56,14 @@ class Numbers
 
   getPolygons: () =>
     tagger = @
-    mapdata = $('#buildingjs').data("map")
+    mapdata = $('#numbersjs').data("map")
+    console.log @firstLoad, mapdata
     if @firstLoad && mapdata.poly.length > 0
       @firstLoad = false
       $("#loader").remove()
       @processPolygons(mapdata)
     else
-      $.getJSON('/fixer/map.json', (data) ->
+      $.getJSON('/fixer/map.json?type=numbers', (data) ->
         # console.log(d);
         if data.poly.length > 0
           $("#loader").remove()
@@ -78,6 +81,15 @@ class Numbers
     @animateSheet()
     @showNextPolygon()
 
+  animateSheet: () =>
+    return if @layer_id == @loadedData.map.layer_id or @tutorialOn
+    @layer_id = @loadedData.map.layer_id
+    msg = "Now inspecting:<br/>Brooklyn, 1855"
+    msg = "Now inspecting:<br/>Manhattan, 1857-62" if @layer_id == 859 # hack // eventually add to sheet table
+    el = $("#map-inspecting")
+    el.html("<span>" + msg + "</span>")
+    .show().delay(2000).fadeOut(1000)
+
   shufflePolygons: (a) ->
     return a if a.length < 2
     # from: http://coffeescriptcookbook.com/chapters/arrays/shuffling-array-elements
@@ -90,14 +102,14 @@ class Numbers
     # Return the shuffled array.
     a
 
-  submitFlag: (type) =>
+  submitFlag: (number) =>
     if @tutorialOn
       # do not submit the data
       @intro.goToStep(@intro._currentStep+2)
       return
 
+    type = "numbers"
     _gaq.push(['_trackEvent', 'Flag', type])
-    @mapPolygonsSession--
     @allPolygonsSession++
     @updateScore()
 
@@ -105,9 +117,9 @@ class Numbers
     $("#buttons").fadeOut 200 , () ->
       $.get("/fixer/flag", 
         i: tagger.currentPolygon.id
-        f: type
+        t: type
+        f: number
         , () ->
-          tagger.resetButtons()
           tagger.showNextPolygon()
       )
   
@@ -129,9 +141,6 @@ class Numbers
       # console.log "Loading more polygons..."
       @currentIndex = -1
       @currentPolygon = {}
-      @mapPolygons = 0
-      @mapPolygonsSession = 0
-      @allPolygons = 0
       @allPolygonsSession = 0
       @getPolygons()
 
@@ -157,10 +166,7 @@ class Numbers
     ).addData json
 
   updateScore: () =>
-    if @mapPolygons == 0 && @allPolygons == 0
-      @mapPolygons = @loadedData.status.map_polygons
-      @mapPolygonsSession = @loadedData.status.map_polygons_session
-      @allPolygons = @loadedData.status.all_polygons
+    if @allPolygonsSession == 0
       @allPolygonsSession = @loadedData.status.all_polygons_session
     
     $("#score .total").text(@allPolygonsSession)

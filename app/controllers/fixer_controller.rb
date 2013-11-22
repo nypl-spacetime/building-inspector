@@ -14,7 +14,7 @@ class FixerController < ApplicationController
 	  @current_page = "numbers"
     @isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
     cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
-    @map = getMap().to_json
+    @map = getMap("numbers").to_json
 	end
 
 	def progress
@@ -114,7 +114,7 @@ class FixerController < ApplicationController
 		map = {}
 		# map[:map] = Sheet.random
 		map[:map] = Sheet.random_unprocessed(type)
-		map[:poly] = map[:map].mini(session)
+		map[:poly] = map[:map].mini(session, type)
 		map[:status] = {}
 		map[:status][:session_id] = session
 		map[:status][:map_polygons] = map[:map].polygons.count
@@ -122,26 +122,33 @@ class FixerController < ApplicationController
 		map[:status][:all_sheets] = Sheet.count
 		map[:status][:all_polygons] = Polygon.count
 		if user_signed_in?
-		  map[:status][:all_polygons_session] = Flag.flags_for_user(current_user.id)
+		  map[:status][:all_polygons_session] = Flag.flags_for_user(current_user.id, type)
 		else
-		  map[:status][:all_polygons_session] = Flag.flags_for_session(session)
+		  map[:status][:all_polygons_session] = Flag.flags_for_session(session, type)
 		end		
 		return map
 	end
 
-	def randomMap
-		@map = getMap()
+	def randomMap(type="geometry")
+    if params[:type] != nil
+      type = params[:type]
+    end
+
+		@map = getMap(type)
 		respond_with( @map )
 	end
 
-	def flagPolygon
+	def flagPolygon(type="geometry")
+    if params[:t] != nil
+      type = params[:t]
+    end
 		session = getSession()
 		@flag = Flag.new
 		@flag[:is_primary] = true
 		@flag[:polygon_id] = params[:i]
 		@flag[:flag_value] = params[:f]
 		@flag[:session_id] = session
-		@flag[:flag_type] = "geometry"
+		@flag[:flag_type] = type
 		if @flag.save
 			fl = Polygon.connection.execute("UPDATE polygons SET flag_count = flag_count+1 WHERE id = #{params[:i]}")
 			respond_with( @flag )

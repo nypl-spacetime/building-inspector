@@ -1,7 +1,7 @@
 class Polygon < ActiveRecord::Base
 	has_many :flags, :dependent => :destroy
 	belongs_to :sheet
-	attr_accessible :color, :geometry, :sheet_id, :status, :vectorizer_json, :dn, :centroid_lat, :centroid_lon, :consensus, :flag_count
+	attr_accessible :color, :geometry, :sheet_id, :status, :vectorizer_json, :dn, :centroid_lat, :centroid_lon, :consensus, :flag_count, :consensus_numbers
 
 	def self.grouped_by_sheet
 		Polygon.select("COUNT(polygons.id) AS polygon_count, sheet_id, sheets.bbox").joins(:sheet).group("polygons.sheet_id, sheets.bbox")
