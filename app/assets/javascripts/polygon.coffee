@@ -18,9 +18,11 @@ class Polygon
 	showPolygon: () =>
 		data = $('#polydata').data("map")
 
+		return if !data or data.features.length==0
+
 		m = @map
 
-		console.log data
+		# console.log data
 
 		json = L.geoJson(data,
 			style: (feature) ->
@@ -31,11 +33,11 @@ class Polygon
 				fill: false
 		)
 
-		bounds = new L.LatLngBounds()
+		bounds = json.getBounds()
 
-		if data.features.length>0
-			json.addTo(m)
-			bounds.extend(json.getBounds())
+		# console.log bounds
+
+		json.addTo(m)
 
 		m.fitBounds(bounds)
 
