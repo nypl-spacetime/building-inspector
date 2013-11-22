@@ -33,7 +33,8 @@
 
 <table>
   <tr>
-    <th>Status</th>
+    <th>Geometry</th>
+    <th>Numbers</th>
     <th>Bbox</th>
     <th>Map</th>
     <th>Layer</th>
@@ -45,7 +46,8 @@
 
 <% @sheets.each do |sheet| %>
   <tr>
-    <td><%= sheet.status %></td>
+    <td><%= sheet.consensus %></td>
+    <td><%= sheet.consensus_numbers %></td>
     <td><%= sheet.bbox %></td>
     <td><%= sheet.map_id %></td>
     <td><%= sheet.layer_id %></td>

@@ -32,13 +32,13 @@ ActiveRecord::Schema.define(:version => 20131122211028) do
     t.text     "vectorizer_json"
     t.integer  "sheet_id"
     t.string   "color"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",                                                       :null => false
+    t.datetime "updated_at",                                                       :null => false
     t.integer  "dn"
-    t.integer  "flag_count",        :default => 0
+    t.integer  "flag_count",                                        :default => 0
     t.string   "consensus"
-    t.float    "centroid_lat"
-    t.float    "centroid_lon"
+    t.decimal  "centroid_lat",      :precision => 15, :scale => 12
+    t.decimal  "centroid_lon",      :precision => 15, :scale => 12
     t.string   "consensus_numbers"
   end
 
