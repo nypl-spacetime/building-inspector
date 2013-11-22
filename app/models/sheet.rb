@@ -2,7 +2,7 @@ class Sheet < ActiveRecord::Base
 	has_many :polygons, :dependent => :destroy
 	attr_accessible :bbox, :map_id, :map_url, :status, :layer_id
 
-	def mini(session_id = nil)
+	def mini(session_id = nil, type="geometry")
 		# only the necessary data of a sheet's polygons
 		if session_id != nil
 			# all polygons with no consensus that a given session has not processed in a sheet
@@ -13,8 +13,11 @@ class Sheet < ActiveRecord::Base
 		end
 	end
 
-	def self.random_unprocessed
+	def self.random_unprocessed(type="geometry")
 		w = "status = 'unprocessed'"
+		if type=="numbers"
+			w = "layer_id = 859" # HACK! only for manhattan for now
+		end
 		c = Sheet.where(w).count
 		Sheet.where(w).find(:first, :offset =>rand(c))
 	end

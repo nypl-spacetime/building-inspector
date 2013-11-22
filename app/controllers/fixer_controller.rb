@@ -109,11 +109,11 @@ class FixerController < ApplicationController
 		respond_with( all_polygons )
 	end
 
-	def getMap
+	def getMap(type="geometry")
 		session = getSession()
 		map = {}
 		# map[:map] = Sheet.random
-		map[:map] = Sheet.random_unprocessed
+		map[:map] = Sheet.random_unprocessed(type)
 		map[:poly] = map[:map].mini(session)
 		map[:status] = {}
 		map[:status][:session_id] = session
