@@ -77,7 +77,7 @@ class Progress
 		bounds = new L.LatLngBounds(@_SW, @_NE)
 		@map.fitBounds bounds
 
-		@updateScore(data.all_polygons_Nession)
+		@updateScore(data.all_polygons_session)
 
 		# marker clustering layer
 		markers = new L.MarkerClusterGroup
