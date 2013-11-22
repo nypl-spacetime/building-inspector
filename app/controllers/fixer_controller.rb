@@ -4,10 +4,17 @@ class FixerController < ApplicationController
 	respond_to :json
 
 	def building
-	  	@current_page = "fixer"
+	  @current_page = "fixer"
 		@isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
 		cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
 		@map = getMap().to_json
+	end
+
+	def numbers
+	  @current_page = "numbers"
+    @isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
+    cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
+    @map = getMap().to_json
 	end
 
 	def progress
@@ -164,7 +171,7 @@ class FixerController < ApplicationController
 			logger.warn("=== cookies are disabled")
 			render :template => "shared/cookies_required"
 		else
-			redirect_to(building_path)
+			redirect_to(session[:return_to])
 		end
 	end
 	

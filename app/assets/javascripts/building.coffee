@@ -26,7 +26,6 @@ class Building
 	constructor: () ->
 		@buttonMode = 0
 		$("#map-tutorial").hide()
-		$("#map-about").hide()
 		$("#buttons").hide()
 		$("#tweet").hide()
 		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859-final/859spec.json', 

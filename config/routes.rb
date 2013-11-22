@@ -53,6 +53,7 @@ Webappmini::Application.routes.draw do
   match "color" => "fixer#color"
 
   match "building" => "fixer#building"
+  match "numbers" => "fixer#numbers"
   
   root :to => "general#home"
 end
