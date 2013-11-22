@@ -12,6 +12,7 @@ class Sheet
 		).addTo(@map)
 
 		s = @
+
 		@map.on
 			load: () ->
 				s.getSheets()
@@ -34,6 +35,13 @@ class Sheet
 		)
 
 		@parse sheet for sheet in data
+
+
+		_SW = new L.LatLng(40.62563874006115,-74.13093566894531)
+		_NE = new L.LatLng(40.81640757520087,-73.83087158203125)
+		bounds = new L.LatLngBounds(_SW, _NE)
+		
+		@map.fitBounds bounds
 
 		@geo.addTo @map
 

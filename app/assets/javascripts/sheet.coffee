@@ -11,6 +11,7 @@ class Sheet
 			zIndex: 3
 		).addTo(@map)
 
+
 		sheet = @
 		@map.on 'load', () ->
 			sheet.getPolygons()
