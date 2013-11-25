@@ -38,6 +38,8 @@ class Numbers
 
     tagger = @
 
+    @map.on('click', @onMapClick)
+
     @map.on('load', () ->
       tagger.getPolygons()
       if (tagger.tutorialOn)
@@ -178,6 +180,35 @@ class Numbers
     $("#tweet").show()
 
     $("#tweet").attr "href", twitterurl
+
+  onMapClick: (e) =>
+    # console.log "click", e
+    lat = e.latlng.lat
+    lng = e.latlng.lng
+    x = e.containerPoint.x
+    y = e.containerPoint.y
+    elem = @buildNumberElement(x,y)
+    elem.css("top", y)
+    elem.css("left", x)
+    $("#map-container").append(elem)
+    tagger = @
+    setTimeout( ()->
+      elem.find(".cont").addClass("active")
+      elem.find(".input").focus()
+      elem.find(".input").on "keypress", () ->
+        tagger.fixInputWidth(this)
+    , 50
+    )
+
+  fixInputWidth: (elem) =>
+    # console.log elem.text()
+    $(elem).css("width", $(elem).text().length * 15)
+
+
+  buildNumberElement: (x,y) =>
+    html = "<div id=\"num-x-#{x}-y-#{y}\" class=\"number-flag\"><a href=\"javascript:;\" class=\"num-close\">x</a><div class=\"cont\"><span class=\"input\" contenteditable=\"true\"></span></div></div>"
+    el = $(html)
+    return el
 
 $ ->
   window._n = new Numbers()
