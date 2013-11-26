@@ -2,6 +2,7 @@
 @import "lib/button-mixins";
 @import "compass/utilities/general/clearfix";
 @import "compass/css3/transition";
+@import "compass/css3/box-shadow";
 @import "variables";
 @import "score";
 
@@ -26,11 +27,7 @@
 	position: absolute;
 	z-index: 1111;
 	text-align: center;
-	// width: 30px;
-	// height: 30px;
-	// margin: -20px 0 0 -20px;
-	// border: 4px solid $orange;
-	// @include border-radius(30px);
+	@include transition(all, .1s, ease-out);
 
 	.cont {
 		position: relative;
@@ -39,6 +36,7 @@
 		width: 60px;
 		padding: 5px;
 		background: $grayLightest;
+		@include box-shadow(#999 0 0 15px);
 		@include border-radius(5px);
 		@include transition(all, .1s, ease-out);
 

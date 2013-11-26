@@ -1,6 +1,7 @@
 class Numbers
 
 	constructor: () ->
+    @flags = {}
     @geo = {}
     @firstLoad = true
     @buttonMode = 0
@@ -38,8 +39,6 @@ class Numbers
 
     tagger = @
 
-    @map.on('click', @onMapClick)
-
     @map.on('load', () ->
       tagger.getPolygons()
       if (tagger.tutorialOn)
@@ -52,6 +51,32 @@ class Numbers
 
   addEventListeners: () =>
     tagger = @
+
+    @addButtonListeners()
+    @map.on('click', @onMapClick)
+    @map.on('move', @onMapChange)
+
+    # $("body").keyup (e)->
+    #   # console.log "key", e.which
+    #   switch e.which
+    #     when 27 then console.log "hi"
+
+  addButtonListeners: () =>
+    @removeButtonListeners()
+    $("#submit-button").on "click", @submitFlags
+
+  removeButtonListeners: () =>
+    $("#submit-button").unbind()
+
+  activateButton: (button) =>
+    @resetButtons()
+    $("#submit-button").addClass("inactive") if button != "submit"
+    $("#submit-button").addClass("active") if button = "submit"
+    @addButtonListeners()
+
+  resetButtons: () ->
+    $("#submit-button").removeClass("inactive")
+    $("#submit-button").removeClass("active")
 
   invokeTutorial: () =>
     @
@@ -104,7 +129,11 @@ class Numbers
     # Return the shuffled array.
     a
 
-  submitFlag: (number) =>
+  submitFlags: (e) =>
+    @removeButtonListeners()
+    e.preventDefault()
+    @activateButton("submit") unless @tutorialOn
+
     if @tutorialOn
       # do not submit the data
       @intro.goToStep(@intro._currentStep+2)
@@ -112,21 +141,42 @@ class Numbers
 
     type = "numbers"
     _gaq.push(['_trackEvent', 'Flag', type])
+
     @allPolygonsSession++
     @updateScore()
 
-    tagger = @
-    $("#buttons").fadeOut 200 , () ->
-      $.get("/fixer/flag", 
-        i: tagger.currentPolygon.id
-        t: type
-        f: number
-        , () ->
-          tagger.showNextPolygon()
-      )
+    flag_data = @prepareData()
+
+    if flag_data.length > 0
+      tagger = @
+      $("#buttons").fadeOut 200 , () ->
+        $.get("/fixer/flagnum", 
+          i: tagger.currentPolygon.id
+          t: type
+          f: JSON.stringify(flag_data)
+          , () ->
+            tagger.resetButtons()
+            tagger.showNextPolygon()
+        )
+    else
+      console.log "skipped"
+      @resetButtons()
+      @showNextPolygon()
   
+  prepareData: () =>
+    r = []
+    for flag, contents of @flags
+      latlng = contents.circle.getLatLng()
+      txt = contents.value
+      r.push 
+        la: latlng.lat
+        lo: latlng.lng
+        v: txt
+    r
+
   showNextPolygon: () =>
     # console.log @polyData
+    @cleanFlags()
     @currentIndex++
     @map.removeLayer(@geo)
     if @currentIndex < @polyData.length
@@ -181,6 +231,14 @@ class Numbers
 
     $("#tweet").attr "href", twitterurl
 
+  onMapChange: (e) =>
+    console.log "changed!"
+    for flag, contents of @flags
+      latlng = contents.circle.getLatLng()
+      xy = @map.latLngToContainerPoint(latlng)
+      contents.elem.css("left",xy.x)
+      contents.elem.css("top",xy.y)
+
   onMapClick: (e) =>
     # console.log "click", e
     latlng = e.latlng
@@ -189,35 +247,92 @@ class Numbers
     x = e.containerPoint.x
     y = e.containerPoint.y
     
-    circle = L.circle(latlng, 3,
+    tagger = @
+
+    circle = L.circleMarker(latlng,
       color: '#d75b25'
       fill: false
-      opacity: 1
+      opacity: 0.7
+      radius: 28
+      weight: 4
     ).addTo @map
 
-    elem = @buildNumberElement(x,y)
+    elem = @createFlag(x, y, circle)
     elem.css("top", y)
     elem.css("left", x)
     $("#map-container").append(elem)
 
-    tagger = @
+    close = elem.find(".num-close")
+
+    close.on "click", (e) ->
+      tagger.destroyFlag(this)
+
+    input = elem.find(".input")
+
+    # add data attributes to facilitate flag remove/update
+    elem.attr("data-x", x)
+    elem.attr("data-y", y)
+    close.attr("data-x", x)
+    close.attr("data-y", y)
+    input.attr("data-x", x)
+    input.attr("data-y", y)
+
     setTimeout( ()->
-      input = elem.find(".input")
       elem.find(".cont").addClass("active")
       input.focus()
-      input.on "focus", () ->
-        this.value = this.value
       input.on "keyup", (e) ->
-        tagger.validateInput(this, e)
+        switch e.which
+          when 27 then tagger.destroyFlag(this)
+          else tagger.validateInput(this, e)
       input.on "keydown", (e) ->
         tagger.validateInput(this, e)
     , 50
     )
 
-  validateInput: (elem, e) =>
-    max = 4
-    if(e.which != 8 && $(elem).text().length >= max)
-      e.preventDefault()
+  createFlag: (x, y, c) =>
+    e = @buildNumberElement(x,y)
+    @flags["x-#{x}-y-#{y}"] =
+      elem: e
+      circle: c
+      value: ""
+    e
+
+  destroyFlag: (item) =>
+    # console.log "destroying", item
+    elem = $(item)
+    x = elem.attr("data-x")
+    y = elem.attr("data-y")
+    p = elem.parentsUntil("#map-container")
+    if p.length == 0
+      elem.remove()
+    else
+      p.remove()
+    flag = @flags["x-#{x}-y-#{y}"]
+    @map.removeLayer flag.circle
+    delete @flags["x-#{x}-y-#{y}"]
+
+  updateFlag: (x, y, value) =>
+    @flags["x-#{x}-y-#{y}"].value = value
+
+  cleanFlags: () =>
+    for flag, contents of @flags
+      # console.log "destroyed", flag
+      @destroyFlag contents.elem[0]
+
+  validateInput: (item, e) =>
+    max = 6
+    elem = $(item)
+    txt = elem.text()
+
+    # console.log e
+
+    e.preventDefault() if (e.which != 8 && txt.length >= max) || (e.which == 13)
+
+    x = elem.attr("data-x")
+    y = elem.attr("data-y")
+
+    # console.log elem, x, y, txt
+    @updateFlag x, y, txt
 
 
   buildNumberElement: (x,y) =>

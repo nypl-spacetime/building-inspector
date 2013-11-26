@@ -50,12 +50,14 @@ Webappmini::Application.routes.draw do
 
   match "fixer/map" => "fixer#randomMap"
 
-  match "fixer/flag" => "fixer#flagPolygon"
+  match "fixer/flag" => "fixer#flag_polygon"
 
   match "color" => "fixer#color"
 
   match "building" => "fixer#building"
+
   match "numbers" => "fixer#numbers"
+  match "fixer/flagnum" => "fixer#many_flags_one_polygon"
   
   root :to => "general#home"
 end

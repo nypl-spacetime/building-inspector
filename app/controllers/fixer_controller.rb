@@ -138,10 +138,10 @@ class FixerController < ApplicationController
 		respond_with( @map )
 	end
 
-	def flagPolygon(type="geometry")
-    if params[:t] != nil
-      type = params[:t]
-    end
+	def flag_polygon(type="geometry")
+	    if params[:t] != nil
+	      type = params[:t]
+	    end
 		session = getSession()
 		@flag = Flag.new
 		@flag[:is_primary] = true
@@ -156,6 +156,40 @@ class FixerController < ApplicationController
 			respond_with( @flag.errors )
 		end
 	end
+
+    def many_flags_one_polygon
+        session = getSession()
+        # assuming json like so:
+        # id: poly_id
+        # flags: [ {la:lat,lo:lng,v:"value"}, ... ]
+        flags = JSON.parse(params[:f])
+        poly_id = params[:i]
+        type = params[:t]
+        if poly_id == nil || flags == nil || flags.count <= 0
+            respond_with( "empty_poly" )
+            return
+        end
+        flags.each do |f|
+        	# at least have a value
+            if f["v"] == nil
+                next
+            end
+            flag = Flag.new
+            flag[:is_primary] = true
+            flag[:polygon_id] = poly_id
+            flag[:flag_value] = f["v"]
+            if f["la"] != nil
+            	flag[:latitude] = f["la"]
+            end
+            if f["lo"] != nil
+	            flag[:longitude] = f["lo"]
+            end
+            flag[:session_id] = session
+            flag[:flag_type] = type
+            flag.save
+        end
+        respond_with( "flag_success" )
+    end
 
 	def getSession
 		if cookies[:session] == nil || cookies[:session] == ""

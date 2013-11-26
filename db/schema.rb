@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131122211028) do
+ActiveRecord::Schema.define(:version => 20131126205635) do
 
   create_table "flags", :force => true do |t|
     t.string   "flag_type"
@@ -19,8 +19,10 @@ ActiveRecord::Schema.define(:version => 20131122211028) do
     t.string   "session_id"
     t.string   "flag_value"
     t.boolean  "is_primary"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+    t.decimal  "latitude",   :precision => 15, :scale => 12
+    t.decimal  "longitude",  :precision => 15, :scale => 12
   end
 
   add_index "flags", ["polygon_id"], :name => "polygon_index"
