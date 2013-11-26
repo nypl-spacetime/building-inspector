@@ -183,30 +183,45 @@ class Numbers
 
   onMapClick: (e) =>
     # console.log "click", e
-    lat = e.latlng.lat
-    lng = e.latlng.lng
+    latlng = e.latlng
+    lat = latlng.lat
+    lng = latlng.lng
     x = e.containerPoint.x
     y = e.containerPoint.y
+    
+    circle = L.circle(latlng, 3,
+      color: '#d75b25'
+      fill: false
+      opacity: 1
+    ).addTo @map
+
     elem = @buildNumberElement(x,y)
     elem.css("top", y)
     elem.css("left", x)
     $("#map-container").append(elem)
+
     tagger = @
     setTimeout( ()->
+      input = elem.find(".input")
       elem.find(".cont").addClass("active")
-      elem.find(".input").focus()
-      elem.find(".input").on "keypress", () ->
-        tagger.fixInputWidth(this)
+      input.focus()
+      input.on "focus", () ->
+        this.value = this.value
+      input.on "keyup", (e) ->
+        tagger.validateInput(this, e)
+      input.on "keydown", (e) ->
+        tagger.validateInput(this, e)
     , 50
     )
 
-  fixInputWidth: (elem) =>
-    # console.log elem.text()
-    $(elem).css("width", $(elem).text().length * 15)
+  validateInput: (elem, e) =>
+    max = 4
+    if(e.which != 8 && $(elem).text().length >= max)
+      e.preventDefault()
 
 
   buildNumberElement: (x,y) =>
-    html = "<div id=\"num-x-#{x}-y-#{y}\" class=\"number-flag\"><a href=\"javascript:;\" class=\"num-close\">x</a><div class=\"cont\"><span class=\"input\" contenteditable=\"true\"></span></div></div>"
+    html = "<div id=\"num-x-#{x}-y-#{y}\" class=\"number-flag\"><div class=\"cont\"><div class=\"input\" contenteditable=\"true\"></div><a href=\"javascript:;\" class=\"num-close\">x</a></div></div>"
     el = $(html)
     return el
 
