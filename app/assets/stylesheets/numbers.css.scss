@@ -1,0 +1,120 @@
+@import "lib/css3-mixins";
+@import "lib/button-mixins";
+@import "compass/utilities/general/clearfix";
+@import "compass/css3/transition";
+@import "variables";
+@import "score";
+
+
+.polygon-highlight {
+	border: 2px solid $orange;
+	width: 10px;
+	height: 10px;
+	@include border-radius(10px);
+	margin-left: -5px;
+	margin-top: -5px;
+	z-index: 1111;
+
+	@include transition(all, .5s, ease-out);
+
+	&.scaled {
+		@include transform(scale(5, 5));
+	}
+}
+
+.number-flag {
+	position: absolute;
+	z-index: 1111;
+	text-align: center;
+	// width: 30px;
+	// height: 30px;
+	// margin: -20px 0 0 -20px;
+	// border: 4px solid $orange;
+	// @include border-radius(30px);
+
+	.cont {
+		position: relative;
+		margin-top: 0;
+		margin-left: -35px;
+		width: 60px;
+		padding: 5px;
+		background: $grayLightest;
+		@include border-radius(5px);
+		@include transition(all, .1s, ease-out);
+
+		&.active {
+			margin-top: -75px;
+		}
+
+		&:after {
+			content: "";
+			display: block;
+			position: absolute;
+			border-top: 10px solid $grayLightest;
+			border-left: 10px solid transparent;
+			border-right: 10px solid transparent;
+			bottom: -10px;
+			left: 25px;
+		}
+	}
+
+	.input {
+		width: 60px;
+		height: 25px;
+	}
+
+	.num-close {
+		position: absolute;
+		right: -5px;
+		top: -5px;
+		content: attr(data-icon);
+		font-family:$iconfont;
+		-webkit-font-smoothing: antialiased;
+		display: inline-block;
+		font-size: 20px;
+		padding-left: 2px;
+		color: $orange;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
+
+.flags {
+	position: absolute;
+	text-align: center;
+	top: -30px;
+	height: 30px;
+	width: 100%;
+
+	// @include transition-property(left,top);
+	// @include transition-duration(.2s);
+	// @include transition-timing-function(ease-out); 
+
+	span {
+		display: inline-block;
+		background: $grayLightest;
+		border: 1px solid $grayLight;
+		border-radius: 10px;
+		padding: 0 5px;
+
+		a {
+			color: $grayDarker;
+
+			&:hover {
+				text-decoration: none;
+			}
+
+			&:after {
+				content: attr(data-icon);
+				font-family:$iconfont;
+				-webkit-font-smoothing: antialiased;
+				content: 'x';
+				display: inline-block;
+				font-size: 15px;
+				padding-left: 2px;
+			}
+		}
+	}
+}
