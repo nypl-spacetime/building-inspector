@@ -21,7 +21,7 @@
   all_count = 0
   %>
   <% @polygon.flags.each do |f| %>
-  <%= f.flag_value %> 
+  <%= link_to f.flag_value, f %> 
   <% 
   if f.flag_value == "yes"
     yes_count = yes_count + 1

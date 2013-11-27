@@ -161,8 +161,8 @@ class FixerController < ApplicationController
         session = getSession()
         # assuming json like so:
         # id: poly_id
-        # flags: [ {la:lat,lo:lng,v:"value"}, ... ]
-        flags = JSON.parse(params[:f])
+        # flags: "lat,lng,value|lat,lng,value|lat,lng,value|..."
+        flags = params[:f].split("|")
         poly_id = params[:i]
         type = params[:t]
         if poly_id == nil || flags == nil || flags.count <= 0
@@ -170,25 +170,26 @@ class FixerController < ApplicationController
             return
         end
         flags.each do |f|
+        	contents = f.split(",")
         	# at least have a value
-            if f["v"] == nil
+            if contents[2] == nil
                 next
             end
             flag = Flag.new
             flag[:is_primary] = true
             flag[:polygon_id] = poly_id
-            flag[:flag_value] = f["v"]
-            if f["la"] != nil
-            	flag[:latitude] = f["la"]
+            flag[:flag_value] = contents[2]
+            if contents[0] != ""
+            	flag[:latitude] = contents[0]
             end
-            if f["lo"] != nil
-	            flag[:longitude] = f["lo"]
+            if contents[1] != ""
+	            flag[:longitude] = contents[1]
             end
             flag[:session_id] = session
             flag[:flag_type] = type
             flag.save
         end
-        respond_with( "flag_success" )
+        respond_with( flags )
     end
 
 	def getSession

@@ -1,10 +1,12 @@
 class FlagsController < ApplicationController
   layout "admin"
   before_filter :check_admin! #, :only => [:index, :edit, :destroy]
+  helper_method :sort_column, :sort_direction
+
   # GET /flags
   # GET /flags.json
   def index
-    @flags = Flag.paginate(:page => params[:page])
+    @flags = Flag.order(sort_column + " " + sort_direction).paginate(:page => params[:page])
 
     @total = Flag.count
 
@@ -87,4 +89,15 @@ class FlagsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+  
+  def sort_column
+    Flag.column_names.include?(params[:sort]) ? params[:sort] : "id"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+
 end

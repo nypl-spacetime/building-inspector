@@ -16,7 +16,7 @@ class Numbers
       attributionControl: false
       minZoom: 18
       maxZoom: 21
-      dragging: false
+      dragging: true
       touchZoom: false
     )
 
@@ -84,7 +84,7 @@ class Numbers
   getPolygons: () =>
     tagger = @
     mapdata = $('#numbersjs').data("map")
-    console.log @firstLoad, mapdata
+    # console.log @firstLoad, mapdata
     if @firstLoad && mapdata.poly.length > 0
       @firstLoad = false
       $("#loader").remove()
@@ -148,30 +148,29 @@ class Numbers
     flag_data = @prepareData()
 
     if flag_data.length > 0
-      tagger = @
-      $("#buttons").fadeOut 200 , () ->
-        $.get("/fixer/flagnum", 
-          i: tagger.currentPolygon.id
-          t: type
-          f: JSON.stringify(flag_data)
-          , () ->
-            tagger.resetButtons()
-            tagger.showNextPolygon()
-        )
+      flag_str = flag_data.join("|")
     else
-      console.log "skipped"
-      @resetButtons()
-      @showNextPolygon()
+      # console.log "skipped"
+      flag_str = ",,NONE"
+
+    tagger = @
+    $("#buttons").fadeOut 200 , () ->
+      $.get("/fixer/flagnum.json", 
+        i: tagger.currentPolygon.id
+        t: type
+        f: flag_str
+        , (data) ->
+          # console.log "returned", data
+          tagger.resetButtons()
+          tagger.showNextPolygon()
+      )
   
   prepareData: () =>
     r = []
     for flag, contents of @flags
       latlng = contents.circle.getLatLng()
       txt = contents.value
-      r.push 
-        la: latlng.lat
-        lo: latlng.lng
-        v: txt
+      r.push "#{latlng.lat},#{latlng.lng},#{txt}" if txt != ""
     r
 
   showNextPolygon: () =>
@@ -215,6 +214,7 @@ class Numbers
         opacity: 1
         dashArray: '1,16'
         fill: false
+        clickable: false
     ).addData json
 
   updateScore: () =>
@@ -232,7 +232,7 @@ class Numbers
     $("#tweet").attr "href", twitterurl
 
   onMapChange: (e) =>
-    console.log "changed!"
+    # console.log "changed!"
     for flag, contents of @flags
       latlng = contents.circle.getLatLng()
       xy = @map.latLngToContainerPoint(latlng)
@@ -277,15 +277,20 @@ class Numbers
     input.attr("data-x", x)
     input.attr("data-y", y)
 
+    # to fix window resize in iOS
+    input.on 'blur', () ->
+      window.scrollTo 0, 0
+
+    input.focus()
+
     setTimeout( ()->
       elem.find(".cont").addClass("active")
-      input.focus()
       input.on "keyup", (e) ->
+          tagger.validateInput(this, e)
+      input.on "keydown", (e) ->
         switch e.which
           when 27 then tagger.destroyFlag(this)
           else tagger.validateInput(this, e)
-      input.on "keydown", (e) ->
-        tagger.validateInput(this, e)
     , 50
     )
 
@@ -320,10 +325,19 @@ class Numbers
       @destroyFlag contents.elem[0]
 
   validateInput: (item, e) =>
+    charCode = if e.which then e.which else e.keyCode
+
     max = 6
     elem = $(item)
-    txt = elem.text()
+    txt = elem.val()
 
+    elem.blur() if charCode == 13 # ENTER
+
+    # console.log charCode
+    
+    e.preventDefault() if (charCode != 46 && charCode != 190 && charCode != 110 && charCode > 31 && (charCode < 48 || charCode > 57) && (charCode > 105 || charCode < 96))
+
+    e.preventDefault() if txt.indexOf(".") > -1 && (charCode == 190 || charCode == 110)
     # console.log e
 
     e.preventDefault() if (e.which != 8 && txt.length >= max) || (e.which == 13)
@@ -336,7 +350,7 @@ class Numbers
 
 
   buildNumberElement: (x,y) =>
-    html = "<div id=\"num-x-#{x}-y-#{y}\" class=\"number-flag\"><div class=\"cont\"><div class=\"input\" contenteditable=\"true\"></div><a href=\"javascript:;\" class=\"num-close\">x</a></div></div>"
+    html = "<div id=\"num-x-#{x}-y-#{y}\" class=\"number-flag\"><div class=\"cont\"><input type=\"number\" class=\"input\" step=\"any\" placeholder=\"#\" /><a href=\"javascript:;\" class=\"num-close\">x</a></div></div>"
     el = $(html)
     return el
 
