@@ -319,9 +319,9 @@ h3 {
 a.home-big-link {
 	display: block;
 	width: 60px;
-	margin: 0 auto;
+	margin: 0 auto 1px auto;
 	padding: 10px 12px;
-	font-size: 18px;
+	font-size: 12px;
 	text-transform: uppercase;
 	text-align: center;
 	text-decoration: none;
@@ -345,7 +345,7 @@ a.home-big-link {
 	@media screen and (min-width: $desktopwidth) {
 		padding: 20px 4px;
 		width: 120px;
-		font-size: 12px;
+		font-size: 18px;
 
 		&:first-child {
 			@include rounded-corners(10px 10px 0 0);
