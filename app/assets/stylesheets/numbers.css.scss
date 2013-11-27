@@ -49,7 +49,7 @@
 		margin-left: -35px;
 		width: 60px;
 		padding: 5px;
-		background: $grayLightest;
+		background: rgba(232, 228, 226, 0.5);
 		@include box-shadow(#999 0 0 15px);
 		@include border-radius(5px);
 		@include transition(all, .1s, ease-out);
@@ -62,7 +62,7 @@
 			content: "";
 			display: block;
 			position: absolute;
-			border-bottom: 10px solid $grayLightest;
+			border-bottom: 10px solid rgba(232, 228, 226, 0.5);
 			border-left: 10px solid transparent;
 			border-right: 10px solid transparent;
 			top: -10px;
@@ -74,7 +74,7 @@
 		width: 60px;
 		height: 25px;
 		border: none;
-		background: $grayLightest;
+		background: transparent;
 		padding: 0;
 		margin: 0;
 		text-align: center;
@@ -98,7 +98,7 @@
 		font-size: 20px;
 		padding: 0;
 		color: $orange;
-		background: $grayLightest;
+		background: rgba(232, 228, 226, 0.5);
 		border-radius: 10px;
 		width: 21px;
 		height: 21px;

@@ -316,31 +316,44 @@ h3 {
 	}
 }
 
-#link-try {
+a.home-big-link {
 	display: block;
 	width: 60px;
 	margin: 0 auto;
 	padding: 10px 12px;
-	font-size: 24px;
+	font-size: 18px;
 	text-transform: uppercase;
 	text-align: center;
 	text-decoration: none;
 	color: $white;
 	background: $yescolor;
 
-	@include rounded-corners(5px);
-
-	@media screen and (min-width: $desktopwidth) {
-		padding: 20px 4px;
-		width: 120px;
-		font-size: 36px;
-		@include rounded-corners(10px);
-	}
-
 	&:hover {
 		color: $white;
 		text-decoration: none;
 		background: $grayDarkest;
+	}
+
+	&:first-child {
+		@include rounded-corners(5px 5px 0 0);
+	}
+
+	&:last-child {
+		@include rounded-corners(0 0 5px 5px);
+	}
+
+	@media screen and (min-width: $desktopwidth) {
+		padding: 20px 4px;
+		width: 120px;
+		font-size: 12px;
+
+		&:first-child {
+			@include rounded-corners(10px 10px 0 0);
+		}
+
+		&:last-child {
+			@include rounded-corners(0 0 10px 10px);
+		}
 	}
 }
 

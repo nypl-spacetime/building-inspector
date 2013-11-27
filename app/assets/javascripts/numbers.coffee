@@ -252,7 +252,7 @@ class Numbers
     circle = L.circleMarker(latlng,
       color: '#d75b25'
       fill: false
-      opacity: 0.7
+      opacity: 0.5
       radius: 28
       weight: 4
     ).addTo @map
