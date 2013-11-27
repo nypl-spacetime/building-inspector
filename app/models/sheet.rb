@@ -27,8 +27,10 @@ class Sheet < ActiveRecord::Base
 		w = "consensus IS NULL"
 		case type
 		when "geometry"
+			# any polygon without consensus
 			w = "consensus IS NULL"
 		when "numbers"
+			# polygon has to be 'done' (geometry ok)
 			w = "consensus_numbers IS NULL AND consensus = 'done'"
 		end
 		c = Sheet.where(w).count
