@@ -7,14 +7,14 @@ class FixerController < ApplicationController
 	  @current_page = "fixer"
 		@isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
 		cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
-		@map = getMap().to_json
+		@map = getMap("geometry").to_json
 	end
 
 	def numbers
-	  @current_page = "numbers"
-    @isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
-    cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
-    @map = getMap("numbers").to_json
+		@current_page = "numbers"
+		@isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
+		cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
+		@map = getMap("numbers").to_json
 	end
 
 	def progress
