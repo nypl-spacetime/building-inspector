@@ -37,27 +37,31 @@ Webappmini::Application.routes.draw do
   get "fixer/color"
 
   get "fixer/progress"
-
   get "fixer/progress_all"
+
+  get "numbers/progress" => "fixer#progress_numbers"
+  get "numbers/progress_all" => "fixer#progress_numbers_all"
 
   get "fixer/progress_sheet"
 
   get "fixer/sheet" => "fixer#session_progress_for_sheet"
 
+  get "fixer/sheet_numbers" => "fixer#session_progress_numbers_for_sheet"
+
   get "viz/sheet/:id" => "visualizer#sheet_flags_json"
 
   get "viz/sheet" => "visualizer#sheet_flags_view"
 
-  match "fixer/map" => "fixer#randomMap"
+  get "fixer/map" => "fixer#randomMap"
 
-  match "fixer/flag" => "fixer#flag_polygon"
+  get "fixer/flag" => "fixer#flag_polygon"
 
-  match "color" => "fixer#color"
+  get "color" => "fixer#color"
 
-  match "building" => "fixer#building"
+  get "building" => "fixer#building"
 
-  match "numbers" => "fixer#numbers"
-  match "fixer/flagnum" => "fixer#many_flags_one_polygon"
+  get "numbers" => "fixer#numbers"
+  get "fixer/flagnum" => "fixer#many_flags_one_polygon"
   
   root :to => "general#home"
 end

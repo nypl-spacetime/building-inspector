@@ -7,12 +7,12 @@ class Flag < ActiveRecord::Base
 
 	def self.flags_for_sheet_for_session(sheet_id, session_id, type = "geometry")
 		# just need the count
-		Flag.select('DISTINCT flags.polygon_id, flags.flag_value, polygons.geometry, polygons.sheet_id, polygons.dn').joins([polygon: :sheet]).where('sheets.id = ? AND flags.session_id = ? AND flags.flag_type = ?', sheet_id, session_id, type)
+		Flag.select('DISTINCT flags.polygon_id, flags.latitude, flags.longitude, flags.flag_value, polygons.geometry, polygons.sheet_id, polygons.dn').joins([polygon: :sheet]).where('sheets.id = ? AND flags.session_id = ? AND flags.flag_type = ?', sheet_id, session_id, type)
 	end
 
 	def self.flags_for_sheet_for_user(sheet_id, user_id, type = "geometry")
 		# just need the count
-		Flag.select('DISTINCT flags.polygon_id, flags.flag_value, polygons.geometry, polygons.sheet_id, polygons.dn').joins([polygon: :sheet]).joins('INNER JOIN usersessions ON usersessions.session_id = flags.session_id').where('sheets.id = ? AND usersessions.user_id = ? AND flags.flag_type = ?', sheet_id, user_id, type)
+		Flag.select('DISTINCT flags.polygon_id, flags.latitude, flags.longitude, flags.flag_value, polygons.geometry, polygons.sheet_id, polygons.dn').joins([polygon: :sheet]).joins('INNER JOIN usersessions ON usersessions.session_id = flags.session_id').where('sheets.id = ? AND usersessions.user_id = ? AND flags.flag_type = ?', sheet_id, user_id, type)
 	end
 
 	def self.grouped_flags_for_session(session_id, type = "geometry")
@@ -39,6 +39,15 @@ class Flag < ActiveRecord::Base
 	
 	def self.progress_for_user(user_id, type = "geometry")
 		Flag.select("DISTINCT polygons.id, polygons.centroid_lat, polygons.centroid_lon, polygons.geometry, flags.*").joins(:polygon).joins('INNER JOIN usersessions ON usersessions.session_id = flags.session_id').where('usersessions.user_id = ? AND flags.flag_type = ?', user_id, type)
+	end
+
+	def as_feature
+		if self[:latitude] == nil || self[:longitude] == nil
+			p = self.polygon
+			self[:latitude] = p[:centroid_lat]
+			self[:longitude] = p[:centroid_lon]
+		end
+		{ :type => "Feature", :properties => { :flag_value => self[:flag_value] }, :geometry => { :type => "Point", :coordinates => [self[:longitude].to_f, self[:latitude].to_f] } }
 	end
   
 end

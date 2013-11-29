@@ -20,9 +20,14 @@
 			<% end %>
 		</div>
 		<% if @current_page=="progress" %>
-		<div id="score-progress"><a href="/fixer/building" class="score-link">INSPECT MORE</a></div>
-		<% else %>
+		<div id="score-progress"><a href="/building" class="score-link">INSPECT MORE</a></div>
+		<% elsif @current_page=="fixer" %>
 		<div id="score-progress"><a href="/fixer/progress" class="score-link">VIEW INSPECTIONS</a></div>
+		<% elsif @current_page=="progress_numbers" %>
+		<div id="score-progress"><a href="/numbers" class="score-link">INSPECT MORE</a></div>
+		<% elsif @current_page=="numbers" %>
+		<div id="score-progress"><a href="/numbers/progress" class="score-link">VIEW INSPECTIONS</a></div>
+		<% else %>
 		<% end %>
 		<%= link_to "T", "", {:onclick=>"javascript:_gaq.push(['_trackEvent', 'Tweet']);",:id => "tweet", :title => "Share on Twitter"} %>
 	</div>

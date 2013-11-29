@@ -1,0 +1,22 @@
+<% content_for :page_title do %>Building Inspector by NYPL Labs<% end %>
+
+<% content_for :dynamic_js do %>
+	<%= stylesheet_link_tag    "progress", :media => "all" %>
+	<%= stylesheet_link_tag    "lib/MarkerCluster", :media => "all" %>
+	<%= stylesheet_link_tag    "lib/MarkerCluster.Default", :media => "all" %>
+	<!--[if lte IE 8]>
+	<%= stylesheet_link_tag    "lib/MarkerCluster.Default.ie", :media => "all" %>
+	<![endif]-->
+
+	<%= javascript_include_tag "progress_all", {:id => "progressjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}"), "data-progress" => @progress} %>
+
+	<%= javascript_include_tag "lib/leaflet.markercluster" %>
+<% end %>
+
+
+<%= render :partial => "partials/nav" %>
+
+<div id="main-container" class="noscore">
+	<%= render :partial => "partials/legend" %>
+	<%= render :partial => "partials/map" %>
+</div>

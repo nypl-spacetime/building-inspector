@@ -38,6 +38,12 @@
 	}
 }
 
+#map div.leaflet-popup-content {
+	margin: 2px 16px;
+	text-align: center;
+	font-size: 20px;
+}
+
 .number-flag {
 	position: absolute;
 	z-index: 1111;
@@ -99,7 +105,7 @@
 		font-size: 20px;
 		padding: 0;
 		color: $orange;
-		background: rgba(232, 228, 226, 0.5);
+		background: $grayLightest;
 		border-radius: 10px;
 		width: 21px;
 		height: 21px;
