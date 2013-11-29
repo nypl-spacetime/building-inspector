@@ -37,6 +37,8 @@ class ApiController < ApplicationController
 		output[:message] = msg
 		output[:polygon_count] = count
 		output[:page] = page
+		output[:per_page] = per_page
+		output[:total_pages] = (count.to_f / per_page.to_f).ceil
 		output[:type] = "FeatureCollection"
 		output[:features] = geojson
 		render json: output
