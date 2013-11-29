@@ -165,11 +165,11 @@ class Progress
 
 			json = L.geoJson(data.poly,
 				pointToLayer: (f,latlng)->
-					L.circleMarker(latlng,
+					L.circle(latlng, 3,
 						color: '#d75b25'
 						fillOpacity: 0.1
 						opacity: 0.5
-						radius: 16
+						# radius: 16
 						weight: 4
 					)
 				style: (feature) ->
