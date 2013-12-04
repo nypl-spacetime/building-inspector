@@ -1,12 +1,13 @@
+<%
+help_link = "/building?tutorial=true"
+help_link = "/numbers?tutorial=true" if @current_page=="progress_numbers" || @current_page=="progress_numbers_all"
+help_link = "javascript:;" if @current_page=="fixer" || @current_page=="numbers"
+%>
 <div id="top-nav">
 	<%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:class => "nypl-logo", :title => "Visit NYPL.org"} %>
 	<h1 class="logo"><a href="/" id="home-logo"><span>Building Inspector</span></a></h1>
 	<div id="links-service">
 		<div id="links-account">
-		<%
-		help_link = "/building?tutorial=true"
-		help_link = "javascript:;" if @current_page=="fixer"
-		%>
 		<% if user_signed_in? %>
 			<%= link_to "LOG OUT " + truncate(current_user.name, :length => 10, :omission => '…'), destroy_user_session_path, method: :delete, :id => "link-logout", :class=>"icon" %>
 		<% else %>

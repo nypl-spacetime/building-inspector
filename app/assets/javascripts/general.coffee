@@ -43,6 +43,30 @@ class General
 		if !$(e.target).closest('.sign-in-options').length
 			$('.sign-in-options').hide()
 
+	# deep copy method
+	# see: http://coffeescriptcookbook.com/chapters/classes_and_objects/cloning
+	clone: (obj) ->
+		if not obj? or typeof obj isnt 'object'
+			return obj
+
+		if obj instanceof Date
+			return new Date(obj.getTime()) 
+
+		if obj instanceof RegExp
+			flags = ''
+			flags += 'g' if obj.global?
+			flags += 'i' if obj.ignoreCase?
+			flags += 'm' if obj.multiline?
+			flags += 'y' if obj.sticky?
+			return new RegExp(obj.source, flags) 
+
+		newInstance = new obj.constructor()
+
+		for key of obj
+			newInstance[key] = @clone obj[key]
+
+		return newInstance
+
 	_spinner: () ->
 		opts =
 			lines: 11, # The number of lines to draw

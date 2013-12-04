@@ -66,7 +66,7 @@ class Building
 				)
 		)
 
-		return if not (window.history && window.history.pushState) # ie screws up all
+		# return if not (window.history && window.history.pushState) # ie screws up all
 		
 		history.replaceState("fixer","inspector","building") 
 
@@ -173,7 +173,7 @@ class Building
 			@intro.exit() if @intro
 			@intro = null
 			@removeButtonListeners()
-			@polyData = @clone @_polyData
+			@polyData = _gen.clone(@_polyData)
 			@currentIndex = @_currentIndex
 			@showNextPolygon()
 			@addButtonListeners()
@@ -189,8 +189,8 @@ class Building
 				autostart: false
 			.goTo 0
 		else
-			@_polyData = @clone @polyData
-			@polyData = @clone @tutorialData.poly
+			@_polyData = _gen.clone(@polyData)
+			@polyData = _gen.clone(@tutorialData.poly)
 			@_currentIndex = @currentIndex - 1
 			@currentIndex = -1
 			@showNextPolygon()
@@ -534,31 +534,6 @@ class Building
 			color: '#b00'
 			opacity: 0
 			fill: false
-
-
-	# deep copy method
-	# see: http://coffeescriptcookbook.com/chapters/classes_and_objects/cloning
-	clone: (obj) ->
-		if not obj? or typeof obj isnt 'object'
-			return obj
-
-		if obj instanceof Date
-			return new Date(obj.getTime()) 
-
-		if obj instanceof RegExp
-			flags = ''
-			flags += 'g' if obj.global?
-			flags += 'i' if obj.ignoreCase?
-			flags += 'm' if obj.multiline?
-			flags += 'y' if obj.sticky?
-			return new RegExp(obj.source, flags) 
-
-		newInstance = new obj.constructor()
-
-		for key of obj
-			newInstance[key] = @clone obj[key]
-
-		return newInstance
 
 
 $ ->

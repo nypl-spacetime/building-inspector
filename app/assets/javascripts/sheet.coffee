@@ -38,6 +38,7 @@ class Sheet
 				stroke: false
 			onEachFeature: (f,l) ->
 				out = for key, val of f.properties
+					val = "<a href='/polygons/#{val}'>#{val}</a>" if key == "id"
 					"<strong>#{key}:</strong> #{val}"
 				l.bindPopup(out.join("<br />"))
 				l.on 'click', ()->
@@ -51,6 +52,7 @@ class Sheet
 				stroke: false
 			onEachFeature: (f,l) ->
 				out = for key, val of f.properties
+					val = "<a href='/polygons/#{val}'>#{val}</a>" if key == "id"
 					"<strong>#{key}:</strong> #{val}"
 				l.bindPopup(out.join("<br />"))
 				l.on 'click', ()->
@@ -64,6 +66,7 @@ class Sheet
 				stroke: false
 			onEachFeature: (f,l) ->
 				out = for key, val of f.properties
+					val = "<a href='/polygons/#{val}'>#{val}</a>" if key == "id"
 					"<strong>#{key}:</strong> #{val}"
 				l.bindPopup(out.join("<br />"))
 				l.on 'click', ()->
@@ -77,6 +80,7 @@ class Sheet
 				stroke: false
 			onEachFeature: (f,l) ->
 				out = for key, val of f.properties
+					val = "<a href='/polygons/#{val}'>#{val}</a>" if key == "id"
 					"<strong>#{key}:</strong> #{val}"
 				l.bindPopup(out.join("<br />"))
 				l.on 'click', ()->
