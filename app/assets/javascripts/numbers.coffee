@@ -56,10 +56,10 @@ class Numbers
     @map.on('click', @onMapClick)
     @map.on('move', @onMapChange)
 
-    # $("body").keyup (e)->
-    #   # console.log "key", e.which
-    #   switch e.which
-    #     when 27 then console.log "hi"
+    $("body").keyup (e)->
+      # console.log "key", e.which
+      switch e.which
+        when 107, 187 then tagger.submitFlags(e)
 
   addButtonListeners: () =>
     @removeButtonListeners()
