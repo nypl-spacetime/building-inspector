@@ -68,6 +68,16 @@ h3 {
 	}
 }
 
+.nypl-logo-loader {
+	content: attr(data-icon);
+	font-family:$iconfont;
+	// color: $grayLighter;
+	-webkit-font-smoothing: antialiased;
+	display: block;
+	font-size: 40px;
+	margin-bottom: 5px;
+}
+
 #top-nav {
 	height: 100px;
 	background: $grayLightest;

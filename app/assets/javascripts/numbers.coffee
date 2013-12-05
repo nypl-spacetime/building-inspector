@@ -308,16 +308,24 @@ class Numbers
     $(".introjs-helperLayer").removeClass("yesNext")
     @removeButtonListeners()
 
-    switch @intro._currentStep
+    step = @intro._currentStep
+
+    overlay = $("#map-highlight")
+
+    overlay.unbind('click')
+
+    switch step
       when 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26
         $(".introjs-helperLayer").addClass("yesNext")
+        overlay.on('click', @onTutorialClick)
       when 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27
         $(".introjs-helperLayer").addClass("noMap")
         @addButtonListeners()
       when 28
         $(".introjs-helperLayer").addClass("noMap")
+    
     # for polygon show
-    switch @intro._currentStep
+    switch step
       when 0,1,2,3
         @currentIndex = -1
       when 4,5 then @currentIndex = 0
@@ -496,6 +504,15 @@ class Numbers
       xy = @map.latLngToContainerPoint(latlng)
       contents.elem.css("left",xy.x)
       contents.elem.css("top",xy.y)
+
+  onTutorialClick: (e) =>
+    console.log e
+    x = e.offsetX
+    y = e.offsetY
+    elem = @buildNumberElement(x,y)
+    elem.css("top", y)
+    elem.css("left", x)
+    $("#map-highlight").append(elem)
 
   onMapClick: (e) =>
     # console.log "click", e
