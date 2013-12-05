@@ -68,6 +68,7 @@ class Numbers
     @map.on('move', @onMapChange)
 
   addButtonListeners: () =>
+    tagger = @
     @removeButtonListeners()
 
     $("#link-help-close").on("click", @hideTutorial)
