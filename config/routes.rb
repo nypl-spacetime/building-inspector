@@ -30,7 +30,7 @@ Webappmini::Application.routes.draw do
 
   get "fixer/allPolygons"
 
-  get "fixer/building"
+  get "fixer/building" => "fixer#progress" # was no arrow
 
   get "fixer/color"
 
@@ -52,7 +52,7 @@ Webappmini::Application.routes.draw do
 
   match "color" => "fixer#color"
 
-  match "building" => "fixer#building"
+  match "building" => "fixer#progress" # was building
   
   root :to => "general#home"
 end
