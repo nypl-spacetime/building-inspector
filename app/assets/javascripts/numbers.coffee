@@ -565,7 +565,7 @@ class Numbers
           tagger.validateInput(this, e)
       input.on "keydown", (e) ->
         switch e.which
-          when 27 then tagger.destroyFlag(this)
+          when 27 then tagger.destroyFromEscape(this)
           else tagger.validateInput(this, e)
     , 50
     )
@@ -577,6 +577,12 @@ class Numbers
       circle: c
       value: ""
     e
+
+  destroyFromEscape: (item) =>
+    @destroyFlag(item)
+    for e, contents of @flags
+      @flags[e].elem.find(".input").focus()
+      break
 
   destroyFlag: (item) =>
     # console.log "destroying", item
