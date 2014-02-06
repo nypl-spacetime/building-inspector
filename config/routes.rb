@@ -63,5 +63,7 @@ Webappmini::Application.routes.draw do
   get "numbers" => "fixer#numbers"
   get "fixer/flagnum" => "fixer#many_flags_one_polygon"
   
+  get "polygonfix" => "fixer#polygonfix"
+
   root :to => "general#home"
 end

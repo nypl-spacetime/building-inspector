@@ -42,6 +42,13 @@ class FixerController < ApplicationController
 		@map = getMap("numbers").to_json
 	end
 
+	def polygonfix
+		@current_page = "polygonfix"
+		@isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
+		cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
+		@map = getMap("polygonfix").to_json
+	end
+
 	def progress_numbers
 	  	@current_page = "progress_numbers"
 		# returns a GeoJSON object with the flags the session has sent so far

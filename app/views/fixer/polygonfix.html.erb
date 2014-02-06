@@ -1,0 +1,34 @@
+<% content_for :page_title do %>Building Inspector by NYPL Labs<% end %>
+
+<% content_for :dynamic_js do %>
+  <script type="text/javascript">
+  // var addToHomeConfig = {
+  //  lifespan:4000
+  // };
+  </script>
+  <%# stylesheet_link_tag    "lib/add2home", :media => "all" %>
+  <%= stylesheet_link_tag    "fixer", :media => "all" %>
+
+  <%# javascript_include_tag "lib/add2home" %>
+
+  <%= javascript_include_tag "lib/leaflet-editable-polyline" %>
+  
+  <%= javascript_include_tag "polygonfix", {:id => "polygonfixjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}"), "data-session" => "#{@isNew}", "data-map" => "#{@map}"} %>
+<% end %>
+
+<%= render :partial => "partials/nav" %>
+<%= render :partial => "partials/tutorial" %>
+
+<div id="main-container">
+  <div id="loader">LOADING<div class="nypl-logo-loader">N</div></div>
+  <div id="map-highlight"></div>
+  <div id="map-inspecting"></div>
+  <%= render :partial => "partials/map" %>
+</div>
+<div id="controls">
+  <%= render :partial => "partials/score" %>
+  <div id="buttons" class="numbers">
+    <div class="wrapper">
+      <a href="javascript:;" id="submit-button" title="Keyboard shortcut: +" rel="nofollow">NEXT / SKIP</a>
+  </div>
+</div>

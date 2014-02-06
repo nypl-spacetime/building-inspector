@@ -11,6 +11,8 @@ class Sheet < ActiveRecord::Base
 				Polygon.select("polygons.id, color, geometry, sheet_id, status, dn, flag_count, consensus, consensus_numbers").joins("LEFT JOIN flags ON polygons.id = flags.polygon_id AND session_id = " + Sheet.sanitize(session_id) ).where("sheet_id = ? AND session_id IS NULL AND polygons.flag_count < 10 AND polygons.consensus IS NULL", self[:id])
 			when "numbers"
 				Polygon.select("polygons.id, color, geometry, sheet_id, status, dn, flag_count, consensus, consensus_numbers").joins("LEFT JOIN flags ON polygons.id = flags.polygon_id AND session_id = " + Sheet.sanitize(session_id) ).where("sheet_id = ? AND session_id IS NULL AND polygons.consensus_numbers IS NULL AND polygons.consensus = 'yes'", self[:id])
+			when "polygonfix"
+				Polygon.select("polygons.id, color, geometry, sheet_id, status, dn, flag_count, consensus, consensus_polygonfix").joins("LEFT JOIN flags ON polygons.id = flags.polygon_id AND session_id = " + Sheet.sanitize(session_id) ).where("sheet_id = ? AND session_id IS NULL AND polygons.consensus_polygonfix IS NULL AND polygons.consensus = 'yes'", self[:id])
 			end
 		else
 			# all polygons in a sheet
@@ -19,6 +21,8 @@ class Sheet < ActiveRecord::Base
 				Polygon.select("polygons.id, color, geometry, sheet_id, status, dn, flag_count, consensus, consensus_numbers").where("sheet_id = ? AND polygons.flag_count < 10 AND polygons.consensus IS NULL", self[:id])
 			when "numbers"
 				Polygon.select("polygons.id, color, geometry, sheet_id, status, dn, flag_count, consensus, consensus_numbers").where("sheet_id = ? AND polygons.flag_count < 10 AND polygons.consensus_numbers IS NULL AND polygons.consensus = 'yes'", self[:id])
+			when "polygonfix"
+				Polygon.select("polygons.id, color, geometry, sheet_id, status, dn, flag_count, consensus, consensus_polygonfix").where("sheet_id = ? AND polygons.flag_count < 4 AND polygons.consensus_polygonfix IS NULL AND polygons.consensus = 'yes'", self[:id])
 			end
 		end
 	end
@@ -27,12 +31,17 @@ class Sheet < ActiveRecord::Base
 		w = "consensus IS NULL"
 		case type
 		when "geometry"
-			# any polygon without consensus
+			# any sheet without consensus
 			w = "consensus IS NULL"
 		when "numbers"
-			# polygon has to be 'done' (geometry ok)
+			# sheet has not been totally processed for addresses
 			w = "consensus_numbers IS NULL AND consensus = 'done'"
+		when "polygonfix"
+			# sheet has not been totally processed for geometry
+			w = "consensus_polygonfix IS NULL AND consensus = 'done'"
 		end
+		# TODO: SOME SORT OF CHECK FOR WHEN THINGS ARE ALMOST COMPLETE
+		#       TO PREVENT DDOS VIA RETRIES
 		c = Sheet.where(w).count
 		Sheet.where(w).find(:first, :offset =>rand(c))
 	end

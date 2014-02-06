@@ -12,7 +12,7 @@
 	background: $white;
 	font-size: 30px;
 	line-height: 120px;
-	z-index: 131;
+	z-index: 1;
 	position: absolute;
 
 	@media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
