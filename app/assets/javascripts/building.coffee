@@ -39,10 +39,10 @@ class Building
 			zIndex: 3
 		).addTo(@map)
 
-		L.control.attribution(
-			position: 'bottomright'
-			prefix: ""
-		).addTo(@map)
+		# L.control.attribution(
+		# 	position: 'bottomright'
+		# 	prefix: ""
+		# ).addTo(@map)
 
 		L.control.zoom(
 			position: 'topright'

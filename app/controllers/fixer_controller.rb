@@ -43,6 +43,7 @@ class FixerController < ApplicationController
 	end
 
 	def polygonfix
+		puts "POLYGONFIX TASK =============------------"
 		@current_page = "polygonfix"
 		@isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
 		cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }

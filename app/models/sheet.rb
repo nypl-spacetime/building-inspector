@@ -12,7 +12,7 @@ class Sheet < ActiveRecord::Base
 			when "numbers"
 				Polygon.select("polygons.id, color, geometry, sheet_id, status, dn, flag_count, consensus, consensus_numbers").joins("LEFT JOIN flags ON polygons.id = flags.polygon_id AND session_id = " + Sheet.sanitize(session_id) ).where("sheet_id = ? AND session_id IS NULL AND polygons.consensus_numbers IS NULL AND polygons.consensus = 'yes'", self[:id])
 			when "polygonfix"
-				Polygon.select("polygons.id, color, geometry, sheet_id, status, dn, flag_count, consensus, consensus_polygonfix").joins("LEFT JOIN flags ON polygons.id = flags.polygon_id AND session_id = " + Sheet.sanitize(session_id) ).where("sheet_id = ? AND session_id IS NULL AND polygons.consensus_polygonfix IS NULL AND polygons.consensus = 'yes'", self[:id])
+				Polygon.select("polygons.id, color, geometry, sheet_id, status, dn, flag_count, consensus, consensus_polygonfix").joins("LEFT JOIN flags ON polygons.id = flags.polygon_id AND session_id = " + Sheet.sanitize(session_id) ).where("sheet_id = ? AND session_id IS NULL AND polygons.consensus_polygonfix IS NULL AND polygons.consensus = 'fix'", self[:id])
 			end
 		else
 			# all polygons in a sheet
@@ -22,7 +22,7 @@ class Sheet < ActiveRecord::Base
 			when "numbers"
 				Polygon.select("polygons.id, color, geometry, sheet_id, status, dn, flag_count, consensus, consensus_numbers").where("sheet_id = ? AND polygons.flag_count < 10 AND polygons.consensus_numbers IS NULL AND polygons.consensus = 'yes'", self[:id])
 			when "polygonfix"
-				Polygon.select("polygons.id, color, geometry, sheet_id, status, dn, flag_count, consensus, consensus_polygonfix").where("sheet_id = ? AND polygons.flag_count < 4 AND polygons.consensus_polygonfix IS NULL AND polygons.consensus = 'yes'", self[:id])
+				Polygon.select("polygons.id, color, geometry, sheet_id, status, dn, flag_count, consensus, consensus_polygonfix").where("sheet_id = ? AND polygons.flag_count < 4 AND polygons.consensus_polygonfix IS NULL AND polygons.consensus = 'fix'", self[:id])
 			end
 		end
 	end

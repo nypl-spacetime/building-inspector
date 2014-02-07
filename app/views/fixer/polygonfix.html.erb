@@ -11,7 +11,7 @@
 
   <%# javascript_include_tag "lib/add2home" %>
 
-  <%= javascript_include_tag "lib/leaflet-editable-polyline" %>
+  <%= javascript_include_tag "lib/leaflet-editable-polygon" %>
   
   <%= javascript_include_tag "polygonfix", {:id => "polygonfixjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}"), "data-session" => "#{@isNew}", "data-map" => "#{@map}"} %>
 <% end %>
