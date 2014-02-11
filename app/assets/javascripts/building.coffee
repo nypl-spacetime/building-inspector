@@ -444,9 +444,9 @@ class Building
 		$("#no-button").addClass("inactive") if button != "no"
 		$("#yes-button").addClass("inactive") if button != "yes"
 		$("#fix-button").addClass("inactive") if button != "fix"
-		$("#no-button").addClass("active") if button = "no"
-		$("#yes-button").addClass("active") if button = "yes"
-		$("#fix-button").addClass("active") if button = "fix"
+		$("#no-button").addClass("active") if button == "no"
+		$("#yes-button").addClass("active") if button == "yes"
+		$("#fix-button").addClass("active") if button == "fix"
 		@addButtonListeners()
 
 	resetButtons: () ->

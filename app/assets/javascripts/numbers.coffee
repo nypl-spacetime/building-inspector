@@ -92,12 +92,12 @@ class Numbers
   activateButton: (button) =>
     @resetButtons()
     $("#submit-button").addClass("inactive") if button != "submit"
-    $("#submit-button").addClass("active") if button = "submit"
-    @addButtonListeners()
+    $("#submit-button").addClass("active") if button == "submit"
 
   resetButtons: () ->
     $("#submit-button").removeClass("inactive")
     $("#submit-button").removeClass("active")
+    @addButtonListeners() unless @tutorialOn
 
   hideOthers: () ->
     $("#main-container").hide()
@@ -398,7 +398,6 @@ class Numbers
   submitFlags: (e) =>
     @removeButtonListeners()
     e.preventDefault()
-    @activateButton("submit") unless @tutorialOn
 
     if @tutorialOn
       # do not submit the data

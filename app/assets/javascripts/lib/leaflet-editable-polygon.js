@@ -10,18 +10,18 @@ L.Polygon.polygonEditor = L.Polygon.extend({
         this._map._editablePolygons = [];
 
         // Click anywhere on map to add a new point-polyline:
-        if(this._options.newPolylines) {
-            console.log('click na map');
+        if(this._options.newPolygons) {
+            // console.log('click na map');
             that._map.on('click', function(event) {
-                console.log('click, target=' + (event.target == that._map) + ' type=' + event.type);
+                // console.log('click, target=' + (event.target == that._map) + ' type=' + event.type);
                 if(that.isBusy())
                     return;
 
                 that._setBusy(true);
 
                 var latLng = event.latlng;
-                if(that._options.newPolylineConfirmMessage)
-                    if(!confirm(that._options.newPolylineConfirmMessage))
+                if(that._options.newPolygonConfirmMessage)
+                    if(!confirm(that._options.newPolygonConfirmMessage))
                         return
 
                 var contexts = [{'originalPolygonNo': null, 'originalPointNo': null}];
@@ -60,24 +60,7 @@ L.Polygon.polygonEditor = L.Polygon.extend({
              */
             this._parseOptions(options);
 
-            this._markers = [];
-            var that = this;
-            var points = this.getLatLngs();
-            var length = points.length;
-            for(var i = 0; i < length; i++) {
-                var marker = this._addMarkers(i, points[i]);
-                if(! ('context' in marker)) {
-                    marker.context = {}
-                    if(that._contexts != null) {
-                        marker.context = contexts[i];
-                    }
-                }
-
-                if(marker.context && ! ('originalPointNo' in marker.context))
-                    marker.context.originalPointNo = i;
-                if(marker.context && ! ('originalPolygonNo' in marker.context))
-                    marker.context.originalPolygonNo = that._map._editablePolygons.length;
-            }
+            this._setMarkers();
 
             var map = this._map;
             this._map.on("zoomend", function(e) {
@@ -98,7 +81,6 @@ L.Polygon.polygonEditor = L.Polygon.extend({
          * Check if there is *any* busy editable polyline on this map.
          */
         this.isBusy = function() {
-            console.log("that:",that);
             for(var i = 0; i < that._map._editablePolygons.length; i++)
                 if(that._map._editablePolygons[i]._isBusy())
                     return true;
@@ -239,15 +221,65 @@ L.Polygon.polygonEditor = L.Polygon.extend({
             }
         };
 
+        this.updateLatLngs = function (latlngs) {
+            this._eraseMarkers();
+            this.setLatLngs(latlngs);
+            that._setMarkers();
+            this._reloadPolygon();
+            return this;
+        }
+
         /**
          * Reload polyline. If it is busy, then the bound markers will not be 
          * shown. Call _setBusy(false) before this method!
          */
         this._reloadPolygon = function(fixAroundPointNo) {
+            // that._setMarkers();
             that.setLatLngs(that._getMarkerLatLngs());
             if(fixAroundPointNo != null)
                 that._fixNeighbourPositions(fixAroundPointNo);
             that._showBoundMarkers();
+        }
+
+        /**
+         * Reload polyline. If it is busy, then the bound markers will not be 
+         * shown. Call _setBusy(false) before this method!
+         */
+        this._setMarkers = function() {
+            this._markers = [];
+            var that = this;
+            var points = this.getLatLngs();
+            var length = points.length;
+            for(var i = 0; i < length; i++) {
+                var marker = this._addMarkers(i, points[i]);
+                if(! ('context' in marker)) {
+                    marker.context = {}
+                    if(that._contexts != null) {
+                        marker.context = contexts[i];
+                    }
+                }
+
+                if(marker.context && ! ('originalPointNo' in marker.context))
+                    marker.context.originalPointNo = i;
+                if(marker.context && ! ('originalPolygonNo' in marker.context))
+                    marker.context.originalPolygonNo = that._map._editablePolygons.length;
+            }
+        }
+
+        /**
+         * Reload polyline. If it is busy, then the bound markers will not be 
+         * shown. Call _setBusy(false) before this method!
+         */
+        this._eraseMarkers = function() {
+            var that = this;
+            var points = this._markers;
+            var length = points.length;
+            for(var i = 0; i < length; i++) {
+                var marker = points[i];
+                this._map.removeLayer(marker.newPointMarker);
+                this._map.removeLayer(marker);
+            }
+            this._markers = [];
         }
 
         /**
@@ -355,7 +387,7 @@ L.Polygon.polygonEditor = L.Polygon.extend({
                     // the splitted one need to be inserted immediately after:
                     var originalPolygonNo = that._map._editablePolygons.indexOf(that);
 
-                    var newPolyline = L.Polygon.PolygonEditor(points, that._options, contexts, originalPolygonNo + 1)
+                    var newPolygon = L.Polygon.PolygonEditor(points, that._options, contexts, originalPolygonNo + 1)
                                                 .addTo(that._map);
 
                     that._showBoundMarkers();
@@ -484,7 +516,6 @@ L.Polygon.polygonEditor.addInitHook(function () {
     this.addTo = function(map) {
         this.originalAddTo(map);
         this._map = map;
-        console.log("this:",this);
 
         this._addMethods();
 

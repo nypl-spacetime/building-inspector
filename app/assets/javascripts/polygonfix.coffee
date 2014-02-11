@@ -17,7 +17,6 @@ class Polygonfix
     @tutorialOn = $('#polygonfixjs').data("session")
     history.replaceState("polygonfix","inspector","polygonfix") 
     #end tutorial
-    @geo = {}
     @firstLoad = true
     @buttonMode = 0
     $("#map-tutorial").hide()
@@ -91,12 +90,13 @@ class Polygonfix
   activateButton: (button) =>
     @resetButtons()
     $("#submit-button").addClass("inactive") if button != "submit"
-    $("#submit-button").addClass("active") if button = "submit"
+    $("#submit-button").addClass("active") if button == "submit"
     @addButtonListeners()
 
   resetButtons: () ->
     $("#submit-button").removeClass("inactive")
     $("#submit-button").removeClass("active")
+    @addButtonListeners() unless @tutorialOn
 
   getPolygons: () =>
     tagger = @
@@ -185,11 +185,9 @@ class Polygonfix
   showNextPolygon: () =>
     @currentIndex++
     if @currentIndex < @polyData.length
-      @map.removeLayer(@geo)
-      @geo = {}
       $("#buttons").show()
       @currentPolygon = @polyData[@currentIndex]
-      @geo = @makePolygon()
+      @makePolygon()
       @geo.addTo(@map)
       # center on the polygon
       @map.fitBounds( @geo.getBounds() )
@@ -206,30 +204,34 @@ class Polygonfix
     # geojson is [[[lon,lat],[lon,lat],...]]
     coordinates = $.parseJSON(@currentPolygon.geometry)[0]
     transposed = ([coord[1],coord[0]] for coord in coordinates)
-    # console.table coordinates #, @currentGeo
-    # console.table transposed #, @currentGeo
-    pointIcon = L.icon(
-      iconUrl: '/assets/polygonfix/editmarker.png'
-      iconSize: [21, 21]
-      iconAnchor: [10, 10]
-    )
-    newPointIcon = L.icon(
-      iconUrl: '/assets/polygonfix/editmarker2.png'
-      iconSize: [16, 16]
-      iconAnchor: [8, 8]
-    )
-    L.Polygon.PolygonEditor(transposed,
-      maxMarkers: 100
-      pointIcon: pointIcon
-      newPointIcon: newPointIcon
-      # style: (feature) ->
-      color: '#b00'
-      weight: 3
-      opacity: 0.5
-      # dashArray: '1,16'
-      fill: false
-      #   clickable: false
-    )
+
+    if (!@geo)
+      # console.table coordinates #, @currentGeo
+      # console.table transposed #, @currentGeo
+      pointIcon = L.icon(
+        iconUrl: '/assets/polygonfix/editmarker.png'
+        iconSize: [21, 21]
+        iconAnchor: [10, 10]
+      )
+      newPointIcon = L.icon(
+        iconUrl: '/assets/polygonfix/editmarker2.png'
+        iconSize: [16, 16]
+        iconAnchor: [8, 8]
+      )
+      @geo = L.Polygon.PolygonEditor(transposed,
+        maxMarkers: 100
+        pointIcon: pointIcon
+        newPointIcon: newPointIcon
+        # style: (feature) ->
+        color: '#b00'
+        weight: 3
+        opacity: 0.5
+        # dashArray: '1,16'
+        fill: false
+        #   clickable: false
+      )
+    else
+      @geo.updateLatLngs(transposed)
 
   getFixedPolygon: () =>
     # prepares the new polygon in GeoJSON-ish format
