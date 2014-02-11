@@ -91,7 +91,6 @@ class Numbers
     $("body").unbind("keyup")
 
   activateButton: (button) =>
-    @resetButtons()
     $("#submit-button").addClass("inactive") if button != "submit"
     $("#submit-button").addClass("active") if button == "submit"
 
@@ -427,7 +426,6 @@ class Numbers
         f: flag_str
         , (data) ->
           # console.log "returned", data
-          tagger.resetButtons()
           tagger.showNextPolygon()
       )
   
@@ -453,6 +451,7 @@ class Numbers
       # center on the polygon
       @geo.addTo(@map)
       @map.fitBounds( @geo.getBounds() )
+      @resetButtons()
     else
       return if @tutorialOn
       # console.log "Loading more polygons..."

@@ -172,7 +172,14 @@
 		margin-right: 5px;
 		background-color: $yescolor;
 	}
-	&#no-button.active, &#fix-button.active, &#yes-button.active {
+
+	&#submit-button {
+		background: $green;
+		margin-left: 60px;
+		width: 180px;
+	}
+
+	&#no-button.active, &#fix-button.active, &#yes-button.active , &#submit-button.active {
 		font-size: 24px;
 	}
 

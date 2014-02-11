@@ -440,14 +440,13 @@ class Building
 		@submitFlag("fix")
 
 	activateButton: (button) =>
-		@resetButtons()
 		$("#no-button").addClass("inactive") if button != "no"
 		$("#yes-button").addClass("inactive") if button != "yes"
 		$("#fix-button").addClass("inactive") if button != "fix"
 		$("#no-button").addClass("active") if button == "no"
 		$("#yes-button").addClass("active") if button == "yes"
 		$("#fix-button").addClass("active") if button == "fix"
-		@addButtonListeners()
+		# @addButtonListeners()
 
 	resetButtons: () ->
 		$("#no-button").removeClass("inactive")
@@ -456,6 +455,7 @@ class Building
 		$("#no-button").removeClass("active")
 		$("#yes-button").removeClass("active")
 		$("#fix-button").removeClass("active")
+		@addButtonListeners() unless @tutorialOn
 
 	submitFlag: (type) =>
 		if @tutorialOn
@@ -473,7 +473,6 @@ class Building
 				i: tagger.currentPolygon.id
 				f: type
 				, () ->
-					tagger.resetButtons()
 					tagger.showNextPolygon()
 			)
 	
@@ -490,6 +489,7 @@ class Building
 			# center on the polygon
 			@geo.addTo(@map)
 			@map.fitBounds( @geo.getBounds() )
+			@resetButtons()
 		else
 			return if @tutorialOn
 			# console.log "Loading more polygons..."

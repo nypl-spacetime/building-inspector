@@ -88,10 +88,8 @@ class Polygonfix
     # $("body").unbind("keyup")
 
   activateButton: (button) =>
-    @resetButtons()
     $("#submit-button").addClass("inactive") if button != "submit"
     $("#submit-button").addClass("active") if button == "submit"
-    @addButtonListeners()
 
   resetButtons: () ->
     $("#submit-button").removeClass("inactive")
@@ -147,6 +145,7 @@ class Polygonfix
     a
 
   submitFlags: (e) =>
+    @activateButton("none")
     @removeButtonListeners()
     e.preventDefault()
 
@@ -168,8 +167,8 @@ class Polygonfix
     # console.log flag_str
 
     if !flag_str
-      tagger.resetButtons()
-      tagger.showNextPolygon()
+      $("#buttons").fadeOut 200 , () ->
+        tagger.showNextPolygon()
     else
       $("#buttons").fadeOut 200 , () ->
         $.get("/fixer/flag.json", 
@@ -178,7 +177,6 @@ class Polygonfix
           f: flag_str
           , (data) ->
             # console.log "returned", data
-            tagger.resetButtons()
             tagger.showNextPolygon()
         )
 
@@ -191,6 +189,7 @@ class Polygonfix
       @geo.addTo(@map)
       # center on the polygon
       @map.fitBounds( @geo.getBounds() )
+      @resetButtons()
     else
       return if @tutorialOn
       # console.log "Loading more polygons..."
@@ -203,6 +202,9 @@ class Polygonfix
     # editable polyline works with [[lat,lon],[lat,lon],...] coordinates
     # geojson is [[[lon,lat],[lon,lat],...]]
     coordinates = $.parseJSON(@currentPolygon.geometry)[0]
+    if coordinates[0][0] == coordinates[coordinates.length-1][0] && coordinates[0][1] == coordinates[coordinates.length-1][1]
+      # same coordinate for the first and last point / redundant
+      coordinates.pop()
     transposed = ([coord[1],coord[0]] for coord in coordinates)
 
     if (!@geo)
@@ -219,7 +221,7 @@ class Polygonfix
         iconAnchor: [8, 8]
       )
       @geo = L.Polygon.PolygonEditor(transposed,
-        maxMarkers: 100
+        maxMarkers: 10000
         pointIcon: pointIcon
         newPointIcon: newPointIcon
         # style: (feature) ->
@@ -240,7 +242,9 @@ class Polygonfix
     # console.log "points:", points
     p_array = ([p.getLatLng().lng,p.getLatLng().lat] for p in points)
     coordinates = $.parseJSON(@currentPolygon.geometry)[0]
-    coordinates.pop() # first & last corners are the same from DB
+    if coordinates[0][0] == coordinates[coordinates.length-1][0] && coordinates[0][1] == coordinates[coordinates.length-1][1]
+      # same coordinate for the first and last point / redundant
+      coordinates.pop()
     # if there's no change return false to leave as is
     return false if p_array.join(",") == coordinates.join(",")
     return "[[" + ("[#{p.join(",")}]" for p in p_array) + "]]"
