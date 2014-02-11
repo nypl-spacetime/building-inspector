@@ -233,6 +233,7 @@ class Polygonfix
         #   clickable: false
       )
     else
+      @map._editablePolygons = [] # hack cause the leaflet plugin does not destroy preexisting polygons
       @geo.updateLatLngs(transposed)
 
   getFixedPolygon: () =>
