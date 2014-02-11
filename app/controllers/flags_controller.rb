@@ -6,7 +6,7 @@ class FlagsController < ApplicationController
   # GET /flags
   # GET /flags.json
   def index
-    @flags = Flag.order(sort_column + " " + sort_direction).paginate(:page => params[:page])
+    @flags = Flag.order(sort_column + " " + sort_direction + ", created_at DESC").paginate(:page => params[:page])
 
     @total = Flag.count
 

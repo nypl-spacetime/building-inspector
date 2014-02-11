@@ -30,7 +30,7 @@ class Flag < ActiveRecord::Base
 	end
 	
 	def self.flags_for_user(user_id, type = "geometry")
-		Flag.select("DISTINCT polygon_id").joins('INNER JOIN usersessions ON usersessions.session_id = flags.session_id').where('usersessions.user_id = ? AND flags.flag_type = ?', user_id, type).count    
+		Flag.select("DISTINCT polygon_id").joins('INNER JOIN usersessions ON usersessions.session_id = flags.session_id').where('usersessions.user_id = ? AND flags.flag_type = ?', user_id, type).count
 	end
 
 	def self.progress_for_session(session_id, type = "geometry")

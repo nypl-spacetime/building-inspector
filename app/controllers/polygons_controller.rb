@@ -33,6 +33,7 @@ class PolygonsController < ApplicationController
   def show
     @polygon = Polygon.find(params[:id])
     @map = @polygon.as_feature
+    @fixes = @polygon.fixes_as_features
 
     respond_to do |format|
       format.html # show.html.erb

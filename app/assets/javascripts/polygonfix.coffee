@@ -7,15 +7,16 @@ class Polygonfix
     @intro = null
     @prevStep = 0
     @polyData = {}
+    @loadedData = {}
     @currentIndex = -1
     @currentPolygon = {}
+    @allPolygonsSession = 0
     @_polyData = {}
     @_currentIndex = -1
     @_currentPolygon = {}
     @tutorialOn = $('#polygonfixjs').data("session")
     history.replaceState("polygonfix","inspector","polygonfix") 
     #end tutorial
-    @flags = {}
     @geo = {}
     @firstLoad = true
     @buttonMode = 0
@@ -77,20 +78,30 @@ class Polygonfix
     $("#link-help").on("click", @invokeTutorial)
     $("#submit-button").on "click", @submitFlags
 
-    $("body").keyup (e)->
-      # console.log "key", e.which
-      switch e.which
-        when 107, 187 then tagger.submitFlags(e)
+    # $("body").keyup (e)->
+    #   # console.log "key", e.which
+    #   switch e.which
+    #     when 107, 187 then tagger.submitFlags(e)
 
   removeButtonListeners: () =>
     $("#submit-button").unbind()
     $("#link-help").unbind()
-    $("body").unbind("keyup")
+    # $("body").unbind("keyup")
+
+  activateButton: (button) =>
+    @resetButtons()
+    $("#submit-button").addClass("inactive") if button != "submit"
+    $("#submit-button").addClass("active") if button = "submit"
+    @addButtonListeners()
+
+  resetButtons: () ->
+    $("#submit-button").removeClass("inactive")
+    $("#submit-button").removeClass("active")
 
   getPolygons: () =>
     tagger = @
     mapdata = $('#polygonfixjs').data("map")
-    console.log "firstLoad", @firstLoad, mapdata
+    # console.log "firstLoad", @firstLoad, mapdata
     if @firstLoad && mapdata.poly.length > 0
       @firstLoad = false
       $("#loader").remove()
@@ -138,55 +149,47 @@ class Polygonfix
   submitFlags: (e) =>
     @removeButtonListeners()
     e.preventDefault()
-    @activateButton("submit") unless @tutorialOn
 
     if @tutorialOn
       # do not submit the data
       @intro.goToStep(@intro._currentStep+2)
       return
 
-    type = "numbers"
+    type = "polygonfix"
     _gaq.push(['_trackEvent', 'Flag', type])
 
     @allPolygonsSession++
     @updateScore()
 
-    flag_data = @prepareData()
-
-    if flag_data.length > 0
-      flag_str = flag_data.join("|")
-    else
-      # console.log "skipped"
-      flag_str = ",,NONE"
-
     tagger = @
-    $("#buttons").fadeOut 200 , () ->
-      $.get("/fixer/flagnum.json", 
-        i: tagger.currentPolygon.id
-        t: type
-        f: flag_str
-        , (data) ->
-          # console.log "returned", data
-          tagger.resetButtons()
-          tagger.showNextPolygon()
-      )
-  
-  prepareData: () =>
-    r = []
-    for flag, contents of @flags
-      latlng = contents.circle.getLatLng()
-      txt = contents.value
-      r.push "#{latlng.lat},#{latlng.lng},#{txt}" if txt != ""
-    r
+
+    flag_str = @getFixedPolygon()
+
+    # console.log flag_str
+
+    if !flag_str
+      tagger.resetButtons()
+      tagger.showNextPolygon()
+    else
+      $("#buttons").fadeOut 200 , () ->
+        $.get("/fixer/flag.json", 
+          i: tagger.currentPolygon.id
+          t: type
+          f: flag_str
+          , (data) ->
+            # console.log "returned", data
+            tagger.resetButtons()
+            tagger.showNextPolygon()
+        )
 
   showNextPolygon: () =>
-    # console.log @polyData
     @currentIndex++
-    @map.removeLayer(@geo)
     if @currentIndex < @polyData.length
+      @map.removeLayer(@geo)
+      @geo = {}
       $("#buttons").show()
       @currentPolygon = @polyData[@currentIndex]
-      @geo = @makePolygon(@currentPolygon)
+      @geo = @makePolygon()
       @geo.addTo(@map)
       # center on the polygon
       @map.fitBounds( @geo.getBounds() )
@@ -198,10 +201,10 @@ class Polygonfix
       @allPolygonsSession = 0
       @getPolygons()
 
-  makePolygon: (poly) ->
+  makePolygon: () =>
     # editable polyline works with [[lat,lon],[lat,lon],...] coordinates
     # geojson is [[[lon,lat],[lon,lat],...]]
-    coordinates = $.parseJSON(poly.geometry)[0]
+    coordinates = $.parseJSON(@currentPolygon.geometry)[0]
     transposed = ([coord[1],coord[0]] for coord in coordinates)
     # console.table coordinates #, @currentGeo
     # console.table transposed #, @currentGeo
@@ -227,6 +230,18 @@ class Polygonfix
       fill: false
       #   clickable: false
     )
+
+  getFixedPolygon: () =>
+    # prepares the new polygon in GeoJSON-ish format
+    # (same format as was received from server)
+    points = @geo.getPoints()
+    # console.log "points:", points
+    p_array = ([p.getLatLng().lng,p.getLatLng().lat] for p in points)
+    coordinates = $.parseJSON(@currentPolygon.geometry)[0]
+    coordinates.pop() # first & last corners are the same from DB
+    # if there's no change return false to leave as is
+    return false if p_array.join(",") == coordinates.join(",")
+    return "[[" + ("[#{p.join(",")}]" for p in p_array) + "]]"
 
   updateScore: () =>
     if @allPolygonsSession == 0

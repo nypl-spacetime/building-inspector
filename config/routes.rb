@@ -54,16 +54,17 @@ Webappmini::Application.routes.draw do
 
   get "fixer/map" => "fixer#randomMap"
 
-  get "fixer/flag" => "fixer#flag_polygon"
-
   get "color" => "fixer#color"
 
   get "building" => "fixer#building"
 
   get "numbers" => "fixer#numbers"
-  get "fixer/flagnum" => "fixer#many_flags_one_polygon"
   
   get "polygonfix" => "fixer#polygonfix"
+
+  # json flagging
+  get "fixer/flag" => "fixer#flag_polygon"
+  get "fixer/flagnum" => "fixer#many_flags_one_polygon"
 
   root :to => "general#home"
 end

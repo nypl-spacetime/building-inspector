@@ -22,4 +22,13 @@ class Polygon < ActiveRecord::Base
 	def as_feature
 	   { :type => "FeatureCollection", :features => [JSON.parse(self[:vectorizer_json])] }
 	end
+
+	def fixes_as_features
+		f = flags.where(:flag_type => "polygonfix")
+		features = []
+		f.each do |feature|
+			features.push({:type => "Feature", :geometry => { :type => "Polygon", :coordinates => JSON.parse(feature[:flag_value]) }})
+		end
+		{ :type => "FeatureCollection", :features => features }
+	end
 end

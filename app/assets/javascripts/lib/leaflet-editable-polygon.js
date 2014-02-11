@@ -1,4 +1,38 @@
 L.Polygon.polygonEditor = L.Polygon.extend({
+    _prepareMapIfNeeded: function() {
+        var that = this;
+
+        if(this._map._editablePolygons != null) {
+            return;
+        }
+
+        // Container for all editable polylines on this map:
+        this._map._editablePolygons = [];
+
+        // Click anywhere on map to add a new point-polyline:
+        if(this._options.newPolylines) {
+            console.log('click na map');
+            that._map.on('click', function(event) {
+                console.log('click, target=' + (event.target == that._map) + ' type=' + event.type);
+                if(that.isBusy())
+                    return;
+
+                that._setBusy(true);
+
+                var latLng = event.latlng;
+                if(that._options.newPolylineConfirmMessage)
+                    if(!confirm(that._options.newPolylineConfirmMessage))
+                        return
+
+                var contexts = [{'originalPolygonNo': null, 'originalPointNo': null}];
+                L.Polygon.PolygonEditor([latLng], that._options, contexts).addTo(that._map);
+
+                that._setBusy(false);
+
+                that._showBoundMarkers();
+            });
+        }
+    },
     /**
      * Will add all needed methods to this polyline.
      */
@@ -6,10 +40,7 @@ L.Polygon.polygonEditor = L.Polygon.extend({
         var that = this;
 
         this._init = function(options, contexts) {
-            // Container for all editable polylines on this map:
-            if(!('_editablePolylines' in this._map)) {
-                this._map._editablePolylines = [];
-            }
+            this._prepareMapIfNeeded();
 
             /*
              * Utility method added to this map to retreive editable 
@@ -17,7 +48,7 @@ L.Polygon.polygonEditor = L.Polygon.extend({
              */
             if(!this._map.getEditablePolylines) {
                 this._map.getEditablePolylines = function() {
-                    return that._map._editablePolylines;
+                    return that._map._editablePolygons;
                 }
             }
 
@@ -44,8 +75,8 @@ L.Polygon.polygonEditor = L.Polygon.extend({
 
                 if(marker.context && ! ('originalPointNo' in marker.context))
                     marker.context.originalPointNo = i;
-                if(marker.context && ! ('originalPolylineNo' in marker.context))
-                    marker.context.originalPolylineNo = that._map._editablePolylines.length;
+                if(marker.context && ! ('originalPolygonNo' in marker.context))
+                    marker.context.originalPolygonNo = that._map._editablePolygons.length;
             }
 
             var map = this._map;
@@ -56,10 +87,10 @@ L.Polygon.polygonEditor = L.Polygon.extend({
                 that._showBoundMarkers();
             });
 
-            if('_desiredPolylineNo' in this) {
-                this._map._editablePolylines.splice(this._desiredPolylineNo, 0, this);
+            if('_desiredPolygonNo' in this) {
+                this._map._editablePolygons.splice(this._desiredPolygonNo, 0, this);
             } else {
-                this._map._editablePolylines.push(this);
+                this._map._editablePolygons.push(this);
             }
         };
 
@@ -67,8 +98,9 @@ L.Polygon.polygonEditor = L.Polygon.extend({
          * Check if there is *any* busy editable polyline on this map.
          */
         this.isBusy = function() {
-            for(var i = 0; i < that._map._editablePolylines.length; i++)
-                if(that._map._editablePolylines[i]._isBusy())
+            console.log("that:",that);
+            for(var i = 0; i < that._map._editablePolygons.length; i++)
+                if(that._map._editablePolygons[i]._isBusy())
                     return true;
 
             return false;
@@ -130,14 +162,14 @@ L.Polygon.polygonEditor = L.Polygon.extend({
          */
         this._showBoundMarkers = function() {
             if(that.isBusy()) {
-                console.log('Do not show because busy!');
+                //console.log('Do not show because busy!');
                 return;
             }
 
             var bounds = that._map.getBounds();
             var found = 0;
-            for(var polylineNo in that._map._editablePolylines) {
-                var polyline = that._map._editablePolylines[polylineNo];
+            for(var polygonNo in that._map._editablePolygons) {
+                var polyline = that._map._editablePolygons[polygonNo];
                 for(var markerNo in polyline._markers) {
                     var marker = polyline._markers[markerNo];
                     if(bounds.contains(marker.getLatLng()))
@@ -145,10 +177,10 @@ L.Polygon.polygonEditor = L.Polygon.extend({
                 }
             }
 
-            console.log('found=' + found);
+            //console.log('found=' + found);
 
-            for(var polylineNo in that._map._editablePolylines) {
-                var polyline = that._map._editablePolylines[polylineNo];
+            for(var polygonNo in that._map._editablePolygons) {
+                var polyline = that._map._editablePolygons[polygonNo];
                 for(var markerNo in polyline._markers) {
                     var marker = polyline._markers[markerNo];
                     if(found < that.maxMarkers) {
@@ -168,9 +200,9 @@ L.Polygon.polygonEditor = L.Polygon.extend({
          * without too many markers).
          */
         this._hideAll = function(except) {
-            for(var polylineNo in that._map._editablePolylines) {
-                console.log("hide " + polylineNo + " markers");
-                var polyline = that._map._editablePolylines[polylineNo];
+            for(var polygonNo in that._map._editablePolygons) {
+                //console.log("hide " + polygonNo + " markers");
+                var polyline = that._map._editablePolygons[polygonNo];
                 for(var markerNo in polyline._markers) {
                     var marker = polyline._markers[markerNo];
                     if(except == null || except != marker)
@@ -211,7 +243,7 @@ L.Polygon.polygonEditor = L.Polygon.extend({
          * Reload polyline. If it is busy, then the bound markers will not be 
          * shown. Call _setBusy(false) before this method!
          */
-        this._reloadPolyline = function(fixAroundPointNo) {
+        this._reloadPolygon = function(fixAroundPointNo) {
             that.setLatLngs(that._getMarkerLatLngs());
             if(fixAroundPointNo != null)
                 that._fixNeighbourPositions(fixAroundPointNo);
@@ -233,7 +265,7 @@ L.Polygon.polygonEditor = L.Polygon.extend({
             marker.newPointMarker = null;
             marker.on('dragstart', function(event) {
                 var pointNo = that._getPointNo(event.target);
-                console.log("pointNo", pointNo);
+                //console.log("pointNo", pointNo);
                 var previousPoint = pointNo == null ? null : (pointNo - 1 >= 0 ? that._markers[pointNo - 1].getLatLng() : that._markers[that._markers.length - 1].getLatLng());
                 var nextPoint = pointNo < that._markers.length - 1 ? that._markers[pointNo + 1].getLatLng() : that._markers[0].getLatLng();
                 that._setupDragLines(marker, previousPoint, nextPoint);
@@ -243,8 +275,10 @@ L.Polygon.polygonEditor = L.Polygon.extend({
             marker.on('dragend', function(event) {
                 var marker = event.target;
                 var pointNo = that._getPointNo(event.target);
-                that._setBusy(false);
-                that._reloadPolyline(pointNo);
+                setTimeout(function() {
+                    that._setBusy(false);
+                    that._reloadPolygon(pointNo);
+                }, 25);
             });
             // deleting in click and context menu to allow for touch device tap-to-remove
             marker.on('contextmenu dblclick', function(event) {
@@ -253,14 +287,14 @@ L.Polygon.polygonEditor = L.Polygon.extend({
                     return;
                 var marker = event.target;
                 var pointNo = that._getPointNo(event.target);
-                console.log("corners:", corners, "pointNo:", pointNo, marker, newPointMarker);
+                //console.log("corners:", corners, "pointNo:", pointNo);
                 that._map.removeLayer(marker);
                 that._map.removeLayer(newPointMarker);
                 that._markers.splice(pointNo, 1);
-                that._reloadPolyline(pointNo);
+                that._reloadPolygon(pointNo);
             });
             // marker.on('click', function(event) {
-            //     console.log("click");
+            //     //console.log("click");
             //     var marker = event.target;
             //     var pointNo = that._getPointNo(event.target);
             //     if(pointNo == 0 || pointNo == that._markers.length - 1) {
@@ -275,7 +309,7 @@ L.Polygon.polygonEditor = L.Polygon.extend({
             marker.newPointMarker = newPointMarker;
             newPointMarker.on('dragstart', function(event) {
                 var pointNo = that._getPointNo(event.target);
-                console.log("pointNo", pointNo);
+                //console.log("pointNo", pointNo);
                 var previousPoint = pointNo - 1 >= 0 ? that._markers[pointNo - 1].getLatLng() : that._markers[that._markers.length - 1].getLatLng();
                 var nextPoint = that._markers[pointNo].getLatLng();
                 that._setupDragLines(marker.newPointMarker, previousPoint, nextPoint);
@@ -287,8 +321,10 @@ L.Polygon.polygonEditor = L.Polygon.extend({
                 var marker = event.target;
                 var pointNo = that._getPointNo(event.target);
                 that._addMarkers(pointNo, marker.getLatLng(), true);
-                that._setBusy(false);
-                that._reloadPolyline();
+                setTimeout(function() {
+                    that._setBusy(false);
+                    that._reloadPolygon();
+                }, 25);
             });
 
             if (this._options.deletableEdges) {
@@ -302,7 +338,7 @@ L.Polygon.polygonEditor = L.Polygon.extend({
                     var secondPartMarkers = that._markers.slice(pointNo, pointNo.length);
                     that._markers.splice(pointNo, that._markers.length - pointNo);
 
-                    that._reloadPolyline();
+                    that._reloadPolygon();
 
                     var points = [];
                     var contexts = [];
@@ -312,19 +348,19 @@ L.Polygon.polygonEditor = L.Polygon.extend({
                         contexts.push(marker.context);
                     }
 
-                    console.log('points:' + points);
-                    console.log('contexts:' + contexts);
+                    //console.log('points:' + points);
+                    //console.log('contexts:' + contexts);
 
                     // Need to know the current polyline order numbers, because 
                     // the splitted one need to be inserted immediately after:
-                    var originalPolylineNo = that._map._editablePolylines.indexOf(that);
+                    var originalPolygonNo = that._map._editablePolygons.indexOf(that);
 
-                    var newPolyline = L.Polygon.PolygonEditor(points, that._options, contexts, originalPolylineNo + 1)
+                    var newPolyline = L.Polygon.PolygonEditor(points, that._options, contexts, originalPolygonNo + 1)
                                                 .addTo(that._map);
 
                     that._showBoundMarkers();
 
-                    console.log('Done split, _editablePolylines now:' + that._map._editablePolylines.length);
+                    //console.log('Done split, _editablePolygons now:' + that._map._editablePolygons.length);
                 });
             }
 
@@ -348,11 +384,11 @@ L.Polygon.polygonEditor = L.Polygon.extend({
             };
             that._map.on('mousemove', mouseMoveHandler);
             that._map.once('click', function(event) {
-                console.log('dodajemo na ' + pointNo + ' - ' + event.latlng);
+                //console.log('dodajemo na ' + pointNo + ' - ' + event.latlng);
                 that._map.off('mousemove', mouseMoveHandler);
                 that._addMarkers(pointNo, event.latlng, true);
                 that._setBusy(false);
-                that._reloadPolyline();
+                that._reloadPolygon();
             });
         };
 
@@ -362,15 +398,21 @@ L.Polygon.polygonEditor = L.Polygon.extend({
         this._fixNeighbourPositions = function(pointNo) {
             var previousMarker = pointNo == 0 ? this._markers[this._markers.length - 1] : this._markers[pointNo - 1];
             var marker = this._markers[pointNo];
-            var nextMarker = pointNo < this._markers.length ? this._markers[pointNo + 1] : this._markers[0];
-            console.log("_fixNeighbourPositions:", pointNo, this._markers.length, this._markers[pointNo + 1], this._markers[0]);
+            var nextMarker = pointNo < this._markers.length - 1 ? this._markers[pointNo + 1] : this._markers[0];
+            //console.log("_fixNeighbourPositions:", pointNo, this._markers.length);
+            //console.log("markers:", marker, previousMarker, nextMarker);
+            if(!marker && previousMarker && nextMarker) {
+                // //console.log("last point deleted!");
+                nextMarker.newPointMarker.setLatLng([(previousMarker.getLatLng().lat + nextMarker.getLatLng().lat) / 2.,
+                                                     (previousMarker.getLatLng().lng + nextMarker.getLatLng().lng) / 2.]);
+            }
             if(marker && previousMarker) {
-                console.log("marker && previousMarker");
+                // //console.log("marker && previousMarker");
                 marker.newPointMarker.setLatLng([(previousMarker.getLatLng().lat + marker.getLatLng().lat) / 2.,
                                                  (previousMarker.getLatLng().lng + marker.getLatLng().lng) / 2.]);
             }
             if(marker && nextMarker) {
-                console.log("marker && nextMarker");
+                // //console.log("marker && nextMarker");
                 nextMarker.newPointMarker.setLatLng([(marker.getLatLng().lat + nextMarker.getLatLng().lat) / 2.,
                                                      (marker.getLatLng().lng + nextMarker.getLatLng().lng) / 2.]);
             }
@@ -399,12 +441,12 @@ L.Polygon.polygonEditor = L.Polygon.extend({
         };
 
         this._setupDragLines = function(marker, point1, point2) {
-            // console.log("_setupDragLines", marker, point1, point2);
+            // //console.log("_setupDragLines", marker, point1, point2);
             var line1 = null;
             var line2 = null;
-            if(point1) line1 = L.polygon([marker.getLatLng(), point1], {dasharray: "5,1", weight: 1})
+            if(point1) line1 = L.polygon([marker.getLatLng(), point1], {dashArray: "5,5", weight: 1})
                                 .addTo(that._map);
-            if(point2) line2 = L.polygon([marker.getLatLng(), point1], {dasharray: "5,1", weight: 1})
+            if(point2) line2 = L.polygon([marker.getLatLng(), point1], {dashArray: "5,5", weight: 1})
                                 .addTo(that._map);
 
             var moveHandler = function(event) {
@@ -419,7 +461,7 @@ L.Polygon.polygonEditor = L.Polygon.extend({
                 marker.off('dragend', stopHandler);
                 if(line1) that._map.removeLayer(line1);
                 if(line2) that._map.removeLayer(line2);
-                console.log('STOPPED');
+                //console.log('STOPPED');
                 if(event.target != that._map) {
                     that._map.fire('click', event);
                 }
@@ -442,6 +484,7 @@ L.Polygon.polygonEditor.addInitHook(function () {
     this.addTo = function(map) {
         this.originalAddTo(map);
         this._map = map;
+        console.log("this:",this);
 
         this._addMethods();
 
@@ -473,7 +516,7 @@ L.Polygon.polygonEditor.addInitHook(function () {
  * contexts   ... custom contexts for every point in the polyline. Must have the 
  *                same number of elements as latlngs and this data will be 
  *                preserved when new points are added or polylines splitted.
- * polylineNo ... insert this polyline in a specific order (used when splitting).
+ * polygonNo ... insert this polyline in a specific order (used when splitting).
  *
  * More about contexts:
  * This is an array of objects that will be kept as "context" for every 
@@ -487,10 +530,10 @@ L.Polygon.polygonEditor.addInitHook(function () {
  * original order number of this point. The order may change if some 
  * markers before this one are delted or new added.
  */
-L.Polygon.PolygonEditor = function(latlngs, options, contexts, polylineNo) {
+L.Polygon.PolygonEditor = function(latlngs, options, contexts, polygonNo) {
     var result = new L.Polygon.polygonEditor(latlngs, options);
     result._options = options;
     result._contexts = contexts;
-    result._desiredPolylineNo = polylineNo
+    result._desiredPolygonNo = polygonNo
     return result;
 };
