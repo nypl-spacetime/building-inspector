@@ -9,6 +9,7 @@ class Numbers
     @polyData = {}
     @currentIndex = -1
     @currentPolygon = {}
+    @allPolygonsSession = 0
     @_polyData = {}
     @_currentIndex = -1
     @_currentPolygon = {}
