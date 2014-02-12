@@ -212,8 +212,8 @@ class Polygonfix
       # console.table transposed #, @currentGeo
       pointIcon = L.icon(
         iconUrl: '/assets/polygonfix/editmarker.png'
-        iconSize: [21, 21]
-        iconAnchor: [10, 10]
+        iconSize: [28, 60]
+        iconAnchor: [14, 60]
       )
       newPointIcon = L.icon(
         iconUrl: '/assets/polygonfix/editmarker2.png'

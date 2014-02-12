@@ -48,10 +48,6 @@ Webappmini::Application.routes.draw do
 
   get "fixer/sheet_numbers" => "fixer#session_progress_numbers_for_sheet"
 
-  get "viz/sheet/:id" => "visualizer#sheet_flags_json"
-
-  get "viz/sheet" => "visualizer#sheet_flags_view"
-
   get "fixer/map" => "fixer#randomMap"
 
   get "color" => "fixer#color"
@@ -65,6 +61,11 @@ Webappmini::Application.routes.draw do
   # json flagging
   get "fixer/flag" => "fixer#flag_polygon"
   get "fixer/flagnum" => "fixer#many_flags_one_polygon"
+
+  # visualizing
+  get "viz/sheet/:id" => "visualizer#sheet_flags_json"
+  get "viz/sheet" => "visualizer#sheet_flags_view"
+  get "viz/building_consensus" => "visualizer#building_consensus"
 
   root :to => "general#home"
 end

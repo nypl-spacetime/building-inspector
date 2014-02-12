@@ -4,136 +4,61 @@ class Visualizer
 		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859-final/859spec.json', 
 			animate: true
 			attributionControl: true
-			minZoom: 13
+			minZoom: 16
 			maxZoom: 21
 		)
+
+		@overlay2 = L.mapbox.tileLayer('https://s3.amazonaws.com/maptiles.nypl.org/860/860spec.json',
+			zIndex: 3
+		).addTo(@map)
+
 
 		@no_color = '#AF2228'
 		@yes_color = '#609846'
 		@fix_color = '#FFB92D'
 		@nil_color = '#AAAAAA'
 
-		@resetSheet()
+		v = @
+		@map.on 'load', () ->
+			v.getPolygons()
 
-		s = @
-		@map.on
-			load: () ->
-				s.getSheets()
-
-	resetSheet: () ->
-		@map.removeLayer @sheet if @map.hasLayer @sheet
-		@sheet = L.geoJson({features:[]},
-			style: (feature) ->
-				color: @nil_color
-				opacity: 0
-				fillOpacity: 0.5
-				stroke: false
-		).addTo @map
-
-	getSheets: () ->
+	getPolygons: () =>
 		data = $('#vizdata').data("map")
 
-		@geo = L.geoJson({features:[]},
-			style: (feature) ->
-				color: '#fff'
-				weight: 1
-				stroke: false
-				fillOpacity: 0.005
-			onEachFeature: @onEachFeature
-		)
+		no_color = '#AF2228'
+		yes_color = '#609846'
+		fix_color = '#FFB92D'
+		nil_color = '#AAAAAA'
 
-		@parse sheet for sheet in data
+		console.log data
 
-		@geo.addTo @map
-
-	parse: (sheet) ->
-		# define rectangle geographical bounds
-		# data comes: W, S, E, N
-		bbox = sheet["bbox"].split ","
-		
-		W = parseFloat(bbox[0])
-		S = parseFloat(bbox[1])
-		E = parseFloat(bbox[2])
-		N = parseFloat(bbox[3])
-
-		SW = new L.LatLng(S, W)
-		NW = new L.LatLng(N, W)
-		NE = new L.LatLng(N, E)
-		SE = new L.LatLng(S, E)
-
-		bounds = new L.LatLngBounds(SW, NE)
-
-		json = 
-			type : "Feature"
-			properties:
-				id: sheet.id
-				map_id: sheet.map_id
-			geometry:
-				type: "Polygon"
-				coordinates: [[[W,S],[W,N],[E,N],[E,S]]]
-		@geo.addData json
-
-	onEachFeature: (f,l) =>
-		s = @
-
-		l.on
-			mouseover: s.highlightFeature
-			mouseout: s.resetHighlight
-			click: s.zoomToFeature
-
-	highlightFeature: (e) =>
-		l = e.target
-
-		$("#info").text("Sheet: " + l.feature.properties.map_id)
-
-		l.setStyle
-			weight: 1
-			stroke: true
-			color: '#b00'
-			fillOpacity: 0.1
-		
-		l.bringToFront()
-
-	resetHighlight: (e) =>
-		$("#info").text("")
-		@geo.resetStyle(e.target)
-
-	zoomToFeature: (e) =>
-		l = e.target
-		@sheet_id = l.feature.properties.id
-		@map.panTo(l.getBounds().getCenter())
-		@startPlayback()
-
-	getPolygons: () ->
-		v = @
-		$.getJSON('/viz/sheet/' + @sheet_id + '.json', (data) ->
-			v.processPolygons(data)
-		)
-
-	processPolygons: (data) ->
-		return if data.polygons.length==0
+		return if data.poly.features.length==0
 
 		m = @map
 
-		for polygon in data.polygons
-			json = 
-				type : "Feature"
-				properties:
-					id: polygon.id
-				geometry:
-					type: "Polygon"
-					coordinates: $.parseJSON(polygon.geometry)
+		p_json = L.geoJson(data.poly,
+			style: (feature) ->
+				color: fix_color
+				fillColor: false
+				stroke: false
+				opacity: 0
+				fillOpacity: 0.7
+			onEachFeature: (f,l) ->
+				out = for key, val of f.properties
+					val = "<a href='/polygons/#{val}'>#{val}</a>" if key == "id"
+					"<strong>#{key}:</strong> #{val}"
+				l.bindPopup(out.join("<br />"))
+				l.on 'click', ()->
+					m.fitBounds(@.getBounds())
+		)
 
-			@sheet.addData json
+		bounds = new L.LatLngBounds()
 
-		@map.fitBounds(@sheet.getBounds())
+		if data.poly.features.length>0
+			p_json.addTo(m)
+			bounds.extend(p_json.getBounds())
 
-	stopPlayback: () ->
-		@resetSheet()
-
-	startPlayback: () ->
-		@resetSheet()
-		@getPolygons()
+		m.fitBounds(bounds)
 
 $ ->
 	window._viz = new Visualizer

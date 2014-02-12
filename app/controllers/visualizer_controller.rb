@@ -19,4 +19,20 @@ class VisualizerController < ApplicationController
 		@sheets = Sheet.all
 	end
 
+  def building_consensus
+    all_polygons = Polygon.where("consensus = ?", params[:type])
+    poly = []
+    all_polygons.each do |p|
+      poly.push(p.to_geojson)
+    end
+
+    @map = {}
+    @map[:poly] = { :type => "FeatureCollection", :features => poly }
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @polygon }
+    end
+  end
+
 end

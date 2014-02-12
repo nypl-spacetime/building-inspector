@@ -70,6 +70,8 @@ L.Polygon.polygonEditor = L.Polygon.extend({
                 that._showBoundMarkers();
             });
 
+            this._lastMouseEvent = undefined;
+
             if('_desiredPolygonNo' in this) {
                 this._map._editablePolygons.splice(this._desiredPolygonNo, 0, this);
             } else {
@@ -295,6 +297,11 @@ L.Polygon.polygonEditor = L.Polygon.extend({
             var marker = L.marker(latLng, {draggable: true, icon: this.pointIcon});
 
             marker.newPointMarker = null;
+
+            marker.on('mousedown', function (e) {
+                console.log("DOWN!", e);
+                that._lastMouseEvent = e.originalEvent;
+            });
             marker.on('dragstart', function(event) {
                 var pointNo = that._getPointNo(event.target);
                 //console.log("pointNo", pointNo);
@@ -325,14 +332,6 @@ L.Polygon.polygonEditor = L.Polygon.extend({
                 that._markers.splice(pointNo, 1);
                 that._reloadPolygon(pointNo);
             });
-            // marker.on('click', function(event) {
-            //     //console.log("click");
-            //     var marker = event.target;
-            //     var pointNo = that._getPointNo(event.target);
-            //     if(pointNo == 0 || pointNo == that._markers.length - 1) {
-            //         that._prepareForNewPoint(marker, pointNo == 0 ? 0 : pointNo + 1);
-            //     }
-            // });
 
             var previousPoint = points[pointNo == 0 ? points.length - 1 : pointNo - 1];
             var newPointMarker = L.marker([(latLng.lat + previousPoint.lat) / 2.,
@@ -406,25 +405,6 @@ L.Polygon.polygonEditor = L.Polygon.extend({
         };
 
         /**
-         * Event handlers for first and last point.
-         */
-        this._prepareForNewPoint = function(marker, pointNo) {
-            that._hideAll();
-            that._setupDragLines(marker, marker.getLatLng());
-            var mouseMoveHandler = function(event) {
-                that._setBusy(true);
-            };
-            that._map.on('mousemove', mouseMoveHandler);
-            that._map.once('click', function(event) {
-                //console.log('dodajemo na ' + pointNo + ' - ' + event.latlng);
-                that._map.off('mousemove', mouseMoveHandler);
-                that._addMarkers(pointNo, event.latlng, true);
-                that._setBusy(false);
-                that._reloadPolygon();
-            });
-        };
-
-        /**
          * Fix nearby new point markers when the new point is created.
          */
         this._fixNeighbourPositions = function(pointNo) {
@@ -476,16 +456,29 @@ L.Polygon.polygonEditor = L.Polygon.extend({
             // //console.log("_setupDragLines", marker, point1, point2);
             var line1 = null;
             var line2 = null;
-            if(point1) line1 = L.polygon([marker.getLatLng(), point1], {dashArray: "5,5", weight: 1})
+            var markerLatlng = marker.getLatLng();
+            var offsetLat = 0;
+            var offsetLng = 0;
+            if (this._lastMouseEvent) {
+                var mousePoint = this._map.mouseEventToLatLng(this._lastMouseEvent);
+                offsetLat = markerLatlng.lat - mousePoint.lat;
+                offsetLng = markerLatlng.lng - mousePoint.lng;
+                // console.log(markerLatlng, mouseLatlng);
+            }
+            // console.log(markerLatlng, this._lastMouseEvent);
+            if(point1) line1 = L.polyline([markerLatlng, point1], {dashArray: "5,5", weight: 1})
                                 .addTo(that._map);
-            if(point2) line2 = L.polygon([marker.getLatLng(), point1], {dashArray: "5,5", weight: 1})
+            if(point2) line2 = L.polyline([markerLatlng, point1], {dashArray: "5,5", weight: 1})
                                 .addTo(that._map);
 
             var moveHandler = function(event) {
+                // add the offsets from the marker
+                // so aux lines appear in the tip of the marker
+                var latlngPoint = L.latLng(event.latlng.lat + offsetLat, event.latlng.lng + offsetLng);
                 if(line1)
-                    line1.setLatLngs([event.latlng, point1]);
+                    line1.setLatLngs([latlngPoint, point1]);
                 if(line2)
-                    line2.setLatLngs([event.latlng, point2]);
+                    line2.setLatLngs([latlngPoint, point2]);
             };
 
             var stopHandler = function(event) {
