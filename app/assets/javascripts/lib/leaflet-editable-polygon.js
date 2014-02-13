@@ -299,7 +299,6 @@ L.Polygon.polygonEditor = L.Polygon.extend({
             marker.newPointMarker = null;
 
             marker.on('mousedown', function (e) {
-                console.log("DOWN!", e);
                 that._lastMouseEvent = e.originalEvent;
             });
             marker.on('dragstart', function(event) {
@@ -312,6 +311,7 @@ L.Polygon.polygonEditor = L.Polygon.extend({
                 that._hideAll(marker);
             });
             marker.on('dragend', function(event) {
+                that._lastMouseEvent = undefined;
                 var marker = event.target;
                 var pointNo = that._getPointNo(event.target);
                 setTimeout(function() {

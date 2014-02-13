@@ -7,301 +7,351 @@
 @import "numbers";
 
 #loader {
-	width: 100%;
-	height: 100%;
-	background: $white;
-	font-size: 30px;
-	line-height: 120px;
-	z-index: 1;
-	position: absolute;
+  width: 100%;
+  height: 100%;
+  background: $white;
+  font-size: 30px;
+  line-height: 120px;
+  z-index: 1;
+  position: absolute;
 
-	@media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
-		display: none;
-	}
+  @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
+    display: none;
+  }
+}
+
+input[type=checkbox].css-checkbox {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height:1px;
+  width:1px;
+  margin:-1px;
+  padding:0;
+  border:0;
+}
+
+input[type=checkbox].css-checkbox + label.css-label {
+  padding-left:20px;
+  height:15px;
+  display:inline-block;
+  line-height:15px;
+  background-repeat:no-repeat;
+  background-position: 0 0;
+  font-size:15px;
+  vertical-align:middle;
+  cursor:pointer;
+}
+
+input[type=checkbox].css-checkbox:checked + label.css-label {
+  background-position: 0 -15px;
+}
+
+.css-label{
+  background-image:url(/assets/dark-check-green.png);
+  font-weight: normal;
 }
 
 #buttons {
-	.wrapper {
-		position: relative;
-		width: 290px;
-		height: 80px;
-		margin: 0 auto;
+  .wrapper {
+    position: relative;
+    width: 290px;
+    height: 80px;
+    margin: 0 auto;
 
-		@include clearfix;
-	}
+    @include clearfix;
+  }
 
-	#one-hand {
-		display: none;
-		position: absolute;
-		margin: 0;
-		padding: 0;
-		top: -70px;
-		left: 10px;
-		width: 30px;
-		height: 30px;
-		background: $grayLight;
-		line-height: 21px;
-		font-size: 16px;
-		@include border-radius(20px);
+  .multiple {
+    text-align: center;
+    text-transform: none;
+    color: $grayLighter;
+    margin-top: 5px;
 
-		@media screen and (max-width: $desktopwidth) {
-			display: block;
-		}
-	}
+    @media screen and (max-width: $desktopwidth) {
+      color: $grayDarker;
+    }
 
-	@media screen and (max-width: $desktopwidth) {
-		.wrapper {
-			overflow: visible;
-		}
+    label {
+      margin: 5px 0;
+    }
+  }
 
-		a {
-			@include transition-property(left,top);
-			@include transition-duration(.2s);
-			@include transition-timing-function(ease-out); 
-		}
+  #one-hand {
+    display: none;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: -70px;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    background: $grayLight;
+    line-height: 21px;
+    font-size: 16px;
+    @include border-radius(20px);
 
-		#yes-button, #no-button, #fix-button {
-			position: absolute;
-		}
+    @media screen and (max-width: $desktopwidth) {
+      display: block;
+    }
+  }
 
-		#yes-button {
-			left: 200px;
-			top: 0;
-		}
+  @media screen and (max-width: $desktopwidth) {
+    .wrapper {
+      overflow: visible;
+    }
 
-		#no-button {
-			left: 0;
-			top: 0;
-		}
+    a {
+      @include transition-property(left,top);
+      @include transition-duration(.2s);
+      @include transition-timing-function(ease-out);
+    }
 
-		#fix-button {
-			left: 100px;
-			top: 0;
-		}
-	}
+    #yes-button, #no-button, #fix-button {
+      position: absolute;
+    }
 
-	&.left, &.right {
-		#yes-button, #no-button, #fix-button {
-			width: 70px;
-			@include border-radius(40px);
-		}
-	}
+    #yes-button {
+      left: 200px;
+      top: 0;
+    }
 
-	&.left {
-		#one-hand {
-			left: 10px;
-			top: 40px;
-		}
+    #no-button {
+      left: 0;
+      top: 0;
+    }
 
-		#yes-button {
-			left: 100px;
-		}
+    #fix-button {
+      left: 100px;
+      top: 0;
+    }
+  }
 
-		#no-button {
-			left: 0;
-			top: -100px;
-		}
+  &.left, &.right {
+    #yes-button, #no-button, #fix-button {
+      width: 70px;
+      @include border-radius(40px);
+    }
+  }
 
-		#fix-button {
-			left: 71px;
-			top: -71px;
-		}
-	}
+  &.left {
+    #one-hand {
+      left: 10px;
+      top: 40px;
+    }
 
-	&.right {
-		#one-hand {
-			left: 230px;
-			top: 40px;
-		}
+    #yes-button {
+      left: 100px;
+    }
 
-		#yes-button {
-			left: 210px;
-			top: -100px;
-		}
+    #no-button {
+      left: 0;
+      top: -100px;
+    }
 
-		#no-button {
-			top: 0;
-			left: 80px;
-		}
+    #fix-button {
+      left: 71px;
+      top: -71px;
+    }
+  }
 
-		#fix-button {
-			left: 126px;
-			top: -71px;
-		}
-	}
+  &.right {
+    #one-hand {
+      left: 230px;
+      top: 40px;
+    }
+
+    #yes-button {
+      left: 210px;
+      top: -100px;
+    }
+
+    #no-button {
+      top: 0;
+      left: 80px;
+    }
+
+    #fix-button {
+      left: 126px;
+      top: -71px;
+    }
+  }
 
 }
 
 .wrapper a, .wrapper span {
-	width: 80px;
-	height: 45px;
-	margin: 10px;
-	padding-top: 20px;
-	float: left;
-	text-align: center;
-	text-decoration: none;
-	color: $white;
+  width: 80px;
+  height: 45px;
+  margin: 10px;
+  padding-top: 20px;
+  float: left;
+  text-align: center;
+  text-decoration: none;
+  color: $white;
 
-	@include rounded-corners(10px);
+  @include rounded-corners(10px);
 
-	&:first-child {
-		margin-left: 5px;
-	}
+  &:first-child {
+    margin-left: 5px;
+  }
 
-	&:last-child {
-		margin-right: 5px;
-	}
+  &:last-child {
+    margin-right: 5px;
+  }
 
-	&.button {
-		background-color: $grayDarker;
-	}
+  &.button {
+    background-color: $grayDarker;
+  }
 
-	&#no-button, &.red {
-		margin-left: 5px;
-		background-color: $nocolor;
-	}
+  &#no-button, &.red {
+    margin-left: 5px;
+    background-color: $nocolor;
+  }
 
-	&#fix-button, &.yellow {
-		// height: 65px;
-		// padding-top: 25px;
-		// color: $black;
-		background-color: $fixcolor;
-	}
+  &#fix-button, &.yellow {
+    // height: 65px;
+    // padding-top: 25px;
+    // color: $black;
+    background-color: $fixcolor;
+  }
 
-	&#yes-button, &.green {
-		margin-right: 5px;
-		background-color: $yescolor;
-	}
+  &#yes-button, &.green {
+    margin-right: 5px;
+    background-color: $yescolor;
+  }
 
-	&#submit-button {
-		background: $green;
-		margin-left: 60px;
-		width: 180px;
-	}
+  &#submit-button {
+    background: $green;
+    margin-left: 60px;
+    margin-top: 5px;
+    width: 180px;
+    height: 35px;
+    line-height: 25px;
+  }
 
-	&#no-button.active, &#fix-button.active, &#yes-button.active , &#submit-button.active {
-		font-size: 24px;
-	}
+  &#no-button.active, &#fix-button.active, &#yes-button.active , &#submit-button.active {
+    font-size: 24px;
+  }
 
-	&#no-button.inactive, &#fix-button.inactive, &#yes-button.inactive {
-		color: transparent;
-		background-color: transparent;
-	}
+  &#no-button.inactive, &#fix-button.inactive, &#yes-button.inactive {
+    color: transparent;
+    background-color: transparent;
+  }
 
-	&.building {
-		// width: 80px;
-	}
+  &.building {
+    // width: 80px;
+  }
 
-	&.centered {
-		margin: 50px auto 0;
-		float: none;
-		display: block;
-	}
+  &.centered {
+    margin: 50px auto 0;
+    float: none;
+    display: block;
+  }
 
-	&#yes-button:hover, &#no-button:hover, &#fix-button:hover {
-		background: $grayDarker;
-	}
+  &#yes-button:hover, &#no-button:hover, &#fix-button:hover {
+    background: $grayDarker;
+  }
 }
 
 #map-inspecting {
-	display: none;
-	position: absolute;
-	width: 100%;
-	text-align: center;
-	top: 35%;
-	z-index: 101;
+  display: none;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 35%;
+  z-index: 101;
 
-	span {
-		display: inline-block;
-		width: 200px;
-		margin: 0 auto;
-		padding: 10px;
-		color: $white;
-		background: $grayDarker;
-		@include border-radius(10px);
-	}
+  span {
+    display: inline-block;
+    width: 200px;
+    margin: 0 auto;
+    padding: 10px;
+    color: $white;
+    background: $grayDarker;
+    @include border-radius(10px);
+  }
 }
 
 #map-tutorial {
-	display: none;
-	width: 100%;
-	height: 100%;
-	position: relative;
-	// left: 140px;
-	// top: 2%;
-	z-index: 110;
-	background-color: $gray;
-	// @include box-shadow(0, 0, 15px);
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  // left: 140px;
+  // top: 2%;
+  z-index: 110;
+  background-color: $gray;
+  // @include box-shadow(0, 0, 15px);
 
-	@media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
-		display: none !important;
-	}
+  @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
+    display: none !important;
+  }
 
-	#link-exit-tutorial {
-		font-size: 30px;
-		width: 160px;
-		cursor: pointer;
+  #link-exit-tutorial {
+    font-size: 30px;
+    width: 160px;
+    cursor: pointer;
 
-		&:hover {
-			background: $grayDarker;
-		}
-	}
+    &:hover {
+      background: $grayDarker;
+    }
+  }
 
-	.slides {
-		// height: 540px;
+  .slides {
+    // height: 540px;
 
-		.slide {
-			padding-top: 0;
+    .slide {
+      padding-top: 0;
 
-			position: absolute;
-			bottom: 10px;
-			width: 100%;
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
 
-			@include clearfix;
+      @include clearfix;
 
-			.wrapper {
-				width: 290px;
-				margin: 0 auto;
-			}
+      .wrapper {
+        width: 290px;
+        margin: 0 auto;
+      }
 
-		}
+    }
 
-		p, h2 {
-			text-align: center;
-			color: $grayLightest;
-			margin-left: 20px;
-			margin-right: 20px;
-			margin-top: 0;
-			margin: 0 10px 10px;
-			clear: both;
-		}
+    p, h2 {
+      text-align: center;
+      color: $grayLightest;
+      margin-left: 20px;
+      margin-right: 20px;
+      margin-top: 0;
+      margin: 0 10px 10px;
+      clear: both;
+    }
 
-		p:first-child {
-			padding-top: 40px;
-		}
+    p:first-child {
+      padding-top: 40px;
+    }
 
-		img {
-			display: block;
-			margin: 0 auto;
-		}
+    img {
+      display: block;
+      margin: 0 auto;
+    }
 
-		a {
-			color: $white;
-		}
-	}
+    a {
+      color: $white;
+    }
+  }
 
-	.overlay {
-		z-index: 12;
-		position: absolute;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		right: 0;
+  .overlay {
+    z-index: 12;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 
-		@include clearfix;
-	}
+    @include clearfix;
+  }
 
-	.dots {
-		bottom: 0;
-	}
+  .dots {
+    bottom: 0;
+  }
 }
