@@ -4,32 +4,46 @@ help_link = "/numbers?tutorial=true" if @current_page=="progress_numbers" || @cu
 help_link = "javascript:;" if @current_page=="fixer" || @current_page=="numbers"
 %>
 <div id="top-nav">
-	<%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:class => "nypl-logo", :title => "Visit NYPL.org"} %>
-	<h1 class="logo"><a href="/" id="home-logo"><span>Building Inspector</span></a></h1>
-	<div id="task-container">
-		<ul id="task-toggle">
-			<li><%= link_to "Footprints", footprints_path, {:rel=>"nofollow", :class=>"shown closed"} %></li>
-			<li class="hidden"><%= link_to "Addresses", addresses_path, {:rel=>"nofollow"} %></li>
-			<li class="hidden"><%= link_to "Fix polygons", polygons_path, {:rel=>"nofollow"} %></li>
-		</ul>
-		<%= link_to "HELP", "#{help_link}", {:id => "link-help", :class => "icon"} %>
-	</div>
-	<div id="top-score-container">
-		<%= link_to "T", "", {:onclick=>"javascript:_gaq.push(['_trackEvent', 'Tweet']);",:id => "tweet", :title => "Share on Twitter"} %>
-		<span id="top-score">2,378</span>
-		<div id="links-account">
-		<% if user_signed_in? %>
-			<%= link_to "LOG OUT " + truncate(current_user.name, :length => 15, :omission => '…'), destroy_user_session_path, method: :delete, :id => "link-logout", :class=>"icon" %>
-		<% else %>
-			<%= link_to "LOG IN", "javascript:;", {:id => "link-login", :class => "icon score-save-link"} %>
-			<div class="sign-in-options">
-				<%= link_to "Sign In With Gmail", user_omniauth_authorize_path(:google_oauth2), {:class => "sign-in-link"} %>
-				<%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), {:class => "sign-in-link"} %>
-				<%= link_to "Sign in with Twitter", user_omniauth_authorize_path(:twitter), {:class => "sign-in-link"} %>
-				<div class="sign-in-callout"></div>
-			</div>
-		<% end %>
-		</div>
-		<%= link_to "ABOUT", "/general/about", {:id => "link-about", :class => "icon"} %>
-	</div>
+  <%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:class => "nypl-logo", :title => "Visit NYPL.org"} %>
+  <h1 class="logo"><a href="/" id="home-logo"><span>Building Inspector</span></a></h1>
+  <div id="task-container">
+    <ul id="task-toggle">
+      <li><%= link_to "Footprints", footprints_path, {:rel=>"nofollow", :class=>"shown closed"} %></li>
+      <li class="hidden"><%= link_to "Addresses", addresses_path, {:rel=>"nofollow"} %></li>
+      <li class="hidden"><%= link_to "Fix polygons", polygons_path, {:rel=>"nofollow"} %></li>
+    </ul>
+    <%= link_to "HELP", "#{help_link}", {:id => "link-help", :class => "icon"} %>
+  </div>
+  <div id="service-links">
+    <div id="links-account">
+    <% if user_signed_in? %>
+      <%= link_to "LOG OUT " + truncate(current_user.name, :length => 15, :omission => '…'), destroy_user_session_path, method: :delete, :id => "link-logout", :class=>"icon" %>
+    <% else %>
+      <%= link_to "LOG IN", "javascript:;", {:id => "link-login", :class => "icon score-save-link"} %>
+      <div class="sign-in-options">
+        <%= link_to "Sign In With Gmail", user_omniauth_authorize_path(:google_oauth2), {:class => "sign-in-link"} %>
+        <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), {:class => "sign-in-link"} %>
+        <%= link_to "Sign in with Twitter", user_omniauth_authorize_path(:twitter), {:class => "sign-in-link"} %>
+        <div class="sign-in-callout"></div>
+      </div>
+    <% end %>
+    </div>
+    <%= link_to "ABOUT", "/general/about", {:id => "link-about", :class => "icon"} %>
+  </div>
+  <div id="top-score-container">
+    <%= link_to "T", "", {:onclick=>"javascript:_gaq.push(['_trackEvent', 'Tweet']);",:id => "tweet", :title => "Share on Twitter"} %>
+    <span id="top-score">2,378</span>
+    <div id="score-progress">
+    <% if @current_page=="progress" %>
+    <a href="/building" class="score-link">INSPECT MORE</a>
+    <% elsif @current_page=="fixer" %>
+    <a href="/fixer/progress" class="score-link">VIEW INSPECTIONS</a>
+    <% elsif @current_page=="progress_numbers" %>
+    <a href="/numbers" class="score-link">INSPECT MORE</a>
+    <% elsif @current_page=="numbers" %>
+    <a href="/numbers/progress" class="score-link">VIEW INSPECTIONS</a>
+    <% else %>
+    <% end %>
+    </div>
+  </div>
 </div>

@@ -198,13 +198,15 @@
 		}
 	}
 	
-	#score-progress {
-		float: right;
-		text-align: right;
+}
 
-		@media screen and (max-width: $desktopwidth) {
-			width: 110px;
-		}
+#score-progress {
+	// float: right;
+	// text-align: right;
+	font-size: 0.7em;
+
+	@media screen and (max-width: $desktopwidth) {
+		width: 110px;
 	}
 }
 
