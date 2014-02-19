@@ -49,6 +49,10 @@ h3 {
   }
 }
 
+a, a:link, a:visited, a:hover {
+  text-decoration: none;
+}
+
 .nypl-logo {
   color: $grayLightest;
   text-align: center;
@@ -171,6 +175,7 @@ h3 {
 
   h1.logo {
     background: asset-url("logo-horizontal.svg", image) center no-repeat;
+      -webkit-font-smoothing: antialiased;
     color: $grayLightest;
     width: 235px;
     height: 27px;
@@ -223,9 +228,8 @@ h3 {
   float: left;
   color: $grayDark;
   width: 300px;
-  height: 20px;
   text-transform: uppercase;
-  margin: 34px 20px;
+  margin: 29px 20px 0;
 }
 
 #task-toggle {
@@ -239,9 +243,8 @@ h3 {
     display: block;
     background: $grayLightest;
     color: $grayDarkest;
-    padding: 5px 2px 5px 12px;
+    padding: 10px 2px 10px 12px;
     line-height: 20px;
-    @include border-radius(3px);
 
     &:hover {
       background: $grayDarkest;
@@ -255,7 +258,7 @@ h3 {
       content: "V";
       position: absolute;
       right: 10px;
-      top: 5px;
+      top: 10px;
     }
 
   }
@@ -271,11 +274,33 @@ h3 {
 
 #link-help {
   float: left;
-  margin: 3px 10px;
+  margin: 8px 10px;
+}
+
+a#tweet {
+  display: inline-block;
+  // position: absolute;
+  // right: -30px;
+  // top: 5px;
+  color: $grayLightest;
+  width: 20px;
+  height: 20px;
+  // font-size: 20px;
+  content: attr(data-icon);
+  font-family:$iconfont;
+  -webkit-font-smoothing: antialiased;
 }
 
 #top-score-container {
   float: right;
+  margin: 37px 20px 0;
+}
+
+#top-score {
+  font-size: 2em;
+  line-height: 0;
+  color: $black;
+  font-weight: bold;
 }
 
 .close {
@@ -444,68 +469,12 @@ a.home-big-link {
   color: $grayDarkest;
 }
 
-.sign-in-options {
-  position: absolute;
-  bottom: 30px;
-  left: -60px;
-  background: $grayLightest;
-  padding: 12px;
-  width: 180px;
-  display: none;
-  @include border-radius(10px);
-
-  @media screen and (max-width: $desktopwidth) {
-    width: 160px;
-    left: 0;
-    bottom: inherit;
-    top: 24px;
-  }
-
-  .sign-in-link {
-    background: $grayLighter;
-    display: block;
-    margin-top: 6px;
-    padding: 6px;
-    @include border-radius(6px);
-
-    @media screen and (max-width: $desktopwidth) {
-      padding: 12px 6px;
-    }
-    
-    &:first-child {
-      margin-top: 0;
-    }
-    &:hover {
-      background: $grayDark;
-      color: $grayLighter;
-    }
-  }
-  .sign-in-callout {
-    position: absolute;
-    bottom: -10px;
-    left: 80px;
-    width: 0; 
-    height: 0; 
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid $grayLightest;
-
-    @media screen and (max-width: $desktopwidth) {
-      left: 10px;
-      bottom: inherit;
-      top: -10px;
-      border-top: none;
-      border-bottom: 10px solid $grayLightest;
-    }
-  }
-}
-
 #links-account {
   position: relative;
   display: inline-block;
   padding: 0;
-  margin-right: 1px;
-  font-size: 12px;
+  margin: 0 20px 0 20px;
+  // font-size: 12px;
   text-transform: uppercase;
 
   @media screen and (max-width: $desktopwidth) {
@@ -513,12 +482,15 @@ a.home-big-link {
   }
 
   .sign-in-options {
+    position: absolute;
     top: 40px;
     bottom: inherit;
-    left: -50%;
+    left: -70%;
     background: $grayDark;
-    font-size: 12px;
-    line-height: 12px;
+    width: 200px;
+    display: none;
+    // font-size: 12px;
+    // line-height: 12px;
 
     @media screen and (max-width: $desktopwidth) {
       font-size: 10px;
@@ -528,22 +500,33 @@ a.home-big-link {
     }
 
     .sign-in-link {
+      background: $grayDark;
+      display: block;
+      font-size: 0.9em;
+      // margin-top: 6px;
+      padding: 10px;
+      // @include border-radius(6px);
 
       @media screen and (max-width: $desktopwidth) {
         padding: 12px 6px;
       }
-      
+
       &:hover {
-        background: $grayDark;
-        color: $grayLighter;
+        background: $grayLighter;
+        color: $grayDarkest;
       }
     }
 
     .sign-in-callout {
+      position: absolute;
+      top: -10px;
+      left: 80px;
+      width: 0; 
+      height: 0; 
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
       border-top: none;
       border-bottom: 10px solid $grayDark;
-      top: -10px;
-      bottom: inherit;
 
       @media screen and (max-width: $desktopwidth) {
         left: inherit;
