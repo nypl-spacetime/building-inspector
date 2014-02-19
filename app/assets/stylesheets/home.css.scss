@@ -4,21 +4,21 @@
 @import "variables";
 @import "compass/css3/transform";
 
-#top-nav {
-	h1.logo {
-		/*left: 40%;*/
-		width: 230px;
-		height: 202px;
-		top: -10px;
+// #top-nav {
+// 	h1.logo {
+// 		/*left: 40%;*/
+// 		width: 230px;
+// 		height: 202px;
+// 		top: -10px;
 
-		@media screen and (max-width: $desktopwidth) {
-			height: 144px;
-			width: 167px;
-			background-position-y: 0;
-			top: 45px;
-		}
-	}
-}
+// 		@media screen and (max-width: $desktopwidth) {
+// 			height: 144px;
+// 			width: 167px;
+// 			background-position-y: 0;
+// 			top: 45px;
+// 		}
+// 	}
+// }
 
 #main-container {
 	background: url(/assets/pattern.svg) $grayLight -50px 120px;

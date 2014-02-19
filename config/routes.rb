@@ -52,11 +52,11 @@ Webappmini::Application.routes.draw do
 
   get "color" => "fixer#color"
 
-  get "building" => "fixer#building"
+  get "building" => "fixer#building", :as => "footprints"
 
-  get "numbers" => "fixer#numbers"
+  get "numbers" => "fixer#numbers", :as => "addresses"
   
-  get "polygonfix" => "fixer#polygonfix"
+  get "polygonfix" => "fixer#polygonfix", :as => "polygons"
 
   # json flagging
   get "fixer/flag" => "fixer#flag_polygon"

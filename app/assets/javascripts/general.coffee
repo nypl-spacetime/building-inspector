@@ -6,6 +6,7 @@ class General
 		
 		$("#link-score-save").on("click", @toggleBottomSigninOptions)
 		$("#link-login").on("click", @toggleTopSigninOptions)
+		$("#task-container .shown").on("click", @onTaskClick)
 		$("body").on("click", @onBodyClick)
 
 		if (window.innerWidth < 500)
@@ -40,8 +41,15 @@ class General
 		e.stopPropagation()
 
 	onBodyClick: (e) ->
+		if !$(e.target).closest('#task-container').length
+			$("#task-container .hidden").hide()
 		if !$(e.target).closest('.sign-in-options').length
 			$('.sign-in-options').hide()
+
+	onTaskClick: (e) ->
+		e.preventDefault()
+		e.stopPropagation()
+		$("#task-container .hidden").toggle()
 
 	# deep copy method
 	# see: http://coffeescriptcookbook.com/chapters/classes_and_objects/cloning

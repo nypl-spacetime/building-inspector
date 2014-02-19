@@ -10,502 +10,547 @@ html {
 }
 
 body {
-	font-family: $mainfont;
-	background: $gray;
-	color: $grayDarker;
+  font-family: $mainfont;
+  font-size: $baseFontSize;
+  background: $gray;
+  color: $grayDarker;
+}
+
+div {
+  font-size: 1em;
 }
 
 table td, table th {
-	padding: 5px;
+  padding: 5px;
 }
 
 p {
-	margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
 h3 {
-	margin: 0 auto 20px;
-	text-align: center;
+  margin: 0 auto 20px;
+  text-align: center;
 }
 
 #nav-admin {
-	background: $grayDarkest;
-	padding: 10px 0 0 10px;
+  background: $grayDarkest;
+  padding: 10px 0 0 10px;
 
-	@include clearfix;
+  @include clearfix;
 
-	li {
-		float: left;
-		margin: 0 10px 10px 0;
-	}
+  li {
+    float: left;
+    margin: 0 10px 10px 0;
+  }
 
-	a {
-		color: $grayLightest;
-	}
+  a {
+    color: $grayLightest;
+  }
 }
 
 .nypl-logo {
-	color: $grayLighter;
-	text-align: center;
-	display: block;
-	width: 200px;
-	margin: 0 auto 10px;
+  color: $grayLightest;
+  text-align: center;
+  display: block;
+  width: 200px;
+  margin: 0 auto 10px;
 
-	&:hover {
-		color: $grayLighter;
-		text-decoration: none;
-	}
+  &:hover {
+    color: $grayLightest;
+    text-decoration: none;
+  }
 
-	&:before {
-		content: attr(data-icon);
-		font-family:$iconfont;
-		color: $grayLighter;
-		-webkit-font-smoothing: antialiased;
-		content: 'W'; //N W
-		display: block;
-		font-size: 30px;
-		margin-bottom: 5px;
-	}
+  &:before {
+    content: attr(data-icon);
+    font-family:$iconfont;
+    color: $grayLightest;
+    -webkit-font-smoothing: antialiased;
+    content: 'W'; //N W
+    display: block;
+    font-size: 30px;
+    margin-bottom: 5px;
+  }
 }
 
 .nypl-logo-loader {
-	content: attr(data-icon);
-	font-family:$iconfont;
-	// color: $grayLighter;
-	-webkit-font-smoothing: antialiased;
-	display: block;
-	font-size: 40px;
-	margin-bottom: 5px;
+  content: attr(data-icon);
+  font-family:$iconfont;
+  // color: $grayLighter;
+  -webkit-font-smoothing: antialiased;
+  display: block;
+  font-size: 40px;
+  margin-bottom: 5px;
 }
 
 #top-nav {
-	height: 100px;
-	background: $grayLightest;
-	position: absolute;
-	top: 0;
-	right: 0;
-	left: 0;
-	z-index: 110;
+  height: 100px;
+  color: $grayLightest;
+  background: $grayDarker;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 110;
 
-	@media screen and (max-width: $desktopwidth) {
-		height: 40px;
-	}
+  @media screen and (max-width: $desktopwidth) {
+    height: 40px;
+  }
 
-	@media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
-		display: none;
-	}
+  @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
+    display: none;
+  }
 
-	a {
-		color: $grayDark;
+  a {
+    color: $grayLightest;
 
 
-		&.icon {
-			display: inline-block;
-			padding: 5px 10px;
-			background: $grayLighter;
-			font-size: 12px;
+    &.icon {
+      display: inline-block;
+      // padding: 5px 10px;
+      // background: $grayLighter;
+      // font-size: 12px;
 
-			&:hover {
-				background: $grayDark;
-				color: $grayLighter;
-			}
+      // &:hover {
+      //   background: $grayLightest;
+      //   color: $grayLighter;
+      // }
 
-			&#link-login, &#link-logout {
-				line-height: 24px;
-
-				&:before {
-					content: "0";
-				}
-			}
-
-			&#link-help {
-				margin-right: 1px;
-				&:before {
-					content: "?";
-				}
-			}
-
-			&#link-about {
-				&:before {
-					content: "i";
-				}
-			}
-			
-			&#link-login, &#link-logout {
-				@include border-radius(10px 0 0 10px);
-			}
-			
-			&#link-about {
-				@include border-radius(0 10px 10px 0);
-			}
-
-			&:before {
-				margin-right: 10px;
-				font-size: 11px;
-				content: attr(data-icon);
-				font-family:$iconfont;
-				-webkit-font-smoothing: antialiased;
-
-				@media screen and (max-width: $desktopwidth) {
-					font-size: 9px;
-					margin-right: 2px;
-				}
-			}			
-
-			@media screen and (max-width: $desktopwidth) {
-				font-size: 9px;
-				padding: 2px 4px;
-			}
-		}
-	}
-
-	a:hover {
-		text-decoration: none;
-	}
-
-	#links-service {
-		float: right;
-		margin: 30px 20px;
-
-		@media screen and (max-width: $desktopwidth) {
-			margin: 5px;
-		}
-	}
-
-	h1.logo {
-		background: asset-url("logo-gray.svg", image) center no-repeat;
-		width: 200px;
-		height: 174px;
-		background-size: 100%;
-		position: absolute;
-		margin: 0 auto;
-		top: 0;
-		left: 60px;
-
-		a {
-			display: inline-block;
-			width: 100%;
-			height: 100%;
-		}
-
-		span {
-			display: none;
-		}
-
-		@media screen and (max-width: $desktopwidth) {
-			height: 40px;
-			width: 90px;
-			background-position-y: -16px;
-			left: 40px;
-		}
-	}
-
-	.nypl-logo {
-        display: block;
-        overflow: hidden;
-        position: static;
-        color: $grayDarkest;
-        float: left;
-        margin: 35px 20px;
-        padding: 0;
-        line-height: 31px;
-        height: 31px;
-        width: 31px;
-
-		span {
-			display: none;
-		}
+      &#link-login, &#link-logout {
+        line-height: 24px;
 
         &:before {
-                content: attr(data-icon);
-                font-family:$iconfont;
-                color: $grayDarkest;
-                -webkit-font-smoothing: antialiased;
-                content: 'N'; //N W
-                display: block;
-                position: absolute;
-                font-size: 30px;
+          content: "0";
         }
+      }
 
-		@media screen and (max-width: $desktopwidth) {
-			margin: 5px;
-		}
-	}
+      &#link-help {
+        margin-right: 1px;
+        &:before {
+          content: "?";
+        }
+      }
+
+      &#link-about {
+        &:before {
+          content: "i";
+        }
+      }
+      
+      &#link-login, &#link-logout {
+        @include border-radius(10px 0 0 10px);
+      }
+      
+      &#link-about {
+        @include border-radius(0 10px 10px 0);
+      }
+
+      &:before {
+        margin-right: 5px;
+        // font-size: 11px;
+        content: attr(data-icon);
+        font-family:$iconfont;
+        -webkit-font-smoothing: antialiased;
+
+        @media screen and (max-width: $desktopwidth) {
+          font-size: 9px;
+          margin-right: 2px;
+        }
+      }     
+
+      @media screen and (max-width: $desktopwidth) {
+        font-size: 9px;
+        padding: 2px 4px;
+      }
+    }
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
+
+  h1.logo {
+    background: asset-url("logo-horizontal.svg", image) center no-repeat;
+    color: $grayLightest;
+    width: 235px;
+    height: 27px;
+    background-size: 100%;
+    margin: 0 auto;
+    float: left;
+    margin-top: 36px;
+    margin-left: 10px;
+
+    a {
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+    }
+
+    span {
+      display: none;
+    }
+
+    @media screen and (max-width: $desktopwidth) {
+      height: 40px;
+      width: 90px;
+      background-position-y: -16px;
+      left: 40px;
+    }
+  }
+
+  .nypl-logo {
+    display: block;
+    overflow: hidden;
+    position: static;
+    float: left;
+    margin: 35px 20px;
+    padding: 0;
+    line-height: 31px;
+    height: 31px;
+    width: 31px;
+
+    span {
+      display: none;
+    }
+
+    @media screen and (max-width: $desktopwidth) {
+      margin: 5px;
+    }
+  }
+}
+
+#task-container {
+  float: left;
+  color: $grayDark;
+  width: 300px;
+  height: 20px;
+  text-transform: uppercase;
+  margin: 34px 20px;
+}
+
+#task-toggle {
+  position: relative;
+  float: left;
+  width: 200px;
+  background: $grayLightest;
+  @include border-radius(3px);
+
+  a {
+    display: block;
+    background: $grayLightest;
+    color: $grayDarkest;
+    padding: 5px 2px 5px 12px;
+    line-height: 20px;
+    @include border-radius(3px);
+
+    &:hover {
+      background: $grayDarkest;
+      color: $grayLightest;
+    }
+
+    &:first-child:after {
+      content: attr(data-icon);
+      font-family:$iconfont;
+      -webkit-font-smoothing: antialiased;
+      content: "V";
+      position: absolute;
+      right: 10px;
+      top: 5px;
+    }
+
+  }
+
+  .shown {
+    display: block;
+  }
+
+  .hidden {
+    display: none;
+  }
+}
+
+#link-help {
+  float: left;
+  margin: 3px 10px;
+}
+
+#top-score-container {
+  float: right;
 }
 
 .close {
-	position: absolute;
-	display: block;
-	height: 31px;
-	overflow: hidden;
-	width: 31px;
-	line-height: 31px;
-	// position: fixed;
-	top: 5px;
-	right: 5px;
-	z-index: 111;
+  position: absolute;
+  display: block;
+  height: 31px;
+  overflow: hidden;
+  width: 31px;
+  line-height: 31px;
+  // position: fixed;
+  top: 5px;
+  right: 5px;
+  z-index: 111;
 
-	// @media screen and (min-width: $desktopwidth) {
-	// 	position: absolute;
-	// }
+  // @media screen and (min-width: $desktopwidth) {
+  //  position: absolute;
+  // }
 
-	&:before {
-		content: attr(data-icon);
-		font-family:$iconfont;
-		color: $grayDarkest;
-		-webkit-font-smoothing: antialiased;
-		content: 'x';
-		font-size: 30px;
-	}
+  &:before {
+    content: attr(data-icon);
+    font-family:$iconfont;
+    color: $grayDarkest;
+    -webkit-font-smoothing: antialiased;
+    content: 'x';
+    font-size: 30px;
+  }
 
-	&:hover {
-		text-decoration: none;
-	}
+  &:hover {
+    text-decoration: none;
+  }
 
-	span {
-		display: none;
-	}
+  span {
+    display: none;
+  }
 }
 
 #logo-background {
-	background: asset-url("logo-building.jpg", image);
-	display: inline-block;
-	margin: 20px auto;
-	padding: 40px;
-	@include border-radius(40px);
+  background: asset-url("logo-building.jpg", image);
+  display: inline-block;
+  margin: 20px auto;
+  padding: 40px;
+  @include border-radius(40px);
 
-	@media screen and (max-width: $desktopwidth) {
-		padding: 20px;
-		@include border-radius(20px);
-	}
+  @media screen and (max-width: $desktopwidth) {
+    padding: 20px;
+    @include border-radius(20px);
+  }
 }
 
 #main-container {
-	text-align: center;
-	background: $grayLight;
-	padding-top: 200px;
+  text-align: center;
+  background: $grayLight;
+  padding-top: 200px;
 
-	@media screen and (max-width: $desktopwidth) {
-		padding-top: 194px;
-	}
+  @media screen and (max-width: $desktopwidth) {
+    padding-top: 194px;
+  }
 
-	@media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
-		display: none;
-	}
+  @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
+    display: none;
+  }
 }
 
 .intro {
-	width: $desktopwidth - 40;
-	padding: 30px;
-	margin: 0 auto;
-	background: $grayLightest;
-	@include border-radius(30px 30px 0 0);
+  width: $desktopwidth - 40;
+  padding: 30px;
+  margin: 0 auto;
+  background: $grayLightest;
+  @include border-radius(30px 30px 0 0);
 
-	p {
-		line-height: 1.5em;
-		margin-top: 5px;
-		padding: 5px;
-		font-size: 14px;
-		text-align: center;
+  p {
+    line-height: 1.5em;
+    margin-top: 5px;
+    padding: 5px;
+    font-size: 14px;
+    text-align: center;
 
-		@media screen and (max-width: $desktopwidth) {
-			font-size: 10px;
-		}
-	}
+    @media screen and (max-width: $desktopwidth) {
+      font-size: 10px;
+    }
+  }
 
-	a {
-		color: $gray;
-	}
+  a {
+    color: $gray;
+  }
 
 }
 
 .about {
-	p {
-		text-align: left;
-		color: $grayDarkest;
-	}
+  p {
+    text-align: left;
+    color: $grayDarkest;
+  }
 }
 
 a.home-big-link {
-	display: block;
-	width: 130px;
-	margin: 0 auto 2px auto;
-	padding: 10px 12px;
-	font-size: 12px;
-	text-transform: uppercase;
-	text-align: center;
-	text-decoration: none;
-	color: $white;
-	background: $yescolor;
+  display: block;
+  width: 130px;
+  margin: 0 auto 2px auto;
+  padding: 10px 12px;
+  font-size: 12px;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  color: $white;
+  background: $yescolor;
 
-	&:hover {
-		color: $white;
-		text-decoration: none;
-		background: $grayDarkest;
-	}
+  &:hover {
+    color: $white;
+    text-decoration: none;
+    background: $grayDarkest;
+  }
 
-	&:first-child {
-		@include rounded-corners(5px 5px 0 0);
-	}
+  &:first-child {
+    @include rounded-corners(5px 5px 0 0);
+  }
 
-	&:last-child {
-		@include rounded-corners(0 0 5px 5px);
-	}
+  &:last-child {
+    @include rounded-corners(0 0 5px 5px);
+  }
 
-	@media screen and (min-width: $desktopwidth) {
-		padding: 20px 4px;
-		width: 170px;
-		font-size: 18px;
+  @media screen and (min-width: $desktopwidth) {
+    padding: 20px 4px;
+    width: 170px;
+    font-size: 18px;
 
-		&:first-child {
-			@include rounded-corners(10px 10px 0 0);
-		}
+    &:first-child {
+      @include rounded-corners(10px 10px 0 0);
+    }
 
-		&:last-child {
-			@include rounded-corners(0 0 10px 10px);
-		}
-	}
+    &:last-child {
+      @include rounded-corners(0 0 10px 10px);
+    }
+  }
 }
 
 #footer {
-	padding: 20px 0;
-	background: $gray;
+  padding: 20px 0;
+  background: $gray;
 
-	p {
-		text-align: center;
-		margin: 0 auto 2em;
-		width: 500px;
-		font-size: 12px;
+  p {
+    text-align: center;
+    margin: 0 auto 2em;
+    width: 500px;
+    font-size: 12px;
 
-		a {
-			color: $grayLighter;
-		}
+    a {
+      color: $grayLighter;
+    }
 
-		@media screen and (max-width: $desktopwidth) {
-			width: auto;
-			margin: 0 10px 1em;
-		}
-	}
+    @media screen and (max-width: $desktopwidth) {
+      width: auto;
+      margin: 0 10px 1em;
+    }
+  }
 
-	@media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
-		display: none;
-	}
+  @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
+    display: none;
+  }
 }
 
 #map-about {
-	position: relative;
-	z-index: 110;
-	background-color: $white;
-	color: $grayDarkest;
+  position: relative;
+  z-index: 110;
+  background-color: $white;
+  color: $grayDarkest;
 }
 
 .sign-in-options {
-	position: absolute;
-	bottom: 30px;
-	left: -60px;
-	background: $grayLightest;
-	padding: 12px;
-	width: 180px;
-	display: none;
-	@include border-radius(10px);
+  position: absolute;
+  bottom: 30px;
+  left: -60px;
+  background: $grayLightest;
+  padding: 12px;
+  width: 180px;
+  display: none;
+  @include border-radius(10px);
 
-	@media screen and (max-width: $desktopwidth) {
-		width: 160px;
-		left: 0;
-		bottom: inherit;
-		top: 24px;
-	}
+  @media screen and (max-width: $desktopwidth) {
+    width: 160px;
+    left: 0;
+    bottom: inherit;
+    top: 24px;
+  }
 
-	.sign-in-link {
-		background: $grayLighter;
-		display: block;
-		margin-top: 6px;
-		padding: 6px;
-		@include border-radius(6px);
+  .sign-in-link {
+    background: $grayLighter;
+    display: block;
+    margin-top: 6px;
+    padding: 6px;
+    @include border-radius(6px);
 
-		@media screen and (max-width: $desktopwidth) {
-			padding: 12px 6px;
-		}
-		
-		&:first-child {
-			margin-top: 0;
-		}
-		&:hover {
-			background: $grayDark;
-			color: $grayLighter;
-		}
-	}
-	.sign-in-callout {
-		position: absolute;
-		bottom: -10px;
-		left: 80px;
-		width: 0; 
-		height: 0; 
-		border-left: 10px solid transparent;
-		border-right: 10px solid transparent;
-		border-top: 10px solid $grayLightest;
+    @media screen and (max-width: $desktopwidth) {
+      padding: 12px 6px;
+    }
+    
+    &:first-child {
+      margin-top: 0;
+    }
+    &:hover {
+      background: $grayDark;
+      color: $grayLighter;
+    }
+  }
+  .sign-in-callout {
+    position: absolute;
+    bottom: -10px;
+    left: 80px;
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid $grayLightest;
 
-		@media screen and (max-width: $desktopwidth) {
-			left: 10px;
-			bottom: inherit;
-			top: -10px;
-			border-top: none;
-			border-bottom: 10px solid $grayLightest;
-		}
-	}
+    @media screen and (max-width: $desktopwidth) {
+      left: 10px;
+      bottom: inherit;
+      top: -10px;
+      border-top: none;
+      border-bottom: 10px solid $grayLightest;
+    }
+  }
 }
 
 #links-account {
-	position: relative;
-	display: inline-block;
-	padding: 0;
-	margin-right: 1px;
-	font-size: 12px;
-	text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+  padding: 0;
+  margin-right: 1px;
+  font-size: 12px;
+  text-transform: uppercase;
 
-	@media screen and (max-width: $desktopwidth) {
-		font-size: 9px;
-	}
+  @media screen and (max-width: $desktopwidth) {
+    font-size: 9px;
+  }
 
-	.sign-in-options {
-		top: 40px;
-		bottom: inherit;
-		left: -50%;
-		background: $grayDark;
-		font-size: 12px;
-		line-height: 12px;
+  .sign-in-options {
+    top: 40px;
+    bottom: inherit;
+    left: -50%;
+    background: $grayDark;
+    font-size: 12px;
+    line-height: 12px;
 
-		@media screen and (max-width: $desktopwidth) {
-			font-size: 10px;
-			left: inherit;
-			right: 10px;
-			top: 35px;
-		}
+    @media screen and (max-width: $desktopwidth) {
+      font-size: 10px;
+      left: inherit;
+      right: 10px;
+      top: 35px;
+    }
 
-		.sign-in-link {
+    .sign-in-link {
 
-			@media screen and (max-width: $desktopwidth) {
-				padding: 12px 6px;
-			}
-			
-			&:hover {
-				background: $grayDark;
-				color: $grayLighter;
-			}
-		}
+      @media screen and (max-width: $desktopwidth) {
+        padding: 12px 6px;
+      }
+      
+      &:hover {
+        background: $grayDark;
+        color: $grayLighter;
+      }
+    }
 
-		.sign-in-callout {
-			border-top: none;
-			border-bottom: 10px solid $grayDark;
-			top: -10px;
-			bottom: inherit;
+    .sign-in-callout {
+      border-top: none;
+      border-bottom: 10px solid $grayDark;
+      top: -10px;
+      bottom: inherit;
 
-			@media screen and (max-width: $desktopwidth) {
-				left: inherit;
-				right: 10px;
-			}
-		}
-	}
+      @media screen and (max-width: $desktopwidth) {
+        left: inherit;
+        right: 10px;
+      }
+    }
+  }
 }
 
 #admin-container {
@@ -515,43 +560,43 @@ a.home-big-link {
 
 
 .leaflet-bottom.leaflet-right {
-	bottom: -10px;
+  bottom: -10px;
 }
 
 #ie8 {
-	display: none;
-	text-transform: uppercase;
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	color: $grayLightest;
-	text-align: center;
-	background: $grayDarker;
-	z-index: 11111;
+  display: none;
+  text-transform: uppercase;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  color: $grayLightest;
+  text-align: center;
+  background: $grayDarker;
+  z-index: 11111;
 
-	p {
-		padding: 100px 100px 0;
-	}
+  p {
+    padding: 100px 100px 0;
+  }
 }
 
 #landscape-alert {
-	display: none;
-	text-transform: uppercase;
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	color: $grayLightest;
-	text-align: center;
+  display: none;
+  text-transform: uppercase;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  color: $grayLightest;
+  text-align: center;
 
-	p {
-		margin: 100px 100px 0;
-	}
+  p {
+    margin: 100px 100px 0;
+  }
 
-	@media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
-		// display: block;
-	}
+  @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
+    // display: block;
+  }
 }
