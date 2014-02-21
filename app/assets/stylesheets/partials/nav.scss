@@ -1,0 +1,386 @@
+@import "lib/drr-base";
+@import "lib/nypl-header";
+@import "lib/css3-mixins";
+@import "lib/button-mixins";
+@import "compass/utilities/general/clearfix";
+@import "variables";
+@import "compass/css3/transition";
+@import "compass/css3/animation";
+@import "animate";
+
+#top-nav {
+  position: absolute;
+  height: 100px;
+  color: $grayLightest;
+  background: $grayDarker;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 110;
+  @include transition(all, .2s);
+
+  @media screen and (max-width: $desktopwidth) {
+    right: 100%;
+    left: -100%;
+    bottom: 0;
+    height: auto;
+    z-index: initial;
+
+    &.hidden {
+      right: 110%;
+      left: -110%;
+    }
+
+    &.open {
+      right: 50px;
+      left: 0;
+    }
+  }
+
+  @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
+    display: none;
+  }
+
+  a {
+    color: $grayLightest;
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
+
+.icon {
+  display: inline-block;
+  // padding: 5px 10px;
+  // background: $grayLighter;
+  // font-size: 12px;
+
+  // &:hover {
+  //   background: $grayLightest;
+  //   color: $grayLighter;
+  // }
+
+  &#link-logout {
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &#link-login, &#link-logout {
+    // line-height: 24px;
+
+    &:before {
+      content: "0";
+    }
+  }
+
+  &#link-help {
+    margin-right: 1px;
+    &:before {
+      content: "?";
+    }
+  }
+
+  &#link-about {
+    &:before {
+      content: "i";
+    }
+  }
+
+  &#link-login, &#link-logout {
+  }
+
+  &#link-about {
+    display: block;
+    float: right;
+  }
+
+  &:before {
+    margin-right: 5px;
+    // font-size: 11px;
+    content: attr(data-icon);
+    font-family:$iconfont;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @media screen and (max-width: $desktopwidth) {
+    // font-size: 9px;
+    // padding: 2px 4px;
+  }
+}
+
+#nav-branding {
+  @include clearfix;
+
+  @media screen and (min-width: $desktopwidth) {
+    float: left;
+  }
+
+  h1.logo {
+    background: asset-url("logo-horizontal.svg", image) center no-repeat;
+      -webkit-font-smoothing: antialiased;
+    color: $grayLightest;
+    width: 235px;
+    height: 27px;
+    background-size: 100%;
+    // margin: 0 auto;
+    float: left;
+    margin-top: 36px;
+    margin-left: 0;
+
+    a {
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+    }
+
+    span {
+      display: none;
+    }
+
+    @media screen and (max-width: $desktopwidth) {
+      margin-top: 10px;
+      width: 140px;
+    }
+  }
+
+  .nypl-logo {
+    display: block;
+    overflow: hidden;
+    position: static;
+    float: left;
+    margin: 35px 10px;
+    padding: 0;
+    line-height: 31px;
+    height: 31px;
+    width: 31px;
+
+    span {
+      display: none;
+    }
+
+    @media screen and (max-width: $desktopwidth) {
+      margin: 10px;
+      width: 20px;
+      height: 30px;
+
+      &:before {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+}
+
+#task-container {
+  float: left;
+  color: $grayDark;
+  text-transform: uppercase;
+  margin: 29px 20px 0;
+
+  @media screen and (max-width: $desktopwidth) {
+    float: none;
+    @include clearfix;
+    margin: 10px;
+  }
+}
+
+#task-toggle {
+  position: relative;
+  float: left;
+  width: 160px;
+  background: $grayLightest;
+  @include border-radius(3px);
+
+  @media screen and (max-width: $desktopwidth) {
+    width: 100%;
+  }
+
+  a {
+    display: block;
+    background: $grayLightest;
+    color: $grayDarkest;
+    padding: 10px 2px 8px 12px;
+    line-height: 20px;
+
+    &:hover {
+      background: $grayDarkest;
+      color: $grayLightest;
+    }
+
+    @media screen and (max-width: $desktopwidth) {
+      color: $grayLightest;
+      background: $gray;
+    }
+
+    @media screen and (min-width: $desktopwidth) {
+      &:first-child:after {
+        content: attr(data-icon);
+        font-family:$iconfont;
+        -webkit-font-smoothing: antialiased;
+        content: "V";
+        position: absolute;
+        right: 10px;
+        top: 10px;
+      }
+    }
+
+  }
+
+  .shown {
+    display: block;
+    color: $grayLightest;
+    background: $grayDark;
+  }
+
+  .hidden {
+    display: none;
+
+    @media screen and (max-width: $desktopwidth) {
+      display: block !important;
+    }
+  }
+
+  .header {
+    @media screen and (max-width: $desktopwidth) {
+      display: none;
+    }
+  }
+}
+
+#link-help {
+  float: left;
+  margin: 8px 10px;
+}
+
+a#tweet {
+  display: inline-block;
+  // position: absolute;
+  // right: -30px;
+  // top: 5px;
+  color: $grayLightest;
+  width: 20px;
+  height: 20px;
+  // font-size: 20px;
+  content: attr(data-icon);
+  font-family:$iconfont;
+  -webkit-font-smoothing: antialiased;
+}
+
+#service-links {
+  position: relative;
+  float: right;
+  margin: 37px 20px 0 0;
+}
+
+#links-account {
+  position: relative;
+  display: inline-block;
+  padding: 0;
+  margin: 0 10px 0 10px;
+  // font-size: 12px;
+  text-transform: uppercase;
+  float: left;
+
+  @media screen and (max-width: $desktopwidth) {
+    // font-size: 9px;
+  }
+}
+
+.popup-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.popup {
+  position: absolute;
+  top: 40px;
+  bottom: inherit;
+  left: -70%;
+  background: $grayDark;
+  width: 200px;
+  display: none;
+  // font-size: 12px;
+  // line-height: 12px;
+
+  &.progress {
+    left: -270%;
+
+    @media screen and (max-width: $desktopwidth) {
+      left: -310%;
+    }
+  }
+
+  @media screen and (max-width: $desktopwidth) {
+    font-size: 0.8em;
+    left: inherit;
+    right: 10px;
+    top: 35px;
+    width: 120px;
+  }
+
+  .popup-link {
+    background: $grayDark;
+    display: block;
+    font-size: 0.9em;
+    // margin-top: 6px;
+    padding: 10px;
+    // @include border-radius(6px);
+
+    @media screen and (max-width: $desktopwidth) {
+      padding: 6px 10px;
+    }
+
+    &:hover {
+      background: $grayLighter !important;
+      color: $grayDarkest !important;
+    }
+  }
+
+  .callout {
+    position: absolute;
+    top: -10px;
+    left: 80px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: none;
+    border-bottom: 10px solid $grayDark;
+
+    @media screen and (max-width: $desktopwidth) {
+      // left: inherit;
+      right: 10px;
+    }
+  }
+}
+
+#nav-toggle {
+  display: none;
+
+  @media screen and (max-width: $desktopwidth) {
+    position: absolute;
+    display: block;
+    width: 40px;
+    height: 40px;
+    right: -40px;
+    top: 0px;
+    background: $grayDarker;
+  }
+
+  .hamburger {
+    display: block;
+    content: attr(data-icon);
+    font-family:$iconfont;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 36px;
+  }
+}
+
+

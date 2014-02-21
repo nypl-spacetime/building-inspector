@@ -87,222 +87,6 @@ a, a:link, a:visited, a:hover {
   margin-bottom: 5px;
 }
 
-#top-nav {
-  height: 100px;
-  color: $grayLightest;
-  background: $grayDarker;
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 110;
-
-  @media screen and (max-width: $desktopwidth) {
-    height: 40px;
-  }
-
-  @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
-    display: none;
-  }
-
-  a {
-    color: $grayLightest;
-
-
-    &.icon {
-      display: inline-block;
-      // padding: 5px 10px;
-      // background: $grayLighter;
-      // font-size: 12px;
-
-      // &:hover {
-      //   background: $grayLightest;
-      //   color: $grayLighter;
-      // }
-
-      &#link-login, &#link-logout {
-        line-height: 24px;
-
-        &:before {
-          content: "0";
-        }
-      }
-
-      &#link-help {
-        margin-right: 1px;
-        &:before {
-          content: "?";
-        }
-      }
-
-      &#link-about {
-        &:before {
-          content: "i";
-        }
-      }
-      
-      &#link-login, &#link-logout {
-        @include border-radius(10px 0 0 10px);
-      }
-      
-      &#link-about {
-        @include border-radius(0 10px 10px 0);
-      }
-
-      &:before {
-        margin-right: 5px;
-        // font-size: 11px;
-        content: attr(data-icon);
-        font-family:$iconfont;
-        -webkit-font-smoothing: antialiased;
-
-        @media screen and (max-width: $desktopwidth) {
-          font-size: 9px;
-          margin-right: 2px;
-        }
-      }     
-
-      @media screen and (max-width: $desktopwidth) {
-        font-size: 9px;
-        padding: 2px 4px;
-      }
-    }
-  }
-
-  a:hover {
-    text-decoration: none;
-  }
-
-  h1.logo {
-    background: asset-url("logo-horizontal.svg", image) center no-repeat;
-      -webkit-font-smoothing: antialiased;
-    color: $grayLightest;
-    width: 235px;
-    height: 27px;
-    background-size: 100%;
-    margin: 0 auto;
-    float: left;
-    margin-top: 36px;
-    margin-left: 10px;
-
-    a {
-      display: inline-block;
-      width: 100%;
-      height: 100%;
-    }
-
-    span {
-      display: none;
-    }
-
-    @media screen and (max-width: $desktopwidth) {
-      height: 40px;
-      width: 90px;
-      background-position-y: -16px;
-      left: 40px;
-    }
-  }
-
-  .nypl-logo {
-    display: block;
-    overflow: hidden;
-    position: static;
-    float: left;
-    margin: 35px 20px;
-    padding: 0;
-    line-height: 31px;
-    height: 31px;
-    width: 31px;
-
-    span {
-      display: none;
-    }
-
-    @media screen and (max-width: $desktopwidth) {
-      margin: 5px;
-    }
-  }
-}
-
-#task-container {
-  float: left;
-  color: $grayDark;
-  width: 300px;
-  text-transform: uppercase;
-  margin: 29px 20px 0;
-}
-
-#task-toggle {
-  position: relative;
-  float: left;
-  width: 200px;
-  background: $grayLightest;
-  @include border-radius(3px);
-
-  a {
-    display: block;
-    background: $grayLightest;
-    color: $grayDarkest;
-    padding: 10px 2px 10px 12px;
-    line-height: 20px;
-
-    &:hover {
-      background: $grayDarkest;
-      color: $grayLightest;
-    }
-
-    &:first-child:after {
-      content: attr(data-icon);
-      font-family:$iconfont;
-      -webkit-font-smoothing: antialiased;
-      content: "V";
-      position: absolute;
-      right: 10px;
-      top: 10px;
-    }
-
-  }
-
-  .shown {
-    display: block;
-  }
-
-  .hidden {
-    display: none;
-  }
-}
-
-#link-help {
-  float: left;
-  margin: 8px 10px;
-}
-
-a#tweet {
-  display: inline-block;
-  // position: absolute;
-  // right: -30px;
-  // top: 5px;
-  color: $grayLightest;
-  width: 20px;
-  height: 20px;
-  // font-size: 20px;
-  content: attr(data-icon);
-  font-family:$iconfont;
-  -webkit-font-smoothing: antialiased;
-}
-
-#top-score-container, #service-links {
-  float: right;
-  margin: 37px 20px 0;
-}
-
-#top-score {
-  font-size: 2em;
-  line-height: 0;
-  color: $black;
-  font-weight: bold;
-}
-
 .close {
   position: absolute;
   display: block;
@@ -396,6 +180,14 @@ a#tweet {
   }
 }
 
+#map-about {
+  position: relative;
+  z-index: 110;
+  background-color: $white;
+  color: $grayDarkest;
+}
+
+
 a.home-big-link {
   display: block;
   width: 130px;
@@ -462,80 +254,6 @@ a.home-big-link {
   }
 }
 
-#map-about {
-  position: relative;
-  z-index: 110;
-  background-color: $white;
-  color: $grayDarkest;
-}
-
-#links-account {
-  position: relative;
-  display: inline-block;
-  padding: 0;
-  margin: 0 20px 0 20px;
-  // font-size: 12px;
-  text-transform: uppercase;
-
-  @media screen and (max-width: $desktopwidth) {
-    font-size: 9px;
-  }
-
-  .sign-in-options {
-    position: absolute;
-    top: 40px;
-    bottom: inherit;
-    left: -70%;
-    background: $grayDark;
-    width: 200px;
-    display: none;
-    // font-size: 12px;
-    // line-height: 12px;
-
-    @media screen and (max-width: $desktopwidth) {
-      font-size: 10px;
-      left: inherit;
-      right: 10px;
-      top: 35px;
-    }
-
-    .sign-in-link {
-      background: $grayDark;
-      display: block;
-      font-size: 0.9em;
-      // margin-top: 6px;
-      padding: 10px;
-      // @include border-radius(6px);
-
-      @media screen and (max-width: $desktopwidth) {
-        padding: 12px 6px;
-      }
-
-      &:hover {
-        background: $grayLighter;
-        color: $grayDarkest;
-      }
-    }
-
-    .sign-in-callout {
-      position: absolute;
-      top: -10px;
-      left: 80px;
-      width: 0; 
-      height: 0; 
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-top: none;
-      border-bottom: 10px solid $grayDark;
-
-      @media screen and (max-width: $desktopwidth) {
-        left: inherit;
-        right: 10px;
-      }
-    }
-  }
-}
-
 #admin-container {
   padding: 12px;
   background: $white;
@@ -543,7 +261,13 @@ a.home-big-link {
 
 
 .leaflet-bottom.leaflet-right {
-  bottom: -10px;
+  // bottom: -10px;
+}
+
+.leaflet-top.leaflet-right {
+  @media screen and (max-width: $desktopwidth) {
+    top: 60px;
+  }
 }
 
 #ie8 {

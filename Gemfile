@@ -13,6 +13,8 @@ gem 'pg'
 
 gem 'compass-rails'
 
+gem 'animate'
+
 gem 'thin'
 
 gem 'devise'

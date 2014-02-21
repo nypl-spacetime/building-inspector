@@ -12,7 +12,7 @@
 	margin-top: 0;
 	padding-top: 0;
 	top: 100px;
-	bottom: 160px;
+	bottom: 110px;
 	left: 0;
 	right: 0;
 
@@ -32,8 +32,9 @@
 	}
 
 	@media screen and (max-width: $desktopwidth) {
-		top: 40px;
+		top: 0;
 		bottom: 0;
+		z-index: -2;
 	}
 }
 
@@ -47,7 +48,7 @@
 
 #controls {
 	position: absolute;
-	height: 160px;
+	height: 110px;
 	bottom: 0;
 	left: 0;
 	right: 0;
@@ -56,6 +57,7 @@
 	@media screen and (max-width: $desktopwidth) {
 		background: transparent;
 		height: 100px;
+		z-index: -2;
 	}
 
 	@media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
@@ -64,150 +66,38 @@
 }
 
 #score {
-	position: relative;
-	font-size: 20px;
-	padding: 5px 10px;
-	background: $grayLight;
-	color: $white;
-	width: 260px;
-	margin: 0 auto;
-	text-align: center;
-	line-height: normal;
-
-	@include border-radius(0 0 10px 10px);
+  position: relative;
+  float: right;
+  margin: 37px 0 0 0;
 
 	@media screen and (max-width: $desktopwidth) {
-		background: rgba(144,139,133,0.75);
-		@include border-radius(10px);
+		background: $grayDarker;
+		height: 30px;
 		position: fixed;
-		top: 50px;
-		left: 10px;
-		font-size: 16px;
-		width: 210px;
+		right: 100px;
+		top: -37px;
+		padding: 10px 10px 0;
+		z-index: -1;
 	}
+}
 
-	/* clearfix 
-	seen: http://stackoverflow.com/a/1633170/160933 
-	*/
-	/* For modern browsers */
-	&:before,
-	&:after {
-		content:"";
-		display:table;
-	}
-	&:after {
-		clear:both;
-	}
-	/* For IE 6/7 (trigger hasLayout) */
-	& {
-		zoom:1;
-	}
+#score-number {
+  display: inline-block;
+  font-size: 2em;
+  line-height: 0;
+  color: $black;
+  font-weight: bold;
+}
 
-	/* end clearfix */
-
-	.progress {
-		position: relative;
-		font-size: 18px;
-		background: $grayDarkest;
-		margin: 5px 0;
-		text-transform: uppercase;
-
-		@media screen and (max-width: $desktopwidth) {
-			margin: 2px 0;
-		}
-	}
-
-	.percent {
-		position: absolute;
-		left: 5px;
-		top: -3px;
-		color: lighten($orange, 10%);
-	}
-
-	.bar {
-		height: 3px;
-		width: 0%;
-
-		&.level {
-			background: lighten($orange, 10%);
-		}
-
-		&.map {
-			background: lighten($orange, 10%);
-		}
-	}
-
-	.username {
-		display: block;
-		float: left;
-		width: 110px;
-		margin-right: 0;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-
-		@media screen and (max-width: $desktopwidth) {
-			width: 70px;
-			margin-right: 2px;
-		}
-
-	}
-
-	#score-save, #score-progress {
-		float: left;
-		text-align: left;
-		width: 130px;
-		color: $grayDarker;
-		font-size: 12px;
-		padding: 5px 0;
-		cursor: pointer;
-		text-transform: uppercase;
-		position: relative;
-		
-
-		@media screen and (max-width: $desktopwidth) {
-			font-size: 10px;
-			width: 100px;
-			padding: 0;
-		}
-
-		small {
-			font-size: 12px;
-			line-height: 12px;
-
-			@media screen and (max-width: $desktopwidth) {
-				display: block;
-				float: left;
-				margin-top: 2px;
-				font-size: 9px;
-				line-height: 9px;
-			}
-		}
-
-		a {
-			color: $grayDarker;
-
-			@media screen and (max-width: $desktopwidth) {
-				color: $grayDarkest;
-			}
-		
-			&:hover {
-				color: $white;
-				text-decoration: none;
-			}
-		}
-	}
-	
+#link-view-inspections {
+  font-size: 0.7em;
 }
 
 #score-progress {
 	// float: right;
 	// text-align: right;
-	font-size: 0.7em;
+	// font-size: 0.7em;
 
-	@media screen and (max-width: $desktopwidth) {
-		width: 110px;
-	}
 }
 
 #link-exit {

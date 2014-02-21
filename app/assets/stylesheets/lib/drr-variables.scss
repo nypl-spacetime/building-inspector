@@ -49,14 +49,14 @@ $textColorInverse:      $grayLightest;
 
 // Typography
 // -------------------------
-$mainFontFamily:        Verdana, "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-$heavyFontFamily:       Verdana, "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$mainFontFamily:        "Avenir Next W01", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$heavyFontFamily:       "Avenir Next W01", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 $iconFontFamily:        "Icomoon";
 $baseFontFamily:        $mainFontFamily;
 $headingsFontFamily:    $heavyFontFamily;
 $headingsFontWeight:    bold;
 $headingsColor:         inherit;
-$headingsTransform:     uppercase;
+$headingsTransform:     none;
 
 // Text sizing
 // -------------------------

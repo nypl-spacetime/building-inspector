@@ -11,6 +11,7 @@
  *= require lib/reset
  *= require lib/drr-base-layout
  *= require styles
+ *= require partials/nav
  *= require lib/mapbox
  *= require lib/introjs
  *= require lib/jquery.swipeshow

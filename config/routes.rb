@@ -52,7 +52,7 @@ Webappmini::Application.routes.draw do
 
   get "color" => "fixer#color"
 
-  get "building" => "fixer#building", :as => "footprints"
+  get "building" => "fixer#building", :as => "building"
 
   get "numbers" => "fixer#numbers", :as => "addresses"
   

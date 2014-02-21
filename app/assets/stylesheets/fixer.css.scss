@@ -181,7 +181,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
 .wrapper a, .wrapper span {
   width: 80px;
-  height: 45px;
+  height: 40px;
   margin: 10px;
   padding-top: 20px;
   float: left;
@@ -189,7 +189,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   text-decoration: none;
   color: $white;
 
-  @include rounded-corners(10px);
+  @include rounded-corners(5px);
 
   &:first-child {
     margin-left: 5px;
@@ -268,7 +268,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     padding: 10px;
     color: $white;
     background: $grayDarker;
-    @include border-radius(10px);
+    @include border-radius(5px);
   }
 }
 

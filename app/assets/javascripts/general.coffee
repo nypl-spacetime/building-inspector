@@ -3,9 +3,15 @@ class General
 	constructor: () ->
 		# // scroll to top (hide bar in ios)
 		window.scrollTo(0, 1)
-		
-		$("#link-score-save").on("click", @toggleBottomSigninOptions)
-		$("#link-login").on("click", @toggleTopSigninOptions)
+
+		window.setTimeout(
+				() ->
+					$("#top-nav").removeClass("hidden")
+				, 1000
+		)
+		$("#link-nav-menu").on("click", @toggleAppMenu)
+		$("#link-login").on("click", @toggleSigninPopup)
+		$("#link-view-inspections").on("click", @toggleProgressPopup)
 		$("#task-container .shown").on("click", @onTaskClick)
 		$("body").on("click", @onBodyClick)
 
@@ -32,21 +38,32 @@ class General
 			e.preventDefault()
 			window.location.href = e.currentTarget.href;
 
-	toggleBottomSigninOptions: (e) ->
-		$('#score-save .sign-in-options').toggle()
+	toggleAppMenu: (e) ->
+		$("#top-nav").toggleClass("open")
 		e.stopPropagation()
 
-	toggleTopSigninOptions: (e) ->
-		$('#links-account .sign-in-options').toggle()
+	toggleSigninPopup: (e) ->
+		$("#task-container .hidden").hide()
+		$('#score-progress').hide()
+		$('#links-account .popup').toggle()
+		e.stopPropagation()
+
+	toggleProgressPopup: (e) ->
+		$("#task-container .hidden").hide()
+		$('#links-account .popup').hide()
+		$('#score-progress').toggle()
 		e.stopPropagation()
 
 	onBodyClick: (e) ->
+		if !$(e.target).closest('#top-nav.open').length
+			$("#top-nav.open").removeClass("open")
 		if !$(e.target).closest('#task-container').length
 			$("#task-container .hidden").hide()
-		if !$(e.target).closest('.sign-in-options').length
-			$('.sign-in-options').hide()
+		if !$(e.target).closest('.popup').length
+			$('.popup').hide()
 
 	onTaskClick: (e) ->
+		$('.popup').hide()
 		e.preventDefault()
 		e.stopPropagation()
 		$("#task-container .hidden").toggle()
@@ -58,7 +75,7 @@ class General
 			return obj
 
 		if obj instanceof Date
-			return new Date(obj.getTime()) 
+			return new Date(obj.getTime())
 
 		if obj instanceof RegExp
 			flags = ''
@@ -66,7 +83,7 @@ class General
 			flags += 'i' if obj.ignoreCase?
 			flags += 'm' if obj.multiline?
 			flags += 'y' if obj.sticky?
-			return new RegExp(obj.source, flags) 
+			return new RegExp(obj.source, flags)
 
 		newInstance = new obj.constructor()
 
