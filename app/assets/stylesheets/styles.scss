@@ -31,6 +31,7 @@ p {
 h3 {
   margin: 0 auto 20px;
   text-align: center;
+  text-transform: uppercase;
 }
 
 #nav-admin {
@@ -140,7 +141,7 @@ a, a:link, a:visited, a:hover {
   padding-top: 200px;
 
   @media screen and (max-width: $desktopwidth) {
-    padding-top: 194px;
+    padding-top: 50px;
   }
 
   @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
@@ -149,7 +150,7 @@ a, a:link, a:visited, a:hover {
 }
 
 .intro {
-  width: $desktopwidth - 40;
+  width: $desktopwidth / 2;
   padding: 30px;
   margin: 0 auto;
   background: $grayLightest;
@@ -159,11 +160,12 @@ a, a:link, a:visited, a:hover {
     line-height: 1.5em;
     margin-top: 5px;
     padding: 5px;
-    font-size: 14px;
+    font-size: 1em;
     text-align: center;
 
     @media screen and (max-width: $desktopwidth) {
-      font-size: 10px;
+      font-size: .9em;
+      line-height: 1.8em;
     }
   }
 

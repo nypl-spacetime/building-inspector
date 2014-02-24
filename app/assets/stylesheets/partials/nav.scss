@@ -327,8 +327,8 @@ a#tweet {
 
   @media screen and (max-width: $desktopwidth) {
     font-size: 0.8em;
-    left: inherit;
-    right: 10px;
+    left: 0;
+    right: auto;
     top: auto;
     width: 210px;
     bottom: 35px;
