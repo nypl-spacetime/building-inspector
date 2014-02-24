@@ -3,8 +3,8 @@
       <%= link_to "LOG OUT " + current_user.name, destroy_user_session_path, method: :delete, :id => "link-logout", :class=>"icon" %>
     <% else %>
 <%
-loginmsg = "LOG IN"
-loginmsg = "SAVE SCORE" if @current_page=="progress" || @current_page=="fixer" || @current_page=="progress_numbers" || @current_page=="numbers"
+loginmsg = "SAVE SCORE"
+loginmsg = "LOG IN" if controller_name=="general"
 %>
       <%= link_to "#{loginmsg}", "javascript:;", {:id => "link-login", :class => "icon score-save-link", :rel=>"nofollow"} %>
       <div class="popup">

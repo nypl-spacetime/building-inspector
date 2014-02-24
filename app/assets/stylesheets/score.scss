@@ -34,7 +34,6 @@
 	@media screen and (max-width: $desktopwidth) {
 		top: 0;
 		bottom: 0;
-		z-index: -2;
 	}
 }
 
@@ -57,7 +56,6 @@
 	@media screen and (max-width: $desktopwidth) {
 		background: transparent;
 		height: 100px;
-		z-index: -2;
 	}
 
 	@media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
@@ -72,12 +70,11 @@
 
 	@media screen and (max-width: $desktopwidth) {
 		background: $grayDarker;
-		height: 30px;
+		height: 32px;
 		position: fixed;
 		right: 100px;
 		top: -37px;
-		padding: 10px 10px 0;
-		z-index: -1;
+		padding: 8px 10px 0;
 	}
 }
 
@@ -87,6 +84,9 @@
   line-height: 0;
   color: $black;
   font-weight: bold;
+	@media screen and (max-width: $desktopwidth) {
+		line-height: 16px;
+	}
 }
 
 #link-view-inspections {

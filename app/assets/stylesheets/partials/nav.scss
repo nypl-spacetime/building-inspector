@@ -24,7 +24,6 @@
     left: -100%;
     bottom: 0;
     height: auto;
-    z-index: initial;
 
     &.hidden {
       right: 110%;
@@ -34,6 +33,10 @@
     &.open {
       right: 50px;
       left: 0;
+
+      #score {
+        display: none;
+      }
     }
   }
 
@@ -94,6 +97,11 @@
   &#link-about {
     display: block;
     float: right;
+
+    @media screen and (max-width: $desktopwidth) {
+      float: none;
+      margin: 10px;
+    }
   }
 
   &:before {
@@ -257,13 +265,9 @@
 
 a#tweet {
   display: inline-block;
-  // position: absolute;
-  // right: -30px;
-  // top: 5px;
   color: $grayLightest;
   width: 20px;
   height: 20px;
-  // font-size: 20px;
   content: attr(data-icon);
   font-family:$iconfont;
   -webkit-font-smoothing: antialiased;
@@ -273,6 +277,13 @@ a#tweet {
   position: relative;
   float: right;
   margin: 37px 20px 0 0;
+
+  @media screen and (max-width: $desktopwidth) {
+    float: none;
+    margin: 20px 10px;
+    border-top: 1px solid $grayLight;
+    padding-top: 20px;
+  }
 }
 
 #links-account {
@@ -280,12 +291,12 @@ a#tweet {
   display: inline-block;
   padding: 0;
   margin: 0 10px 0 10px;
-  // font-size: 12px;
   text-transform: uppercase;
   float: left;
 
   @media screen and (max-width: $desktopwidth) {
-    // font-size: 9px;
+    display: block;
+    float: none;
   }
 }
 
@@ -359,6 +370,7 @@ a#tweet {
 
 #nav-toggle {
   display: none;
+  z-index: inherit;
 
   @media screen and (max-width: $desktopwidth) {
     position: absolute;
