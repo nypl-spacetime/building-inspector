@@ -24,6 +24,7 @@
     left: -100%;
     bottom: 0;
     height: auto;
+    // overflow-y: scroll;
 
     &.hidden {
       right: 110%;
@@ -328,20 +329,20 @@ a#tweet {
     font-size: 0.8em;
     left: inherit;
     right: 10px;
-    top: 35px;
-    width: 120px;
+    top: auto;
+    width: 210px;
+    bottom: 35px;
   }
 
   .popup-link {
     background: $grayDark;
     display: block;
     font-size: 0.9em;
-    // margin-top: 6px;
     padding: 10px;
-    // @include border-radius(6px);
 
     @media screen and (max-width: $desktopwidth) {
       padding: 6px 10px;
+      font-size: 1em;
     }
 
     &:hover {
@@ -362,8 +363,11 @@ a#tweet {
     border-bottom: 10px solid $grayDark;
 
     @media screen and (max-width: $desktopwidth) {
-      // left: inherit;
-      right: 10px;
+      left: 20px;
+      top: auto;
+      bottom: -10px;
+      border-bottom: none;
+      border-top: 10px solid $grayDark;
     }
   }
 }
