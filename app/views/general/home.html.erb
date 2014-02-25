@@ -1,34 +1,79 @@
 <% content_for :page_title do %>Building Inspector by NYPL Labs<% end %>
 <% content_for :dynamic_js do %>
-	<%= stylesheet_link_tag    "home", :media => "all" %>
-	<script type="text/javascript">
-	// scroll to top (hide bar in ios)
-	window.addEventListener("load",function() {
-		setTimeout(function(){
-			window.scrollTo(0, 1);
-		}, 0);
-	});
-	</script>
+  <%= stylesheet_link_tag    "home", :media => "all" %>
+  <script type="text/javascript">
+  // scroll to top (hide bar in ios)
+  window.addEventListener("load",function() {
+    setTimeout(function(){
+      window.scrollTo(0, 1);
+    }, 0);
+  });
+  </script>
 <% end %>
 
 <%= render :partial => "partials/nav" %>
 
 <div id="main-container">
-	<div class="intro">
-		<h3>Help trace<br />New York City's<br />past</h3>
-		<div id="logo-background">
-			<%= link_to "CHECK FOOTPRINTS", "/building", {:id => "link-try", :class => "home-big-link"} %>
-			<%= link_to "ENTER ADDRESSES", "/numbers", {:id => "link-numbers", :class => "home-big-link"} %>
-			<%= link_to "FIX POLYGONS", "/polygonfix", {:id => "link-polygonfix", :class => "home-big-link"} %>
-		</div>
-		<p>The <strong>New York Public Library</strong> is training computers how to recognize building shapes and other information from old city maps. Help us clean up the data so that it can be used in research, teaching and civic hacking.</p>
-                <p>Currently under inspection:
-<ul>
-<li><strong>Maps of the City of Brooklyn, 1855</strong> </li>
-<li><strong>Maps of the City of New York, 1857-62</strong></li>
-</ul>
-</p>
-	</div>
+  <div class="intro">
+    <div id="home-slideshow" class="swipeshow">
+      <ul class="slides">
+        <li id="slide1" class="slide">
+          <%= link_to "", building_path, {:id => "slide-building"} %>
+          <div class="wrap">
+            <div id="slide1-yes" class="control green">YES</div>
+            <div id="slide1-no" class="control red">NO</div>
+            <div id="slide1-fix" class="control yellow">FIX</div>
+          </div>
+          <svg version="1.1" class="intro-path" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 960 300" enable-background="new 0 0 960 300" xml:space="preserve">
+            <polygon class="poly-yes" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="333,188 385.4,158.5 433.3,221.2 377.3,253.6 "/>
+            <polygon class="poly-no" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="414.1,138.1 395,110.8 425.9,95.8 446.6,124.1 "/>
+            <polygon class="poly-fix" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="562.3,163.1 483.4,73.2 565.3,51.1 648.6,135.1 "/>
+          </svg>
+        </li>
+        <li id="slide2" class="slide">
+          <%= link_to "", addresses_path, {:id => "slide-numbers"} %>
+          <div class="wrap">
+            <div id="slide2-a" class="number">123</div>
+            <div id="slide2-b" class="number">117</div>
+            <div id="slide2-c" class="number">111</div>
+            <div id="slide2-d" class="number">113</div>
+          </div>
+          <svg version="1.1" class="intro-path" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 960 300" enable-background="new 0 0 960 300" xml:space="preserve">
+            <polygon class="poly-a" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="333,188 385.4,158.5 433.3,221.2 377.3,253.6 "/>
+            <polygon class="poly-b" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="498.2,188.2 530.6,175.7 477.5,110.8 446.6,124.1 "/>
+            <polygon class="poly-c" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="562.3,163.1 472.4,59.2 551.3,37.1 648.6,135.1 "/>
+          </svg>
+        </li>
+        <li id="slide3" class="slide">
+          <%= link_to "", polygons_path, {:id => "slide-polygonfix"} %>
+          <div class="wrap">
+            <div id="slide3-a" class="marker"></div>
+            <div id="slide3-b" class="marker"></div>
+            <div id="slide3-c" class="marker"></div>
+            <div id="slide3-d" class="marker"></div>
+          </div>
+          <svg version="1.1" class="intro-path" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 960 300" enable-background="new 0 0 960 300" xml:space="preserve">
+            <polygon class="poly-a" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="562.3,163.1 483.4,73.2 565.3,51.1 648.6,135.1 "/>
+            <polygon class="poly-b" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="562.3,163.1 472.4,59.2 565.3,51.1 648.6,135.1 "/>
+            <polygon class="poly-c" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="562.3,163.1 472.4,59.2 551.3,37.1 648.6,135.1 "/>
+          </svg>
+        </li>
+      </ul>
+      <div id="slide-buttons">
+        <%= link_to "CHECK FOOTPRINTS", building_path, {:id => "link-building"} %>
+        <%= link_to "ENTER ADDRESSES", addresses_path, {:id => "link-numbers"} %>
+        <%= link_to "FIX POLYGONS", polygons_path, {:id => "link-polygonfix"} %>
+      </div>
+    </div>
+    <h3>Help trace<br />New York City's past</h3>
+    <p>The <em>New York Public Library</em> is training computers how to recognize building shapes and other information from old city maps. Help us clean up the data so that it can be used in research, teaching and civic hacking.</p>
+    <p>Currently under inspection:
+    <ul>
+      <li><em>Maps of the City of Brooklyn, 1855</em> </li>
+      <li><em>Maps of the City of New York, 1857-62</em></li>
+    </ul>
+    </p>
+  </div>
 </div>
 
 <%= render :partial => "partials/footer" %>

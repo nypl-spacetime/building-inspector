@@ -3,50 +3,388 @@
 @import "compass/utilities/general/clearfix";
 @import "variables";
 @import "compass/css3/transform";
-
-// #top-nav {
-// 	h1.logo {
-// 		/*left: 40%;*/
-// 		width: 230px;
-// 		height: 202px;
-// 		top: -10px;
-
-// 		@media screen and (max-width: $desktopwidth) {
-// 			height: 144px;
-// 			width: 167px;
-// 			background-position-y: 0;
-// 			top: 45px;
-// 		}
-// 	}
-// }
+@import "compass";
+@import "animate";
 
 #main-container {
-	background: url(/assets/pattern.svg) $grayLight -50px 120px;
-	background-size: 40%;
+  // background: url(/assets/pattern.svg) $grayLight -50px 120px;
+  // background-size: 40%;
 
-	strong {
-		font-weight: normal;
-		color: $orange;
-	}
+  em {
+    font-weight: normal;
+    font-style: italic;
+  }
 
-	h3 {
-		font-size: 30px;
-		line-height: 30px;
-		margin-bottom: 0;
+  strong {
+    font-weight: bold;
+  }
 
-		@media screen and (max-width: $desktopwidth) {
-			font-size: 20px;
-			line-height: 20px;
-		}
-	}
+  h3 {
+    font-size: 30px;
+    line-height: 30px;
+    margin: 5px 0 20px 20px;
 
-	.intro {
+    @media screen and (max-width: $desktopwidth) {
+      font-size: 20px;
+      line-height: 20px;
+    }
+  }
 
-		@media screen and (max-width: $desktopwidth) {
-			width: auto;
-			padding: 10px;
-			margin: 0 20px;
-			@include border-radius(0);
-		}
-	}
+  .intro {
+
+    @media screen and (max-width: $desktopwidth) {
+      width: auto;
+    }
+  }
+}
+
+#home-slideshow {
+  width: 100%;
+  height: 300px;
+  background: purple;
+  margin-bottom: 20px;
+  background: url(/assets/home-animation-end.jpg) center center no-repeat;
+}
+
+.intro-path {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.slide {
+  a {
+    display: block;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    right: 0;
+  }
+}
+
+.wrap {
+  position: relative;
+  left: 50%;
+}
+
+.control, .number, .marker {
+  position: absolute;
+  display: inline-block;
+  z-index: 1;
+  @include transition-property("top");
+  @include transition-duration(0.1s);
+  @include transition-timing-function(ease-out);
+}
+
+.control {
+  padding: 14px 16px;
+  color: $white;
+  @include border-radius(4px);
+
+  &.red {
+    background-color: $nocolor;
+  }
+
+  &.yellow {
+    background-color: $fixcolor;
+  }
+
+  &.green {
+    background-color: $yescolor;
+  }
+}
+
+@include keyframes(dash) {
+  0% {
+    stroke-width: 0;
+  }
+  1% {
+    stroke-width: 3;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-width: 3;
+    stroke-dasharray: 6;
+    stroke-dashoffset: 0;
+  }
+}
+
+polygon {
+  stroke-width: 0;
+  stroke-dasharray: 6;
+  stroke-dashoffset: 0;
+}
+
+#slide1 {
+  #slide1-yes {
+    left: -140px;
+    top: -64px;
+    @include transition-delay(1.5s);
+  }
+  #slide1-no {
+    left: -90px;
+    top: -140px;
+    @include transition-delay(2.5s);
+  }
+  #slide1-fix {
+    left: 50px;
+    top: -130px;
+    @include transition-delay(3.5s);
+  }
+  &.active {
+    .poly-yes {
+      @include animation(dash .5s ease-in forwards .5s);
+    }
+    .poly-no {
+      @include animation(dash .5s ease-in forwards 1.5s);
+    }
+    .poly-fix {
+      @include animation(dash .5s ease-in forwards 2.5s);
+    }
+    #slide1-yes {
+      top: 164px;
+    }
+    #slide1-no {
+      top: 60px;
+    }
+    #slide1-fix {
+      top: 70px;
+    }
+  }
+}
+
+.number {
+  border: 4px solid $orange;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 40px;
+  color: grayDarkest;
+  background: rgba(255,255,255,.75);
+  @include border-radius(25px);
+}
+
+#slide2 {
+  .wrap {
+    margin-top: -300px;
+  }
+  #slide2-a {
+    top: -54px;
+    left: -91px;
+    @include transition-delay(1.5s);
+  }
+  #slide2-b {
+    top: -88px;
+    left: 10px;
+    @include transition-delay(2.5s);
+  }
+  #slide2-c {
+    top: -130px;
+    left: 137px;
+    @include transition-delay(3.5s);
+  }
+  #slide2-d {
+    top: -112px;
+    left: 78px;
+    @include transition-delay(4s);
+  }
+  &.active {
+    .wrap {
+      margin-top: auto;
+    }
+    .poly-a {
+      @include animation(dash .5s ease-in forwards .5s);
+    }
+    .poly-b {
+      @include animation(dash .5s ease-in forwards 1.5s);
+    }
+    .poly-c {
+      @include animation(dash .5s ease-in forwards 2.5s);
+    }
+    #slide2-a {
+      top: 216px;
+    }
+    #slide2-b {
+      top: 162px;
+    }
+    #slide2-c {
+      top: 120px;
+      @include animation(moveMarkerC);
+    }
+    #slide2-d {
+      top: 138px;
+    }
+  }
+}
+
+@include keyframes(fixPolyA) {
+  0% {
+    stroke-width: 3;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+  }
+  20% {
+    stroke-dasharray: 6;
+    stroke-dashoffset: 0;
+    stroke-width: 3;
+  }
+  39% {
+    stroke-width: 3;
+  }
+  40% {
+    stroke-width: 0;
+  }
+}
+
+@include keyframes(fixPolyB) {
+  40% {
+    stroke-width: 0;
+  }
+  41% {
+    stroke-width: 3;
+  }
+  59% {
+    stroke-width: 3;
+  }
+  60% {
+    stroke-width: 0;
+  }
+}
+
+@include keyframes(fixPolyC) {
+  60% {
+    stroke-width: 0;
+  }
+  61% {
+    stroke-width: 3;
+  }
+  100% {
+    stroke-width: 3;
+  }
+}
+
+.marker {
+  width: 28px;
+  height: 60px;
+  background: url(/assets/polygonfix/editmarker.png);
+  background-size: contain;
+}
+
+@include keyframes(moveMarkerC) {
+  0% {
+    left: 72px;
+    top: -6px;
+  }
+  100% {
+    left: 58px;
+    top: -23px;
+  }
+}
+
+@include keyframes(moveMarkerD) {
+  0% {
+    left: -8px;
+    top: 14px;
+  }
+  100% {
+    left: -22px;
+    top: 0px;
+  }
+}
+
+#slide3 {
+  polygon {
+    stroke-width: 0;
+    stroke-dasharray: 6;
+    stroke-dashoffset: 0;
+  }
+  #slide3-a {
+    left: 68px;
+    top: -96px;
+    @include transition-delay(1.6s);
+  }
+  #slide3-b {
+    left: 155px;
+    top: -123px;
+    @include transition-delay(1.7s);
+  }
+  #slide3-c {
+    left: 72px;
+    top: -206px;
+    @include transition-delay(1.8s);
+  }
+  #slide3-d {
+    left: -8px;
+    top: -186px;
+    @include transition-delay(1.9s);
+  }
+  &.active {
+    .poly-a {
+      @include animation(fixPolyA 3s linear forwards 1s);
+    }
+    .poly-b {
+      @include animation(fixPolyB 3s linear forwards 1s);
+    }
+    .poly-c {
+      @include animation(fixPolyC 3s linear forwards 1s);
+    }
+    #slide3-a {
+      top: 104px;
+    }
+    #slide3-b {
+      top: 77px;
+    }
+    #slide3-c {
+      top: -6px;
+      @include animation(moveMarkerC .1s ease-out forwards 2.6s);
+    }
+    #slide3-d {
+      top: 14px;
+      @include animation(moveMarkerD .1s ease-out forwards 2.1s);
+    }
+  }
+}
+
+#slide-buttons {
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+  padding: 0;
+  margin: 0;
+
+  a {
+    display: block;
+    float: left;
+    width: 150px;
+    height: 30px;
+    color: $grayLightest;
+    background: $grayDarkest;
+    margin: 1px 1px 0 0;
+    padding: 10px 10px 0;
+    @include transition-property("color background-color");
+    @include transition-duration(0.2s);
+
+    &.active {
+      background: rgba(255,255,255,0.3);
+      color: $grayDarkest;
+      font-weight: bold;
+    }
+
+    &:hover {
+      color: $grayDarkest;
+      background: $grayLightest;
+    }
+
+    @media screen and (max-width: $desktopwidth) {
+      float: none;
+      width: 120px;
+      padding: 6px 6px 0;
+      font-size: 0.8em;
+    }
+  }
 }
