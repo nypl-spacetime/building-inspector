@@ -20,6 +20,7 @@ class General
 
     $("#home-slideshow").swipeshow(
       autostart: true
+      mouse: false
       initial: 0
       speed: 700
       interval: 6000
