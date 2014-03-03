@@ -42,12 +42,15 @@
   font-size: 12px;
 
   @media screen and (max-width: $desktopwidth) {
-    top: 70px;
+    top: auto;
+    bottom: 10px;
+    left: 50px;
   }
 
   ul {
     padding: 5px 10px;
     background: $white;
+    margin: 0;
     @include border-radius(3px);
     @include clearfix;
   }

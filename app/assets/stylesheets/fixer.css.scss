@@ -41,7 +41,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 #buttons {
   .wrapper {
     position: relative;
-    width: 290px;
+    width: 230px;
     height: 80px;
     margin: 0 auto;
 
@@ -62,113 +62,12 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
       margin: 5px 0;
     }
   }
-
-  #one-hand {
-    display: none;
-    position: absolute;
-    margin: 0;
-    padding: 0;
-    top: -70px;
-    left: 10px;
-    width: 30px;
-    height: 30px;
-    background: $grayLight;
-    line-height: 21px;
-    font-size: 16px;
-    @include border-radius(20px);
-
-    @media screen and (max-width: $desktopwidth) {
-      display: block;
-    }
-  }
-
-  @media screen and (max-width: $desktopwidth) {
-    .wrapper {
-      overflow: visible;
-    }
-
-    a {
-      @include transition-property(left,top);
-      @include transition-duration(.2s);
-      @include transition-timing-function(ease-out);
-    }
-
-    #yes-button, #no-button, #fix-button {
-      position: absolute;
-    }
-
-    #yes-button {
-      left: 200px;
-      top: 0;
-    }
-
-    #no-button {
-      left: 0;
-      top: 0;
-    }
-
-    #fix-button {
-      left: 100px;
-      top: 0;
-    }
-  }
-
-  &.left, &.right {
-    #yes-button, #no-button, #fix-button {
-      width: 70px;
-      @include border-radius(40px);
-    }
-  }
-
-  &.left {
-    #one-hand {
-      left: 10px;
-      top: 40px;
-    }
-
-    #yes-button {
-      left: 100px;
-    }
-
-    #no-button {
-      left: 0;
-      top: -100px;
-    }
-
-    #fix-button {
-      left: 71px;
-      top: -71px;
-    }
-  }
-
-  &.right {
-    #one-hand {
-      left: 230px;
-      top: 40px;
-    }
-
-    #yes-button {
-      left: 210px;
-      top: -100px;
-    }
-
-    #no-button {
-      top: 0;
-      left: 80px;
-    }
-
-    #fix-button {
-      left: 126px;
-      top: -71px;
-    }
-  }
-
 }
 
 .wrapper a, .wrapper span {
-  width: 80px;
+  width: 60px;
   height: 40px;
-  margin: 10px;
+  margin: 10px 10px 10px;
   padding-top: 20px;
   float: left;
   text-align: center;
@@ -208,11 +107,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
   &#submit-button {
     background: $green;
-    margin-left: 60px;
-    margin-top: 5px;
-    width: 180px;
-    height: 35px;
-    line-height: 25px;
+    width: 220px;
   }
 
   &#no-button.active, &#fix-button.active, &#yes-button.active , &#submit-button.active {
