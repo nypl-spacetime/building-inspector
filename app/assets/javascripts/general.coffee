@@ -9,7 +9,7 @@ class General
 
     window.setTimeout(
         () ->
-          $("#top-nav").removeClass("hidden")
+          $("#nav-toggle").removeClass("hidden")
         , 1000
     )
     $("#link-nav-menu").on("click", @toggleAppMenu)
@@ -18,19 +18,7 @@ class General
     $("#task-container .shown").on("click", @onTaskClick)
     $("body").on("click", @onBodyClick)
 
-    $("#home-slideshow").swipeshow(
-      autostart: true
-      mouse: false
-      initial: 0
-      speed: 700
-      interval: 6000
-      onactivate: (slide, index) ->
-        console.log "activate", slide, index
-        $("#slide-buttons a").removeClass("active")
-        $("#link-building").addClass("active") if index==0
-        $("#link-numbers").addClass("active") if index==1
-        $("#link-polygonfix").addClass("active") if index==2
-    )
+    @activateSlideshow()
 
     if (window.innerWidth < 500)
       document.title = "Bldg Inspector"
@@ -48,6 +36,32 @@ class General
       "#link-back"
     ]
     @mobileClick id for id in overrides
+
+  activateSlideshow: () ->
+    $("#home-slideshow").swipeshow(
+      autostart: true
+      mouse: false
+      initial: 0
+      speed: 700
+      interval: 6000
+      onactivate: (slide, index) ->
+        # console.log "activate", slide, index
+        $("#slide-buttons a").removeClass("active")
+        $("#link-building").addClass("active") if index==0
+        $("#link-polygonfix").addClass("active") if index==1
+        $("#link-numbers").addClass("active") if index==2
+    )
+    $("#link-building").on("mouseover", ()->
+      $("#home-slideshow").swipeshow().goTo(0)
+    )
+    $("#link-polygonfix").on("mouseover", ()->
+      $("#home-slideshow").swipeshow().goTo(1)
+    )
+    $("#link-numbers").on("mouseover", ()->
+      $("#home-slideshow").swipeshow().goTo(2)
+    )
+    # $("#link-numbers").addClass("active")
+    # $("#link-polygonfix").addClass("active")
 
   resizeSVG: () =>
     maxWidth = 960
@@ -68,6 +82,7 @@ class General
 
   toggleAppMenu: (e) ->
     $("#top-nav").toggleClass("open")
+    $("#nav-toggle").toggleClass("open")
     e.stopPropagation()
 
   toggleSigninPopup: (e) ->

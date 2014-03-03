@@ -7,8 +7,8 @@ help_link = "javascript:;" if @current_page=="fixer" || @current_page=="numbers"
     <ul id="task-toggle">
       <%= content_tag :li, (link_to "INSPECT:", building_path, {:rel=>"nofollow", :class=>"shown"}), :class => "header" if @current_page == "homepage" || @current_page.include?("progress") %>
       <%= content_tag :li, (link_to "Footprints", building_path, {:rel=>"nofollow", :class=>("shown" if @current_page=="fixer")}), :class=>("hidden" unless @current_page=="fixer") %>
-      <%= content_tag :li, (link_to "Addresses", addresses_path, {:rel=>"nofollow", :class=>("shown" if @current_page=="numbers")}), :class=>("hidden" unless @current_page=="numbers") %>
       <%= content_tag :li, (link_to "Fix polygons", polygons_path, {:rel=>"nofollow", :class=>("shown" if @current_page=="polygonfix")}), :class=>("hidden" unless @current_page=="polygonfix") %>
+      <%= content_tag :li, (link_to "Addresses", addresses_path, {:rel=>"nofollow", :class=>("shown" if @current_page=="numbers")}), :class=>("hidden" unless @current_page=="numbers") %>
     </ul>
     <%= link_to "HELP", "#{help_link}", {:id => "link-help", :class => "icon"} unless controller_name == "general" %>
   </div>

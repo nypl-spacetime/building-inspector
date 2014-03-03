@@ -34,6 +34,11 @@ h3 {
   text-transform: uppercase;
 }
 
+::selection {
+  background-color: $green;
+  color: $grayLightest;
+}
+
 #nav-admin {
   background: $grayDarkest;
   padding: 10px 0 0 10px;
@@ -143,9 +148,9 @@ a, a:link, a:visited, a:hover {
     padding-top: 0;
   }
 
-  @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
-    display: none;
-  }
+  // @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
+  //   display: none;
+  // }
 }
 
 .intro {
@@ -255,9 +260,9 @@ a.home-big-link {
     }
   }
 
-  @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
-    display: none;
-  }
+  // @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
+  //   display: none;
+  // }
 }
 
 #admin-container {
@@ -309,7 +314,7 @@ a.home-big-link {
     margin: 100px 100px 0;
   }
 
-  @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
-    // display: block;
-  }
+  // @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
+  //   // display: block;
+  // }
 }

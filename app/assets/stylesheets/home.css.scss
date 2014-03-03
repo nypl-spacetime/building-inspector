@@ -61,7 +61,8 @@
     color: $grayDarkest;
 
     @media screen and (max-width: $desktopwidth) {
-      margin-top: 240px;
+      margin-top: 0;
+      margin-left: 50px;
       font-size: 24px;
       line-height: 24px;
     }

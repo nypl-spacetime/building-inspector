@@ -20,15 +20,25 @@
   @include transition(all, .2s);
 
   @media screen and (max-width: $desktopwidth) {
+    position: fixed;
     right: 100%;
     left: -100%;
     bottom: 0;
-    height: auto;
-    // overflow-y: scroll;
+    height: 100%;
 
-    &.hidden {
-      right: 110%;
-      left: -110%;
+    .scrollable {
+      height: 100%;
+      overflow: hidden;
+      overflow-y: scroll;
+    }
+
+    &::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 4px
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: rgba(0,0,0,0.5);
     }
 
     &.open {
@@ -41,9 +51,9 @@
     }
   }
 
-  @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
-    display: none;
-  }
+  // @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
+  //   display: none;
+  // }
 
   a {
     color: $grayLightest;
@@ -374,16 +384,36 @@ a#tweet {
 
 #nav-toggle {
   display: none;
-  z-index: inherit;
+  z-index: 1;
+  @include transition(all, .2s);
+
+  a {
+    color: $grayLightest;
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
 
   @media screen and (max-width: $desktopwidth) {
-    position: absolute;
+    position: fixed;
     display: block;
     width: 40px;
     height: 40px;
-    right: -40px;
+    left: 0;
+    right: 100%;
     top: 0px;
     background: $grayDarker;
+  }
+
+  &.hidden {
+    right: auto;
+    left: -40px;
+  }
+
+  &.open {
+    right: 10px;
+    left: auto;
   }
 
   .hamburger {

@@ -1,16 +1,17 @@
-<div id="top-nav" class="hidden">
-  <div id="nav-branding">
-    <%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:class => "nypl-logo", :title => "Visit NYPL.org"} %>
-    <h1 class="logo"><a href="/" id="home-logo"><span>Building Inspector</span></a></h1>
+<div id="top-nav">
+  <div class="scrollable">
+    <div id="nav-branding">
+      <%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:class => "nypl-logo", :title => "Visit NYPL.org"} %>
+      <h1 class="logo"><a href="/" id="home-logo"><span>Building Inspector</span></a></h1>
+    </div>
+    <%= render :partial => "partials/task-nav" %>
+    <div id="service-links">
+      <%= render :partial => "partials/login" %>
+      <%= link_to "ABOUT", "/general/about", {:id => "link-about", :class => "icon"} %>
+    </div>
   </div>
-  <%= render :partial => "partials/task-nav" %>
-  <div id="service-links">
-    <%= render :partial => "partials/login" %>
-    <%= link_to "ABOUT", "/general/about", {:id => "link-about", :class => "icon"} %>
-  </div>
-  <%  %>
   <%= render :partial => "partials/score" unless controller_name == "general" %>
-  <div id="nav-toggle">
-    <%= link_to "M", "javascript:;", {:id => "link-nav-menu", :class => "hamburger", :title => "Toggle menu"} %>
-  </div>
+</div>
+<div id="nav-toggle" class="hidden">
+  <%= link_to "M", "javascript:;", {:id => "link-nav-menu", :class => "hamburger", :title => "Toggle menu"} %>
 </div>
