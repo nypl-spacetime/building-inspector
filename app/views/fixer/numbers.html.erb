@@ -18,7 +18,7 @@
 <%= render :partial => "partials/tutorial" %>
 
 <div id="main-container">
-  <div id="loader">LOADING<div class="nypl-logo-loader">N</div></div>
+  <%= render :partial => "partials/loading" %>
   <div id="map-highlight"></div>
   <div id="map-inspecting"></div>
   <%= render :partial => "partials/map" %>
@@ -27,5 +27,7 @@
   <div id="buttons" class="numbers">
     <div class="wrapper">
       <a href="javascript:;" id="submit-button" title="Keyboard shortcut: +" rel="nofollow">NEXT / SKIP</a>
+    </div>
   </div>
 </div>
+<%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:class => "nypl-logo", :title => "Visit NYPL.org", :id=>"nypl-mini"} %>

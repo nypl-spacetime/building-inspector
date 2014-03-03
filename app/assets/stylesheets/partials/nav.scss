@@ -17,7 +17,7 @@
   right: 0;
   left: 0;
   z-index: 110;
-  @include transition(all, .2s);
+  @include transition(all, .5s);
 
   @media screen and (max-width: $desktopwidth) {
     position: fixed;
@@ -34,7 +34,7 @@
 
     &::-webkit-scrollbar {
         -webkit-appearance: none;
-        width: 4px
+        width: 4px;
     }
     &::-webkit-scrollbar-thumb {
         border-radius: 4px;
@@ -331,7 +331,20 @@ a#tweet {
     left: -270%;
 
     @media screen and (max-width: $desktopwidth) {
-      left: -310%;
+      left: -150px;
+      top: 35px;
+      width: 140px;
+    }
+
+    .callout {
+      @media screen and (max-width: $desktopwidth) {
+        right: 0;
+        left: auto;
+        top: -10px;
+        bottom: auto;
+        border-top: none;
+        border-bottom: 10px solid $grayDark;
+      }
     }
   }
 
@@ -384,8 +397,14 @@ a#tweet {
 
 #nav-toggle {
   display: none;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  right: -40px;
+  top: 0px;
+  background: $grayDarker;
   z-index: 1;
-  @include transition(all, .2s);
+  @include border-radius-separate(0px, 0px, 5px, 0px);
 
   a {
     color: $grayLightest;
@@ -396,24 +415,7 @@ a#tweet {
   }
 
   @media screen and (max-width: $desktopwidth) {
-    position: fixed;
     display: block;
-    width: 40px;
-    height: 40px;
-    left: 0;
-    right: 100%;
-    top: 0px;
-    background: $grayDarker;
-  }
-
-  &.hidden {
-    right: auto;
-    left: -40px;
-  }
-
-  &.open {
-    right: 10px;
-    left: auto;
   }
 
   .hamburger {

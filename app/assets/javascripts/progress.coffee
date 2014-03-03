@@ -72,6 +72,7 @@ class Progress
 		).addTo @map
 
 	getCounts: () =>
+		$("#loader").remove()
 		data = $('#progressjs').data("progress")
 
 		bounds = new L.LatLngBounds(@_SW, @_NE)

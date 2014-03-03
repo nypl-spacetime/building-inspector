@@ -8,8 +8,8 @@ class General
       @resizeSVG()
 
     window.setTimeout(
-        () ->
-          $("#nav-toggle").removeClass("hidden")
+        () =>
+          @toggleAppMenu()
         , 1000
     )
     $("#link-nav-menu").on("click", @toggleAppMenu)
@@ -83,7 +83,7 @@ class General
   toggleAppMenu: (e) ->
     $("#top-nav").toggleClass("open")
     $("#nav-toggle").toggleClass("open")
-    e.stopPropagation()
+    e.stopPropagation() if e
 
   toggleSigninPopup: (e) ->
     $("#task-container .hidden").hide()

@@ -72,6 +72,7 @@ class Progress
 		).addTo @map
 
 	getCounts: () =>
+		$("#loader").remove()
 		data = $('#progressjs').data("progress")
 
 		bounds = new L.LatLngBounds(@_SW, @_NE)
@@ -98,7 +99,7 @@ class Progress
 					iconSize: L.point(30, 30)
 			polygonOptions:
 				stroke: false
-		
+
 		p = @
 
 		markers.on("click", (e) ->
@@ -121,7 +122,7 @@ class Progress
 		# console.log data
 
 		bbox = data.bbox.split ","
-		
+
 		W = parseFloat(bbox[0])
 		S = parseFloat(bbox[1])
 		E = parseFloat(bbox[2])

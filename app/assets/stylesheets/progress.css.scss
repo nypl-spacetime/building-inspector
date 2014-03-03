@@ -6,177 +6,114 @@
 @import "score";
 
 #link-progress-close {
-	top: 45px;
+  top: 45px;
 
-	// @media screen and (max-width: $desktopwidth) {
-	// 	top: 45px;
-	// }
+  // @media screen and (max-width: $desktopwidth) {
+  //  top: 45px;
+  // }
 
-	&:before {
-		color: $grayDarkest;
-	}
+  &:before {
+    color: $grayDarkest;
+  }
 }
 
 .polygon-highlight {
-	border: 2px solid $orange;
-	width: 10px;
-	height: 10px;
-	@include border-radius(10px);
-	margin-left: -5px;
-	margin-top: -5px;
-	z-index: 1111;
+  border: 2px solid $orange;
+  width: 10px;
+  height: 10px;
+  @include border-radius(10px);
+  margin-left: -5px;
+  margin-top: -5px;
+  z-index: 1111;
 
-	@include transition(all, .5s, ease-out);
+  @include transition(all, .5s, ease-out);
 
-	&.scaled {
-		@include transform(scale(5, 5));
-	}
+  &.scaled {
+    @include transform(scale(5, 5));
+  }
 }
 
 #legend {
-	position: absolute;
-	width: 120px;
-	left: 10px;
-	top: 80px;
-	z-index: 1;
-	text-align: left;
-	font-size: 12px;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  z-index: 1;
+  text-align: left;
+  font-size: 12px;
 
-	@media screen and (max-width: $desktopwidth) {
-		bottom: 10px;
-		top: auto;
-		right: 10px;
-		width: auto;
-		height: auto;
-	}
+  @media screen and (max-width: $desktopwidth) {
+    top: 70px;
+  }
 
-	ul {
-		padding: 10px;
-		background: $grayLightest;
-		margin-bottom: 10px;
-		@include border-radius(5px);
-		@include clearfix;
-	
-		@media screen and (max-width: $desktopwidth) {
-			float: left;
-			width: 40%;
-			margin-right: 5px;
-		}
-	}
+  ul {
+    padding: 5px 10px;
+    background: $white;
+    @include border-radius(3px);
+    @include clearfix;
+  }
 
-	li {
-		@media screen and (max-width: $desktopwidth) {
-			float: left;
-			margin-right: 5px;
-		}
-	}
+  li {
+    float: left;
+    margin-right: 10px;
+  }
 
-	.color {
-		display: inline-block;
-		width: 10px;
-		height: 10px;
+  .color {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
 
-		&.yes {
-			background: $yescolor;
-		}
+    &.yes {
+      background: $yescolor;
+    }
 
-		&.no {
-			background: $nocolor;
-		}
+    &.no {
+      background: $nocolor;
+    }
 
-		&.fix {
-			background: $fixcolor;
-		}
+    &.fix {
+      background: $fixcolor;
+    }
 
-		&.nil {
-			background: $grayLight;
-		}
-	}
-
-	.legend-link {
-		display: block;
-		font-size: 10px;
-		padding: 5px 10px;
-		margin-bottom: 10px;
-		background: $gray;
-		color: $grayLightest;
-		text-align: center;
-		@include border-radius(5px);
-
-		@media screen and (max-width: $desktopwidth) {
-			float: left;
-			width: 40%;
-			margin-bottom: 0;
-			background: transparent;
-			color: $grayDarkest;
-			background: rgba(144,139,133,0.75);
-		}
-
-		&:hover {
-			background: $grayDarkest;
-			text-decoration: none;
-
-			@media screen and (max-width: $desktopwidth) {
-				background: rgba(144,139,133,0.75);
-			}
-		}
-	}
-}
-
-#main-container.noscore {
-	bottom: 0;
-
-	#legend {
-		top: 10px;
-
-		@media screen and (max-width: $desktopwidth) {
-			top: auto;
-			bottom: 20px;
-
-			.legend-link {
-				@include border-radius(5px 5px 0 0);
-
-				&:last-child {
-					@include border-radius(0 0 5px 5px);
-				}
-			}
-		}
-	}
+    &.nil {
+      background: $grayLight;
+    }
+  }
 }
 
 #controls {
-	@media screen and (max-width: $desktopwidth) {
-		height: 1px;
-	}
+  @media screen and (max-width: $desktopwidth) {
+    height: 1px;
+  }
 }
 
 #map-container .spinner {
-	left: 50%;
-	top: -50%;
+  left: 50%;
+  top: -50%;
 }
 
 .leaflet-container {
-	background: transparent;
+  background: transparent;
 }
 
 .cluster-small, .cluster-medium, .cluster-large {
-	width: 36px;
-	height: 36px;
-	text-align: center;
-	background: $grayLightest;
-	color: $grayDarker;
-	font-size: 12px;
-	line-height: 30px;
-	border: 2px solid $grayLighter;
-	@include rounded-corners(18px);
+  width: 36px;
+  height: 36px;
+  text-align: center;
+  background: $grayLightest;
+  color: $grayDarker;
+  font-family: $mainfont;
+  font-size: 12px;
+  line-height: 26px;
+  border: 2px solid $grayLighter;
+  @include rounded-corners(18px);
 }
 
 .cluster-medium {
-	background: $grayLighter;
-	border-color: $grayLight;
+  background: $grayLighter;
+  border-color: $grayLight;
 }
 
 .cluster-large {
-	background: $grayLight;
-	border-color: $gray;
+  background: $grayLight;
+  border-color: $gray;
 }

@@ -73,6 +73,7 @@ class Progress
 		).addTo @map
 
 	getCounts: () =>
+		$("#loader").remove()
 		data = $('#progressjs').data("progress")
 
 		# console.log data

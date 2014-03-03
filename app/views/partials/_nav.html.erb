@@ -1,4 +1,4 @@
-<div id="top-nav">
+<div id="top-nav" class="open">
   <div class="scrollable">
     <div id="nav-branding">
       <%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:class => "nypl-logo", :title => "Visit NYPL.org"} %>
@@ -11,7 +11,7 @@
     </div>
   </div>
   <%= render :partial => "partials/score" unless controller_name == "general" %>
-</div>
-<div id="nav-toggle" class="hidden">
-  <%= link_to "M", "javascript:;", {:id => "link-nav-menu", :class => "hamburger", :title => "Toggle menu"} %>
+  <div id="nav-toggle" class="open">
+    <%= link_to "M", "javascript:;", {:id => "link-nav-menu", :class => "hamburger", :title => "Toggle menu"} %>
+  </div>
 </div>
