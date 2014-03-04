@@ -80,7 +80,6 @@ class Building
 	addButtonListeners: () =>
 		tagger = @
 		@removeButtonListeners()
-		$("#one-hand").on("click", @toggleButtonMode)
 		$("#link-help-close").on("click", @hideTutorial)
 		$("#link-exit-tutorial").on("click", @hideTutorial)
 		$("#link-help").on("click", @invokeTutorial)
@@ -146,11 +145,11 @@ class Building
 
 		$("#tweet").attr "href", twitterurl
 
-	animateSheet: () =>
+	showInspectingMessage: () =>
 		return if @layer_id == @loadedData.map.layer_id or @tutorialOn
 		@layer_id = @loadedData.map.layer_id
-		msg = "Now inspecting:<br/>Brooklyn, 1855"
-		msg = "Now inspecting:<br/>Manhattan, 1857-62" if @layer_id == 859 # hack // eventually add to sheet table
+		msg = "Now inspecting:<br/><strong>Brooklyn, 1855</strong>"
+		msg = "Now inspecting:<br/><strong>Manhattan, 1857-62</strong>" if @layer_id == 859 # hack // eventually add to sheet table
 		el = $("#map-inspecting")
 		el.html("<span>" + msg + "</span>")
 		.show().delay(2000).fadeOut(1000)
@@ -197,192 +196,6 @@ class Building
 			@buildTutorial()
 		@tutorialOn = true
 
-	buildTutorial: () =>
-		tagger = @
-		if @intro == null
-			@intro = introJs()
-			@intro.setOptions(
-				skipLabel: "Exit tutorial"
-				tooltipClass: "tutorial"
-				showStepNumbers: false
-				exitOnOverlayClick: false
-				steps: [
-						{
-							element: "#map-highlight"
-							intro: "<strong>Here's how the app works</strong><br />We'll show you one computer-generated building outline at a time, laid over the original map."
-							position: "bottom"
-						}
-						{
-							element: "#buttons .wrapper"
-							intro: "Along with 3 buttons:<br /><strong>YES</strong> (keyboard 3) for when the outline matches a building footprint<br /><strong>FIX</strong> (keyboard 2) for when the outline mostly matches, but needs correcting<br /><strong>NO</strong> (keyboard 1) for when the outline is not around a building"
-							position: "top"
-						}
-						{
-							element: "#buttons .wrapper"
-							intro: "Let's walk through a few examples…"
-							position: "top"
-						}
-						{
-							element: "#map-highlight"
-							intro: "This outline matches the original building footprint."
-							position: "top"
-						}
-						{
-							element: "#yes-button"
-							intro: "Press YES to tag it as correct and continue to the next one."
-							position: "top"
-						}
-						{
-							element: "#map-highlight"
-							intro: "This outline does't match a building at all, but rather the <strong>space between buildings</strong>."
-							position: "top"
-						}
-						{
-							element: "#no-button"
-							intro: "Press NO to tag it as wrong."
-							position: "top"
-						}
-						{
-							element: "#map-highlight"
-							intro: "Sometimes that inter-building space has a darker shade."
-							position: "top"
-						}
-						{
-							element: "#no-button"
-							intro: "Be vigilant!"
-							position: "top"
-						}
-						{
-							element: "#map-highlight"
-							intro: "Sometimes the computer is <strong>just a little bit off</strong> (e.g. here it missed a skylight).<br />Your input can help us to train it to recognize these in the future."
-							position: "top"
-						}
-						{
-							element: "#fix-button"
-							intro: "Press FIX to indicate so."
-							position: "top"
-						}
-						{
-							element: "#map-highlight"
-							intro: "But don't let perfect be the enemy of good."
-							position: "top"
-						}
-						{
-							element: "#yes-button"
-							intro: "This one's good enough. Press YES and keep going."
-							position: "top"
-						}
-						{
-							element: "#map-highlight"
-							intro: "Some buildings have multiple parts. When in doubt, refer to the original map. <strong>Broken lines mean connected structures.</strong> Solid lines mean separate ones."
-							position: "top"
-						}
-						{
-							element: ".leaflet-control-zoom.leaflet-bar.leaflet-control"
-							intro: "That's a large building! Use zoom in/out to view it better."
-							position: "left"
-						}
-						{
-							element: "#yes-button"
-							intro: "Now you can approve it."
-							position: "top"
-						}
-						{
-							element: "#map-highlight"
-							intro: "Defer to those original lines (broken vs. solid) criteria for <strong>multi-colored buildings</strong> also."
-							position: "top"
-						}
-						{
-							element: "#yes-button"
-							intro: "That's a YES!"
-							position: "top"
-						}
-						{
-							element: "#map-highlight"
-							intro: "Good!<br />This one is actually <strong>two separate</strong> buildings."
-							position: "top"
-						}
-						{
-							element: "#fix-button"
-							intro: "That's a FIXer."
-							position: "top"
-						}
-						{
-							element: "#map-highlight"
-							intro: "Easy, right?<br />But keep an eye out.. Occasionally a <strong>crease or seam in the map</strong> throws off the computer."
-							position: "top"
-						}
-						{
-							element: "#fix-button"
-							intro: "Those are FIXes."
-							position: "top"
-						}
-						{
-							element: "#map-highlight"
-							intro: "Sometimes the computer makes a real mess."
-							position: "top"
-						}
-						{
-							element: "#no-button"
-							intro: "Teach that computer a lesson!"
-							position: "top"
-						}
-						{
-							element: "#map-highlight"
-							intro: "Yikes! It really screwed this one up."
-							position: "top"
-						}
-						{
-							element: "#no-button"
-							intro: "Laugh at the poor computer and move on."
-							position: "top"
-						}
-						{
-							element: "#link-help"
-							intro: "<strong>Now you're ready to begin checking buildings!</strong><br />You can always refer to this tutorial again by hitting the HELP button.<br />Have fun! And thanks for helping The New York Public Library."
-							position: "left"
-						}
-				]
-			).onchange (e) ->
-				tagger.parseTutorial(e)
-			.oncomplete () ->
-				tagger.hideTutorial()
-			.onexit () ->
-				tagger.hideTutorial()
-			.start()
-		@
-
-	parseTutorial: (e) =>
-		# console.log @intro._currentStep, @currentIndex
-		$(".introjs-helperLayer").removeClass("noMap")
-		$(".introjs-helperLayer").removeClass("yesNext")
-		@removeButtonListeners()
-
-		switch @intro._currentStep
-			when 1, 2, 14
-				$(".introjs-helperLayer").addClass("noMap yesNext")
-			when 4, 6, 8, 10, 12, 15, 17, 19, 21, 23, 25
-				$(".introjs-helperLayer").addClass("noMap")
-				@addButtonListeners()
-			when 26
-				$(".introjs-helperLayer").addClass("noMap")
-		# for polygon show
-		switch @intro._currentStep
-			when 0,1,2,3,4
-				@currentIndex = -1
-			when 5,6 then @currentIndex = 0
-			when 7,8 then @currentIndex = 1
-			when 9,10 then @currentIndex = 2
-			when 11,12 then @currentIndex = 3
-			when 13,14,15 then @currentIndex = 4
-			when 16,17 then @currentIndex = 5
-			when 18,19 then @currentIndex = 6
-			when 20,21 then @currentIndex = 7
-			when 22,23 then @currentIndex = 8
-			when 24,25,26 then @currentIndex = 9
-		@showNextPolygon()
-		@
-
 	getPolygons: () =>
 		tagger = @
 		mapdata = $('#buildingjs').data("map")
@@ -406,7 +219,7 @@ class Building
 		@loadedData = data
 		@polyData = data.poly
 		@updateScore()
-		@animateSheet()
+		@showInspectingMessage()
 		@showNextPolygon()
 
 	shufflePolygons: (a) ->
@@ -534,6 +347,198 @@ class Building
 			color: '#b00'
 			opacity: 0
 			fill: false
+
+	buildTutorial: () =>
+		return if @intro!=null
+		steps = [
+            {
+              element: "#map-highlight"
+              intro: "<strong>Here's how the app works</strong><br />We'll show you one computer-generated building outline at a time, laid over the original map."
+              position: "bottom"
+              polygon_index: -1
+            }
+            {
+              element: "#buttons .wrapper"
+              intro: "Along with 3 buttons:<br /><strong>YES</strong> (keyboard 3) for when the outline matches a building footprint<br /><strong>FIX</strong> (keyboard 2) for when the outline mostly matches, but needs correcting<br /><strong>NO</strong> (keyboard 1) for when the outline is not around a building"
+              position: "top"
+              polygon_index: -1
+            }
+            {
+              element: "#buttons .wrapper"
+              intro: "Let's walk through a few examples…"
+              position: "top"
+              polygon_index: -1
+            }
+            {
+              element: "#map-highlight"
+              intro: "This outline matches the original building footprint."
+              position: "top"
+              polygon_index: -1
+            }
+            {
+              element: "#yes-button"
+              intro: "Press YES to tag it as correct and continue to the next one."
+              position: "top"
+              polygon_index: -1
+              ixactive: true
+            }
+            {
+              element: "#map-highlight"
+              intro: "This outline does't match a building at all, but rather the <strong>space between buildings</strong>."
+              position: "top"
+              polygon_index: 0
+            }
+            {
+              element: "#no-button"
+              intro: "Press NO to tag it as wrong."
+              position: "top"
+              polygon_index: 0
+              ixactive: true
+            }
+            {
+              element: "#map-highlight"
+              intro: "Sometimes that inter-building space has a darker shade."
+              position: "top"
+              polygon_index: 1
+            }
+            {
+              element: "#no-button"
+              intro: "Be vigilant!"
+              position: "top"
+              polygon_index: 1
+              ixactive: true
+            }
+            {
+              element: "#map-highlight"
+              intro: "Sometimes the computer is <strong>just a little bit off</strong> (e.g. here it missed a skylight).<br />Your input can help us to train it to recognize these in the future."
+              position: "top"
+              polygon_index: 2
+            }
+            {
+              element: "#fix-button"
+              intro: "Press FIX to indicate so."
+              position: "top"
+              polygon_index: 2
+              ixactive: true
+            }
+            {
+              element: "#map-highlight"
+              intro: "But don't let perfect be the enemy of good."
+              position: "top"
+              polygon_index: 3
+            }
+            {
+              element: "#yes-button"
+              intro: "This one's good enough. Press YES and keep going."
+              position: "top"
+              polygon_index: 3
+              ixactive: true
+            }
+            {
+              element: "#map-highlight"
+              intro: "Some buildings have multiple parts. When in doubt, refer to the original map. <strong>Broken lines mean connected structures.</strong> Solid lines mean separate ones."
+              position: "top"
+              polygon_index: 4
+            }
+            {
+              element: ".leaflet-control-zoom.leaflet-bar.leaflet-control"
+              intro: "That's a large building! Use zoom in/out to view it better."
+              position: "left"
+              polygon_index: 4
+            }
+            {
+              element: "#yes-button"
+              intro: "Now you can approve it."
+              position: "top"
+              polygon_index: 4
+              ixactive: true
+            }
+            {
+              element: "#map-highlight"
+              intro: "Defer to those original lines (broken vs. solid) criteria for <strong>multi-colored buildings</strong> also."
+              position: "top"
+              polygon_index: 5
+            }
+            {
+              element: "#yes-button"
+              intro: "That's a YES!"
+              position: "top"
+              polygon_index: 5
+              ixactive: true
+            }
+            {
+              element: "#map-highlight"
+              intro: "Good!<br />This one is actually <strong>two separate</strong> buildings."
+              position: "top"
+              polygon_index: 6
+            }
+            {
+              element: "#fix-button"
+              intro: "That's a FIXer."
+              position: "top"
+              polygon_index: 6
+              ixactive: true
+            }
+            {
+              element: "#map-highlight"
+              intro: "Easy, right?<br />But keep an eye out.. Occasionally a <strong>crease or seam in the map</strong> throws off the computer."
+              position: "top"
+              polygon_index: 7
+            }
+            {
+              element: "#fix-button"
+              intro: "Those are FIXes."
+              position: "top"
+              polygon_index: 7
+              ixactive: true
+            }
+            {
+              element: "#map-highlight"
+              intro: "Sometimes the computer makes a real mess."
+              position: "top"
+              polygon_index: 8
+            }
+            {
+              element: "#no-button"
+              intro: "Teach that computer a lesson!"
+              position: "top"
+              polygon_index: 8
+              ixactive: true
+            }
+            {
+              element: "#map-highlight"
+              intro: "Yikes! It really screwed this one up."
+              position: "top"
+              polygon_index: 9
+            }
+            {
+              element: "#no-button"
+              intro: "Laugh at the poor computer and move on."
+              position: "top"
+              polygon_index: 9
+              ixactive: true
+            }
+            {
+              element: "#link-help"
+              intro: "<strong>Now you're ready to begin checking buildings!</strong><br />You can always refer to this tutorial again by hitting the HELP button.<br />Have fun! And thanks for helping The New York Public Library."
+              position: "left"
+              polygon_index: 9
+            }
+        ]
+		@intro = new NYPL_Map_Tutorial(
+			highlightID: "#map-highlight"
+			steps: steps
+			changeFunction: @parseTutorial
+			exitFunction: @hideTutorial
+			ixactiveFunction: @addButtonListeners
+			ixinactiveFunction: @removeButtonListeners
+		)
+		@intro.init()
+
+	parseTutorial: () =>
+		@currentIndex = @intro.getCurrentPolygonIndex()
+		@showNextPolygon()
+		@
 
 
 $ ->

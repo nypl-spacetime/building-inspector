@@ -77,10 +77,20 @@ class Polygonfix
     $("#link-help").on("click", @invokeTutorial)
     $("#submit-button").on "click", @submitFlags
 
-    # $("body").keyup (e)->
-    #   # console.log "key", e.which
-    #   switch e.which
-    #     when 107, 187 then tagger.submitFlags(e)
+    $("body").keydown (e)->
+      switch e.which
+        when 32 then tagger.hideMarkers(e)
+
+    $("body").keyup (e)->
+      # console.log "key", e.which
+      switch e.which
+        when 32 then tagger.showMarkers(e)
+
+  showMarkers: (e) =>
+    @geo._reloadPolygon() # hacky
+
+  hideMarkers: (e) =>
+    @geo._hideAll() # hacky
 
   removeButtonListeners: () =>
     $("#submit-button").unbind()

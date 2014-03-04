@@ -14,7 +14,7 @@ class Numbers
     @_currentIndex = -1
     @_currentPolygon = {}
     @tutorialOn = $('#numbersjs').data("session")
-    history.replaceState("numbers","inspector","numbers") 
+    history.replaceState("numbers","inspector","numbers")
     #end tutorial
     @flags = {}
     @geo = {}
@@ -24,7 +24,7 @@ class Numbers
     $("#buttons").hide()
     $("#tweet").hide()
 
-    @map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859-final/859spec.json', 
+    @map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859-final/859spec.json',
       zoomControl: false
       scrollWheelZoom: false
       animate: true
@@ -110,6 +110,8 @@ class Numbers
     $("#map-tutorial").hide()
 
   hideTutorial: () =>
+    # remove fake flags from tutorial
+    $("#map-highlight .number-flag").remove()
     # console.log "end of tutorial"
     if (window.innerWidth < 500)
       @showOthers()
@@ -141,212 +143,6 @@ class Numbers
       @buildTutorial()
     @tutorialOn = true
 
-  buildTutorial: () =>
-    tagger = @
-    if @intro == null
-      @intro = introJs()
-      @intro.setOptions(
-        skipLabel: "Exit tutorial"
-        tooltipClass: "tutorial"
-        showStepNumbers: false
-        exitOnOverlayClick: false
-        steps: [
-            {
-              element: "#map-highlight"
-              intro: "<strong>Here's how this task works</strong><br />We'll show you one computer-generated building outline at a time, laid over the original map."
-              position: "bottom"
-            }
-            {
-              element: "#buttons .wrapper"
-              intro: "Along with this button. Let's walk through a few examples…"
-              position: "top"
-            }
-            {
-              element: "#map-highlight"
-              intro: "The address number of this building is 781. Click there and type 781."
-              position: "right"
-            }
-            {
-              element: "#submit-button"
-              intro: "Press next to save it and go to the next building."
-              position: "top"
-            }
-            {
-              element: "#map-highlight"
-              intro: "62 or 29? Look around! (remind of even/odd addressing system)"
-              position: "right"
-            }
-            {
-              element: "#submit-button"
-              intro: "press."
-              position: "top"
-            }
-            {
-              element: "#map-highlight"
-              intro: "1s may be confused for 4s and vice-versa. look around"
-              position: "right"
-            }
-            {
-              element: "#submit-button"
-              intro: "Be vigilant!"
-              position: "top"
-            }
-            {
-              element: "#map-highlight"
-              intro: "3s and 8s are another source of confusion."
-              position: "right"
-            }
-            {
-              element: "#submit-button"
-              intro: "Press FIX to indicate so."
-              position: "top"
-            }
-            {
-              element: "#map-highlight"
-              intro: "this building is part of the 33 address."
-              position: "right"
-            }
-            {
-              element: "#submit-button"
-              intro: "This one's good enough. Press YES and keep going."
-              position: "top"
-            }
-            {
-              element: "#map-highlight"
-              intro: "Some buildings have no address number."
-              position: "right"
-            }
-            {
-              element: "#submit-button"
-              intro: "Now you can approve it."
-              position: "top"
-            }
-            {
-              element: "#map-highlight"
-              intro: "don't be fooled by numbers inside buildings! this is a lucky 13."
-              position: "right"
-            }
-            {
-              element: "#submit-button"
-              intro: "Those are FIXes."
-              position: "top"
-            }
-            {
-              element: "#map-highlight"
-              intro: "some have more than one number. type em all!"
-              position: "right"
-            }
-            {
-              element: "#submit-button"
-              intro: "That's a FIXer."
-              position: "top"
-            }
-            {
-              element: "#map-highlight"
-              intro: "hand drawn maps go through corrections. we want both numbers [mga note: do we?]"
-              position: "right"
-            }
-            {
-              element: "#submit-button"
-              intro: "Teach that computer a lesson!"
-              position: "top"
-            }
-            {
-              element: "#map-highlight"
-              intro: "extra complicated... type fractions as .5 in this case 805.5"
-              position: "right"
-            }
-            {
-              element: "#submit-button"
-              intro: "Laugh at the poor computer and move on."
-              position: "top"
-            }
-            {
-              element: "#map-highlight"
-              intro: "i wants moar numberz!"
-              position: "right"
-            }
-            {
-              element: "#submit-button"
-              intro: "Laugh at the poor computer and move on."
-              position: "top"
-            }
-            {
-              element: "#map-highlight"
-              intro: "some numbers are shared by more than one building. this 11 would be typed in both."
-              position: "right"
-            }
-            {
-              element: "#submit-button"
-              intro: "Laugh at the poor computer and move on."
-              position: "top"
-            }
-            {
-              element: "#map-highlight"
-              intro: "this must be part of the 68 bottom-right (note wall 'entrance' connecting)"
-              position: "right"
-            }
-            {
-              element: "#submit-button"
-              intro: "That's a YES!"
-              position: "top"
-            }
-            {
-              element: "#link-help"
-              intro: "<strong>Now you're ready to begin checking buildings!</strong><br />You can always refer to this tutorial again by hitting the HELP button.<br />Have fun! And thanks for helping The New York Public Library."
-              position: "left"
-            }
-        ]
-      ).onchange (e) ->
-        tagger.parseTutorial(e)
-      .oncomplete () ->
-        tagger.hideTutorial()
-      .onexit () ->
-        tagger.hideTutorial()
-      .start()
-    @
-
-  parseTutorial: (e) =>
-    # console.log @intro._currentStep, @currentIndex
-    $(".introjs-helperLayer").removeClass("noMap")
-    $(".introjs-helperLayer").removeClass("yesNext")
-    @removeButtonListeners()
-
-    step = @intro._currentStep
-
-    overlay = $("#map-highlight")
-
-    overlay.unbind('click')
-
-    switch step
-      when 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26
-        $(".introjs-helperLayer").addClass("yesNext")
-        overlay.on('click', @onTutorialClick)
-      when 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27
-        $(".introjs-helperLayer").addClass("noMap")
-        @addButtonListeners()
-      when 28
-        $(".introjs-helperLayer").addClass("noMap")
-    
-    # for polygon show
-    switch step
-      when 0,1,2,3
-        @currentIndex = -1
-      when 4,5 then @currentIndex = 0
-      when 6,7 then @currentIndex = 1
-      when 8,9 then @currentIndex = 2
-      when 10,11 then @currentIndex = 3
-      when 12,13 then @currentIndex = 4
-      when 14,15 then @currentIndex = 5
-      when 16,17 then @currentIndex = 6
-      when 18,19 then @currentIndex = 7
-      when 20,21 then @currentIndex = 8
-      when 22,23 then @currentIndex = 9
-      when 24,25 then @currentIndex = 10
-      when 26,27,28 then @currentIndex = 11
-    @showNextPolygon()
-    @
-
   getPolygons: () =>
     tagger = @
     mapdata = $('#numbersjs').data("map")
@@ -371,14 +167,14 @@ class Numbers
     @loadedData = data
     @polyData = data.poly
     @updateScore()
-    @animateSheet()
+    @showInspectingMessage()
     @showNextPolygon()
 
-  animateSheet: () =>
+  showInspectingMessage: () =>
     return if @layer_id == @loadedData.map.layer_id or @tutorialOn
     @layer_id = @loadedData.map.layer_id
-    msg = "Now inspecting:<br/>Brooklyn, 1855"
-    msg = "Now inspecting:<br/>Manhattan, 1857-62" if @layer_id == 859 # hack // eventually add to sheet table
+    msg = "Now inspecting:<br/><strong>Brooklyn, 1855</strong>"
+    msg = "Now inspecting:<br/><strong>Manhattan, 1857-62</strong>" if @layer_id == 859 # hack // eventually add to sheet table
     el = $("#map-inspecting")
     el.html("<span>" + msg + "</span>")
     .show().delay(2000).fadeOut(1000)
@@ -420,7 +216,7 @@ class Numbers
 
     tagger = @
     $("#buttons").fadeOut 200 , () ->
-      $.get("/fixer/flagnum.json", 
+      $.get("/fixer/flagnum.json",
         i: tagger.currentPolygon.id
         t: type
         f: flag_str
@@ -428,7 +224,7 @@ class Numbers
           # console.log "returned", data
           tagger.showNextPolygon()
       )
-  
+
   prepareData: () =>
     r = []
     for flag, contents of @flags
@@ -461,7 +257,7 @@ class Numbers
       @getPolygons()
 
   makePolygon: (poly) ->
-    json = 
+    json =
       type : "Feature"
       properties:
         DN: poly.dn
@@ -485,7 +281,7 @@ class Numbers
   updateScore: () =>
     if @allPolygonsSession == 0
       @allPolygonsSession = @loadedData.status.all_polygons_session
-    
+
     $("#score .total").text(@allPolygonsSession)
 
     url = $('#progressjs').data("server")
@@ -524,7 +320,7 @@ class Numbers
     lng = latlng.lng
     x = e.containerPoint.x
     y = e.containerPoint.y
-    
+
     tagger = @
 
     circle = L.circleMarker(latlng,
@@ -618,7 +414,7 @@ class Numbers
     elem.blur() if charCode == 13 # ENTER
 
     # console.log charCode
-    
+
     e.preventDefault() if (charCode != 46 && charCode != 190 && charCode != 110 && charCode > 31 && (charCode < 48 || charCode > 57) && (charCode > 105 || charCode < 96))
 
     e.preventDefault() if txt.indexOf(".") > -1 && (charCode == 190 || charCode == 110)
@@ -637,6 +433,213 @@ class Numbers
     html = "<div id=\"num-x-#{x}-y-#{y}\" class=\"number-flag\"><div class=\"cont\"><input type=\"number\" class=\"input\" step=\"any\" placeholder=\"#\" /><a href=\"javascript:;\" class=\"num-close\">x</a></div></div>"
     el = $(html)
     return el
+
+  buildTutorial: () =>
+    steps = [
+        {
+          element: "#map-highlight"
+          intro: "<strong>Here's how this task works</strong><br />We'll show you one computer-generated building outline at a time, laid over the original map."
+          position: "bottom"
+          polygon_index: -1
+        }
+        {
+          element: "#buttons .wrapper"
+          intro: "Along with this button. Let's walk through a few examples…"
+          position: "top"
+          polygon_index: -1
+          ixactive: true
+        }
+        {
+          element: "#map-highlight"
+          intro: "The address number of this building is 781. Click there and type 781."
+          position: "right"
+          polygon_index: -1
+        }
+        {
+          element: "#submit-button"
+          intro: "Press next to save it and go to the next building."
+          position: "top"
+          polygon_index: -1
+          ixactive: true
+        }
+        {
+          element: "#map-highlight"
+          intro: "62 or 29? Look around! (remind of even/odd addressing system)"
+          position: "right"
+          polygon_index: 0
+        }
+        {
+          element: "#submit-button"
+          intro: "press."
+          position: "top"
+          polygon_index: 0
+          ixactive: true
+        }
+        {
+          element: "#map-highlight"
+          intro: "1s may be confused for 4s and vice-versa. look around"
+          position: "right"
+          polygon_index: 1
+        }
+        {
+          element: "#submit-button"
+          intro: "Be vigilant!"
+          position: "top"
+          polygon_index: 1
+          ixactive: true
+        }
+        {
+          element: "#map-highlight"
+          intro: "3s and 8s are another source of confusion."
+          position: "right"
+          polygon_index: 2
+        }
+        {
+          element: "#submit-button"
+          intro: "Press FIX to indicate so."
+          position: "top"
+          polygon_index: 2
+          ixactive: true
+        }
+        {
+          element: "#map-highlight"
+          intro: "this building is part of the 33 address."
+          position: "right"
+          polygon_index: 3
+        }
+        {
+          element: "#submit-button"
+          intro: "This one's good enough. Press YES and keep going."
+          position: "top"
+          polygon_index: 3
+          ixactive: true
+        }
+        {
+          element: "#map-highlight"
+          intro: "Some buildings have no address number."
+          position: "right"
+          polygon_index: 4
+        }
+        {
+          element: "#submit-button"
+          intro: "Now you can approve it."
+          position: "top"
+          polygon_index: 4
+          ixactive: true
+        }
+        {
+          element: "#map-highlight"
+          intro: "don't be fooled by numbers inside buildings! this is a lucky 13."
+          position: "right"
+          polygon_index: 5
+        }
+        {
+          element: "#submit-button"
+          intro: "Those are FIXes."
+          position: "top"
+          polygon_index: 5
+          ixactive: true
+        }
+        {
+          element: "#map-highlight"
+          intro: "some have more than one number. type em all!"
+          position: "right"
+          polygon_index: 6
+        }
+        {
+          element: "#submit-button"
+          intro: "That's a FIXer."
+          position: "top"
+          polygon_index: 6
+          ixactive: true
+        }
+        {
+          element: "#map-highlight"
+          intro: "hand drawn maps go through corrections. we want both numbers [mga note: do we?]"
+          position: "right"
+          polygon_index: 7
+        }
+        {
+          element: "#submit-button"
+          intro: "Teach that computer a lesson!"
+          position: "top"
+          polygon_index: 7
+          ixactive: true
+        }
+        {
+          element: "#map-highlight"
+          intro: "extra complicated... type fractions as .5 in this case 805.5"
+          position: "right"
+          polygon_index: 8
+        }
+        {
+          element: "#submit-button"
+          intro: "Laugh at the poor computer and move on."
+          position: "top"
+          polygon_index: 8
+          ixactive: true
+        }
+        {
+          element: "#map-highlight"
+          intro: "i wants moar numberz!"
+          position: "right"
+          polygon_index: 9
+        }
+        {
+          element: "#submit-button"
+          intro: "Laugh at the poor computer and move on."
+          position: "top"
+          polygon_index: 9
+          ixactive: true
+        }
+        {
+          element: "#map-highlight"
+          intro: "some numbers are shared by more than one building. this 11 would be typed in both."
+          position: "right"
+          polygon_index: 10
+        }
+        {
+          element: "#submit-button"
+          intro: "Laugh at the poor computer and move on."
+          position: "top"
+          polygon_index: 10
+          ixactive: true
+        }
+        {
+          element: "#map-highlight"
+          intro: "this must be part of the 68 bottom-right (note wall 'entrance' connecting)"
+          position: "right"
+          polygon_index: 11
+        }
+        {
+          element: "#submit-button"
+          intro: "That's a YES!"
+          position: "top"
+          polygon_index: 11
+          ixactive: true
+        }
+        {
+          element: "#link-help"
+          intro: "<strong>Now you're ready to begin checking buildings!</strong><br />You can always refer to this tutorial again by hitting the HELP button.<br />Have fun! And thanks for helping The New York Public Library."
+          position: "left"
+          polygon_index: 11
+        }
+    ]
+    @intro = new NYPL_Map_Tutorial(
+      highlightID: "#map-highlight"
+      steps: steps
+      changeFunction: @parseTutorial
+      exitFunction: @hideTutorial
+      ixactiveFunction: @addButtonListeners
+      ixinactiveFunction: @removeButtonListeners
+      highlightclickFunction: @onTutorialClick
+    )
+    @intro.init()
+
+  parseTutorial: (e) =>
+    @currentIndex = @intro.getCurrentPolygonIndex()
+    @showNextPolygon()
+    @
 
 $ ->
   window._n = new Numbers()
