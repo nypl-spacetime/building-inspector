@@ -42,7 +42,6 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   .wrapper {
     position: relative;
     width: 230px;
-    height: 80px;
     margin: 0 auto;
 
     @include clearfix;
@@ -234,5 +233,76 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
   .dots {
     bottom: 0;
+  }
+}
+
+// introjs overrides
+.tutorial {
+  font-family: $mainfont;
+
+  strong {
+    font-weight: normal;
+    color: $orange;
+  }
+  .introjs-tooltipbuttons {
+    min-width: 240px;
+  }
+
+  .introjs-button {
+    border: none;
+    padding: 5px 10px;
+    @include border-radius(5px);
+    @include text-shadow(none);
+    @include box-shadow(none);
+    background: $gray;
+    line-height: 13px;
+    text-transform: uppercase;
+    color: $white;
+    text-decoration: none;
+
+    &:hover {
+      color: $grayDark;
+      background: $white;
+    }
+  }
+
+  .introjs-skipbutton {
+    background: $grayLighter;
+  }
+
+  .introjs-prevbutton {
+    margin-right: 1px;
+    @include border-radius(5px 0 0 5px);
+  }
+
+  .introjs-nextbutton {
+    @include border-radius(0 5px 5px 0);
+  }
+
+  .introjs-disabled, .introjs-disabled:hover {
+    color: $white;
+    background: $grayLightest;
+  }
+}
+
+.introjs-overlay {
+  opacity: .15 !important;
+}
+
+.introjs-helperLayer {
+  border: 10px solid $grayLightest;
+  background: transparent;
+}
+
+.introjs-helperLayer.noMap {
+  border: none;
+  background: rgba(255,255,255,.9);
+
+  .introjs-nextbutton {
+    // display: none;
+  }
+
+  &.yesNext .introjs-nextbutton {
+    display: inline-block;
   }
 }

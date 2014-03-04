@@ -30,7 +30,7 @@ p, ul {
 }
 
 h3 {
-  margin: 0 auto 20px;
+  // margin: 0 auto 20px;
   text-transform: uppercase;
 }
 
@@ -130,13 +130,32 @@ a, a:link, a:visited, a:hover {
 #logo-background {
   background: asset-url("logo-building.jpg", image);
   display: inline-block;
-  margin: 20px auto;
+  margin: 20px 0 20px 100px;
   padding: 40px;
-  @include border-radius(40px);
+  @include border-radius(10px);
 
   @media screen and (max-width: $desktopwidth) {
     padding: 20px;
-    @include border-radius(20px);
+    @include border-radius(5px);
+  }
+
+  a {
+    display: inline-block;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: $white;
+    background-color: $yescolor;
+    font-size: 2em;
+    font-weight: bold;
+    @include border-radius(3px);
+
+    @include transition(background-color, 0.2s);
+
+    &:hover {
+      color: $grayDark;
+      background-color: $white;
+    }
   }
 }
 
@@ -199,7 +218,7 @@ a, a:link, a:visited, a:hover {
   background: $grayLightest;
   @include clearfix;
 
-  p {
+  h1, h2, h3, h4, h5, h6, p {
     padding: 0 10px 0 20px;
     max-width: $desktopwidth/2;
 
