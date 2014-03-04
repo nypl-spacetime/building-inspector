@@ -39,18 +39,20 @@ class @NYPL_Map_Tutorial
       t.opts.changeFunction() if t.opts.changeFunction
       t.opts.highlightElement.on('click', t.opts.highlightclickFunction) if t.opts.highlightclickFunction && onOverlay
       t.opts.ixinactiveFunction() if t.opts.ixinactiveFunction
-      t.opts.ixactiveFunction() if t.opts.steps[t.intro._currentStep].ixactive && t.opts.ixactiveFunction
+      t.opts.ixactiveFunction() if t.opts.steps[t._currentStep].ixactive && t.opts.ixactiveFunction
     .oncomplete () ->
-      t._currentStep = 0
+      t.opts.ixinactiveFunction() if t.opts.ixinactiveFunction
+      t.opts.ixactiveFunction() if t.opts.ixactiveFunction
       t.opts.exitFunction()
     .onexit () ->
-      t._currentStep = 0
+      t.opts.ixinactiveFunction() if t.opts.ixinactiveFunction
+      t.opts.ixactiveFunction() if t.opts.ixactiveFunction
       t.opts.exitFunction()
     .start()
     @
 
   exit: () ->
-    @intro.exit()
+    @intro.exit() if @intro
 
   goToStep: (index) ->
     @intro.goToStep(index)

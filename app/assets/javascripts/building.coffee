@@ -164,38 +164,6 @@ class Building
 		$("#controls").show()
 		$("#map-tutorial").hide()
 
-	hideTutorial: () =>
-		# console.log "end of tutorial"
-		if (window.innerWidth < 500)
-			@showOthers()
-		else
-			@intro.exit() if @intro
-			@intro = null
-			@removeButtonListeners()
-			@polyData = _gen.clone(@_polyData)
-			@currentIndex = @_currentIndex
-			@showNextPolygon()
-			@addButtonListeners()
-		@tutorialOn = false
-
-	invokeTutorial: () =>
-		if (window.innerWidth < 500)
-			@hideOthers()
-			$("#map-tutorial").unswipeshow()
-			$("#map-tutorial").show()
-			$("#map-tutorial").swipeshow
-				mouse: true
-				autostart: false
-			.goTo 0
-		else
-			@_polyData = _gen.clone(@polyData)
-			@polyData = _gen.clone(@tutorialData.poly)
-			@_currentIndex = @currentIndex - 1
-			@currentIndex = -1
-			@showNextPolygon()
-			@buildTutorial()
-		@tutorialOn = true
-
 	getPolygons: () =>
 		tagger = @
 		mapdata = $('#buildingjs').data("map")
@@ -348,8 +316,37 @@ class Building
 			opacity: 0
 			fill: false
 
+	hideTutorial: () =>
+		# console.log "end of tutorial"
+		if (window.innerWidth < 500)
+			@showOthers()
+		else
+			@intro.exit()
+			@polyData = _gen.clone(@_polyData)
+			@currentIndex = @_currentIndex
+			@showNextPolygon()
+		@tutorialOn = false
+
+	invokeTutorial: () =>
+		if (window.innerWidth < 500)
+			@hideOthers()
+			$("#map-tutorial").unswipeshow()
+			$("#map-tutorial").show()
+			$("#map-tutorial").swipeshow
+				mouse: true
+				autostart: false
+			.goTo 0
+		else
+			@_polyData = _gen.clone(@polyData)
+			@polyData = _gen.clone(@tutorialData.poly)
+			@_currentIndex = @currentIndex - 1
+			@currentIndex = -1
+			@showNextPolygon()
+			@buildTutorial()
+		@tutorialOn = true
+
 	buildTutorial: () =>
-		return if @intro!=null
+		# return if @intro!=null
 		steps = [
             {
               element: "#map-highlight"

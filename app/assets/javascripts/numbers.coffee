@@ -109,40 +109,6 @@ class Numbers
     $("#controls").show()
     $("#map-tutorial").hide()
 
-  hideTutorial: () =>
-    # remove fake flags from tutorial
-    $("#map-highlight .number-flag").remove()
-    # console.log "end of tutorial"
-    if (window.innerWidth < 500)
-      @showOthers()
-    else
-      @intro.exit() if @intro
-      @intro = null
-      @removeButtonListeners()
-      @polyData = _gen.clone(@_polyData)
-      @currentIndex = @_currentIndex
-      @showNextPolygon()
-      @addButtonListeners()
-    @tutorialOn = false
-
-  invokeTutorial: () =>
-    if (window.innerWidth < 500)
-      @hideOthers()
-      $("#map-tutorial").unswipeshow()
-      $("#map-tutorial").show()
-      $("#map-tutorial").swipeshow
-        mouse: true
-        autostart: false
-      .goTo 0
-    else
-      @_polyData = _gen.clone(@polyData)
-      @polyData = _gen.clone(@tutorialData.poly)
-      @_currentIndex = @currentIndex - 1
-      @currentIndex = -1
-      @showNextPolygon()
-      @buildTutorial()
-    @tutorialOn = true
-
   getPolygons: () =>
     tagger = @
     mapdata = $('#numbersjs').data("map")
@@ -428,11 +394,46 @@ class Numbers
     # console.log elem, x, y, txt
     @updateFlag x, y, txt
 
-
   buildNumberElement: (x,y) =>
     html = "<div id=\"num-x-#{x}-y-#{y}\" class=\"number-flag\"><div class=\"cont\"><input type=\"number\" class=\"input\" step=\"any\" placeholder=\"#\" /><a href=\"javascript:;\" class=\"num-close\">x</a></div></div>"
     el = $(html)
     return el
+
+  hideTutorial: () =>
+    # remove fake flags from tutorial
+    $("#map-highlight .number-flag").remove()
+    # console.log "end of tutorial"
+    if (window.innerWidth < 500)
+      @showOthers()
+    else
+      @intro.exit()
+      @polyData = _gen.clone(@_polyData)
+      @currentIndex = @_currentIndex
+      @showNextPolygon()
+    @tutorialOn = false
+
+  invokeTutorial: () =>
+    if (window.innerWidth < 500)
+      @hideOthers()
+      $("#map-tutorial").unswipeshow()
+      $("#map-tutorial").show()
+      $("#map-tutorial").swipeshow
+        mouse: true
+        autostart: false
+      .goTo 0
+    else
+      @_polyData = _gen.clone(@polyData)
+      @polyData = _gen.clone(@tutorialData.poly)
+      @_currentIndex = @currentIndex - 1
+      @currentIndex = -1
+      @showNextPolygon()
+      @buildTutorial()
+    @tutorialOn = true
+
+  parseTutorial: (e) =>
+    @currentIndex = @intro.getCurrentPolygonIndex()
+    @showNextPolygon()
+    @
 
   buildTutorial: () =>
     steps = [
@@ -635,11 +636,6 @@ class Numbers
       highlightclickFunction: @onTutorialClick
     )
     @intro.init()
-
-  parseTutorial: (e) =>
-    @currentIndex = @intro.getCurrentPolygonIndex()
-    @showNextPolygon()
-    @
 
 $ ->
   window._n = new Numbers()

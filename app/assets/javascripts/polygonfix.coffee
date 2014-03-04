@@ -263,7 +263,7 @@ class Polygonfix
   updateScore: () =>
     if @allPolygonsSession == 0
       @allPolygonsSession = @loadedData.status.all_polygons_session
-    
+
     $("#score .total").text(@allPolygonsSession)
 
     url = $('#progressjs').data("server")
