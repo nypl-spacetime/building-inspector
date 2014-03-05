@@ -99,7 +99,7 @@ class Progress
 					iconSize: L.point(30, 30)
 			polygonOptions:
 				stroke: false
-		
+
 		p = @
 
 		markers.on("click", (e) ->
@@ -122,7 +122,7 @@ class Progress
 		# console.log data
 
 		bbox = data.bbox.split ","
-		
+
 		W = parseFloat(bbox[0])
 		S = parseFloat(bbox[1])
 		E = parseFloat(bbox[2])
@@ -153,7 +153,7 @@ class Progress
 
 		# spinner available in general.coffee
 		spinner_xy = @map.layerPointToContainerPoint(e.layer.getLatLng())
-		el.append(_gen._spinner().el)
+		el.append(Utils.spinner().el)
 
 		$.getJSON('/fixer/sheet.json?id=' + sheet_id, (data) ->
 			p.map.off 'moveend', p.applyHighlights

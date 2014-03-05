@@ -32,15 +32,10 @@ Webappmini::Application.routes.draw do
 
   get "fixer/allPolygons"
 
-  get "fixer/building"
 
   get "fixer/color"
 
-  get "fixer/progress"
-  get "fixer/progress_all"
 
-  get "numbers/progress" => "fixer#progress_numbers"
-  get "numbers/progress_all" => "fixer#progress_numbers_all"
 
   get "fixer/progress_sheet"
 
@@ -52,10 +47,17 @@ Webappmini::Application.routes.draw do
 
   get "color" => "fixer#color"
 
+  # footprints
   get "building" => "fixer#building", :as => "building"
+  get "fixer/building"
+  get "fixer/progress", :as => "building_progress"
+  get "fixer/progress_all", :as => "building_progress_all"
 
+  # addresses
   get "numbers" => "fixer#numbers", :as => "addresses"
-  
+  get "numbers/progress" => "fixer#progress_numbers", :as => "addresses_progress"
+  get "numbers/progress_all" => "fixer#progress_numbers_all", :as => "addresses_progress_all"
+
   get "polygonfix" => "fixer#polygonfix", :as => "polygons"
 
   # json flagging

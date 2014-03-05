@@ -150,7 +150,7 @@ class Progress
 
 		# spinner available in general.coffee
 		spinner_xy = @map.layerPointToContainerPoint(e.layer.getLatLng())
-		el.append(_gen._spinner().el)
+		el.append(Utils.spinner().el)
 
 		color = '#609846'
 

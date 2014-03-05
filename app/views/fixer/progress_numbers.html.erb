@@ -1,6 +1,7 @@
 <% content_for :page_title do %>Building Inspector by NYPL Labs<% end %>
 
 <% content_for :dynamic_js do %>
+	<%= stylesheet_link_tag    "fixer", :media => "all" %>
 	<%= stylesheet_link_tag    "progress", :media => "all" %>
 	<%= stylesheet_link_tag    "numbers", :media => "all" %>
 	<%= stylesheet_link_tag    "lib/MarkerCluster", :media => "all" %>
@@ -21,8 +22,5 @@
   <%= render :partial => "partials/loading" %>
 	<%= render :partial => "partials/legend" %>
 	<%= render :partial => "partials/map" %>
-</div>
-<div id="controls">
-	<%= render :partial => "partials/score" %>
 </div>
 <%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:class => "nypl-logo", :title => "Visit NYPL.org", :id=>"nypl-mini"} %>

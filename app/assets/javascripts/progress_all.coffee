@@ -81,6 +81,8 @@ class Progress
 		bounds = new L.LatLngBounds(@_SW, @_NE)
 		@map.fitBounds bounds
 
+		@updateScore(data.all_polygons_session)
+
 		# marker clustering layer
 		markers = new L.MarkerClusterGroup
 			singleMarkerMode: true
@@ -149,7 +151,7 @@ class Progress
 		console.log sheet_id
 		# spinner available in general.coffee
 		spinner_xy = @map.layerPointToContainerPoint(e.layer.getLatLng())
-		el.append(_gen._spinner().el)
+		el.append(Utils.spinner().el)
 		$.getJSON('/fixer/progress_sheet.json?id=' + sheet_id, (data) ->
 			v.processPolygons(data)
 			el.find('.spinner').remove()
@@ -215,6 +217,22 @@ class Progress
 			bounds.extend(nil_json.getBounds())
 
 		@map.fitBounds(bounds)
+
+	updateScore: (current) =>
+		# mapScore = if total > 0 then Math.round(current*100/total) else 0
+
+		# mapDOM = $("#map-bar")
+		# mapDOM.find(".bar").css("width", mapScore + "%")
+		$("#score .total").text(current)
+		# $("#map-total").text("of " + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " shapes")
+
+		url = $('#progressjs').data("server")
+		tweet = current + " buildings checked! Data mining old maps with the Building Inspector from @NYPLMaps @nypl_labs"
+		twitterurl = "https://twitter.com/share?url=" + url + "&text=" + tweet
+
+		$("#tweet").show()
+
+		$("#tweet").attr "href", twitterurl
 
 $ ->
 	window._progress = new Progress()

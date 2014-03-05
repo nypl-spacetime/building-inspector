@@ -75,6 +75,7 @@
 		margin: 0;
 		text-align: center;
 		font-size: 18px;
+		font-family: $mainfont;
 		
 		&::-webkit-inner-spin-button,
 		&::-webkit-outer-spin-button {
@@ -94,7 +95,7 @@
 		font-size: 20px;
 		padding: 0;
 		color: $orange;
-		background: $grayLightest;
+		background: $white;
 		border-radius: 10px;
 		width: 21px;
 		height: 21px;

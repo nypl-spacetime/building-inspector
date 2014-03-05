@@ -149,7 +149,7 @@ class Progress
 		console.log sheet_id
 		# spinner available in general.coffee
 		spinner_xy = @map.layerPointToContainerPoint(e.layer.getLatLng())
-		el.append(_gen._spinner().el)
+		el.append(Utils.spinner().el)
 		$.getJSON('/fixer/progress_sheet.json?id=' + sheet_id, (data) ->
 			v.processPolygons(data)
 			el.find('.spinner').remove()

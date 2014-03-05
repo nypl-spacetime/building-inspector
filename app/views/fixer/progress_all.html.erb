@@ -1,6 +1,7 @@
 <% content_for :page_title do %>Building Inspector by NYPL Labs<% end %>
 
 <% content_for :dynamic_js do %>
+	<%= stylesheet_link_tag    "fixer", :media => "all" %>
 	<%= stylesheet_link_tag    "progress", :media => "all" %>
 	<%= stylesheet_link_tag    "lib/MarkerCluster", :media => "all" %>
 	<%= stylesheet_link_tag    "lib/MarkerCluster.Default", :media => "all" %>
@@ -16,7 +17,7 @@
 
 <%= render :partial => "partials/nav" %>
 
-<div id="main-container" class="noscore">
+<div id="main-container">
   <%= render :partial => "partials/loading" %>
 	<%= render :partial => "partials/legend" %>
 	<%= render :partial => "partials/map" %>

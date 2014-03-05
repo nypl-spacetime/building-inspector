@@ -322,7 +322,7 @@ class Building
 			@showOthers()
 		else
 			@intro.exit()
-			@polyData = _gen.clone(@_polyData)
+			@polyData = Utils.clone(@_polyData)
 			@currentIndex = @_currentIndex
 			@showNextPolygon()
 		@tutorialOn = false
@@ -337,8 +337,8 @@ class Building
 				autostart: false
 			.goTo 0
 		else
-			@_polyData = _gen.clone(@polyData)
-			@polyData = _gen.clone(@tutorialData.poly)
+			@_polyData = Utils.clone(@polyData)
+			@polyData = Utils.clone(@tutorialData.poly)
 			@_currentIndex = @currentIndex - 1
 			@currentIndex = -1
 			@showNextPolygon()
@@ -346,7 +346,6 @@ class Building
 		@tutorialOn = true
 
 	buildTutorial: () =>
-		# return if @intro!=null
 		steps = [
             {
               element: "#map-highlight"
