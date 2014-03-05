@@ -67,10 +67,11 @@ class Polygonfix
   addEventListeners: () =>
     tagger = @
 
+    $("#multiple-checkbox").on("click", @multipleBuildingClick)
+    $("#multiple-text").on("click", @multipleBuildingClick)
     @addButtonListeners()
 
   multipleBuildingClick: (e) =>
-    console.log $("#multiple-polygon").is(':checked'), $("#multiple-polygon")
     @isMultiple = $("#multiple-polygon").is(':checked')
     if (@isMultiple)
       $("#multiple-text").text("Finish this building, polygon will reload.")
@@ -81,8 +82,6 @@ class Polygonfix
     tagger = @
     @removeButtonListeners()
 
-    $("#multiple-checkbox").on("click", @multipleBuildingClick)
-    $("#multiple-text").on("click", @multipleBuildingClick)
     $("#link-help-close").on("click", @hideTutorial)
     $("#link-exit-tutorial").on("click", @hideTutorial)
     $("#link-help").on("click", @invokeTutorial)
