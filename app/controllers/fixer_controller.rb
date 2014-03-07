@@ -212,40 +212,42 @@ class FixerController < ApplicationController
 		end
 	end
 
-    def many_flags_one_polygon
-        session = getSession()
-        # assuming json like so:
-        # id: poly_id
-        # flags: "lat,lng,value|lat,lng,value|lat,lng,value|..."
-        flags = params[:f].split("|")
-        poly_id = params[:i]
-        type = params[:t]
-        if poly_id == nil || flags == nil || flags.count <= 0
-            respond_with( "empty_poly" )
-            return
-        end
-        flags.each do |f|
-        	contents = f.split(",")
-        	# at least have a value
-            if contents[2] == nil
-                next
-            end
-            flag = Flag.new
-            flag[:is_primary] = true
-            flag[:polygon_id] = poly_id
-            flag[:flag_value] = contents[2]
-            if contents[0] != ""
-            	flag[:latitude] = contents[0]
-            end
-            if contents[1] != ""
-	            flag[:longitude] = contents[1]
-            end
-            flag[:session_id] = session
-            flag[:flag_type] = type
-            flag.save
-        end
-        respond_with( flags )
+  def many_flags_one_polygon
+    session = getSession()
+    # assuming json like so:
+    # id: poly_id
+    # flags: "lat,lng,value|lat,lng,value|lat,lng,value|..."
+    flags = params[:f].split("|")
+    poly_id = params[:i]
+    type = params[:t]
+    if poly_id == nil || flags == nil || flags.count <= 0
+        respond_with( "empty_poly" )
+        return
     end
+    uniques = []
+    flags.each do |f|
+    	contents = f.split(",")
+    	# at least have a value
+        if contents[2] == nil || uniques.index(contents[2]) != nil
+            next
+        end
+        flag = Flag.new
+        flag[:is_primary] = true
+        flag[:polygon_id] = poly_id
+        flag[:flag_value] = contents[2]
+        if contents[0] != ""
+        	flag[:latitude] = contents[0]
+        end
+        if contents[1] != ""
+          flag[:longitude] = contents[1]
+        end
+        flag[:session_id] = session
+        flag[:flag_type] = type
+        flag.save
+        uniques.push(flag[:flag_value])
+    end
+    respond_with( flags )
+  end
 
 	def getSession
 		if cookies[:session] == nil || cookies[:session] == ""

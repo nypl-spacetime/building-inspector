@@ -39,11 +39,6 @@ class Numbers
       zIndex: 3
     ).addTo(@map)
 
-    # L.control.attribution(
-    #   position: 'bottomright'
-    #   prefix: ""
-    # ).addTo(@map)
-
     L.control.zoom(
       position: 'topright'
     ).addTo(@map)
@@ -129,7 +124,7 @@ class Numbers
       )
 
   processPolygons: (data) =>
-    data.poly = @shufflePolygons(data.poly)
+    data.poly = Utils.shuffle(data.poly)
     @loadedData = data
     @polyData = data.poly
     @updateScore()
@@ -144,18 +139,6 @@ class Numbers
     el = $("#map-inspecting")
     el.html("<span>" + msg + "</span>")
     .show().delay(2000).fadeOut(1000)
-
-  shufflePolygons: (a) ->
-    return a if a.length < 2
-    # from: http://coffeescriptcookbook.com/chapters/arrays/shuffling-array-elements
-    # From the end of the list to the beginning, pick element `i`.
-    for i in [a.length-1..1]
-      # Choose random element `j` to the front of `i` to swap with.
-      j = Math.floor Math.random() * (i + 1)
-      # Swap `j` with `i`, using destructured assignment
-      [a[i], a[j]] = [a[j], a[i]]
-    # Return the shuffled array.
-    a
 
   submitFlags: (e) =>
     @removeButtonListeners()
@@ -196,7 +179,7 @@ class Numbers
     for flag, contents of @flags
       latlng = contents.circle.getLatLng()
       txt = contents.value
-      r.push "#{latlng.lat},#{latlng.lng},#{txt}" if txt != ""
+      r.push "#{latlng.lat},#{latlng.lng},#{txt}" if txt != "" && !contents.fake
     r
 
   showNextPolygon: () =>
@@ -271,24 +254,28 @@ class Numbers
       contents.elem.css("top",xy.y)
 
   onTutorialClick: (e) =>
-    console.log e
+    # console.log "tutclick", e
     x = e.offsetX
     y = e.offsetY
-    elem = @buildNumberElement(x,y)
+    latlng = @.map.mouseEventToLatLng(e)
+
+    elem = @createFlag(x, y, latlng, true)
     elem.css("top", y)
     elem.css("left", x)
     $("#map-highlight").append(elem)
 
   onMapClick: (e) =>
-    # console.log "click", e
+    # console.log "mapclick", e
     latlng = e.latlng
-    lat = latlng.lat
-    lng = latlng.lng
     x = e.containerPoint.x
     y = e.containerPoint.y
 
-    tagger = @
+    elem = @createFlag(x, y, latlng)
+    elem.css("top", y)
+    elem.css("left", x)
+    $("#map-container").append(elem)
 
+  createFlag: (x, y, latlng, fake) =>
     circle = L.circleMarker(latlng,
       color: '#d75b25'
       fill: false
@@ -297,34 +284,43 @@ class Numbers
       weight: 4
     ).addTo @map
 
-    elem = @createFlag(x, y, circle)
-    elem.css("top", y)
-    elem.css("left", x)
-    $("#map-container").append(elem)
+    e = @buildNumberElement(x,y)
+    @flags["x-#{x}-y-#{y}"] =
+      elem: e
+      circle: circle
+      value: ""
+      fake: fake
+    e
 
-    close = elem.find(".num-close")
+  buildNumberElement: (x,y) =>
+    tagger = @
+    html = "<div id=\"num-x-#{x}-y-#{y}\" class=\"number-flag\"><div class=\"cont\"><input type=\"number\" class=\"input\" step=\"any\" placeholder=\"#\" /><a href=\"javascript:;\" class=\"num-close\">x</a></div></div>"
+    el = $(html)
 
+    input = el.find(".input")
+    close = el.find(".num-close")
     close.on "click", (e) ->
+      e.stopPropagation()
+      # console.log "hola", e.target==this, e
       tagger.destroyFlag(this)
 
-    input = elem.find(".input")
+    # to fix window resize in iOS
+    input.on 'blur click', (e) ->
+      e.stopPropagation()
+      window.scrollTo 0, 0
+
 
     # add data attributes to facilitate flag remove/update
-    elem.attr("data-x", x)
-    elem.attr("data-y", y)
+    el.attr("data-x", x)
+    el.attr("data-y", y)
     close.attr("data-x", x)
     close.attr("data-y", y)
     input.attr("data-x", x)
     input.attr("data-y", y)
 
-    # to fix window resize in iOS
-    input.on 'blur', () ->
-      window.scrollTo 0, 0
-
-    input.focus()
-
     setTimeout( ()->
-      elem.find(".cont").addClass("active")
+      input.focus()
+      el.find(".cont").addClass("active")
       input.on "keyup", (e) ->
           tagger.validateInput(this, e)
       input.on "keydown", (e) ->
@@ -333,14 +329,7 @@ class Numbers
           else tagger.validateInput(this, e)
     , 50
     )
-
-  createFlag: (x, y, c) =>
-    e = @buildNumberElement(x,y)
-    @flags["x-#{x}-y-#{y}"] =
-      elem: e
-      circle: c
-      value: ""
-    e
+    return el
 
   destroyFromEscape: (item) =>
     @destroyFlag(item)
@@ -353,13 +342,13 @@ class Numbers
     elem = $(item)
     x = elem.attr("data-x")
     y = elem.attr("data-y")
-    p = elem.parentsUntil("#map-container")
-    if p.length == 0
-      elem.remove()
-    else
+    p = elem.parentsUntil("#num-x-#{x}-y-#{y}")
+    if p.length > 0
       p.remove()
+    else
+      elem.remove()
     flag = @flags["x-#{x}-y-#{y}"]
-    @map.removeLayer flag.circle
+    @map.removeLayer flag.circle if flag.circle
     delete @flags["x-#{x}-y-#{y}"]
 
   updateFlag: (x, y, value) =>
@@ -367,8 +356,8 @@ class Numbers
 
   cleanFlags: () =>
     for flag, contents of @flags
-      # console.log "destroyed", flag
-      @destroyFlag contents.elem[0]
+      # console.log "destroyed", contents.elem[0]
+      @destroyFlag("#num-" + flag + " .num-close") # this is really hacky
 
   validateInput: (item, e) =>
     charCode = if e.which then e.which else e.keyCode
@@ -394,14 +383,9 @@ class Numbers
     # console.log elem, x, y, txt
     @updateFlag x, y, txt
 
-  buildNumberElement: (x,y) =>
-    html = "<div id=\"num-x-#{x}-y-#{y}\" class=\"number-flag\"><div class=\"cont\"><input type=\"number\" class=\"input\" step=\"any\" placeholder=\"#\" /><a href=\"javascript:;\" class=\"num-close\">x</a></div></div>"
-    el = $(html)
-    return el
-
   hideTutorial: () =>
     # remove fake flags from tutorial
-    $("#map-highlight .number-flag").remove()
+    @cleanFlags()
     # console.log "end of tutorial"
     if (window.innerWidth < 500)
       @showOthers()

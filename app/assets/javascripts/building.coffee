@@ -183,24 +183,12 @@ class Building
 			)
 	
 	processPolygons: (data) =>
-		data.poly = @shufflePolygons(data.poly)
+		data.poly = Utils.shuffle(data.poly)
 		@loadedData = data
 		@polyData = data.poly
 		@updateScore()
 		@showInspectingMessage()
 		@showNextPolygon()
-
-	shufflePolygons: (a) ->
-		return a if a.length < 2
-		# from: http://coffeescriptcookbook.com/chapters/arrays/shuffling-array-elements
-		# From the end of the list to the beginning, pick element `i`.
-		for i in [a.length-1..1]
-			# Choose random element `j` to the front of `i` to swap with.
-			j = Math.floor Math.random() * (i + 1)
-			# Swap `j` with `i`, using destructured assignment
-			[a[i], a[j]] = [a[j], a[i]]
-		# Return the shuffled array.
-		a
 
 	submitYesFlag: (e) =>
 		@removeButtonListeners()

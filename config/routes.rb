@@ -24,10 +24,6 @@ Webappmini::Application.routes.draw do
 
   get "fixer/winPoly"
 
-  get "api/polygons"
-  get "api/polygons/:flag_type" => "api#polygons"
-  get "api/polygons/:flag_type/page/:page" => "api#polygons"
-
   get "fixer/status"
 
   get "fixer/allPolygons"
@@ -63,6 +59,12 @@ Webappmini::Application.routes.draw do
   # json flagging
   get "fixer/flag" => "fixer#flag_polygon"
   get "fixer/flagnum" => "fixer#many_flags_one_polygon"
+
+  # api endpoints
+  get "api/polygons"
+  get "api/polygons/:flag_type" => "api#polygons"
+  get "api/polygons/:flag_type/page/:page" => "api#polygons"
+  get "api/polygons_for_ids" => "api#polygons_for_ids"
 
   # visualizing
   get "viz/sheet/:id" => "visualizer#sheet_flags_json"

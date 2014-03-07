@@ -58,8 +58,8 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
     label {
       margin: 5px 0;
-      @include text-shadow(white -1px 1px);
-      color: $grayDarker;
+      @include text-shadow($grayDarker -2px 1px);
+      color: $white;
     }
   }
 }
