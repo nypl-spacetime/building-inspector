@@ -76,7 +76,7 @@ class FixerController < ApplicationController
 
 	def progress_sheet
 	    all_polygons = Polygon.select("id, consensus, dn, sheet_id, geometry").where(:sheet_id => params[:id])
-	    
+
 	    fix_poly = []
 	    yes_poly = []
 	    no_poly = []
@@ -157,11 +157,6 @@ class FixerController < ApplicationController
 		@progress = {}
 		@progress[:poly] = { :type => "FeatureCollection", :features => poly }
 		respond_with( @progress )
-	end
-
-	def allPolygons
-		all_polygons = Polygon.select("status, id, sheet_id, geometry, dn")
-		respond_with( all_polygons )
 	end
 
 	def getMap(type="geometry")
@@ -256,9 +251,6 @@ class FixerController < ApplicationController
 		check_for_user_session(cookies[:session]) unless user_signed_in?
 		Usersession.register_user_session(current_user.id, cookies[:session]) if user_signed_in?
 		cookies[:session]
-	end
-
-	def color
 	end
 
 	# checks for presence of "cookie_test" cookie

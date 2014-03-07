@@ -1,47 +1,29 @@
 Webappmini::Application.routes.draw do
 
-  get "general/home"
-
-  get "general/about"
-  
-  get "general/help"
-  
-  get "general/win"  
-
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
-  
+
   resources :users
-
-  resources :polygons
-
-  get "polygon_consensus" => "polygons#consensus"
-
-  resources :flags
-
   resources :sheets
-
-  get "cookie_test" => "fixer#cookie_test"
-
-  get "fixer/winPoly"
-
-  get "fixer/status"
-
-  get "fixer/allPolygons"
-
-
-  get "fixer/color"
-
-
-
-  get "fixer/progress_sheet"
-
-  get "fixer/sheet" => "fixer#session_progress_for_sheet"
-
-  get "fixer/sheet_numbers" => "fixer#session_progress_numbers_for_sheet"
+  resources :flags
+  resources :polygons
 
   get "fixer/map" => "fixer#randomMap"
 
-  get "color" => "fixer#color"
+  # progress
+  get "fixer/progress_sheet"
+  get "fixer/sheet" => "fixer#session_progress_for_sheet"
+  get "fixer/sheet_numbers" => "fixer#session_progress_numbers_for_sheet"
+
+  get "cookie_test" => "fixer#cookie_test"
+
+  # admin specials
+  get "polygon_consensus" => "polygons#consensus"
+
+  # general content stuff
+  get "general/home"
+  get "general/about"
+  get "general/help"
+  get "general/win"
 
   # footprints
   get "building" => "fixer#building", :as => "building"
