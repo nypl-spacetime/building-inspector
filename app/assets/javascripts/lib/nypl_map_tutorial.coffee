@@ -1,4 +1,5 @@
 class @NYPL_Map_Tutorial
+
   constructor: (options) ->
     @_parseOptions(options)
     @_currentStep = 0

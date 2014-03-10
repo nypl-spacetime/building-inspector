@@ -19,4 +19,5 @@
 //= require lib/humanize.min
 //= require lib/nypl_map_tutorial
 //= require lib/nypl_utils
+//= require lib/nypl_inspector
 //= require general

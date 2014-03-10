@@ -118,16 +118,12 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   background: $gray;
 
   &.compact {
-    height: 110px;
+    height: 130px;
   }
 
   @media screen and (max-width: $desktopwidth) {
     background: transparent;
     height: 80px;
-  }
-
-  @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
-    display: none;
   }
 }
 
