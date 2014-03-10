@@ -229,10 +229,13 @@ class Geometry extends Inspector
     $("#fix-button").unbind()
     super()
 
-  activateButton: (button) =>
-    $("#no-button").addClass((button != "no" ? "inactive" : "active"))
-    $("#yes-button").addClass((button != "yes" ? "inactive" : "active"))
-    $("#fix-button").addClass((button != "fix" ? "inactive" : "active"))
+  activateButton: (button) ->
+    $("#no-button").addClass("inactive") if button != "no"
+    $("#yes-button").addClass("inactive") if button != "yes"
+    $("#fix-button").addClass("inactive") if button != "fix"
+    $("#no-button").addClass("active") if button == "no"
+    $("#yes-button").addClass("active") if button == "yes"
+    $("#fix-button").addClass("active") if button == "fix"
 
   resetButtons: () ->
     $("#no-button").removeClass("inactive")

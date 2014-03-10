@@ -80,6 +80,7 @@ class @Inspector
     # rest should be implemented in the inspector instance
 
   addEventListeners: () =>
+    inspector = @
     $("#link-help-close").on("click", @hideTutorial)
     $("#link-exit-tutorial").on("click", @hideTutorial)
     $("#link-help").on("click", @invokeTutorial)
@@ -253,9 +254,10 @@ class @Inspector
     ).addData json
 
   showPolygon: (e) =>
+    inspector = @
     # console.log "showPolygon"
     @geo.setStyle (feature) ->
-      @options.polygonStyle
+      inspector.options.polygonStyle
 
   hidePolygon: (e) =>
     if @geo._hideAll
