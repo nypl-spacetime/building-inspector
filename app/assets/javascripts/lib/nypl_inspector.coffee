@@ -86,6 +86,17 @@ class @Inspector
 
   addEventListeners: () =>
     inspector = @
+    @addButtonListeners()
+    # rest should be implemented in the inspector instance
+
+  onTutorialClick: (e) =>
+    # should be implemented in the inspector instance
+
+  removeEventListeners: () =>
+    # rest should be implemented in the inspector instance
+
+  addButtonListeners: () =>
+    @removeButtonListeners()
     $("#link-help-close").on("click", @hideTutorial)
     $("#link-exit-tutorial").on("click", @hideTutorial)
     $("#link-help").on("click", @invokeTutorial)
@@ -98,22 +109,11 @@ class @Inspector
       switch e.which
         when 32 then inspector.showPolygon(e)
 
-    @addButtonListeners()
-    # rest should be implemented in the inspector instance
-
-  onTutorialClick: (e) =>
-    # should be implemented in the inspector instance
-
-  removeEventListeners: () =>
-    $("#link-help").unbind()
-    $("body").unbind("keyup")
-    # rest should be implemented in the inspector instance
-
-  addButtonListeners: () =>
-    @removeButtonListeners()
     # rest should be implemented in the inspector instance
 
   removeButtonListeners: () =>
+    $("#link-help").unbind()
+    $("body").unbind("keyup")
     # rest should be implemented in the inspector instance
 
   resetButtons: () =>
@@ -204,6 +204,7 @@ class @Inspector
 
   showNextPolygon: () =>
     # console.log @polyData
+    @clearScreen()
     @currentIndex++
     @map.removeLayer(@geo)
     if @currentIndex < @polyData.length
@@ -294,8 +295,9 @@ class @Inspector
     @intro.init()
 
   parseTutorial: () =>
-    @currentIndex = @intro.getCurrentPolygonIndex()
-    @showNextPolygon()
+    if @currentIndex != @intro.getCurrentPolygonIndex() + 1
+      @currentIndex = @intro.getCurrentPolygonIndex()
+      @showNextPolygon()
     @
 
   hideTutorial: () =>

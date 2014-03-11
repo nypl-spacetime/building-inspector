@@ -40,6 +40,7 @@ Webappmini::Application.routes.draw do
   get "address/progress" => "fixer#progress_address", :as => "addresses_progress"
   get "address/progress_all" => "fixer#progress_address_all", :as => "addresses_progress_all"
 
+  # polygonfix
   get "polygonfix" => "fixer#polygonfix", :as => "polygons"
 
   # json flagging
