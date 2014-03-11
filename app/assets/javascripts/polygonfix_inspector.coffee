@@ -64,9 +64,9 @@ class Polygonfix extends Inspector
 
     flag_str = @getFixedPolygon()
 
-    # console.log flag_str
-
     flag_str = "NOFIX" if !flag_str
+
+    # console.log flag_str
 
     @submitSingleFlag(e, flag_str)
 
@@ -86,7 +86,7 @@ class Polygonfix extends Inspector
       coordinates.pop()
     transposed = ([coord[1],coord[0]] for coord in coordinates)
 
-    transposed = Simplify.whyattGeoJSON(transposed, maxCorners) if transposed.length > maxCorners
+    # transposed = Simplify.whyattGeoJSON(transposed, maxCorners) if transposed.length > maxCorners
 
     if (!@geo)
       # console.table coordinates #, @currentGeo
@@ -128,6 +128,7 @@ class Polygonfix extends Inspector
       # same coordinate for the first and last point / redundant
       coordinates.pop()
     # if there's no change return false to leave as is
+    # console.log p_array, coordinates
     return false if p_array.join(",") == coordinates.join(",")
     return "[[" + ("[#{p.join(",")}]" for p in p_array) + "]]"
 
