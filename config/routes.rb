@@ -27,6 +27,7 @@ Webappmini::Application.routes.draw do
 
   # footprints
   get "building" => "fixer#building", :as => "building"
+  get "geometry" => "fixer#building", :as => "geometry"
   get "fixer/building"
   get "fixer/progress", :as => "building_progress"
   get "fixer/progress_all", :as => "building_progress_all"

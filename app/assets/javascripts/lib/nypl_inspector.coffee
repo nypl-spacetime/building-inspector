@@ -4,6 +4,7 @@ class @Inspector
     window.nypl_inspector = @ # to make it accessible from console
 
     defaults =
+      draggableMap: false
       loaderID: "#loader"
       tutorialOn: true
       tutorialData: {}
@@ -50,7 +51,7 @@ class @Inspector
       attributionControl: false
       minZoom: 18
       maxZoom: 21
-      dragging: false
+      dragging: @options.draggableMap
       touchZoom: false
     )
 
@@ -66,9 +67,13 @@ class @Inspector
 
     inspector = @
 
+    history.replaceState("fixer","",@options.task)
+
+    @options.tutorialOn = $(@options.jsdataID).data("session")
+
     @map.on('load', () ->
       inspector.getPolygons()
-      if (inspector.tutorialOn)
+      if (inspector.options.tutorialOn)
         window.setTimeout(
             () ->
               inspector.invokeTutorial()
@@ -92,7 +97,12 @@ class @Inspector
     $("body").keyup (e)->
       switch e.which
         when 32 then inspector.showPolygon(e)
+
+    @addButtonListeners()
     # rest should be implemented in the inspector instance
+
+  onTutorialClick: (e) =>
+    # should be implemented in the inspector instance
 
   removeEventListeners: () =>
     $("#link-help").unbind()
@@ -100,12 +110,14 @@ class @Inspector
     # rest should be implemented in the inspector instance
 
   addButtonListeners: () =>
+    @removeButtonListeners()
     # rest should be implemented in the inspector instance
 
   removeButtonListeners: () =>
     # rest should be implemented in the inspector instance
 
   resetButtons: () =>
+    @addButtonListeners() unless @options.tutorialOn
     # rest should be implemented in the inspector instance
 
   submitSingleFlag: (type, data) =>
@@ -115,9 +127,10 @@ class @Inspector
     @prepareFlagSubmission(type, data, "/fixer/flagnum.json")
 
   prepareFlagSubmission: (type, data, url) =>
-    if @tutorialOn
+    @clearScreen()
+
+    if @options.tutorialOn
       # do not submit the data
-      @clearScreen()
       @intro.goToStep(@intro._currentStep+2)
       return
 
@@ -151,7 +164,7 @@ class @Inspector
     $(@options.tweetID).attr "href", twitterurl
 
   showInspectingMessage: () =>
-    return if @layer_id == @loadedData.map.layer_id or @tutorialOn
+    return if @layer_id == @loadedData.map.layer_id or @options.tutorialOn
     @layer_id = @loadedData.map.layer_id
     msg = "Now inspecting:<br/><strong>Brooklyn, 1855</strong>"
     msg = "Now inspecting:<br/><strong>Manhattan, 1857-62</strong>" if @layer_id == 859 # hack // eventually add to sheet table
@@ -170,12 +183,12 @@ class @Inspector
       .goTo 0
     else
       @_polyData = Utils.clone(@polyData)
-      @polyData = Utils.clone(@tutorialData.poly)
+      @polyData = Utils.clone(@options.tutorialData.poly.poly)
       @_currentIndex = @currentIndex - 1
       @currentIndex = -1
       @showNextPolygon()
       @buildTutorial()
-    @tutorialOn = true
+    @options.tutorialOn = true
 
   hideOthers: () ->
     $("#main-container").hide()
@@ -202,7 +215,7 @@ class @Inspector
       @map.fitBounds( @geo.getBounds() )
       @resetButtons()
     else
-      return if @tutorialOn
+      return if @options.tutorialOn
       # console.log "Loading more polygons..."
       @currentIndex = -1
       @currentPolygon = {}
@@ -274,6 +287,7 @@ class @Inspector
       exitFunction: @hideTutorial
       ixactiveFunction: @addButtonListeners
       ixinactiveFunction: @removeButtonListeners
+      highlightclickFunction: @onTutorialClick
     )
     @intro.init()
 
@@ -284,6 +298,7 @@ class @Inspector
 
   hideTutorial: () =>
     # console.log "end of tutorial"
+    @clearScreen()
     if (window.innerWidth < 500)
       @showOthers()
     else
@@ -291,4 +306,4 @@ class @Inspector
       @polyData = Utils.clone(@_polyData)
       @currentIndex = @_currentIndex
       @showNextPolygon()
-    @tutorialOn = false
+    @options.tutorialOn = false

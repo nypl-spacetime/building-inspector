@@ -12,8 +12,8 @@
  *= require lib/drr-base-layout
  *= require styles
  *= require partials/nav
- *= require lib/mapbox
- *= require lib/introjs
- *= require lib/jquery.swipeshow
- *= require lib/slideshow-theme
+ *= require lib/vendor/mapbox
+ *= require lib/vendor/introjs
+ *= require lib/vendor/jquery.swipeshow
+ *= require lib/vendor/slideshow-theme
  */

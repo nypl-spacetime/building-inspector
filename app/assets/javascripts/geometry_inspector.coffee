@@ -189,12 +189,11 @@ class Geometry extends Inspector
     super()
 
   addEventListeners: () =>
-    @addButtonListeners()
     super()
 
   addButtonListeners: () =>
+    super()
     inspector = @
-    @removeButtonListeners()
     $("#yes-button").on("click", @submitYesFlag)
     $("#no-button").on("click", @submitNoFlag)
     $("#fix-button").on("click", @submitFixFlag)
@@ -221,13 +220,12 @@ class Geometry extends Inspector
         when 98 then inspector.submitFixFlag(e)
         when 51 then inspector.submitYesFlag(e)
         when 99 then inspector.submitYesFlag(e)
-    super()
 
   removeButtonListeners: () =>
+    super()
     $("#yes-button").unbind()
     $("#no-button").unbind()
     $("#fix-button").unbind()
-    super()
 
   activateButton: (button) ->
     $("#no-button").addClass("inactive") if button != "no"
@@ -238,30 +236,27 @@ class Geometry extends Inspector
     $("#fix-button").addClass("active") if button == "fix"
 
   resetButtons: () ->
-    $("#no-button").removeClass("inactive")
-    $("#yes-button").removeClass("inactive")
-    $("#fix-button").removeClass("inactive")
-    $("#no-button").removeClass("active")
-    $("#yes-button").removeClass("active")
-    $("#fix-button").removeClass("active")
-    @addButtonListeners() unless @tutorialOn
+    super()
+    $("#no-button").removeClass("active inactive")
+    $("#yes-button").removeClass("active inactive")
+    $("#fix-button").removeClass("active inactive")
 
   submitYesFlag: (e) =>
     @removeButtonListeners()
     e.preventDefault()
-    @activateButton("yes") unless @tutorialOn
+    @activateButton("yes") unless @options.tutorialOn
     @submitSingleFlag("geometry", "yes")
 
   submitNoFlag: (e) =>
     @removeButtonListeners()
     e.preventDefault()
-    @activateButton("no") unless @tutorialOn
+    @activateButton("no") unless @options.tutorialOn
     @submitSingleFlag("geometry", "no")
 
   submitFixFlag: (e) =>
     @removeButtonListeners()
     e.preventDefault()
-    @activateButton("fix") unless @tutorialOn
+    @activateButton("fix") unless @options.tutorialOn
     @submitSingleFlag("geometry", "fix")
 
 $ ->
