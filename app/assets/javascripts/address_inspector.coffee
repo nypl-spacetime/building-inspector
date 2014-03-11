@@ -237,8 +237,7 @@ class Address extends Inspector
     $("#submit-button").addClass("active") if button == "submit"
 
   submitFlags: (e) =>
-    @removeButtonListeners()
-    e.preventDefault()
+    @activateButton("submit") unless @options.tutorialOn
 
     flag_data = @prepareData()
 
@@ -248,7 +247,7 @@ class Address extends Inspector
       # console.log "skipped"
       flag_str = ",,NONE"
 
-    @submitMultipleFlags(flag_str)
+    @submitMultipleFlags(e, flag_str)
 
   prepareData: () =>
     r = []

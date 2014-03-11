@@ -242,22 +242,16 @@ class Geometry extends Inspector
     $("#fix-button").removeClass("active inactive")
 
   submitYesFlag: (e) =>
-    @removeButtonListeners()
-    e.preventDefault()
     @activateButton("yes") unless @options.tutorialOn
-    @submitSingleFlag("yes")
+    @submitSingleFlag(e, "yes")
 
   submitNoFlag: (e) =>
-    @removeButtonListeners()
-    e.preventDefault()
     @activateButton("no") unless @options.tutorialOn
-    @submitSingleFlag("no")
+    @submitSingleFlag(e, "no")
 
   submitFixFlag: (e) =>
-    @removeButtonListeners()
-    e.preventDefault()
     @activateButton("fix") unless @options.tutorialOn
-    @submitSingleFlag("fix")
+    @submitSingleFlag(e, "fix")
 
 $ ->
   new Geometry()

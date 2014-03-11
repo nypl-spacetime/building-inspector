@@ -4,6 +4,7 @@ class @Inspector
     window.nypl_inspector = @ # to make it accessible from console
 
     defaults =
+      editablePolygon: false
       draggableMap: false
       loaderID: "#loader"
       tutorialOn: true
@@ -39,11 +40,11 @@ class @Inspector
     @_currentPolygon = {}
     @_polyData = {}
 
-    @geo = {}
+    # @geo = {}
 
     @initMap()
 
-  initMap: () =>
+  initMap: () ->
     @map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859-final/859spec.json', 
       zoomControl: false
       scrollWheelZoom: false
@@ -81,10 +82,10 @@ class @Inspector
         )
     )
 
-  clearScreen: () =>
+  clearScreen: () ->
     # rest should be implemented in the inspector instance
 
-  addEventListeners: () =>
+  addEventListeners: () ->
     inspector = @
     @addButtonListeners()
     # rest should be implemented in the inspector instance
@@ -92,14 +93,16 @@ class @Inspector
   onTutorialClick: (e) =>
     # should be implemented in the inspector instance
 
-  removeEventListeners: () =>
+  removeEventListeners: () ->
     # rest should be implemented in the inspector instance
 
-  addButtonListeners: () =>
+  addButtonListeners: () ->
     @removeButtonListeners()
     $("#link-help-close").on("click", @hideTutorial)
     $("#link-exit-tutorial").on("click", @hideTutorial)
     $("#link-help").on("click", @invokeTutorial)
+
+    inspector = @
 
     $("body").keydown (e)->
       switch e.which
@@ -111,7 +114,7 @@ class @Inspector
 
     # rest should be implemented in the inspector instance
 
-  removeButtonListeners: () =>
+  removeButtonListeners: () ->
     $("#link-help").unbind()
     $("body").unbind("keyup")
     # rest should be implemented in the inspector instance
@@ -120,10 +123,14 @@ class @Inspector
     @addButtonListeners() unless @options.tutorialOn
     # rest should be implemented in the inspector instance
 
-  submitSingleFlag: (data) ->
+  submitSingleFlag: (event, data) ->
+    @removeButtonListeners()
+    event.preventDefault()
     @prepareFlagSubmission(data, "/fixer/flag")
 
-  submitMultipleFlags: (data) ->
+  submitMultipleFlags: (event, data) ->
+    @removeButtonListeners()
+    event.preventDefault()
     @prepareFlagSubmission(data, "/fixer/flagnum.json")
 
   prepareFlagSubmission: (data, url) ->
@@ -151,7 +158,7 @@ class @Inspector
           inspector.showNextPolygon()
       )
 
-  updateScore: () =>
+  updateScore: () ->
     if @allPolygonsSession == 0
       @allPolygonsSession = @loadedData.status.all_polygons_session
 
@@ -165,7 +172,7 @@ class @Inspector
 
     $(@options.tweetID).attr "href", twitterurl
 
-  showInspectingMessage: () =>
+  showInspectingMessage: () ->
     return if @layer_id == @loadedData.map.layer_id or @options.tutorialOn
     @layer_id = @loadedData.map.layer_id
     msg = "Now inspecting:<br/><strong>Brooklyn, 1855</strong>"
@@ -174,7 +181,7 @@ class @Inspector
     el.html("<span>" + msg + "</span>")
     .show().delay(2000).fadeOut(1000)
 
-  invokeTutorial: () =>
+  invokeTutorial: () ->
     if (window.innerWidth < 500)
       @hideOthers()
       $(@options.tutorialID).unswipeshow()
@@ -202,15 +209,22 @@ class @Inspector
     $("#controls").show()
     $("#map-tutorial").hide()
 
-  showNextPolygon: () =>
+  showNextPolygon: () ->
     # console.log @polyData
     @clearScreen()
     @currentIndex++
-    @map.removeLayer(@geo)
+
+    if !@options.editablePolygon and @geo
+      @map.removeLayer(@geo)
+
     if @currentIndex < @polyData.length
       $(@options.buttonsID).show()
       @currentPolygon = @polyData[@currentIndex]
-      @geo = @makePolygon(@currentPolygon)
+      if !@options.editablePolygon
+        @geo = @makePolygon(@currentPolygon)
+      else
+        @makeEditablePolygon()
+        @geo.addTo(@map)
       # console.log @currentPolygon #, @currentGeo
       # console.log @geo
       # center on the polygon
@@ -225,7 +239,7 @@ class @Inspector
       @allPolygonsSession = 0
       @getPolygons()
 
-  getPolygons: () =>
+  getPolygons: () ->
     inspector = @
     mapdata = $(@options.jsdataID).data("map")
     if @firstLoad && mapdata.poly.length > 0
@@ -243,7 +257,7 @@ class @Inspector
           inspector.getPolygons()
       )
 
-  processPolygons: (data) =>
+  processPolygons: (data) ->
     data.poly = Utils.shuffle(data.poly)
     @loadedData = data
     @polyData = data.poly
@@ -269,6 +283,47 @@ class @Inspector
         inspector.options.polygonStyle
     ).addData json
 
+  makeEditablePolygon: () ->
+    maxCorners = 12
+    # editable polyline works with [[lat,lon],[lat,lon],...] coordinates
+    # geojson is [[[lon,lat],[lon,lat],...]]
+    coordinates = $.parseJSON(@currentPolygon.geometry)[0]
+    if coordinates[0][0] == coordinates[coordinates.length-1][0] && coordinates[0][1] == coordinates[coordinates.length-1][1]
+      # same coordinate for the first and last point / redundant
+      coordinates.pop()
+    transposed = ([coord[1],coord[0]] for coord in coordinates)
+
+    transposed = Simplify.whyattGeoJSON(transposed, maxCorners) if transposed.length > maxCorners
+
+    if (!@geo)
+      # console.table coordinates #, @currentGeo
+      # console.table transposed #, @currentGeo
+      pointIcon = L.icon(
+        iconUrl: '/assets/polygonfix/editmarker.png'
+        iconSize: [56, 120]
+        iconAnchor: [28, 120]
+      )
+      newPointIcon = L.icon(
+        iconUrl: '/assets/polygonfix/editmarker2.png'
+        iconSize: [32, 32]
+        iconAnchor: [16, 16]
+      )
+      @geo = L.Polygon.PolygonEditor(transposed,
+        maxMarkers: 10000
+        pointIcon: pointIcon
+        newPointIcon: newPointIcon
+        # style: (feature) ->
+        color: '#b00'
+        weight: 3
+        opacity: 0.5
+        # dashArray: '1,16'
+        fill: false
+        #   clickable: false
+      )
+    else
+      @map._editablePolygons = [] # hack cause the leaflet plugin does not destroy preexisting polygons
+      @geo.updateLatLngs(transposed)
+
   showPolygon: (e) =>
     inspector = @
     # console.log "showPolygon"
@@ -276,13 +331,10 @@ class @Inspector
       inspector.options.polygonStyle
 
   hidePolygon: (e) =>
-    if @geo._hideAll
-      @geo._hideAll() # hacky
-    else
-      @geo.setStyle (feature) ->
-        opacity: 0
+    @geo.setStyle (feature) ->
+      opacity: 0
 
-  buildTutorial: () =>
+  buildTutorial: () ->
     @intro = new NYPL_Map_Tutorial(
       highlightID: @options.tutorialHighlightID
       steps: @options.tutorialData.steps
@@ -294,13 +346,13 @@ class @Inspector
     )
     @intro.init()
 
-  parseTutorial: () =>
+  parseTutorial: () ->
     if @currentIndex != @intro.getCurrentPolygonIndex() + 1
       @currentIndex = @intro.getCurrentPolygonIndex()
       @showNextPolygon()
     @
 
-  hideTutorial: () =>
+  hideTutorial: () ->
     # console.log "end of tutorial"
     @clearScreen()
     if (window.innerWidth < 500)

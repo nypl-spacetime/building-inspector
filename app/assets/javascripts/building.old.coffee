@@ -254,7 +254,7 @@ class Building
 			@getPolygons()
 
 	makePolygon: (poly) ->
-		json = 
+		json =
 			type : "Feature"
 			properties:
 				DN: poly.dn

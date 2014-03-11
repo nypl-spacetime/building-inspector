@@ -18,9 +18,6 @@
 
 <%= render :partial => "partials/nav" %>
 
-<div id="main-container">
-  <%= render :partial => "partials/loading" %>
-	<%= render :partial => "partials/legend" %>
-	<%= render :partial => "partials/map" %>
-</div>
+<%= render :partial => "partials/main_container", locals: {css_class: "progress", legend: true} %>
+
 <%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:class => "nypl-logo", :title => "Visit NYPL.org", :id=>"nypl-mini"} %>
