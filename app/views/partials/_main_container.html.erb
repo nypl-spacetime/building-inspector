@@ -1,0 +1,7 @@
+<% css_class = "" if local_assigns[:css_class].nil? %>
+<% legend = false if local_assigns[:legend].nil? %>
+<%= render :partial => "partials/loading" %>
+<div id="main-container" class="<%= css_class %>">
+  <%= render :partial => "partials/legend" if legend %>
+  <%= render :partial => "partials/map" %>
+</div>
