@@ -181,7 +181,7 @@ class @Inspector
     el.html("<span>" + msg + "</span>")
     .show().delay(2000).fadeOut(1000)
 
-  invokeTutorial: () ->
+  invokeTutorial: () =>
     if (window.innerWidth < 500)
       @hideOthers()
       $(@options.tutorialID).unswipeshow()
@@ -346,13 +346,13 @@ class @Inspector
     )
     @intro.init()
 
-  parseTutorial: () ->
+  parseTutorial: () =>
     if @currentIndex != @intro.getCurrentPolygonIndex() + 1
       @currentIndex = @intro.getCurrentPolygonIndex()
       @showNextPolygon()
     @
 
-  hideTutorial: () ->
+  hideTutorial: () =>
     # console.log "end of tutorial"
     @clearScreen()
     if (window.innerWidth < 500)
