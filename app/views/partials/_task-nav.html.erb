@@ -1,14 +1,14 @@
 <%
-help_link = "/building?tutorial=true"
-help_link = "/numbers?tutorial=true" if @current_page=="progress_numbers" || @current_page=="progress_numbers_all"
-help_link = "javascript:;" if @current_page=="fixer" || @current_page=="numbers"
+help_link = "#{geometry_path}?tutorial=true"
+help_link = "#{addresses_path}?tutorial=true" if @current_page=="progress_address" || @current_page=="progress_address_all"
+help_link = "javascript:;" if @current_page=="fixer" || @current_page=="address"
 %>
   <div id="task-container">
     <ul id="task-toggle">
-      <%= content_tag :li, (link_to "INSPECT:", building_path, {:rel=>"nofollow", :class=>"shown"}), :class => "header" if @current_page == "homepage" || @current_page.include?("progress") %>
-      <%= content_tag :li, (link_to "Footprints", building_path, {:rel=>"nofollow", :class=>("shown" if @current_page=="fixer")}), :class=>("hidden" unless @current_page=="fixer") %>
+      <%= content_tag :li, (link_to "INSPECT:", geometry_path, {:rel=>"nofollow", :class=>"shown"}), :class => "header" if @current_page == "homepage" || @current_page.include?("progress") %>
+      <%= content_tag :li, (link_to "Footprints", geometry_path, {:rel=>"nofollow", :class=>("shown" if @current_page=="fixer")}), :class=>("hidden" unless @current_page=="fixer") %>
       <%= content_tag :li, (link_to "Fix polygons", polygons_path, {:rel=>"nofollow", :class=>("shown" if @current_page=="polygonfix")}), :class=>("hidden" unless @current_page=="polygonfix") %>
-      <%= content_tag :li, (link_to "Addresses", addresses_path, {:rel=>"nofollow", :class=>("shown" if @current_page=="numbers")}), :class=>("hidden" unless @current_page=="numbers") %>
+      <%= content_tag :li, (link_to "Addresses", addresses_path, {:rel=>"nofollow", :class=>("shown" if @current_page=="address")}), :class=>("hidden" unless @current_page=="address") %>
     </ul>
     <%= link_to "HELP", "#{help_link}", {:id => "link-help", :class => "icon"} unless controller_name == "general" %>
   </div>

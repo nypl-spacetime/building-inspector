@@ -19,7 +19,7 @@ class VisualizerController < ApplicationController
 		@sheets = Sheet.all
 	end
 
-  def building_consensus
+  def geometry_consensus
     all_polygons = Polygon.where("consensus = ?", params[:type])
     poly = []
     all_polygons.each do |p|

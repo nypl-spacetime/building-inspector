@@ -154,7 +154,7 @@ class Progress
 
 		color = '#609846'
 
-		$.getJSON('/fixer/sheet_numbers.json?id=' + sheet_id, (data) ->
+		$.getJSON('/fixer/sheet_address.json?id=' + sheet_id, (data) ->
 			p.map.off 'moveend', p.applyHighlights
 			el.find('.spinner').remove()
 

@@ -1,9 +1,9 @@
 class FixerController < ApplicationController
-	
+
 	before_filter :cookies_required, :except => :cookie_test
 	respond_to :json
 
-	def building
+	def geometry
 	  @current_page = "fixer"
 		@isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
 		cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
@@ -35,11 +35,11 @@ class FixerController < ApplicationController
 		@progress = @progress.to_json
 	end
 
-	def numbers
-		@current_page = "numbers"
+	def address
+		@current_page = "address"
 		@isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
 		cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
-		@map = getMap("numbers").to_json
+		@map = getMap("address").to_json
 	end
 
 	def polygonfix
@@ -49,28 +49,28 @@ class FixerController < ApplicationController
 		@map = getMap("polygonfix").to_json
 	end
 
-	def progress_numbers
-	  	@current_page = "progress_numbers"
+	def progress_address
+	  	@current_page = "progress_address"
 		# returns a GeoJSON object with the flags the session has sent so far
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
 		session = getSession()
 		@progress = {}
 		if user_signed_in?
-			@progress[:counts] = Flag.grouped_flags_for_user(current_user.id, "numbers")
-			@progress[:all_polygons_session] = Flag.flags_for_user(current_user.id, "numbers")
+			@progress[:counts] = Flag.grouped_flags_for_user(current_user.id, "address")
+			@progress[:all_polygons_session] = Flag.flags_for_user(current_user.id, "address")
 		else
-			@progress[:counts] = Flag.grouped_flags_for_session(session, "numbers")
-			@progress[:all_polygons_session] = Flag.flags_for_session(session, "numbers")
+			@progress[:counts] = Flag.grouped_flags_for_session(session, "address")
+			@progress[:all_polygons_session] = Flag.flags_for_session(session, "address")
 		end
 		@progress = @progress.to_json
 	end
 
-	def progress_numbers_all
-	  	@current_page = "progress_numbers_all"
+	def progress_address_all
+	  	@current_page = "progress_address_all"
 		# returns a GeoJSON object with the flags the session has sent so far
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
 		@progress = {}
-		@progress[:counts] = Polygon.grouped_by_sheet("numbers")
+		@progress[:counts] = Polygon.grouped_by_sheet("address")
 		@progress = @progress.to_json
 	end
 
@@ -136,7 +136,7 @@ class FixerController < ApplicationController
 		respond_with( @progress )
 	end
 
-	def session_progress_numbers_for_sheet
+	def session_progress_address_for_sheet
 		session = getSession()
 
 		if params[:id] == nil
@@ -144,9 +144,9 @@ class FixerController < ApplicationController
 			return
 		end
 		if user_signed_in?
-			all_flags = Flag.flags_for_sheet_for_user(params[:id], current_user.id, "numbers")
+			all_flags = Flag.flags_for_sheet_for_user(params[:id], current_user.id, "address")
 		else
-			all_flags = Flag.flags_for_sheet_for_session(params[:id], session, "numbers")
+			all_flags = Flag.flags_for_sheet_for_session(params[:id], session, "address")
 		end
 
 		poly = []

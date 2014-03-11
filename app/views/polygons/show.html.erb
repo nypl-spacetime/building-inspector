@@ -22,7 +22,7 @@
   %>
   <% @polygon.flags.each do |f| %>
   <%
-  if f.flag_type == "numbers"
+  if f.flag_type == "address"
   %>
   <%= link_to "##{f.flag_value}", f %> 
   <% else %>

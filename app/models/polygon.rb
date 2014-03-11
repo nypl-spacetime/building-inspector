@@ -1,22 +1,22 @@
 class Polygon < ActiveRecord::Base
 	has_many :flags, :dependent => :destroy
 	belongs_to :sheet
-	attr_accessible :color, :geometry, :sheet_id, :status, :vectorizer_json, :dn, :centroid_lat, :centroid_lon, :consensus, :flag_count, :consensus_numbers
+	attr_accessible :color, :geometry, :sheet_id, :status, :vectorizer_json, :dn, :centroid_lat, :centroid_lon, :consensus, :flag_count, :consensus_address
 
 	def self.grouped_by_sheet(type="geometry")
 		w = "1=1"
-		if type == "numbers"
+		if type == "address"
 			w = "polygons.consensus = 'yes'"
 		end
 		Polygon.select("COUNT(polygons.id) AS polygon_count, sheet_id, sheets.bbox").joins(:sheet).where(w).group("polygons.sheet_id, sheets.bbox")
 	end
 
 	def to_geojson
-	   { :type => "Feature", :properties => { :consensus => self[:consensus], :consensus_numbers => self[:consensus_numbers], :id => self[:id], :dn => self[:dn], :sheet_id => self[:sheet_id] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(self[:geometry]) } }
+	   { :type => "Feature", :properties => { :consensus => self[:consensus], :consensus_address => self[:consensus_address], :id => self[:id], :dn => self[:dn], :sheet_id => self[:sheet_id] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(self[:geometry]) } }
 	end
 
 	def to_point_geojson
-	   { :type => "Feature", :properties => { :consensus => self[:consensus], :consensus_numbers => self[:consensus_numbers], :id => self[:id], :dn => self[:dn], :sheet_id => self[:sheet_id] }, :geometry => { :type => "Point", :coordinates => [self[:centroid_lon], self[:centroid_lat]] } }
+	   { :type => "Feature", :properties => { :consensus => self[:consensus], :consensus_address => self[:consensus_address], :id => self[:id], :dn => self[:dn], :sheet_id => self[:sheet_id] }, :geometry => { :type => "Point", :coordinates => [self[:centroid_lon], self[:centroid_lat]] } }
 	end
 
 	def as_feature

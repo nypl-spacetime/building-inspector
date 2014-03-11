@@ -180,7 +180,7 @@ class Geometry extends Inspector
           ]
     options =
       tutorialData: tutorialData
-      jsdataID: '#buildingjs'
+      jsdataID: '#geometryjs'
       task: 'geometry'
       tweetString: "_score_ buildings checked! Data mining old maps with the Building Inspector from @NYPLMaps @nypl_labs"
     super(options)
@@ -245,19 +245,19 @@ class Geometry extends Inspector
     @removeButtonListeners()
     e.preventDefault()
     @activateButton("yes") unless @options.tutorialOn
-    @submitSingleFlag("geometry", "yes")
+    @submitSingleFlag("yes")
 
   submitNoFlag: (e) =>
     @removeButtonListeners()
     e.preventDefault()
     @activateButton("no") unless @options.tutorialOn
-    @submitSingleFlag("geometry", "no")
+    @submitSingleFlag("no")
 
   submitFixFlag: (e) =>
     @removeButtonListeners()
     e.preventDefault()
     @activateButton("fix") unless @options.tutorialOn
-    @submitSingleFlag("geometry", "fix")
+    @submitSingleFlag("fix")
 
 $ ->
   new Geometry()

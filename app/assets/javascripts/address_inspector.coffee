@@ -198,8 +198,8 @@ class Address extends Inspector
     options =
       draggableMap: true
       tutorialData: tutorialData
-      jsdataID: '#numbersjs'
-      task: 'numbers'
+      jsdataID: '#addressjs'
+      task: 'address'
       tweetString: "_score_ buildings checked! Data mining old maps with the Building Inspector from @NYPLMaps @nypl_labs"
     super(options)
 
@@ -248,7 +248,7 @@ class Address extends Inspector
       # console.log "skipped"
       flag_str = ",,NONE"
 
-    @submitMultipleFlags("numbers", flag_str)
+    @submitMultipleFlags(flag_str)
 
   prepareData: () =>
     r = []

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140206205938) do
+ActiveRecord::Schema.define(:version => 20140311183629) do
 
   create_table "flags", :force => true do |t|
     t.string   "flag_type"
@@ -41,14 +41,14 @@ ActiveRecord::Schema.define(:version => 20140206205938) do
     t.string   "consensus"
     t.decimal  "centroid_lat",               :precision => 15, :scale => 12
     t.decimal  "centroid_lon",               :precision => 15, :scale => 12
-    t.string   "consensus_numbers"
+    t.string   "consensus_address"
     t.text     "consensus_polygonfix_value"
     t.boolean  "consensus_polygonfix"
   end
 
   add_index "polygons", ["consensus"], :name => "consensus_index2"
   add_index "polygons", ["sheet_id", "consensus"], :name => "consensus_index"
-  add_index "polygons", ["sheet_id", "consensus_numbers"], :name => "consensus_numbers_index"
+  add_index "polygons", ["sheet_id", "consensus_address"], :name => "consensus_address_index"
   add_index "polygons", ["sheet_id", "consensus_polygonfix"], :name => "consensus_polygonfix_index"
 
   create_table "sheets", :force => true do |t|
@@ -60,12 +60,12 @@ ActiveRecord::Schema.define(:version => 20140206205938) do
     t.datetime "updated_at",           :null => false
     t.integer  "layer_id"
     t.string   "consensus"
-    t.string   "consensus_numbers"
+    t.string   "consensus_address"
     t.boolean  "consensus_polygonfix"
   end
 
   add_index "sheets", ["consensus"], :name => "sheet_consensus_index"
-  add_index "sheets", ["consensus_numbers"], :name => "sheet_consensus_numbers_index"
+  add_index "sheets", ["consensus_address"], :name => "sheet_consensus_address_index"
   add_index "sheets", ["consensus_polygonfix"], :name => "sheet_consensus_polygonfix_index"
   add_index "sheets", ["layer_id"], :name => "index_sheets_on_layer_id"
 

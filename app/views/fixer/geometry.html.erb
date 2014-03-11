@@ -11,7 +11,7 @@
 
 	<%= javascript_include_tag "lib/vendor/add2home" %>
 
-	<%= javascript_include_tag "geometry_inspector", {:id => "buildingjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}"), "data-session" => "#{@isNew}", "data-map" => "#{@map}"} %>
+	<%= javascript_include_tag "geometry_inspector", {:id => "geometryjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}"), "data-session" => "#{@isNew}", "data-map" => "#{@map}"} %>
 <% end %>
 
 <%= render :partial => "partials/nav" %>

@@ -3,14 +3,14 @@
 <% content_for :dynamic_js do %>
 	<%= stylesheet_link_tag    "fixer", :media => "all" %>
 	<%= stylesheet_link_tag    "progress", :media => "all" %>
-	<%= stylesheet_link_tag    "numbers", :media => "all" %>
+	<%= stylesheet_link_tag    "address", :media => "all" %>
 	<%= stylesheet_link_tag    "lib/vendor/MarkerCluster", :media => "all" %>
 	<%= stylesheet_link_tag    "lib/vendor/MarkerCluster.Default", :media => "all" %>
 	<!--[if lte IE 8]>
 	<%= stylesheet_link_tag    "lib/vendor/MarkerCluster.Default.ie", :media => "all" %>
 	<![endif]-->
 
-	<%= javascript_include_tag "progress_all", {:id => "progressjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}"), "data-progress" => @progress} %>
+	<%= javascript_include_tag "progress_address", {:id => "progressjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}"), "data-progress" => @progress} %>
 
 	<%= javascript_include_tag "lib/vendor/leaflet.markercluster" %>
 <% end %>

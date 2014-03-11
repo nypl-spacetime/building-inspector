@@ -7,7 +7,7 @@
     <%= render :partial => "partials/task-nav" %>
     <div id="service-links">
       <%= render :partial => "partials/login" %>
-      <%= link_to "ABOUT", "/general/about", {:id => "link-about", :class => "icon"} %>
+      <%= link_to "ABOUT", about_path, {:id => "link-about", :class => "icon"} %>
     </div>
   </div>
   <%= render :partial => "partials/score" unless controller_name == "general" %>

@@ -5,9 +5,9 @@
       <%= link_to "VIEW ", "javascript:;", :id => "link-view-inspections", :rel=>"nofollow" %>
       <div id="score-progress" class="popup progress">
       <% if @current_page=="progress" || @current_page=="progress_all" || @current_page=="fixer" %>
-        <%= link_to "MY INSPECTIONS", building_progress_path, :class => "popup-link" %>
-        <%= link_to "ALL INSPECTIONS", building_progress_all_path, :class => "popup-link" %>
-      <% elsif @current_page=="progress_numbers" || @current_page=="progress_numbers_all" || @current_page=="numbers" %>
+        <%= link_to "MY INSPECTIONS", geometry_progress_path, :class => "popup-link" %>
+        <%= link_to "ALL INSPECTIONS", geometry_progress_all_path, :class => "popup-link" %>
+      <% elsif @current_page=="progress_address" || @current_page=="progress_address_all" || @current_page=="address" %>
         <%= link_to "MY INSPECTIONS", addresses_progress_path, :class => "popup-link" %>
         <%# link_to "ALL INSPECTIONS", addresses_progress_path, :class => "popup-link" %>
       <% else %>

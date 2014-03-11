@@ -11,7 +11,7 @@ class @Inspector
       tutorialID: "#map-tutorial"
       tutorialHighlightID: "#map-highlight"
       buttonsID: "#buttons"
-      task: '' # geometry, numbers, polygonfix
+      task: '' # geometry, address, polygonfix
       jsdataID: ''
       scoreID: "#score .total"
       tweetID: "#tweet"
@@ -120,19 +120,21 @@ class @Inspector
     @addButtonListeners() unless @options.tutorialOn
     # rest should be implemented in the inspector instance
 
-  submitSingleFlag: (type, data) =>
-    @prepareFlagSubmission(type, data, "/fixer/flag")
+  submitSingleFlag: (data) ->
+    @prepareFlagSubmission(data, "/fixer/flag")
 
-  submitMultipleFlags: (type, data) =>
-    @prepareFlagSubmission(type, data, "/fixer/flagnum.json")
+  submitMultipleFlags: (data) ->
+    @prepareFlagSubmission(data, "/fixer/flagnum.json")
 
-  prepareFlagSubmission: (type, data, url) =>
+  prepareFlagSubmission: (data, url) ->
     @clearScreen()
 
     if @options.tutorialOn
       # do not submit the data
       @intro.goToStep(@intro._currentStep+2)
       return
+
+    type = @options.task
 
     _gaq.push(['_trackEvent', 'Flag', type])
     @allPolygonsSession++
@@ -233,7 +235,7 @@ class @Inspector
       $.getJSON("/fixer/map.json?type=#{@options.task}", (data) ->
         # console.log(d);
         if data.poly.length > 0
-          $(@options.loaderID).remove()
+          $(inspector.options.loaderID).remove()
           inspector.processPolygons(data)
         else
           # retry until you find a good map

@@ -47,20 +47,20 @@ class General
       onactivate: (slide, index) ->
         # console.log "activate", slide, index
         $("#slide-buttons a").removeClass("active")
-        $("#link-building").addClass("active") if index==0
+        $("#link-geometry").addClass("active") if index==0
         $("#link-polygonfix").addClass("active") if index==1
-        $("#link-numbers").addClass("active") if index==2
+        $("#link-address").addClass("active") if index==2
     )
-    $("#link-building").on("mouseover", ()->
+    $("#link-geometry").on("mouseover", ()->
       $("#home-slideshow").swipeshow().goTo(0)
     )
     $("#link-polygonfix").on("mouseover", ()->
       $("#home-slideshow").swipeshow().goTo(1)
     )
-    $("#link-numbers").on("mouseover", ()->
+    $("#link-address").on("mouseover", ()->
       $("#home-slideshow").swipeshow().goTo(2)
     )
-    # $("#link-numbers").addClass("active")
+    # $("#link-address").addClass("active")
     # $("#link-polygonfix").addClass("active")
 
   resizeSVG: () =>
