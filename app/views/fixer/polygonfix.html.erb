@@ -1,0 +1,37 @@
+<% content_for :page_title do %>Building Inspector by NYPL Labs<% end %>
+
+<% content_for :dynamic_js do %>
+  <script type="text/javascript">
+  // var addToHomeConfig = {
+  //  lifespan:4000
+  // };
+  </script>
+  <%# stylesheet_link_tag    "lib/vendor/add2home", :media => "all" %>
+  <%= stylesheet_link_tag    "fixer", :media => "all" %>
+
+  <%# javascript_include_tag "lib/vendor/add2home" %>
+
+  <%= javascript_include_tag "lib/vendor/leaflet-editable-polygon" %>
+  
+  <%= javascript_include_tag "polygonfix", {:id => "polygonfixjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}"), "data-session" => "#{@isNew}", "data-map" => "#{@map}"} %>
+<% end %>
+
+<%= render :partial => "partials/nav" %>
+<%= render :partial => "partials/tutorial" %>
+
+<div id="main-container" class="compact">
+  <%= render :partial => "partials/loading" %>
+  <%= render :partial => "partials/map" %>
+</div>
+<div id="controls" class="compact">
+  <div id="buttons">
+    <div class="wrapper">
+      <div class="multiple">
+        <input id="multiple-polygon" class="css-checkbox" name="multiple-polygon" type="checkbox" value="1">
+        <label for="multiple-polygon" class="css-label" id="multiple-text">More than one building?</label>
+      </div>
+      <a href="javascript:;" id="submit-button" title="Keyboard shortcut: +" rel="nofollow">NEXT / SKIP</a>
+    </div>
+  </div>
+</div>
+<%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:class => "nypl-logo", :title => "Visit NYPL.org", :id=>"nypl-mini"} %>

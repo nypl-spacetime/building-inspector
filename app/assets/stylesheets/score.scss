@@ -6,206 +6,42 @@
 @import "compass/css3/text-shadow";
 @import "compass/css3/box-shadow";
 
-#main-container {
-	@include clearfix;
-	position: absolute;
-	margin-top: 0;
-	padding-top: 0;
-	top: 100px;
-	bottom: 160px;
-	left: 0;
-	right: 0;
-
-	#map-container, #map, #map2 {
-		width: 100%;
-		height: 100%;
-		// background: asset-url("map-load-tile.svg", image);
-	}
-
-	#map, #map2 {
-		position: absolute;
-		background: transparent;
-	}
-
-	#map2 {
-		// background: $grayLighter;
-	}
-
-	@media screen and (max-width: $desktopwidth) {
-		top: 40px;
-		bottom: 0;
-	}
-}
-
-#map-highlight {
-	position: absolute;
-	left: 30%;
-	right: 30%;
-	top: 20%;
-	bottom: 20%;
-}
-
-#controls {
-	position: absolute;
-	height: 160px;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	background: $gray;
-
-	@media screen and (max-width: $desktopwidth) {
-		background: transparent;
-		height: 100px;
-	}
-
-	@media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
-		display: none;
-	}
-}
-
 #score {
-	position: relative;
-	font-size: 20px;
-	padding: 5px 10px;
-	background: $grayLight;
-	color: $white;
-	width: 260px;
-	margin: 0 auto;
-	text-align: center;
-	line-height: normal;
-
-	@include border-radius(0 0 10px 10px);
+  position: relative;
+  float: right;
+  margin: 37px 0 0 0;
 
 	@media screen and (max-width: $desktopwidth) {
-		background: rgba(144,139,133,0.75);
-		@include border-radius(10px);
+		background: $grayDarker;
+		height: 32px;
 		position: fixed;
-		top: 50px;
-		left: 10px;
-		font-size: 16px;
-		width: 210px;
+		right: 0;
+		top: -37px;
+		padding: 8px 10px 0;
 	}
+}
 
-	/* clearfix 
-	seen: http://stackoverflow.com/a/1633170/160933 
-	*/
-	/* For modern browsers */
-	&:before,
-	&:after {
-		content:"";
-		display:table;
+#score-number {
+  display: inline-block;
+  font-size: 2em;
+  line-height: 0;
+  color: $black;
+  font-weight: bold;
+  height: 10px;
+	@media screen and (max-width: $desktopwidth) {
+		line-height: 16px;
 	}
-	&:after {
-		clear:both;
-	}
-	/* For IE 6/7 (trigger hasLayout) */
-	& {
-		zoom:1;
-	}
+}
 
-	/* end clearfix */
+#link-view-inspections {
+  font-size: 0.7em;
+}
 
-	.progress {
-		position: relative;
-		font-size: 18px;
-		background: $grayDarkest;
-		margin: 5px 0;
-		text-transform: uppercase;
+#score-progress {
+	// float: right;
+	// text-align: right;
+	// font-size: 0.7em;
 
-		@media screen and (max-width: $desktopwidth) {
-			margin: 2px 0;
-		}
-	}
-
-	.percent {
-		position: absolute;
-		left: 5px;
-		top: -3px;
-		color: lighten($orange, 10%);
-	}
-
-	.bar {
-		height: 3px;
-		width: 0%;
-
-		&.level {
-			background: lighten($orange, 10%);
-		}
-
-		&.map {
-			background: lighten($orange, 10%);
-		}
-	}
-
-	.username {
-		display: block;
-		float: left;
-		width: 110px;
-		margin-right: 0;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-
-		@media screen and (max-width: $desktopwidth) {
-			width: 70px;
-			margin-right: 2px;
-		}
-
-	}
-
-	#score-save, #score-progress {
-		float: left;
-		text-align: left;
-		width: 130px;
-		color: $grayDarker;
-		font-size: 12px;
-		padding: 5px 0;
-		cursor: pointer;
-		text-transform: uppercase;
-		position: relative;
-		
-
-		@media screen and (max-width: $desktopwidth) {
-			font-size: 10px;
-			width: 100px;
-			padding: 0;
-		}
-
-		small {
-			font-size: 12px;
-			line-height: 12px;
-
-			@media screen and (max-width: $desktopwidth) {
-				display: block;
-				float: left;
-				margin-top: 2px;
-				font-size: 9px;
-				line-height: 9px;
-			}
-		}
-
-		a {
-			color: $grayDarker;
-
-			@media screen and (max-width: $desktopwidth) {
-				color: $grayDarkest;
-			}
-		
-			&:hover {
-				color: $white;
-				text-decoration: none;
-			}
-		}
-	}
-	
-	#score-progress {
-		float: right;
-		text-align: right;
-
-		@media screen and (max-width: $desktopwidth) {
-			width: 110px;
-		}
-	}
 }
 
 #link-exit {
@@ -227,88 +63,4 @@
 	font-size: 12px;
 }
 
-a#tweet {
-	display: block;
-	position: absolute;
-	right: -30px;
-	top: 5px;
-	color: $grayDarkest;
-	width: 20px;
-	height: 20px;
-	font-size: 20px;
-	content: attr(data-icon);
-	font-family:$iconfont;
-	-webkit-font-smoothing: antialiased;
-}
-
-// introjs overrides
-.tutorial {
-	font-family: $mainfont;
-
-	strong {
-		font-weight: normal;
-		color: $orange;
-	}
-	.introjs-tooltipbuttons {
-		min-width: 240px;
-	}
-
-	.introjs-button {
-		border: none;
-		padding: 5px 10px;
-		@include border-radius(5px);
-		@include text-shadow(none);
-		@include single-box-shadow(none);
-		background: $grayLight;
-		line-height: 13px;
-		text-transform: uppercase;
-		color: $white;
-		text-decoration: none;
-
-		&:hover {
-			color: $grayLight;
-			background: $white;
-		}
-	}
-
-	.introjs-skipbutton {
-		background: $grayLighter;
-	}
-
-	.introjs-prevbutton {
-		margin-right: 1px;
-		@include border-radius(5px 0 0 5px);
-	}
-
-	.introjs-nextbutton {
-		@include border-radius(0 5px 5px 0);
-	}
-
-	.introjs-disabled, .introjs-disabled:hover {
-		color: $white;
-		background: $grayLightest;
-	}
-}
-
-.introjs-overlay {
-	opacity: .15 !important;
-}
-
-.introjs-helperLayer {
-	border: 10px solid $grayLightest;
-	background: transparent;
-}
-
-.introjs-helperLayer.noMap {
-	border: none;
-	background: rgba(255,255,255,.9);
-
-	.introjs-nextbutton {
-		// display: none;
-	}
-
-	&.yesNext .introjs-nextbutton {
-		display: inline-block;
-	}
-}
 

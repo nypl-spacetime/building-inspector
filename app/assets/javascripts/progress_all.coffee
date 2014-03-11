@@ -30,10 +30,10 @@ class Progress
 			zIndex: 3
 		).addTo(@map)
 
-		@attributionControl = L.control.attribution(
-			position: 'bottomright'
-			prefix: "From: <a href='http://digitalcollections.nypl.org/search/index?filters[title_uuid_s][]=Maps%20of%20the%20city%20of%20New%20York.||06fd4630-c603-012f-17f8-58d385a7bc34&keywords=&layout=false%22%3E'>NYPL Digital Collections</a> | <a href='http://maps.nypl.org/warper/layers/859/'>Warper</a>"
-		).addTo(@map)
+		# @attributionControl = L.control.attribution(
+		# 	position: 'bottomright'
+		# 	prefix: "From: <a href='http://digitalcollections.nypl.org/search/index?filters[title_uuid_s][]=Maps%20of%20the%20city%20of%20New%20York.||06fd4630-c603-012f-17f8-58d385a7bc34&keywords=&layout=false%22%3E'>NYPL Digital Collections</a> | <a href='http://maps.nypl.org/warper/layers/859/'>Warper</a>"
+		# ).addTo(@map)
 
 		@zoomControl = L.control.zoom(
 			position: 'topright'
@@ -73,12 +73,15 @@ class Progress
 		).addTo @map
 
 	getCounts: () =>
+		$("#loader").remove()
 		data = $('#progressjs').data("progress")
 
 		# console.log data
 
 		bounds = new L.LatLngBounds(@_SW, @_NE)
 		@map.fitBounds bounds
+
+		@updateScore(data.all_polygons_session)
 
 		# marker clustering layer
 		markers = new L.MarkerClusterGroup
@@ -99,7 +102,7 @@ class Progress
 					iconSize: L.point(30, 30)
 			polygonOptions:
 				stroke: false
-		
+
 		p = @
 
 		markers.on("click", (e) ->
@@ -121,7 +124,7 @@ class Progress
 		# console.log data
 
 		bbox = data.bbox.split ","
-		
+
 		W = parseFloat(bbox[0])
 		S = parseFloat(bbox[1])
 		E = parseFloat(bbox[2])
@@ -148,7 +151,7 @@ class Progress
 		console.log sheet_id
 		# spinner available in general.coffee
 		spinner_xy = @map.layerPointToContainerPoint(e.layer.getLatLng())
-		el.append(_gen._spinner().el)
+		el.append(Utils.spinner().el)
 		$.getJSON('/fixer/progress_sheet.json?id=' + sheet_id, (data) ->
 			v.processPolygons(data)
 			el.find('.spinner').remove()
@@ -214,6 +217,22 @@ class Progress
 			bounds.extend(nil_json.getBounds())
 
 		@map.fitBounds(bounds)
+
+	updateScore: (current) =>
+		# mapScore = if total > 0 then Math.round(current*100/total) else 0
+
+		# mapDOM = $("#map-bar")
+		# mapDOM.find(".bar").css("width", mapScore + "%")
+		$("#score .total").text(current)
+		# $("#map-total").text("of " + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " shapes")
+
+		url = $('#progressjs').data("server")
+		tweet = current + " buildings checked! Data mining old maps with the Building Inspector from @NYPLMaps @nypl_labs"
+		twitterurl = "https://twitter.com/share?url=" + url + "&text=" + tweet
+
+		$("#tweet").show()
+
+		$("#tweet").attr "href", twitterurl
 
 $ ->
 	window._progress = new Progress()

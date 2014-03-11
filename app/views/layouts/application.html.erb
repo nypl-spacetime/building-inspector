@@ -35,13 +35,15 @@
 
 	<%= yield :dynamic_js %>
 
+  <script type="text/javascript" src="http://fast.fonts.net/jsapi/a539ff1d-f018-4158-bc00-3e1ca58dffce.js"></script>
+
 </head>
 <body>
 
 <div id="ie8">
 	<p>Building Inspector is not compatible with Internet Explorer 9 or earlier. Please <a href="http://microsoft.com/ie">download a more recent version</a> or try <a href="http://www.getfirefox.com">another browser</a>.</p>
 </div>
-<%= render :partial => "partials/landscape-alert" %>
+
 <%= yield %>
 
 <script>

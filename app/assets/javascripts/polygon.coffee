@@ -2,7 +2,6 @@ class Polygon
 	constructor: () ->
 		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859-final/859spec.json', 
 			animate: true
-			attributionControl: true
 			minZoom: 16
 			maxZoom: 21
 		)
@@ -14,6 +13,7 @@ class Polygon
 		p = @
 		@map.on 'load', () ->
 			p.showPolygon()
+			p.showFixes()
 
 	showPolygon: () =>
 		data = $('#polydata').data("map")
@@ -40,6 +40,28 @@ class Polygon
 		json.addTo(m)
 
 		m.fitBounds(bounds)
+
+	showFixes: () =>
+		data = $('#polydata').data("fixes")
+
+		return if !data or data.features.length==0
+
+		m = @map
+
+		# console.log data
+
+		json = L.geoJson(data,
+			style: (feature) ->
+				color: '#ff0'
+				weight: 1
+				opacity: 1
+				# dashArray: '1,16'
+				fill: false
+		)
+
+		bounds = json.getBounds()
+		json.addTo(m)
+		# m.fitBounds(bounds)
 
 $ ->
 	window._p = new Polygon

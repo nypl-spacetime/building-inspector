@@ -10,17 +10,4 @@
 		<% end %>
 		</ul>
 		<% end %>
-		<% if @current_page=="progress" %>
-			<%= link_to "ALL INSPECTIONS", "/fixer/progress_all", :class => "legend-link" %>
-		<% elsif @current_page=="progress_all" %>
-			<%= link_to "MY INSPECTIONS", "/fixer/progress", :class => "legend-link" %>
-		<% elsif @current_page=="progress_numbers" %>
-			<%# link_to "ALL INSPECTIONS", "/numbers/progress_all", :class => "legend-link" %>
-		<% elsif @current_page=="progress_numbers_all" %>
-			<%= link_to "MY INSPECTIONS", "/numbers/progress", :class => "legend-link" %>
-		<% else %>
-		<% end %>
-		<% if @current_page=="progress_all" || @current_page=="progress_numbers_all" %>
-			<%= link_to "INSPECT MORE", "/fixer/building", :class => "legend-link" %>
-		<% end %>
 	</div>

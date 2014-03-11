@@ -4,6 +4,7 @@ class GeneralController < ApplicationController
   end
 
   def about
+    @current_page = "homepage"
   end
 
   def win

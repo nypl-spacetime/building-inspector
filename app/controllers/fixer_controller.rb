@@ -42,6 +42,13 @@ class FixerController < ApplicationController
 		@map = getMap("numbers").to_json
 	end
 
+	def polygonfix
+		@current_page = "polygonfix"
+		@isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
+		cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
+		@map = getMap("polygonfix").to_json
+	end
+
 	def progress_numbers
 	  	@current_page = "progress_numbers"
 		# returns a GeoJSON object with the flags the session has sent so far
@@ -69,7 +76,7 @@ class FixerController < ApplicationController
 
 	def progress_sheet
 	    all_polygons = Polygon.select("id, consensus, dn, sheet_id, geometry").where(:sheet_id => params[:id])
-	    
+
 	    fix_poly = []
 	    yes_poly = []
 	    no_poly = []
@@ -152,11 +159,6 @@ class FixerController < ApplicationController
 		respond_with( @progress )
 	end
 
-	def allPolygons
-		all_polygons = Polygon.select("status, id, sheet_id, geometry, dn")
-		respond_with( all_polygons )
-	end
-
 	def getMap(type="geometry")
 		session = getSession()
 		map = {}
@@ -205,40 +207,42 @@ class FixerController < ApplicationController
 		end
 	end
 
-    def many_flags_one_polygon
-        session = getSession()
-        # assuming json like so:
-        # id: poly_id
-        # flags: "lat,lng,value|lat,lng,value|lat,lng,value|..."
-        flags = params[:f].split("|")
-        poly_id = params[:i]
-        type = params[:t]
-        if poly_id == nil || flags == nil || flags.count <= 0
-            respond_with( "empty_poly" )
-            return
-        end
-        flags.each do |f|
-        	contents = f.split(",")
-        	# at least have a value
-            if contents[2] == nil
-                next
-            end
-            flag = Flag.new
-            flag[:is_primary] = true
-            flag[:polygon_id] = poly_id
-            flag[:flag_value] = contents[2]
-            if contents[0] != ""
-            	flag[:latitude] = contents[0]
-            end
-            if contents[1] != ""
-	            flag[:longitude] = contents[1]
-            end
-            flag[:session_id] = session
-            flag[:flag_type] = type
-            flag.save
-        end
-        respond_with( flags )
+  def many_flags_one_polygon
+    session = getSession()
+    # assuming json like so:
+    # id: poly_id
+    # flags: "lat,lng,value|lat,lng,value|lat,lng,value|..."
+    flags = params[:f].split("|")
+    poly_id = params[:i]
+    type = params[:t]
+    if poly_id == nil || flags == nil || flags.count <= 0
+        respond_with( "empty_poly" )
+        return
     end
+    uniques = []
+    flags.each do |f|
+    	contents = f.split(",")
+    	# at least have a value
+        if contents[2] == nil || uniques.index(contents[2]) != nil
+            next
+        end
+        flag = Flag.new
+        flag[:is_primary] = true
+        flag[:polygon_id] = poly_id
+        flag[:flag_value] = contents[2]
+        if contents[0] != ""
+        	flag[:latitude] = contents[0]
+        end
+        if contents[1] != ""
+          flag[:longitude] = contents[1]
+        end
+        flag[:session_id] = session
+        flag[:flag_type] = type
+        flag.save
+        uniques.push(flag[:flag_value])
+    end
+    respond_with( flags )
+  end
 
 	def getSession
 		if cookies[:session] == nil || cookies[:session] == ""
@@ -247,9 +251,6 @@ class FixerController < ApplicationController
 		check_for_user_session(cookies[:session]) unless user_signed_in?
 		Usersession.register_user_session(current_user.id, cookies[:session]) if user_signed_in?
 		cookies[:session]
-	end
-
-	def color
 	end
 
 	# checks for presence of "cookie_test" cookie

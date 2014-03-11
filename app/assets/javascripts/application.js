@@ -12,9 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require lib/mapbox
-//= require lib/intro
-//= require lib/jquery.swipeshow.min
-//= require lib/spin.min
-//= require lib/humanize.min
+//= require lib/vendor/mapbox
+//= require lib/vendor/intro
+//= require lib/vendor/jquery.swipeshow.min
+//= require lib/vendor/spin.min
+//= require lib/vendor/humanize.min
+//= require lib/nypl_map_tutorial
+//= require lib/nypl_utils
+//= require lib/nypl_inspector
 //= require general

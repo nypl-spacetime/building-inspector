@@ -8,11 +8,12 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require_self
  *= require lib/reset
+ *= require lib/drr-base-layout
  *= require styles
- *= require lib/mapbox
- *= require lib/introjs
- *= require lib/jquery.swipeshow
- *= require lib/slideshow-theme
+ *= require partials/nav
+ *= require lib/vendor/mapbox
+ *= require lib/vendor/introjs
+ *= require lib/vendor/jquery.swipeshow
+ *= require lib/vendor/slideshow-theme
  */

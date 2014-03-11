@@ -6,29 +6,28 @@
 		lifespan:4000
 	};
 	</script>
-	<%= stylesheet_link_tag    "lib/add2home", :media => "all" %>
+	<%= stylesheet_link_tag    "lib/vendor/add2home", :media => "all" %>
 	<%= stylesheet_link_tag    "fixer", :media => "all" %>
 
-	<%= javascript_include_tag "lib/add2home" %>
+	<%= javascript_include_tag "lib/vendor/add2home" %>
 
-	<%= javascript_include_tag "building", {:id => "buildingjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}"), "data-session" => "#{@isNew}", "data-map" => "#{@map}"} %>
+	<%= javascript_include_tag "geometry_inspector", {:id => "buildingjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}"), "data-session" => "#{@isNew}", "data-map" => "#{@map}"} %>
 <% end %>
 
 <%= render :partial => "partials/nav" %>
 <%= render :partial => "partials/tutorial" %>
 
 <div id="main-container">
-	<div id="loader">LOADING</div>
-	<div id="map-highlight"></div>
-	<div id="map-inspecting">INSPECTING BROOKLYN!</div>
+  <%= render :partial => "partials/loading" %>
 	<%= render :partial => "partials/map" %>
 </div>
 <div id="controls">
-	<%= render :partial => "partials/score" %>
 	<div id="buttons">
 		<div class="wrapper">
 			<a href="javascript:;" id="no-button" title="Keyboard shortcut: 1" rel="nofollow">NO</a>
 			<a href="javascript:;" id="fix-button" title="Keyboard shortcut: 2" rel="nofollow">FIX</a>
 			<a href="javascript:;" id="yes-button" title="Keyboard shortcut: 3" rel="nofollow">YES</a>
+		</div>
 	</div>
 </div>
+<%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:class => "nypl-logo", :title => "Visit NYPL.org", :id=>"nypl-mini"} %>

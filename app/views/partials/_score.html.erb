@@ -1,33 +1,18 @@
-	<div id="score">
-		<div id="score-number" class="total" title="Buildings you have processed">0</div>
-		<% if @current_page=="progress_all" %>
-			<div id="map-total"></div>
-		<% end %>
-		<div id="map-bar" class="progress">
-			<div class="bar map"></div>
-		</div>
-		<div id="score-save">
-		  <% if user_signed_in? %>
-		    <span class="username"><%= current_user.name %></span><small><%= link_to 'x', destroy_user_session_path, method: :delete, :id => "link-exit" %></small>
-		  <% else %>
-		    <%= link_to "SAVE SCORE", "javascript:;", {:id => "link-score-save", :class => "score-save-link"} %>
-		    <div class="sign-in-options">
-          <%= link_to "Sign In With Gmail", user_omniauth_authorize_path(:google_oauth2), {:class => "sign-in-link", :rel=>"nofollow"} %>
-          <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), {:class => "sign-in-link", :rel=>"nofollow"} %>
-          <%= link_to "Sign in with Twitter", user_omniauth_authorize_path(:twitter), {:class => "sign-in-link", :rel=>"nofollow"} %>
-          <div class="sign-in-callout"></div>
-        </div>	 
-			<% end %>
-		</div>
-		<% if @current_page=="progress" %>
-		<div id="score-progress"><a href="/building" class="score-link">INSPECT MORE</a></div>
-		<% elsif @current_page=="fixer" %>
-		<div id="score-progress"><a href="/fixer/progress" class="score-link">VIEW INSPECTIONS</a></div>
-		<% elsif @current_page=="progress_numbers" %>
-		<div id="score-progress"><a href="/numbers" class="score-link">INSPECT MORE</a></div>
-		<% elsif @current_page=="numbers" %>
-		<div id="score-progress"><a href="/numbers/progress" class="score-link">VIEW INSPECTIONS</a></div>
-		<% else %>
-		<% end %>
-		<%= link_to "T", "", {:onclick=>"javascript:_gaq.push(['_trackEvent', 'Tweet']);",:id => "tweet", :title => "Share on Twitter"} %>
-	</div>
+  <div id="score">
+    <%= link_to "T", "", {:onclick=>"javascript:_gaq.push(['_trackEvent', 'Tweet']);",:id => "tweet", :title => "Share on Twitter"} %>
+    <div id="score-number" class="total" title="Buildings you have processed">0</div>
+    <div class="popup-wrapper">
+      <%= link_to "VIEW ", "javascript:;", :id => "link-view-inspections", :rel=>"nofollow" %>
+      <div id="score-progress" class="popup progress">
+      <% if @current_page=="progress" || @current_page=="progress_all" || @current_page=="fixer" %>
+        <%= link_to "MY INSPECTIONS", building_progress_path, :class => "popup-link" %>
+        <%= link_to "ALL INSPECTIONS", building_progress_all_path, :class => "popup-link" %>
+      <% elsif @current_page=="progress_numbers" || @current_page=="progress_numbers_all" || @current_page=="numbers" %>
+        <%= link_to "MY INSPECTIONS", addresses_progress_path, :class => "popup-link" %>
+        <%# link_to "ALL INSPECTIONS", addresses_progress_path, :class => "popup-link" %>
+      <% else %>
+      <% end %>
+        <div class="callout"></div>
+      </div>
+    </div>
+  </div>

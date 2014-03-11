@@ -1,0 +1,17 @@
+    <div id="links-account">
+    <% if user_signed_in? %>
+      <%= link_to "LOG OUT " + current_user.name, destroy_user_session_path, method: :delete, :id => "link-logout", :class=>"icon" %>
+    <% else %>
+<%
+loginmsg = "SAVE SCORE"
+loginmsg = "LOG IN" if controller_name=="general"
+%>
+      <%= link_to "#{loginmsg}", "javascript:;", {:id => "link-login", :class => "icon score-save-link", :rel=>"nofollow"} %>
+      <div class="popup">
+        <%= link_to "Sign In With Gmail", user_omniauth_authorize_path(:google_oauth2), {:class => "popup-link", :rel=>"nofollow"} %>
+        <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), {:class => "popup-link", :rel=>"nofollow"} %>
+        <%= link_to "Sign in with Twitter", user_omniauth_authorize_path(:twitter), {:class => "popup-link", :rel=>"nofollow"} %>
+        <div class="callout"></div>
+      </div>
+    <% end %>
+    </div>

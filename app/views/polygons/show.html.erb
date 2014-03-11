@@ -5,7 +5,7 @@
       height: 300px;
     }
   </style>
-  <%= javascript_include_tag "polygon", {:id => "polydata", "data-map" => "#{@map.to_json}"} %>
+  <%= javascript_include_tag "polygon", {:id => "polydata", "data-map" => "#{@map.to_json}", "data-fixes" => "#{@fixes.to_json}"} %>
 <% end %>
 
 <p id="notice"><%= notice %></p>

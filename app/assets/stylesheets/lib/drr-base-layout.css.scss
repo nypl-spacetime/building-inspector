@@ -1,0 +1,228 @@
+// @import "drr-variables";
+@import "variables";
+@import "drr-mixins";
+
+// Body reset
+// -------------------------
+body {
+  margin: 0;
+  font-family: $baseFontFamily;
+  font-size: $baseFontSize;
+  line-height: $baseLineHeight;
+  color: $textColor;
+  background-color: $bodyBackground;
+  letter-spacing: $baseLetterSpacing;
+}
+
+// Links
+// -------------------------
+a {
+  color:$linkColor;
+  text-decoration: none;
+  &:hover,
+  &:focus {
+    color: $linkColorHover;
+    text-decoration: underline;
+  }
+}
+
+
+// Body text
+// -------------------------
+p {
+  margin: 0 0 $baseLineHeight / 2;
+}
+p.lead {
+  font-size: $leadFontSize;
+  line-height: $largeLineHeight;
+  letter-spacing: $largeLetterSpacing;
+}
+small {
+  font-size: $smallFontSize;
+  line-height: $smallLineHeight;
+}
+
+// Headings
+// -------------------------
+
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6 {
+  @include drr-heading();
+}
+h1 { 
+  font-size: $h1FontSize;
+  line-height: $h1FontSize;
+}
+h2 { 
+  font-size: $h2FontSize;
+  line-height: $h2FontSize;
+}
+h3 { 
+  font-size: $h3FontSize;
+  line-height: $h3FontSize;
+}
+h4 { 
+  font-size: $h4FontSize;
+  line-height: $h4FontSize;
+}
+h5 { 
+  font-size: $h5FontSize;
+  line-height: $h5FontSize;
+}
+h6 { 
+  font-size: $h6FontSize;
+  line-height: $h6FontSize;
+}
+.page-header {
+  padding: 0;
+  margin: ($baseLineHeight / 2) 0;
+  border-bottom: $componentBorder;
+}
+
+// Forms
+// -------------------------
+form {
+  margin: 0 0 $basePadding;
+}
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+legend {  
+  @include drr-heading('h4');
+  display: block;
+  width: 100%;  
+  margin: 0;
+  padding: 0;
+  border: 0;
+  margin-bottom: $basePadding;
+  padding-bottom: $paddingSmall;  
+  border-bottom: $componentBorder;
+  color: $gray;
+}
+label {
+  @include drr-heading('h6');
+  display: block;
+  margin-bottom: $paddingSmall;
+}
+select,
+textarea,
+input[type="text"],
+input[type="password"] {
+  display: inline-block;
+  height: $baseLineHeight;
+  padding: $inputPadding;
+  margin-bottom: $baseLineHeight / 2;
+  font-size: $baseFontSize;
+  line-height: $baseLineHeight;
+  color: $inputColor;
+  vertical-align: middle;
+  width: $inputWidth;
+  background: $inputBackgroundColor;
+  border: $componentBorder;
+  &:focus {
+    border: $componentBorderHighlight;
+    outline: 0;
+    outline: thin dotted \9; /* IE6-9 */
+  }
+}
+textarea {
+  height: auto;
+}
+[type="submit"] {
+  @include drr-button($componentInverseTextColor, $componentPrimaryBackground);
+  cursor: pointer;  
+}
+.search-input{
+  @include drr-search-box();
+}
+.help-block {
+  display: block;
+  margin-bottom: $baseLineHeight / 2;
+  font-size: $smallFontSize;
+}
+
+// Messaging
+// -------------------------
+.alert {
+  @include drr-alert();
+}
+.alert.info {
+  background: $componentInfoBackground;
+}
+.alert.success {
+  background: $componentSuccessBackground;
+}
+.alert.danger {
+  background: $componentDangerBackground;
+}
+
+// Icons
+// -------------------------
+[data-icon]:before,
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  @include drr-icon();
+}
+[data-icon]:before {
+  content: attr(data-icon);
+}
+.icon-multiple:before { content: "m";}
+.icon-ascending:before { content: "a";}
+.icon-descending:before { content: "d";}
+.icon-left:before { content: "l";}
+.icon-right:before { content: "r";}
+.icon-play:before { content: "v";}
+.icon-alert:before { content: "c";}
+.icon-favorite:before { content: "f";}
+.icon-share:before { content: "s";}
+.icon-code:before { content: "e";}
+.icon-lock:before { content: "k";}
+.icon-buy:before { content: "1";}
+.icon-print:before { content: "p";}
+.icon-rotate-right:before { content: "9";}
+.icon-rotate-left:before { content: "6";}
+.icon-delete:before { content: "x";}
+.icon-zoom-out:before { content: "-";}
+.icon-zoom-in:before { content: "+";}
+.icon-book:before { content: "b";}
+.icon-triangle-right:before { content: ">";}
+.icon-triangle-down:before { content: "V";}
+.icon-tag:before { content: "!";}
+.icon-video:before { content: '"';}
+.icon-video-play:before { content: "#";}
+.icon-video-pause:before { content: "$";}
+.icon-mute:before { content: "&";}
+.icon-volume:before { content: "%";}
+.icon-save:before { content: "'";}
+.icon-first:before { content: "(";}
+.icon-edit:before { content: ")";}
+.icon-trash:before { content: "/";}
+.icon-cog:before { content: ".";}
+.icon-user:before { content: "0";}
+.icon-eye:before { content: "2";}
+.icon-search:before { content: "o"; }
+.icon-nypl:before { content: "N"; }
+
+// Fonts
+// -------------------------
+@font-face {
+  @include font-face('Lato Regular', $fontPath, 'lato-reg-webfont');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  @include font-face('Lato Black', $fontPath, 'lato-bla-webfont');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  @include font-face($iconFontFamily, $fontPath, 'icomoon');
+  font-weight: normal;
+  font-style: normal;
+}
