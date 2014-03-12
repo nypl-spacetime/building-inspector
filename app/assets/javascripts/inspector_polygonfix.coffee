@@ -78,10 +78,10 @@ class Polygonfix extends Inspector
             ]
     options =
       editablePolygon: true
+      draggableMap: true
       tutorialData: tutorialData
       jsdataID: '#polygonfixjs'
       task: 'polygonfix'
-      tweetString: "_score_ buildings checked! Data mining old maps with the Building Inspector from @NYPLMaps @nypl_labs"
     super(options)
     @isMultiple = false
 

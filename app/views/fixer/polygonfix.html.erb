@@ -13,7 +13,7 @@
 
   <%= javascript_include_tag "lib/vendor/leaflet-editable-polygon" %>
   
-  <%= javascript_include_tag "polygonfix_inspector", {:id => "polygonfixjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}"), "data-session" => "#{@isNew}", "data-map" => "#{@map}"} %>
+  <%= javascript_include_tag "inspector_polygonfix", {:id => "polygonfixjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}"), "data-session" => "#{@isNew}", "data-map" => "#{@map}"} %>
 <% end %>
 
 <%= render :partial => "partials/nav" %>

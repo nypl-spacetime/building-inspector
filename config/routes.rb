@@ -7,17 +7,14 @@ Webappmini::Application.routes.draw do
   resources :flags
   resources :polygons
 
-  get "fixer/map" => "fixer#randomMap"
+  # for session checking
+  get "cookie_test", to: "fixer#cookie_test"
 
-  # progress
-  get "fixer/progress_sheet"
-  get "fixer/sheet" => "fixer#session_progress_for_sheet"
-  get "fixer/sheet_address" => "fixer#session_progress_address_for_sheet"
-
-  get "cookie_test" => "fixer#cookie_test"
+  #random map provider url
+  get "fixer/map", to: "fixer#randomMap"
 
   # admin specials
-  get "polygon_consensus" => "polygons#consensus"
+  get "polygon_consensus", to: "polygons#consensus"
 
   # general content stuff
   get "general/home", :as => "home"
@@ -26,37 +23,49 @@ Webappmini::Application.routes.draw do
   get "general/win", :as => "win"
 
   # footprints
-  get "building" => "fixer#geometry", :as => "building"
-  get "geometry" => "fixer#geometry", :as => "geometry"
+  get "building", to: "fixer#geometry", :as => "building"
+  get "geometry", to: "fixer#geometry", :as => "geometry"
   get "fixer/geometry"
   get "fixer/progress", :as => "building_progress"
   get "fixer/progress_all", :as => "building_progress_all"
-  get "fixer/progress", :as => "geometry_progress"
-  get "fixer/progress_all", :as => "geometry_progress_all"
+  get "geometry/progress", to: "fixer#progress", :as => "geometry_progress"
+  get "geometry/progress_all", to: "fixer#progress_all", :as => "geometry_progress_all"
+
+  # footprints progress json endpoints
+  get "geometry/progress_user", to: "fixer#session_progress_for_sheet"
+  get "geometry/progress_sheet", to: "fixer#progress_sheet"
 
   # addresses
-  get "address" => "fixer#address", :as => "addresses"
-  get "address" => "fixer#address", :as => "address"
-  get "address/progress" => "fixer#progress_address", :as => "addresses_progress"
-  get "address/progress_all" => "fixer#progress_address_all", :as => "addresses_progress_all"
+  get "address", to: "fixer#address", :as => "addresses"
+  get "address", to: "fixer#address", :as => "address"
+  get "address/progress", to: "fixer#progress_address", :as => "addresses_progress"
+  get "address/progress_all", to: "fixer#progress_address_all", :as => "addresses_progress_all"
+
+  # address progress json endpoints
+  get "address/progress_user", to: "fixer#session_progress_address_for_sheet"
+  # TODO: progrees for sheet (requires consensus)
 
   # polygonfix
-  get "polygonfix" => "fixer#polygonfix", :as => "polygons"
+  get "polygonfix", to: "fixer#polygonfix", :as => "polygons"
+
+  # polygonfix progress json endpoints
+  # TODO: progrees for user
+  # TODO: progrees for sheet (requires consensus)
 
   # json flagging
-  get "fixer/flag" => "fixer#flag_polygon"
-  get "fixer/flagnum" => "fixer#many_flags_one_polygon"
+  get "fixer/flag", to: "fixer#flag_polygon"
+  get "fixer/flagnum", to: "fixer#many_flags_one_polygon"
 
   # api endpoints
   get "api/polygons"
-  get "api/polygons/:flag_type" => "api#polygons"
-  get "api/polygons/:flag_type/page/:page" => "api#polygons"
-  get "api/polygons_for_ids" => "api#polygons_for_ids"
+  get "api/polygons/:flag_type", to: "api#polygons"
+  get "api/polygons/:flag_type/page/:page", to: "api#polygons"
+  get "api/polygons_for_ids", to: "api#polygons_for_ids"
 
   # visualizing
-  get "viz/sheet/:id" => "visualizer#sheet_flags_json"
-  get "viz/sheet" => "visualizer#sheet_flags_view"
-  get "viz/building_consensus" => "visualizer#building_consensus"
+  get "viz/sheet/:id", to: "visualizer#sheet_flags_json"
+  get "viz/sheet", to: "visualizer#sheet_flags_view"
+  get "viz/building_consensus", to: "visualizer#building_consensus"
 
   root :to => "general#home"
 end

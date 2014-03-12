@@ -32,6 +32,11 @@ class FixerController < ApplicationController
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
 		@progress = {}
 		@progress[:counts] = Polygon.grouped_by_sheet
+		if user_signed_in?
+			@progress[:all_polygons_session] = Flag.flags_for_user(current_user.id)
+		else
+			@progress[:all_polygons_session] = Flag.flags_for_session(session)
+		end
 		@progress = @progress.to_json
 	end
 
@@ -71,7 +76,37 @@ class FixerController < ApplicationController
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
 		@progress = {}
 		@progress[:counts] = Polygon.grouped_by_sheet("address")
+		if user_signed_in?
+			@progress[:all_polygons_session] = Flag.flags_for_user(current_user.id, "address")
+		else
+			@progress[:all_polygons_session] = Flag.flags_for_session(session, "address")
+		end
 		@progress = @progress.to_json
+	end
+
+	def session_progress_address_for_sheet
+		# the address progress for a given sheet id
+		session = getSession()
+
+		if params[:id] == nil
+			respond_with("no id provided")
+			return
+		end
+
+		if user_signed_in?
+			all_flags = Flag.flags_for_sheet_for_user(params[:id], current_user.id, "address")
+		else
+			all_flags = Flag.flags_for_sheet_for_session(params[:id], session, "address")
+		end
+
+		poly = []
+
+		all_flags.each do |f|
+			poly.push(f.as_feature)
+		end
+		@progress = {}
+		@progress[:poly] = { :type => "FeatureCollection", :features => poly }
+		respond_with( @progress )
 	end
 
 	def progress_sheet
@@ -136,29 +171,6 @@ class FixerController < ApplicationController
 		respond_with( @progress )
 	end
 
-	def session_progress_address_for_sheet
-		session = getSession()
-
-		if params[:id] == nil
-			respond_with("no id provided")
-			return
-		end
-		if user_signed_in?
-			all_flags = Flag.flags_for_sheet_for_user(params[:id], current_user.id, "address")
-		else
-			all_flags = Flag.flags_for_sheet_for_session(params[:id], session, "address")
-		end
-
-		poly = []
-		
-		all_flags.each do |f|
-			poly.push(f.as_feature)
-		end
-		@progress = {}
-		@progress[:poly] = { :type => "FeatureCollection", :features => poly }
-		respond_with( @progress )
-	end
-
 	def getMap(type="geometry")
 		session = getSession()
 		map = {}
@@ -175,7 +187,7 @@ class FixerController < ApplicationController
 		  map[:status][:all_polygons_session] = Flag.flags_for_user(current_user.id, type)
 		else
 		  map[:status][:all_polygons_session] = Flag.flags_for_session(session, type)
-		end		
+		end
 		return map
 	end
 
@@ -246,7 +258,7 @@ class FixerController < ApplicationController
 
 	def getSession
 		if cookies[:session] == nil || cookies[:session] == ""
-			cookies[:session] = { :value => request.session_options[:id], :expires => 365.days.from_now }			
+			cookies[:session] = { :value => request.session_options[:id], :expires => 365.days.from_now }
 		end
 		check_for_user_session(cookies[:session]) unless user_signed_in?
 		Usersession.register_user_session(current_user.id, cookies[:session]) if user_signed_in?
@@ -265,7 +277,7 @@ class FixerController < ApplicationController
 			redirect_to(session[:return_to])
 		end
 	end
-	
+
 	def check_for_user_session(session)
 	  if session
 	    user = Usersession.find_user_by_session_id(session)

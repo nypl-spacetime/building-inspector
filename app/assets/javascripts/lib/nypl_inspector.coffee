@@ -16,7 +16,7 @@ class @Inspector
       jsdataID: ''
       scoreID: "#score .total"
       tweetID: "#tweet"
-      tweetString:  ""
+      tweetString: "_score_ buildings checked! Data mining old maps with the Building Inspector from @NYPLMaps @nypl_labs"
       polygonStyle:
         color: '#b00'
         weight: 5
@@ -72,6 +72,11 @@ class @Inspector
 
     @options.tutorialOn = $(@options.jsdataID).data("session")
 
+  clearScreen: () ->
+    # rest should be implemented in the inspector instance
+
+  addEventListeners: () ->
+    inspector = @
     @map.on('load', () ->
       inspector.getPolygons()
       if (inspector.options.tutorialOn)
@@ -81,12 +86,6 @@ class @Inspector
             , 1000
         )
     )
-
-  clearScreen: () ->
-    # rest should be implemented in the inspector instance
-
-  addEventListeners: () ->
-    inspector = @
     @addButtonListeners()
     # rest should be implemented in the inspector instance
 

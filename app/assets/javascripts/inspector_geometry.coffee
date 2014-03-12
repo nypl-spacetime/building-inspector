@@ -182,7 +182,6 @@ class Geometry extends Inspector
       tutorialData: tutorialData
       jsdataID: '#geometryjs'
       task: 'geometry'
-      tweetString: "_score_ buildings checked! Data mining old maps with the Building Inspector from @NYPLMaps @nypl_labs"
     super(options)
 
   clearScreen: () =>

@@ -49,13 +49,7 @@ class ApiController < ApplicationController
 		page = 1
 		count = 0
 		if params[:list] == nil
-			output = {}
-			output[:message] = "Provide a list of ids"
-			output[:polygon_count] = count
-			output[:page] = page
-			output[:per_page] = per_page
-			output[:total_pages] = (count.to_f / per_page.to_f).ceil
-			render json: output
+			respond_with("no comma-separated list of ids provided")
 			return
 		end
 		if params[:page] != nil && params[:page] != ''

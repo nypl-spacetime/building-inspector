@@ -8,7 +8,7 @@ class Polygon < ActiveRecord::Base
 		if type == "address"
 			w = "polygons.consensus = 'yes'"
 		end
-		Polygon.select("COUNT(polygons.id) AS polygon_count, sheet_id, sheets.bbox").joins(:sheet).where(w).group("polygons.sheet_id, sheets.bbox")
+		Polygon.select("COUNT(polygons.id) AS total, sheet_id, sheets.bbox").joins(:sheet).where(w).group("polygons.sheet_id, sheets.bbox")
 	end
 
 	def to_geojson

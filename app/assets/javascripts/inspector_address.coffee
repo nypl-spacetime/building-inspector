@@ -13,7 +13,7 @@ class Address extends Inspector
           polygon_index: -1
         }
         {
-          element: "#buttons .wrapper"
+          element: "#submit-button"
           intro: "Along with this button. Let's walk through a few examples…"
           position: "top"
           polygon_index: -1
@@ -200,7 +200,6 @@ class Address extends Inspector
       tutorialData: tutorialData
       jsdataID: '#addressjs'
       task: 'address'
-      tweetString: "_score_ buildings checked! Data mining old maps with the Building Inspector from @NYPLMaps @nypl_labs"
     super(options)
 
   clearScreen: () =>

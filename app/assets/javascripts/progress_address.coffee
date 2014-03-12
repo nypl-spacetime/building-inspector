@@ -1,239 +1,55 @@
-class Progress
+class AddressProgress extends Progress
 
-	_SW: new L.LatLng(40.62563874006115,-74.13093566894531)
-	_NE: new L.LatLng(40.81640757520087,-73.83087158203125)
+  constructor: () ->
+    options =
+      jsdataID: '#progressjs'
+      highlightClass: ".polygon-highlight"
+      task: 'address'
+    options.mode = $(options.jsdataID).data("mode")
+    super(options)
 
-	constructor: () ->
-		$("#map-tutorial").hide()
-		$("#map-about").hide()
-		$("#tweet").hide()
-		@ids = []
-		@map = L.mapbox.map('map', 'nypllabs.g6ei9mm0', 
-			zoomControl: false
-			animate: true
-			scrollWheelZoom: true
-			attributionControl: false
-			minZoom: 12
-			maxZoom: 20
-			dragging: true
-			maxBounds: new L.LatLngBounds(@_SW, @_NE).pad(1)
-		)
+  processData: (data) ->
+    p = @
 
-		t = @
+    p.map.off 'moveend', p.applyHighlights
 
-		@overlay = L.mapbox.tileLayer('https://s3.amazonaws.com/maptiles.nypl.org/859-final/859spec.json',
-			zIndex: 2
-		).addTo(@map)
+    return if data.poly.features.length==0
 
-		@overlay2 = L.mapbox.tileLayer('https://s3.amazonaws.com/maptiles.nypl.org/860/860spec.json',
-			zIndex: 3
-		).addTo(@map)
+    m = p.sheet
 
-		# @attributionControl = L.control.attribution(
-		# 	position: 'bottomright'
-		# 	prefix: "From: <a href='http://digitalcollections.nypl.org/search/index?filters[title_uuid_s][]=Maps%20of%20the%20city%20of%20New%20York.||06fd4630-c603-012f-17f8-58d385a7bc34&keywords=&layout=false%22%3E'>NYPL Digital Collections</a> | <a href='http://maps.nypl.org/warper/layers/859/'>Warper</a>"
-		# ).addTo(@map)
+    p.highlights = []
 
-		@zoomControl = L.control.zoom(
-			position: 'topright'
-		).addTo(@map)
+    json = L.geoJson(data.poly,
+      pointToLayer: (f,latlng)->
+        L.circle(latlng, 3,
+          color: '#d75b25'
+          fillOpacity: 0.1
+          opacity: 0.5
+          # radius: 16
+          weight: 4
+        )
+      style: (feature) ->
+        feature.properties
+      onEachFeature: (f, l) ->
+        p.highlights.push(l)
+        # html = "<div class=\"number-flag\"><div class=\"cont\">#{f.properties.flag_value}</div></div>"
+        l.bindPopup(f.properties.flag_value,
+          # closeButton: false
+        )
+        l.on "click", (e) ->
+          p.map.setView(e.target.getLatLng(), 20)
+    )
 
-		@addEventListeners()
+    bounds = new L.LatLngBounds()
 
-		@resetSheet()
+    console.log data, json
 
-		L.InspectorMarker = L.Marker.extend
-			options:
-				flag_count: 0
-				sheet_id: 0
-				bounds: []
+    json.addTo(m)
+    bounds.extend(json.getBounds())
 
-		window.map = @
+    p.map.fitBounds(bounds)
 
-	addEventListeners: () =>
-		p = @
-		@map.on('load', @getCounts)
-
-	clearTimers: () ->
-		# console.log "clear"
-		clearTimeout id for id in @ids
-
-	resetSheet: () ->
-		@clearTimers()
-		@map.off 'moveend', @applyHighlights
-		$(".polygon-highlight").remove()
-		@map.removeLayer @sheet if @map.hasLayer @sheet
-		@sheet = L.geoJson({features:[]},
-			style: (feature) ->
-				color: @nil_color
-				opacity: 0
-				fillOpacity: 0.5
-				stroke: false
-		).addTo @map
-
-	getCounts: () =>
-		$("#loader").remove()
-		data = $('#progressjs').data("progress")
-
-		bounds = new L.LatLngBounds(@_SW, @_NE)
-		@map.fitBounds bounds
-
-		@updateScore(data.all_polygons_session)
-
-		# marker clustering layer
-		markers = new L.MarkerClusterGroup
-			singleMarkerMode: true
-			disableClusteringAtZoom: 19
-			iconCreateFunction: (c) ->
-				count = 0
-				for child in c.getAllChildMarkers()
-					count = count + parseInt(child.options.flag_count)
-				c = 'cluster-large'
-				if count < 10
-					c = 'cluster-small'
-				else if count < 30
-					c = 'cluster-medium'
-				new L.DivIcon
-					html: Humanize.compactInteger(count)
-					className: c
-					iconSize: L.point(30, 30)
-			polygonOptions:
-				stroke: false
-
-		p = @
-
-		markers.on("click", (e) ->
-			# console.log "click:", e.layer
-			p.resetSheet()
-			p.getPolygons(e)
-		)
-
-		markers.on("clusterclick", (e) ->
-			p.resetSheet()
-		)
-
-		counts = data.counts
-		@addMarker markers, count for count in counts
-
-		markers.addTo @map
-		@
-
-	addMarker: (markers, data) ->
-		# console.log data
-
-		bbox = data.bbox.split ","
-
-		W = parseFloat(bbox[0])
-		S = parseFloat(bbox[1])
-		E = parseFloat(bbox[2])
-		N = parseFloat(bbox[3])
-
-		SW = new L.LatLng(S, W)
-		NW = new L.LatLng(N, W)
-		NE = new L.LatLng(N, E)
-		SE = new L.LatLng(S, E)
-
-		bounds = new L.LatLngBounds(SW, NE)
-		latlng = bounds.getCenter()
-
-		markers.addLayer new L.InspectorMarker latlng,
-			flag_count: data.flag_count
-			sheet_id: data.id
-			bounds: bounds
-		@
-
-	getPolygons: (e) =>
-		p = @
-
-		el = $(e.originalEvent.target)
-		sheet_id = e.layer.options.sheet_id
-
-		# spinner available in general.coffee
-		spinner_xy = @map.layerPointToContainerPoint(e.layer.getLatLng())
-		el.append(Utils.spinner().el)
-
-		color = '#609846'
-
-		$.getJSON('/fixer/sheet_address.json?id=' + sheet_id, (data) ->
-			p.map.off 'moveend', p.applyHighlights
-			el.find('.spinner').remove()
-
-			return if data.poly.features.length==0
-
-			m = p.sheet
-
-			p.highlights = []
-
-			json = L.geoJson(data.poly,
-				pointToLayer: (f,latlng)->
-					L.circle(latlng, 3,
-						color: '#d75b25'
-						fillOpacity: 0.1
-						opacity: 0.5
-						# radius: 16
-						weight: 4
-					)
-				style: (feature) ->
-					feature.properties
-				onEachFeature: (f, l) ->
-					p.highlights.push(l)
-					# html = "<div class=\"number-flag\"><div class=\"cont\">#{f.properties.flag_value}</div></div>"
-					l.bindPopup(f.properties.flag_value,
-						# closeButton: false
-					)
-					l.on "click", (e) ->
-						p.map.setView(e.target.getLatLng(), 20)
-			)
-
-			bounds = new L.LatLngBounds()
-
-			json.addTo(m)
-			bounds.extend(json.getBounds())
-
-			p.map.fitBounds(bounds)
-
-			p.map.on 'moveend', p.applyHighlights
-		)
-
-	applyHighlights: (e) =>
-		@map.off 'moveend', @applyHighlights
-		@map.panBy [0, 20]
-		@ids = (setTimeout @showHighlight, i*30, poly for poly, i in @highlights)
-		# console.log @ids
-
-	showHighlight: (polygon) =>
-		# console.log polygon
-		point = @map.latLngToContainerPoint polygon.getLatLng()
-		# console.log "highlighting:", point
-		elem = $('<div><div class="polygon-highlight"></div></div>')
-		elem.css("position", "absolute")
-		elem.css("top", point.y)
-		elem.css("left", point.x)
-		$("#map-container").append(elem)
-		setTimeout @killHighlight, 10, elem
-		@
-
-	killHighlight: (elem) =>
-		elem.find(".polygon-highlight").addClass("scaled")
-		elem.fadeOut 500, () -> 
-			$(@).remove()
-
-	updateScore: (current) =>
-		# mapScore = if total > 0 then Math.round(current*100/total) else 0
-
-		# mapDOM = $("#map-bar")
-		# mapDOM.find(".bar").css("width", mapScore + "%")
-		$("#score .total").text(current)
-		# $("#map-total").text("of " + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " shapes")
-
-		url = $('#progressjs').data("server")
-		tweet = current + " buildings checked! Data mining old maps with the Building Inspector from @NYPLMaps @nypl_labs"
-		twitterurl = "https://twitter.com/share?url=" + url + "&text=" + tweet
-
-		$("#tweet").show()
-
-		$("#tweet").attr "href", twitterurl
-
+    p.map.on 'moveend', p.applyHighlights
 
 $ ->
-	window._progress = new Progress()
+  new AddressProgress()
