@@ -62,10 +62,5 @@ Webappmini::Application.routes.draw do
   get "api/polygons/:flag_type/page/:page", to: "api#polygons"
   get "api/polygons_for_ids", to: "api#polygons_for_ids"
 
-  # visualizing
-  get "viz/sheet/:id", to: "visualizer#sheet_flags_json"
-  get "viz/sheet", to: "visualizer#sheet_flags_view"
-  get "viz/building_consensus", to: "visualizer#building_consensus"
-
   root :to => "general#home"
 end
