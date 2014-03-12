@@ -6,9 +6,74 @@ class Polygonfix extends Inspector
         steps: [
               {
                 element: "#map-highlight"
-                intro: "<strong>Here's how the app works</strong><br />We'll show you one computer-generated building outline at a time, laid over the original map."
+                intro: "<strong>Here's how this task works</strong><br />We'll show you one computer-generated building outline at a time, laid over the original map."
                 position: "bottom"
                 polygon_index: -1
+              }
+              {
+                element: "#buttons .wrapper"
+                intro: "Along with this button. Let's walk through a few examples…"
+                position: "top"
+                polygon_index: -1
+                ixactive: true
+              }
+              {
+                element: "#map-highlight"
+                intro: "The address number of this building is 781. Click there and type 781."
+                position: "right"
+                polygon_index: -1
+              }
+              {
+                element: "#submit-button"
+                intro: "Press next to save it and go to the next building."
+                position: "top"
+                polygon_index: -1
+                ixactive: true
+              }
+              {
+                element: "#buttons .multiple"
+                intro: "Check this box if the polygon covers more than one building."
+                position: "top"
+                polygon_index: -1
+              }
+              {
+                element: "#map-highlight"
+                intro: "62 or 29? Look around! (remind of even/odd addressing system)"
+                position: "right"
+                polygon_index: 0
+              }
+              {
+                element: "#submit-button"
+                intro: "press."
+                position: "top"
+                polygon_index: 0
+                ixactive: true
+              }
+              {
+                element: "#map-highlight"
+                intro: "1s may be confused for 4s and vice-versa. look around"
+                position: "right"
+                polygon_index: 1
+              }
+              {
+                element: "#submit-button"
+                intro: "Be vigilant!"
+                position: "top"
+                polygon_index: 1
+                ixactive: true
+              }
+              {
+                element: "#map-highlight"
+                intro: "3s and 8s are another source of confusion."
+                position: "right"
+                polygon_index: 2
+              }
+              {
+                element: "#submit-button"
+                intro: "Press FIX to indicate so."
+                position: "top"
+                polygon_index: 2
+                ixactive: true
               }
             ]
     options =
@@ -18,13 +83,15 @@ class Polygonfix extends Inspector
       task: 'polygonfix'
       tweetString: "_score_ buildings checked! Data mining old maps with the Building Inspector from @NYPLMaps @nypl_labs"
     super(options)
+    @isMultiple = false
 
   clearScreen: () =>
+    @updateMultipleStatus()
     super()
 
   addEventListeners: () =>
     super()
-    $("#multiple-checkbox").on("click", @multipleBuildingClick)
+    $("#multiple-polygon").on("change click", @multipleBuildingClick)
     $("#multiple-text").on("click", @multipleBuildingClick)
 
   addButtonListeners: () =>
@@ -46,6 +113,9 @@ class Polygonfix extends Inspector
 
   multipleBuildingClick: (e) =>
     @isMultiple = $("#multiple-polygon").is(':checked')
+    @updateMultipleStatus()
+
+  updateMultipleStatus: () ->
     if (@isMultiple)
       $("#multiple-text").text("Finish this building, polygon will reload.")
     else
@@ -69,53 +139,6 @@ class Polygonfix extends Inspector
     # console.log flag_str
 
     @submitSingleFlag(e, flag_str)
-
-  makePolygon: () ->
-    # destroying @geo because it breaks here
-    # fix that
-    if !@options.editableActive
-      @geo = null
-      @options.editableActive = true
-
-    maxCorners = 12
-    # editable polyline works with [[lat,lon],[lat,lon],...] coordinates
-    # geojson is [[[lon,lat],[lon,lat],...]]
-    coordinates = $.parseJSON(@currentPolygon.geometry)[0]
-    if coordinates[0][0] == coordinates[coordinates.length-1][0] && coordinates[0][1] == coordinates[coordinates.length-1][1]
-      # same coordinate for the first and last point / redundant
-      coordinates.pop()
-    transposed = ([coord[1],coord[0]] for coord in coordinates)
-
-    # transposed = Simplify.whyattGeoJSON(transposed, maxCorners) if transposed.length > maxCorners
-
-    if (!@geo)
-      # console.table coordinates #, @currentGeo
-      # console.table transposed #, @currentGeo
-      pointIcon = L.icon(
-        iconUrl: '/assets/polygonfix/editmarker.png'
-        iconSize: [56, 120]
-        iconAnchor: [28, 120]
-      )
-      newPointIcon = L.icon(
-        iconUrl: '/assets/polygonfix/editmarker2.png'
-        iconSize: [32, 32]
-        iconAnchor: [16, 16]
-      )
-      @geo = L.Polygon.PolygonEditor(transposed,
-        maxMarkers: 10000
-        pointIcon: pointIcon
-        newPointIcon: newPointIcon
-        # style: (feature) ->
-        color: '#b00'
-        weight: 3
-        opacity: 0.5
-        # dashArray: '1,16'
-        fill: false
-        #   clickable: false
-      )
-    else
-      @map._editablePolygons = [] # hack cause the leaflet plugin does not destroy preexisting polygons
-      @geo.updateLatLngs(transposed)
 
   getFixedPolygon: () ->
     # prepares the new polygon in GeoJSON-ish format

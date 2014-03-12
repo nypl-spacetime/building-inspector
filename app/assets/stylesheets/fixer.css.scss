@@ -41,7 +41,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 #buttons {
   .wrapper {
     position: relative;
-    width: 230px;
+    width: 350px;
     margin: 0 auto;
 
     @include clearfix;
@@ -75,7 +75,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   right: 0;
 
   &.compact {
-    bottom: 110px;
+    bottom: 130px;
   }
 
   &.progress {
@@ -156,14 +156,15 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   }
 
   &#no-button, &.red {
-    margin-left: 5px;
+    margin-left: 65px;
     background-color: $nocolor;
+
+    @media screen and (max-width: $desktopwidth) {
+      margin-left: 50px;
+    }
   }
 
   &#fix-button, &.yellow {
-    // height: 65px;
-    // padding-top: 25px;
-    // color: $black;
     background-color: $fixcolor;
   }
 
@@ -175,6 +176,8 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   &#submit-button {
     background: $green;
     width: 220px;
+    width: 220px;
+    margin-left: 65px;
   }
 
   &#no-button.active, &#fix-button.active, &#yes-button.active , &#submit-button.active {

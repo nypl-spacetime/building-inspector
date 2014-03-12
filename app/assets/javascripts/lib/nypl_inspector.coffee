@@ -214,15 +214,14 @@ class @Inspector
     @clearScreen()
     @currentIndex++
 
-    if !@options.editablePolygon and @geo
-      @map.removeLayer(@geo)
-
     if @currentIndex < @polyData.length
       $(@options.buttonsID).show()
       @currentPolygon = @polyData[@currentIndex]
       if !@options.editablePolygon
+        @map.removeLayer(@geo) if @geo
         @geo = @makePolygon(@currentPolygon)
       else
+        # things are slightly different for editable polygon drawing
         @makeEditablePolygon()
         @geo.addTo(@map)
       # console.log @currentPolygon #, @currentGeo
