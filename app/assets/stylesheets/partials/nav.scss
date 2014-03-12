@@ -448,4 +448,26 @@ a#tweet {
   }
 }
 
+#nav-credits {
+  display: none;
+  margin: 20px 10px;
 
+  p {
+    margin: 0 30px 1.1em;
+    color: $grayLight;
+  }
+
+  .nypl-logo {
+    margin: 0;
+    display: inline-block;
+    width: auto;
+
+    &:before {
+      float: left;
+    }
+  }
+
+  @media screen and (max-width: $desktopwidth) {
+    display: block;
+  }
+}
