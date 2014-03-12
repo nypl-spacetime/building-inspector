@@ -3,13 +3,23 @@ help_link = "#{geometry_path}?tutorial=true"
 help_link = "#{addresses_path}?tutorial=true" if @current_page=="progress_address" || @current_page=="progress_address_all"
 help_link = "#{polygons_path}?tutorial=true" if @current_page=="progress_polygonfix" || @current_page=="progress_polygonfix_all"
 help_link = "javascript:;" if @current_page=="fixer" || @current_page=="address" || @current_page=="polygonfix"
+
+tasks = []
+tasks.push({:name => "Footprints", :path => geometry_path, :page => "fixer"})
+tasks.push({:name => "Fix polygons", :path => polygons_path, :page => "polygonfix"})
+tasks.push({:name => "Addresses", :path => addresses_path, :page => "address"})
+
+# sort tasks based on current page
+tasks.unshift(tasks.slice!(1,1)[0]) if @current_page=="polygonfix"
+tasks.unshift(tasks.slice!(2,1)[0]) if @current_page=="address"
+
 %>
   <div id="task-container">
     <ul id="task-toggle">
       <%= content_tag :li, (link_to "INSPECT:", geometry_path, {:rel=>"nofollow", :class=>"shown"}), :class => "header" if @current_page == "homepage" || @current_page.include?("progress") %>
-      <%= content_tag :li, (link_to "Footprints", geometry_path, {:rel=>"nofollow", :class=>("shown" if @current_page=="fixer")}), :class=>("hidden" unless @current_page=="fixer") %>
-      <%= content_tag :li, (link_to "Fix polygons", polygons_path, {:rel=>"nofollow", :class=>("shown" if @current_page=="polygonfix")}), :class=>("hidden" unless @current_page=="polygonfix") %>
-      <%= content_tag :li, (link_to "Addresses", addresses_path, {:rel=>"nofollow", :class=>("shown" if @current_page=="address")}), :class=>("hidden" unless @current_page=="address") %>
+      <% tasks.each do |task| %>
+      <%= content_tag :li, (link_to task[:name], task[:path], {:rel=>"nofollow", :class=>("shown" if @current_page==task[:page])}), :class=>("hidden" unless @current_page==task[:page]) %>
+      <% end %>
     </ul>
     <%= link_to "HELP", "#{help_link}", {:id => "link-help", :class => "icon"} unless controller_name == "general" %>
   </div>

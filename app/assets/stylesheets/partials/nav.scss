@@ -229,7 +229,7 @@
     line-height: 20px;
 
     &:hover {
-      background: $grayDarkest;
+      background: $grayDark;
       color: $grayLightest;
     }
 
@@ -255,7 +255,7 @@
   .shown {
     display: block;
     color: $grayLightest;
-    background: $grayDark;
+    background: $grayDarkest;
   }
 
   .hidden {
@@ -366,6 +366,10 @@ a#tweet {
     display: block;
     font-size: 0.9em;
     padding: 10px;
+
+    &.active {
+      background: $grayDarkest;
+    }
 
     @media screen and (max-width: $desktopwidth) {
       padding: 6px 10px;
