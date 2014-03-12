@@ -68,6 +68,16 @@
         <%= link_to "ENTER ADDRESSES", addresses_path, {:id => "link-address"} %>
       </div>
     </div>
+    <% if @has_score %>
+    <div id="home-scores">
+        <p>
+          So far you've inspected:<br />
+          <strong><%= @score_geometry %></strong> building footprints,<br />
+          <strong><%= @score_address %></strong> building addresses<br />
+          and fixed <strong><%= @score_polygonfix %></strong> building polygons.
+        </p>
+    </div>
+    <% end %>
     <h3>Help trace<br />New York City's past</h3>
     <p>The <em>New York Public Library</em> is training computers how to recognize building shapes and other information from old city maps. Help us clean up the data so that it can be used in research, teaching and civic hacking.</p>
     <p>Currently under inspection:

@@ -11,7 +11,7 @@ class FixerController < ApplicationController
 	end
 
 	def progress
-	  	@current_page = "progress"
+	  @current_page = "progress"
 		# returns a GeoJSON object with the flags the session has sent so far
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
 		session = getSession()
@@ -27,7 +27,7 @@ class FixerController < ApplicationController
 	end
 
 	def progress_all
-	  	@current_page = "progress_all"
+  	@current_page = "progress_all"
 		# returns a GeoJSON object with the flags the session has sent so far
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
 		@progress = {}
@@ -42,6 +42,7 @@ class FixerController < ApplicationController
 
 	def address
 		@current_page = "address"
+		sort_tasks()
 		@isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
 		cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
 		@map = getMap("address").to_json
@@ -49,6 +50,7 @@ class FixerController < ApplicationController
 
 	def polygonfix
 		@current_page = "polygonfix"
+		sort_tasks()
 		@isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
 		cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
 		@map = getMap("polygonfix").to_json
