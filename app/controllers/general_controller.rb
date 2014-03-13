@@ -1,6 +1,8 @@
 class GeneralController < ApplicationController
+
   def home
   	@current_page = "homepage"
+    session = getSession()
     @score_geometry = 0
     @score_address = 0
     @score_polygonfix = 0

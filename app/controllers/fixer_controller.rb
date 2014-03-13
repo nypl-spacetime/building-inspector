@@ -309,49 +309,4 @@ class FixerController < ApplicationController
     respond_with( uniques )
   end
 
-  # SESSION STUFF
-
-	def getSession
-		if cookies[:session] == nil || cookies[:session] == ""
-			cookies[:session] = { :value => request.session_options[:id], :expires => 365.days.from_now }
-		end
-		check_for_user_session(cookies[:session]) unless user_signed_in?
-		Usersession.register_user_session(current_user.id, cookies[:session]) if user_signed_in?
-		cookies[:session]
-	end
-
-	# checks for presence of "cookie_test" cookie
-	# (should have been set by cookies_required before_filter)
-	# if cookie is present, continue normal operation
-	# otherwise show cookie warning at "shared/cookies_required"
-	def cookie_test
-		if cookies["cookie_test"].blank?
-			logger.warn("=== cookies are disabled")
-			render :template => "shared/cookies_required"
-		else
-			redirect_to(session[:return_to])
-		end
-	end
-
-	def check_for_user_session(session)
-	  if session
-	    user = Usersession.find_user_by_session_id(session)
-	    if user
-	      @user = user
-	      sign_in @user, :event => :authentication
-	    end
-	  end
-	end
-
-protected
-
-	# checks for presence of "cookie_test" cookie.
-	# If not present, redirects to cookies_test action
-	def cookies_required
-		return true unless cookies["cookie_test"].blank?
-		cookies["cookie_test"] = Time.now
-		session[:return_to] = request.original_url
-		redirect_to(cookie_test_path)
-	end
-
 end

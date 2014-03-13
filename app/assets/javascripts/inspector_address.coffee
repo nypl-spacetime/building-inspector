@@ -270,6 +270,9 @@ class Address extends Inspector
 
   onTutorialClick: (e) =>
     # console.log "tutclick", e
+    e.stopPropagation?()
+    e.preventDefault?()
+
     x = e.offsetX
     y = e.offsetY
     latlng = @.map.mouseEventToLatLng(e)
@@ -278,9 +281,13 @@ class Address extends Inspector
     elem.css("top", y)
     elem.css("left", x)
     $("#map-highlight").append(elem)
+    elem.find(".input").focus()
 
   onMapClick: (e) =>
     # console.log "mapclick", e
+    e.stopPropagation?()
+    e.preventDefault?()
+
     latlng = e.latlng
     x = e.containerPoint.x
     y = e.containerPoint.y
@@ -289,6 +296,7 @@ class Address extends Inspector
     elem.css("top", y)
     elem.css("left", x)
     $("#map-container").append(elem)
+    elem.find(".input").focus()
 
   createFlag: (x, y, latlng, fake) ->
     @cleanEmptyFlags()
@@ -313,18 +321,13 @@ class Address extends Inspector
     html = "<div id=\"num-x-#{x}-y-#{y}\" class=\"number-flag\"><div class=\"cont\"><input type=\"number\" class=\"input\" step=\"any\" placeholder=\"#\" /><a href=\"javascript:;\" class=\"num-close\">x</a></div></div>"
     el = $(html)
 
+    console.log "num-x-#{x}-y-#{y}"
+
     input = el.find(".input")
     close = el.find(".num-close")
     close.on "click", (e) ->
       e.stopPropagation()
-      # console.log "hola", e.target==this, e
       inspector.destroyFlag(this)
-
-    # to fix window resize in iOS
-    input.on 'blur click', (e) ->
-      e.stopPropagation()
-      window.scrollTo 0, 0
-
 
     # add data attributes to facilitate flag remove/update
     el.attr("data-x", x)
@@ -334,15 +337,19 @@ class Address extends Inspector
     input.attr("data-x", x)
     input.attr("data-y", y)
 
+    # to fix window resize in iOS
+    input.on 'blur click', (e) ->
+      e.stopPropagation()
+      window.scrollTo 0, 0
+
     setTimeout( ()->
-      input.focus()
       el.find(".cont").addClass("active")
       input.on "keyup", (e) ->
-          inspector.validateInput(this, e)
+          inspector.validateInput(@, e)
       input.on "keydown", (e) ->
         switch e.which
-          when 27 then inspector.destroyFromEscape(this)
-          else inspector.validateInput(this, e)
+          when 27 then inspector.destroyFromEscape(@)
+          else inspector.validateInput(@, e)
     , 50
     )
     return el
