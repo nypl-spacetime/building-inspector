@@ -24,10 +24,13 @@ class General
       document.title = "Bldg Inspector"
 
     overrides = [
+      ".slide a"
+      ".popup-link"
       "#home-logo"
       "#link-help"
       "#link-about"
       "#logout-link"
+      ".task-link"
       ".score-save-link"
       ".sign-in-link"
       ".score-link"
@@ -76,6 +79,7 @@ class General
 
   mobileClick: (id) ->
     elem = $(id)
+    return if elem.hasClass("shown task-link")
     elem.click (e) ->
       e.preventDefault()
       window.location.href = e.currentTarget.href;

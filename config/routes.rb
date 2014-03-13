@@ -8,7 +8,7 @@ Webappmini::Application.routes.draw do
   resources :polygons
 
   # for session checking
-  get "cookie_test", to: "fixer#cookie_test"
+  get "cookie_test", :controller => :general
 
   #random map provider url
   get "fixer/map", to: "fixer#randomMap"

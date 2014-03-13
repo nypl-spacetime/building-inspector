@@ -201,11 +201,14 @@ class @Inspector
   hideOthers: () ->
     $("#main-container").hide()
     $("#controls").hide()
+    $("#score").hide()
+    $("#top-nav").removeClass("open")
     $("#map-tutorial").hide()
 
   showOthers: () ->
     $("#main-container").show()
     $("#controls").show()
+    $("#score").show()
     $("#map-tutorial").hide()
 
   showNextPolygon: () ->

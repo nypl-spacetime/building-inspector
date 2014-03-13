@@ -45,12 +45,14 @@ class ApplicationController < ActionController::Base
   # (should have been set by cookies_required before_filter)
   # if cookie is present, continue normal operation
   # otherwise show cookie warning at "shared/cookies_required"
+  public
+
   def cookie_test
     if cookies["cookie_test"].blank?
       logger.warn("=== cookies are disabled")
       render :template => "shared/cookies_required"
     else
-      redirect_to(session[:return_to])
+      redirect_to(session[:return_to] ? session[:return_to] : root_path)
     end
   end
 

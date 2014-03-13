@@ -1,5 +1,7 @@
 class GeneralController < ApplicationController
 
+  before_filter :cookies_required, :except => :cookie_test
+
   def home
   	@current_page = "homepage"
     session = getSession()
