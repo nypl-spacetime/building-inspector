@@ -1,0 +1,23 @@
+<% content_for :page_title do %>Building Inspector by NYPL Labs<% end %>
+
+<% content_for :dynamic_js do %>
+  <%= stylesheet_link_tag    "fixer", :media => "all" %>
+  <%= stylesheet_link_tag    "progress", :media => "all" %>
+  <%= stylesheet_link_tag    "lib/vendor/MarkerCluster", :media => "all" %>
+  <%= stylesheet_link_tag    "lib/vendor/MarkerCluster.Default", :media => "all" %>
+  <!--[if lte IE 8]>
+  <%= stylesheet_link_tag    "lib/vendor/MarkerCluster.Default.ie", :media => "all" %>
+  <![endif]-->
+
+  <%= javascript_include_tag "lib/vendor/leaflet.markercluster" %>
+  <%= javascript_include_tag "lib/nypl_progress" %>
+  <%= javascript_include_tag "progress_polygonfix", {:id => "progressjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}"), "data-progress" => @progress, "data-mode" => "user"} %>
+
+<% end %>
+
+
+<%= render :partial => "partials/nav" %>
+
+<%= render :partial => "partials/main_container", locals: {css_class: "progress", legend: true} %>
+
+<%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:class => "nypl-logo", :title => "Visit NYPL.org", :id=>"nypl-mini"} %>

@@ -5,7 +5,7 @@ class GeometryProgress extends Progress
       jsdataID: '#progressjs'
       highlightClass: ".polygon-highlight"
       task: 'geometry'
-    options.mode = $(options.jsdataID).data("mode")
+      mode: $('#progressjs').data("mode")
     super(options)
 
   processData: (data) ->

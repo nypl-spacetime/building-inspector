@@ -26,20 +26,19 @@ Webappmini::Application.routes.draw do
   get "building", to: "fixer#geometry", :as => "building"
   get "geometry", to: "fixer#geometry", :as => "geometry"
   get "fixer/geometry"
-  get "fixer/progress", :as => "building_progress"
-  get "fixer/progress_all", :as => "building_progress_all"
-  get "geometry/progress", to: "fixer#progress", :as => "geometry_progress"
-  get "geometry/progress_all", to: "fixer#progress_all", :as => "geometry_progress_all"
+  get "fixer/progress", to: "fixer#progress_geometry", :as => "building_progress"
+  get "fixer/progress_all", to: "fixer#progress_geometry_all", :as => "building_progress_all"
+  get "geometry/progress", to: "fixer#progress_geometry", :as => "geometry_progress"
+  get "geometry/progress_all", to: "fixer#progress_geometry_all", :as => "geometry_progress_all"
 
   # footprints progress json endpoints
   get "geometry/progress_user", to: "fixer#session_progress_for_sheet"
   get "geometry/progress_sheet", to: "fixer#progress_sheet"
 
   # addresses
-  get "address", to: "fixer#address", :as => "addresses"
   get "address", to: "fixer#address", :as => "address"
-  get "address/progress", to: "fixer#progress_address", :as => "addresses_progress"
-  get "address/progress_all", to: "fixer#progress_address_all", :as => "addresses_progress_all"
+  get "address/progress", to: "fixer#progress_address", :as => "address_progress"
+  get "address/progress_all", to: "fixer#progress_address_all", :as => "address_progress_all"
 
   # address progress json endpoints
   get "address/progress_user", to: "fixer#session_progress_address_for_sheet"
@@ -47,9 +46,10 @@ Webappmini::Application.routes.draw do
 
   # polygonfix
   get "polygonfix", to: "fixer#polygonfix", :as => "polygons"
+  get "polygonfix/progress", to: "fixer#progress_polygonfix", :as => "polygonfix_progress"
 
   # polygonfix progress json endpoints
-  # TODO: progrees for user
+  get "polygonfix/progress_user", to: "fixer#session_progress_polygonfix_for_sheet"
   # TODO: progrees for sheet (requires consensus)
 
   # json flagging

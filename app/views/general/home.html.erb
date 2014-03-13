@@ -47,7 +47,7 @@
           </svg>
         </li>
         <li id="slide2" class="slide">
-          <%= link_to "", addresses_path, {:id => "slide-address"} %>
+          <%= link_to "", address_path, {:id => "slide-address"} %>
           <div class="wrap">
             <div id="slide2-a" class="number">123</div>
             <div id="slide2-b" class="number">117</div>
@@ -65,7 +65,7 @@
       <div id="slide-buttons">
         <%= link_to "CHECK FOOTPRINTS", geometry_path, {:id => "link-geometry"} %>
         <%= link_to "FIX POLYGONS", polygons_path, {:id => "link-polygonfix"} %>
-        <%= link_to "ENTER ADDRESSES", addresses_path, {:id => "link-address"} %>
+        <%= link_to "ENTER ADDRESSES", address_path, {:id => "link-address"} %>
       </div>
     </div>
     <% if @has_score %>

@@ -5,7 +5,7 @@ class AddressProgress extends Progress
       jsdataID: '#progressjs'
       highlightClass: ".polygon-highlight"
       task: 'address'
-    options.mode = $(options.jsdataID).data("mode")
+      mode: $('#progressjs').data("mode")
     super(options)
 
   processData: (data) ->

@@ -17,9 +17,9 @@ class @Progress
       tweetID: "#tweet"
       tweetString: "_score_ buildings checked! Data mining old maps with the Building Inspector from @NYPLMaps @nypl_labs"
       polygonStyle:
-        color: '#ff0'
+        color: '#609846'
         opacity: 0
-        fillOpacity: 0.9
+        fillOpacity: 0.75
         stroke: false
     @options = $.extend defaults, options
 
@@ -76,11 +76,8 @@ class @Progress
 
     color = '#609846'
 
-    if @options.task == "geometry"
-      url = '/geometry/progress_user.json'
-      url = '/geometry/progress_sheet.json' if @options.mode == "all"
-    else if @options.task == "address"
-      url = '/address/progress_user.json'
+    url = "/#{@options.task}/progress_user.json"
+    url = "/#{@options.task}/progress_sheet.json" if @options.mode == "all"
 
     url += '?id=' + sheet_id
 
