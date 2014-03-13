@@ -290,7 +290,8 @@ class Address extends Inspector
     elem.css("left", x)
     $("#map-container").append(elem)
 
-  createFlag: (x, y, latlng, fake) =>
+  createFlag: (x, y, latlng, fake) ->
+    @cleanEmptyFlags()
     circle = L.circleMarker(latlng,
       color: '#d75b25'
       fill: false
@@ -372,7 +373,11 @@ class Address extends Inspector
   cleanFlags: () =>
     for flag, contents of @flags
       # console.log "destroyed", contents.elem[0]
-      @destroyFlag("#num-" + flag + " .num-close") # this is really hacky
+      @destroyFlag("#num-" + flag + " .num-close")
+
+  cleanEmptyFlags: () =>
+    for flag, contents of @flags
+      @destroyFlag("#num-" + flag + " .num-close") if contents.value == ""
 
   validateInput: (item, e) =>
     charCode = if e.which then e.which else e.keyCode

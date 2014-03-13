@@ -252,10 +252,15 @@ class FixerController < ApplicationController
         end
         flag[:session_id] = session
         flag[:flag_type] = type
-        flag.save
-        uniques.push(flag[:flag_value])
+        begin
+        	flag.save
+          uniques.push(flag)
+        rescue ActiveRecord::RecordNotUnique => e
+	        next if(e.message =~ /unique.*constraint.*index_flags_on_session_id/)
+          raise
+	      end
     end
-    respond_with( flags )
+    respond_with( uniques )
   end
 
 	def getSession

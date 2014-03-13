@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140311183629) do
+ActiveRecord::Schema.define(:version => 20140313152307) do
 
   create_table "flags", :force => true do |t|
     t.string   "flag_type"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(:version => 20140311183629) do
   end
 
   add_index "flags", ["polygon_id"], :name => "polygon_index"
-  add_index "flags", ["session_id"], :name => "index_flags_on_session_id"
+  add_index "flags", ["session_id", "flag_type", "polygon_id", "flag_value", "latitude", "longitude"], :name => "index_flags_on_session_id", :unique => true
 
   create_table "polygons", :force => true do |t|
     t.text     "geometry"

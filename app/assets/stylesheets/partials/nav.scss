@@ -16,7 +16,7 @@
   top: 0;
   right: 0;
   left: 0;
-  z-index: 110;
+  z-index: 1112;
   @include transition(all, .5s);
 
   @media screen and (max-width: $desktopwidth) {

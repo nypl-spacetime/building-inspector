@@ -28,7 +28,7 @@ class Flag < ActiveRecord::Base
 	def self.flags_for_session(session_id, type = "geometry")
 		Flag.select("DISTINCT polygon_id").where("session_id = ? AND flag_type = ?", session_id, type).count
 	end
-	
+
 	def self.flags_for_user(user_id, type = "geometry")
 		Flag.select("DISTINCT polygon_id").joins('INNER JOIN usersessions ON usersessions.session_id = flags.session_id').where('usersessions.user_id = ? AND flags.flag_type = ?', user_id, type).count
 	end
@@ -36,7 +36,7 @@ class Flag < ActiveRecord::Base
 	def self.progress_for_session(session_id, type = "geometry")
 		Flag.select("DISTINCT polygons.id, polygons.centroid_lat, polygons.centroid_lon, polygons.geometry, flags.*").joins(:polygon).where("flags.session_id = ? AND flags.flag_type = ?", session_id, type)
 	end
-	
+
 	def self.progress_for_user(user_id, type = "geometry")
 		Flag.select("DISTINCT polygons.id, polygons.centroid_lat, polygons.centroid_lon, polygons.geometry, flags.*").joins(:polygon).joins('INNER JOIN usersessions ON usersessions.session_id = flags.session_id').where('usersessions.user_id = ? AND flags.flag_type = ?', user_id, type)
 	end
@@ -49,5 +49,5 @@ class Flag < ActiveRecord::Base
 		end
 		{ :type => "Feature", :properties => { :flag_value => self[:flag_value] }, :geometry => { :type => "Point", :coordinates => [self[:longitude].to_f, self[:latitude].to_f] } }
 	end
-  
+
 end
