@@ -32,6 +32,7 @@ class FixerController < ApplicationController
   	@current_page = "progress_all"
 		# returns a GeoJSON object with the flags the session has sent so far
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
+    session = getSession()
 		@progress = {}
 		@progress[:counts] = Polygon.grouped_by_sheet
 		if user_signed_in?
@@ -127,9 +128,10 @@ class FixerController < ApplicationController
 	end
 
 	def progress_address_all
-	  	@current_page = "progress_address_all"
+  	@current_page = "progress_address_all"
 		# returns a GeoJSON object with the flags the session has sent so far
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
+    session = getSession()
 		@progress = {}
 		@progress[:counts] = Polygon.grouped_by_sheet("address")
 		if user_signed_in?

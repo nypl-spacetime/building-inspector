@@ -63,9 +63,9 @@
         </li>
       </ul>
       <div id="slide-buttons">
-        <%= link_to "CHECK FOOTPRINTS", geometry_path, {:id => "link-geometry"} %>
-        <%= link_to "FIX POLYGONS", polygons_path, {:id => "link-polygonfix"} %>
-        <%= link_to "ENTER ADDRESSES", address_path, {:id => "link-address"} %>
+        <%= link_to "CHECK FOOTPRINTS", geometry_path, {:id => "link-geometry", :class => "home-link"} %>
+        <%= link_to "FIX POLYGONS", polygons_path, {:id => "link-polygonfix", :class => "home-link"} %>
+        <%= link_to "ENTER ADDRESSES", address_path, {:id => "link-address", :class => "home-link"} %>
       </div>
     </div>
     <% if @has_score %>

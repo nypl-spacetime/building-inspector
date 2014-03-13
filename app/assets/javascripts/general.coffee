@@ -30,6 +30,7 @@ class General
       "#link-help"
       "#link-about"
       "#logout-link"
+      ".home-link"
       ".task-link"
       ".score-save-link"
       ".sign-in-link"
