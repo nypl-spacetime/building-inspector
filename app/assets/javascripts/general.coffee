@@ -79,7 +79,6 @@ class General
 
   mobileClick: (id) ->
     elem = $(id)
-    return if elem.hasClass("shown task-link")
     elem.click (e) ->
       e.preventDefault()
       window.location.href = e.currentTarget.href;
