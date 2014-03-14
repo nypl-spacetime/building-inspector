@@ -221,6 +221,20 @@
     width: 100%;
   }
 
+  li:first-child, li.shown {
+    @media screen and (min-width: $desktopwidth) {
+      &:after {
+        content: attr(data-icon);
+        font-family:$iconfont;
+        -webkit-font-smoothing: antialiased;
+        content: "V";
+        position: absolute;
+        right: 10px;
+        top: 10px;
+      }
+    }
+  }
+
   a {
     display: block;
     background: $grayLightest;
@@ -237,25 +251,14 @@
       color: $grayLightest;
       background: $gray;
     }
-
-    @media screen and (min-width: $desktopwidth) {
-      &:first-child:after {
-        content: attr(data-icon);
-        font-family:$iconfont;
-        -webkit-font-smoothing: antialiased;
-        content: "V";
-        position: absolute;
-        right: 10px;
-        top: 10px;
-      }
-    }
-
   }
 
   .shown {
     display: block;
     color: $grayLightest;
     background: $grayDarkest;
+    padding: 10px 2px 8px 12px;
+    line-height: 20px;
   }
 
   .hidden {
@@ -267,7 +270,11 @@
   }
 
   .header {
-    @media screen and (max-width: $desktopwidth) {
+    display: none;
+  }
+
+  @media screen and (max-width: $desktopwidth) {
+    .inspect {
       display: none;
     }
   }
