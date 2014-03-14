@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="52px" height="52px" viewBox="0 0 52 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <title>icon-geometry</title>
+    <description>Created with Sketch (http://www.bohemiancoding.com/sketch)</description>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Group" sketch:type="MSLayerGroup">
+            <rect id="Rectangle-1" fill="#A1170D" sketch:type="MSShapeGroup" x="0" y="0" width="42" height="42" rx="3"></rect>
+            <rect id="Rectangle-1" fill="#FD9C27" sketch:type="MSShapeGroup" x="5" y="5" width="42" height="42" rx="3"></rect>
+            <rect id="Rectangle-1" fill="#45BAA7" sketch:type="MSShapeGroup" x="10" y="10" width="42" height="42" rx="3"></rect>
+            <text id="YES" fill="#FFFFFF" sketch:type="MSTextLayer" font-family="Avenir Next" font-size="14" font-weight="normal" sketch:alignment="middle">
+                <tspan x="18.694" y="37">YES</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
