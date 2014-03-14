@@ -298,7 +298,7 @@ polygon {
 
 .marker {
   width: 28px;
-  height: 60px;
+  height: 43px;
   background: url(/assets/polygonfix/editmarker.png);
   background-size: contain;
 }
@@ -306,22 +306,22 @@ polygon {
 @include keyframes(moveMarkerC) {
   0% {
     left: 72px;
-    top: -6px;
+    top: 11px;
   }
   100% {
     left: 58px;
-    top: -23px;
+    top: -6px;
   }
 }
 
 @include keyframes(moveMarkerD) {
   0% {
     left: -8px;
-    top: 14px;
+    top: 31px;
   }
   100% {
     left: -22px;
-    top: 0px;
+    top: 17px;
   }
 }
 
@@ -362,17 +362,17 @@ polygon {
       @include animation(fixPolyC 3s linear forwards 1s);
     }
     #slide3-a {
-      top: 104px;
+      top: 121px;
     }
     #slide3-b {
-      top: 77px;
+      top: 94px;
     }
     #slide3-c {
-      top: -6px;
+      top: 11px;
       @include animation(moveMarkerC .1s ease-out forwards 2.6s);
     }
     #slide3-d {
-      top: 14px;
+      top: 31px;
       @include animation(moveMarkerD .1s ease-out forwards 2.1s);
     }
   }
