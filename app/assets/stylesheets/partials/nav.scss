@@ -222,6 +222,8 @@
   }
 
   li:first-child, li.shown {
+    cursor: pointer;
+
     @media screen and (min-width: $desktopwidth) {
       &:after {
         content: attr(data-icon);
