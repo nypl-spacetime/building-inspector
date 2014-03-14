@@ -31,7 +31,7 @@ class General
       "#link-about"
       "#logout-link"
       ".home-link"
-      # "#top-nav.open .task-link"
+      "#top-nav.open .task-link"
       ".score-save-link"
       ".sign-in-link"
       ".score-link"
