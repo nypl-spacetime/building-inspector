@@ -47,8 +47,17 @@
 }
 
 #home-scores {
-  font-size: 1.5em;
-  line-height: 1.5em;
+  font-size: 1em;
+  line-height: 1em;
+
+  ul {
+    @include clearfix;
+  }
+
+  li {
+    float: left;
+    width: 33%;
+  }
 }
 
 .intro-path {
