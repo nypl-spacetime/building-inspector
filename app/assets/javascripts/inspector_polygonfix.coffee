@@ -16,6 +16,9 @@ class Polygonfix extends Inspector
 
   addEventListeners: () =>
     super()
+    @map.on('dragstart', @onMapDragStart)
+    @map.on('dragend', @onMapDragEnd)
+
     $("#multiple-polygon").on("change click", @multipleBuildingClick)
     $("#multiple-text").on("click", @multipleBuildingClick)
 
@@ -35,6 +38,12 @@ class Polygonfix extends Inspector
   activateButton: (button) =>
     $("#submit-button").addClass("inactive") if button != "submit"
     $("#submit-button").addClass("active") if button == "submit"
+
+  onMapDragStart: (e) =>
+    @hidePolygon()
+
+  onMapDragEnd: (e) =>
+    @showPolygon()
 
   multipleBuildingClick: (e) =>
     @isMultiple = $("#multiple-polygon").is(':checked')
