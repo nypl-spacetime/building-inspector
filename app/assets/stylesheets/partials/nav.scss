@@ -145,11 +145,11 @@
       -webkit-font-smoothing: antialiased;
     color: $grayLightest;
     width: 235px;
-    height: 27px;
+    height: 38px;
     background-size: 100%;
     // margin: 0 auto;
     float: left;
-    margin-top: 36px;
+    margin-top: 30px;
     margin-left: 0;
 
     a {
@@ -163,8 +163,8 @@
     }
 
     @media screen and (max-width: $desktopwidth) {
-      margin-top: 10px;
-      width: 140px;
+      margin-top: 6px;
+      width: 180px;
     }
   }
 

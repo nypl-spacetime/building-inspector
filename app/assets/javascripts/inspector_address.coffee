@@ -77,12 +77,12 @@ class Address extends Inspector
       contents.elem.css("top",xy.y)
 
   onTutorialClick: (e) =>
-    # console.log "tutclick", e
+    console.log "tutclick", e
     e.stopPropagation?()
     e.preventDefault?()
 
-    x = e.offsetX
-    y = e.offsetY
+    x = e.offsetX ? e.originalEvent.layerX
+    y = e.offsetY ? e.originalEvent.layerY
     latlng = @.map.mouseEventToLatLng(e)
 
     elem = @createFlag(x, y, latlng, true)

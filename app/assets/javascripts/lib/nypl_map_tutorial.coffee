@@ -8,51 +8,63 @@ class @NYPL_Map_Tutorial
 
   _parseOptions: (options)=>
     @opts = {}
+    @opts = $.extend @opts, options
 
     # required stuff
-    @opts.highlightID = options.highlightID
     @opts.highlightElement = $(options.highlightID)
-    @opts.steps = options.steps
-
-    # optional stuff
-    @opts.highlightclickFunction = options.highlightclickFunction if options.highlightclickFunction
-    @opts.changeFunction = options.changeFunction if options.changeFunction
-    @opts.exitFunction = options.exitFunction if options.exitFunction
-    @opts.ixactiveFunction = options.ixactiveFunction if options.ixactiveFunction
-    @opts.ixinactiveFunction = options.ixinactiveFunction if options.ixinactiveFunction
+    @opts.showBullets = false
 
   init: () =>
     t = @
     @intro.setOptions(
-      skipLabel: "Exit tutorial"
+      skipLabel: "Exit help"
       tooltipClass: "tutorial"
       showStepNumbers: false
+      showBullets: t.opts.showBullets
       exitOnOverlayClick: false
       steps: @opts.steps
     ).onchange () ->
       t._currentStep = t.intro._currentStep
-      onOverlay = (t.opts.steps[t._currentStep].element == t.opts.highlightElement[0])
+      onOverlay = (t.opts.steps[t._currentStep].element == t.opts.highlightID)
       # overriding some CSS
       $(".introjs-helperLayer").removeClass("noMap")
       $(".introjs-helperLayer").addClass("noMap") if !onOverlay
       # end CSS stuff
       t.opts.highlightElement.unbind('click')
-      t.opts.changeFunction() if t.opts.changeFunction
+      t.opts.changeFunction?()
       t.opts.highlightElement.on('click', t.opts.highlightclickFunction) if t.opts.highlightclickFunction && onOverlay
-      t.opts.ixinactiveFunction() if t.opts.ixinactiveFunction
-      t.opts.ixactiveFunction() if t.opts.steps[t._currentStep].ixactive && t.opts.ixactiveFunction
+      t.opts.ixinactiveFunction?()
+      t.opts.ixactiveFunction?() if t.opts.steps[t._currentStep].ixactive
     .oncomplete () ->
-      t.opts.ixinactiveFunction() if t.opts.ixinactiveFunction
-      t.opts.ixactiveFunction() if t.opts.ixactiveFunction
+      t.opts.ixinactiveFunction?()
+      t.opts.ixactiveFunction?()
       t.opts.exitFunction()
     .onexit () ->
-      t.opts.ixinactiveFunction() if t.opts.ixinactiveFunction
-      t.opts.ixactiveFunction() if t.opts.ixactiveFunction
-      t.opts.exitFunction()
+      # console.log "onexit"
+      t.opts.ixinactiveFunction?()
+      t.opts.ixactiveFunction?()
+      t.opts.exitFunction?()
     .start()
+    @addCloseButton() #adds the X next to the popup
     @
 
-  exit: () ->
+  addCloseButton: () ->
+    # console.log "addclose"
+    t = @
+    html = '<a href="javascript:;" class="close" id="tutorial-close"><span>CLOSE</span></a>'
+    el = $(html)
+    el.css "right", -9
+    el.css "top", -9
+    el.on "click", (e) ->
+      # console.log e
+      t.exit()
+    $(".introjs-tooltip.tutorial").append(el)
+
+  exit: () =>
+    # console.log "exit", @
+    @opts.ixinactiveFunction?()
+    @opts.ixactiveFunction?()
+    @opts.exitFunction?()
     @intro.exit() if @intro
 
   goToStep: (index) ->

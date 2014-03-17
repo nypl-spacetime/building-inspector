@@ -354,12 +354,11 @@ class @Inspector
     @
 
   hideTutorial: () =>
-    # console.log "end of tutorial"
+    console.log "end of tutorial"
     @clearScreen()
     if (window.innerWidth < 500)
       @showOthers()
     else
-      @intro.exit()
       @polyData = Utils.clone(@_polyData)
       @currentIndex = @_currentIndex
       @showNextPolygon()

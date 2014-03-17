@@ -60,11 +60,18 @@
     text-align: center;
     font-size: 1.25em;
     line-height: 1.25em;
+    @media screen and (max-width: $desktopwidth) {
+      font-size: 1em;
+      line-height: 1em;
+    }
   }
 
   img {
     display: block;
     margin: 0 auto 10px;
+    @media screen and (max-width: $desktopwidth) {
+      height: 40px;
+    }
   }
 }
 
