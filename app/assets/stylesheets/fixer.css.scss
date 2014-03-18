@@ -75,7 +75,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   right: 0;
 
   &.compact {
-    bottom: 130px;
+    bottom: 110px;
   }
 
   &.progress {
@@ -122,7 +122,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   background: $gray;
 
   &.compact {
-    height: 130px;
+    height: 110px;
   }
 
   @media screen and (max-width: $desktopwidth) {
@@ -158,10 +158,6 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   &#no-button, &.red {
     margin-left: 5px;
     background-color: $nocolor;
-
-    @media screen and (max-width: $desktopwidth) {
-      margin-left: 50px;
-    }
   }
 
   &#fix-button, &.yellow {
