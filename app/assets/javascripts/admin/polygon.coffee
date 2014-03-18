@@ -58,7 +58,7 @@ class Polygon
         # dashArray: '1,16'
         fill: false
       onEachFeature: (feature, layer) ->
-          layer.bindPopup(feature.properties.flag_value)
+          layer.bindPopup(feature.properties.flag_value) if feature.properties?.flag_value
     )
 
     bounds = json.getBounds()
