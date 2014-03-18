@@ -80,10 +80,12 @@ class Polygonfix extends Inspector
 
   addPolygonToFlags: (e) =>
     return if !@polygonHasChanged
-    @flags.push(
-      flag: @getFixedPolygon()
-      layer: null
-    )
+    flag = @getFixedPolygon()
+    if flag
+      @flags.push(
+        flag: flag
+        layer: null
+      )
     @refreshGhosts()
     @resetPolygon()
 
