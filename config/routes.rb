@@ -53,8 +53,8 @@ Webappmini::Application.routes.draw do
   # TODO: progrees for sheet (requires consensus)
 
   # json flagging
-  get "fixer/flag", to: "fixer#flag_polygon"
-  get "fixer/flagnum", to: "fixer#many_flags_one_polygon"
+  post "fixer/flag", to: "fixer#flag_polygon"
+  post "fixer/flagmulti", to: "fixer#many_flags_one_polygon"
 
   # api endpoints
   get "api/polygons"

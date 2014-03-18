@@ -6,6 +6,8 @@ class @Inspector
     defaults =
       editablePolygon: false
       draggableMap: false
+      touchZoom: true
+      scrollWheelZoom: true
       loaderID: "#loader"
       tutorialOn: true
       tutorialData: {}
@@ -30,6 +32,7 @@ class @Inspector
     @loadedData = {}
     @currentIndex = -1
     @currentPolygon = {}
+    @originalPolygon = [] #to save the pre-edited polygon
     @allPolygonsSession = 0
     @firstLoad = true
     @intro = null
@@ -47,13 +50,13 @@ class @Inspector
   initMap: () ->
     @map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859-final/859spec.json',
       zoomControl: false
-      scrollWheelZoom: false
+      scrollWheelZoom: @options.scrollWheelZoom
+      touchZoom: @options.touchZoom
       animate: true
       attributionControl: false
       minZoom: 18
       maxZoom: 21
       dragging: @options.draggableMap
-      touchZoom: false
     )
 
     @overlay2 = L.mapbox.tileLayer('https://s3.amazonaws.com/maptiles.nypl.org/860/860spec.json',
@@ -130,7 +133,7 @@ class @Inspector
   submitMultipleFlags: (event, data) ->
     @removeButtonListeners()
     event.preventDefault()
-    @prepareFlagSubmission(data, "/fixer/flagnum.json")
+    @prepareFlagSubmission(data, "/fixer/flagmulti.json")
 
   prepareFlagSubmission: (data, url) ->
     @clearScreen()
@@ -149,11 +152,14 @@ class @Inspector
     inspector = @
 
     $(@options.buttonsID).fadeOut 200 , () ->
-      $.get(url,
-        i: inspector.currentPolygon.id
-        t: type
-        f: data
-        , () ->
+      $.ajax(
+        type: "POST"
+        url: url
+        data:
+          i: inspector.currentPolygon.id
+          t: type
+          f: data
+        success: () ->
           inspector.showNextPolygon()
       )
 
@@ -220,16 +226,13 @@ class @Inspector
       $(@options.buttonsID).show()
       @currentPolygon = @polyData[@currentIndex]
       if !@options.editablePolygon
-        @map.removeLayer(@geo) if @geo
-        @geo = @makePolygon(@currentPolygon)
+        @makeRegularPolygon()
       else
         # things are slightly different for editable polygon drawing
         @makeEditablePolygon()
-        @geo.addTo(@map)
       # console.log @currentPolygon #, @currentGeo
       # console.log @geo
       # center on the polygon
-      @geo.addTo(@map)
       @map.fitBounds( @geo.getBounds() )
       @resetButtons()
     else
@@ -278,23 +281,29 @@ class @Inspector
         status: poly.status
       geometry:
         type: "Polygon"
-        coordinates: $.parseJSON(poly.geometry)
+        coordinates: poly
     geo = L.geoJson({features:[]},
       style: (feature) ->
         inspector.options.polygonStyle
     ).addData json
 
+  makeRegularPolygon: () ->
+    inspector = @
+    @geo = @makePolygon($.parseJSON(@currentPolygon.geometry))
+    @geo.addTo(@map)
+
   makeEditablePolygon: () ->
-    maxCorners = 12
+    maxCorners = 8
     # editable polyline works with [[lat,lon],[lat,lon],...] coordinates
     # geojson is [[[lon,lat],[lon,lat],...]]
     coordinates = $.parseJSON(@currentPolygon.geometry)[0]
     if coordinates[0][0] == coordinates[coordinates.length-1][0] && coordinates[0][1] == coordinates[coordinates.length-1][1]
       # same coordinate for the first and last point / redundant
       coordinates.pop()
-    transposed = ([coord[1],coord[0]] for coord in coordinates)
 
-    transposed = Simplify.whyattGeoJSON(transposed, maxCorners) if transposed.length > maxCorners
+    @originalPolygon = ([coord[1],coord[0]] for coord in coordinates)
+
+    @originalPolygon = simplifyGeometry(@originalPolygon,0.00002) if coordinates.length > maxCorners
 
     if (!@geo)
       # console.table coordinates #, @currentGeo
@@ -309,7 +318,7 @@ class @Inspector
         iconSize: [32, 32]
         iconAnchor: [16, 16]
       )
-      @geo = L.Polygon.PolygonEditor(transposed,
+      @geo = L.Polygon.PolygonEditor(@originalPolygon,
         maxMarkers: 10000
         pointIcon: pointIcon
         newPointIcon: newPointIcon
@@ -323,7 +332,8 @@ class @Inspector
       )
     else
       @map._editablePolygons = [] # hack cause the leaflet plugin does not destroy preexisting polygons
-      @geo.updateLatLngs(transposed)
+      @geo.updateLatLngs(@originalPolygon)
+    @geo.addTo(@map)
 
   showPolygon: (e) =>
     inspector = @

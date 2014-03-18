@@ -283,7 +283,7 @@ class FixerController < ApplicationController
     end
     uniques = []
     flags.each do |f|
-    	contents = f.split(",")
+    	contents = f.split("=")
     	# at least have a value
         if contents[2] == nil || uniques.index(contents[2]) != nil
             next
@@ -308,7 +308,7 @@ class FixerController < ApplicationController
           raise
 	      end
     end
-    respond_with( uniques )
+    render :json => { :flags => uniques }
   end
 
 end

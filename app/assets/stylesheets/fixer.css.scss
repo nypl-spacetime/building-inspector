@@ -41,7 +41,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 #buttons {
   .wrapper {
     position: relative;
-    width: 350px;
+    width: 230px;
     margin: 0 auto;
 
     @include clearfix;
@@ -156,7 +156,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   }
 
   &#no-button, &.red {
-    margin-left: 65px;
+    margin-left: 5px;
     background-color: $nocolor;
 
     @media screen and (max-width: $desktopwidth) {
@@ -176,15 +176,25 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   &#submit-button {
     background: $green;
     width: 220px;
-    width: 220px;
-    margin-left: 55px;
+    margin-left: 5px;
   }
 
-  &#no-button.active, &#fix-button.active, &#yes-button.active , &#submit-button.active {
+  &#add-button {
+    background: $fixcolor;
+    width: 120px;
+    margin-right: 0;
+  }
+
+  &#save-button {
+    background: $green;
+    width: 80px;
+  }
+
+  &.active {
     font-size: 24px;
   }
 
-  &#no-button.inactive, &#fix-button.inactive, &#yes-button.inactive {
+  &.inactive {
     color: transparent;
     background-color: transparent;
   }
@@ -201,6 +211,10 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
   &#yes-button:hover, &#no-button:hover, &#fix-button:hover {
     background: $grayDarker;
+  }
+
+  &.secondary {
+    display: none;
   }
 }
 

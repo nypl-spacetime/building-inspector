@@ -17,6 +17,7 @@
 //= require lib/vendor/jquery.swipeshow.min
 //= require lib/vendor/spin.min
 //= require lib/vendor/humanize.min
+//= require lib/vendor/simplifygeometry-0.0.1.min
 //= require lib/nypl_map_tutorial
 //= require lib/nypl_utils
 //= require lib/nypl_inspector

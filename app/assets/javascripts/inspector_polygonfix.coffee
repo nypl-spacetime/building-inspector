@@ -8,10 +8,13 @@ class Polygonfix extends Inspector
       jsdataID: '#polygonfixjs'
       task: 'polygonfix'
     super(options)
+    @flags = []
     @isMultiple = false
 
   clearScreen: () =>
-    @updateMultipleStatus()
+    $("#multiple-polygon:checkbox").attr('checked', false)
+    @multipleBuildingClick()
+    @eraseGhosts()
     super()
 
   addEventListeners: () =>
@@ -26,18 +29,28 @@ class Polygonfix extends Inspector
     super()
     inspector = @
     $("#submit-button").on "click", @submitFlags
+    $("#save-button").on "click", @submitFlags
+    $("#add-button").on "click", @addPolygonToFlags
 
   removeButtonListeners: () =>
     super()
     $("#submit-button").unbind()
+    $("#save-button").unbind()
+    $("#add-button").unbind()
 
   resetButtons: () ->
     super()
     $("#submit-button").removeClass("active inactive")
+    $("#save-button").removeClass("active inactive")
+    $("#add-button").removeClass("active inactive")
 
   activateButton: (button) =>
     $("#submit-button").addClass("inactive") if button != "submit"
     $("#submit-button").addClass("active") if button == "submit"
+    $("#save-button").addClass("inactive") if button != "save"
+    $("#save-button").addClass("active") if button == "save"
+    $("#add-button").addClass("inactive") if button != "add"
+    $("#add-button").addClass("active") if button == "add"
 
   onMapDragStart: (e) =>
     @hidePolygon()
@@ -51,9 +64,11 @@ class Polygonfix extends Inspector
 
   updateMultipleStatus: () ->
     if (@isMultiple)
-      $("#multiple-text").text("Finish this building, polygon will reload.")
+      $(".primary").hide()
+      $(".secondary").show()
     else
-      $("#multiple-text").text("More than one building?")
+      $(".primary").show()
+      $(".secondary").hide()
 
   showPolygon: (e) =>
     # overriding the superclass method
@@ -63,31 +78,70 @@ class Polygonfix extends Inspector
     # overriding the superclass method
     @geo._hideAll() # hacky
 
+  addPolygonToFlags: (e) =>
+    return if !@polygonHasChanged
+    @flags.push(
+      flag: @getFixedPolygon()
+      layer: null
+    )
+    @refreshGhosts()
+    @resetPolygon()
+
   submitFlags: (e) =>
-    @activateButton("submit") unless @options.tutorialOn
-
-    flag_str = @getFixedPolygon()
-
-    flag_str = "NOFIX" if !flag_str
-
-    # console.log flag_str
-
-    @submitSingleFlag(e, flag_str)
+    if !@isMultiple
+      @activateButton("submit") unless @options.tutorialOn
+      flag_str = @getFixedPolygon()
+      flag_str = "NOFIX" if !flag_str
+      # console.log flag_str
+      @submitSingleFlag(e, flag_str)
+    else
+      @activateButton("save") unless @options.tutorialOn
+      # add current flag if good
+      @addPolygonToFlags()
+      flag_str = @prepareData()
+      @submitMultipleFlags(e, flag_str)
 
   getFixedPolygon: () ->
     # prepares the new polygon in GeoJSON-ish format
     # (same format as was received from server)
-    points = @geo.getPoints()
+    return false if !@polygonHasChanged()
+    points = @geo.getLatLngs()
     # console.log "points:", points
-    p_array = ([p.getLatLng().lng,p.getLatLng().lat] for p in points)
-    coordinates = $.parseJSON(@currentPolygon.geometry)[0]
-    if coordinates[0][0] == coordinates[coordinates.length-1][0] && coordinates[0][1] == coordinates[coordinates.length-1][1]
-      # same coordinate for the first and last point / redundant
-      coordinates.pop()
+    p_array = ([p.lng,p.lat] for p in points)
+    coordinates = @originalPolygon
     # if there's no change return false to leave as is
-    # console.log p_array, coordinates
-    return false if p_array.join(",") == coordinates.join(",")
+    # console.log p_array, coordinates, p_array == coordinates
     return "[[" + ("[#{p.join(",")}]" for p in p_array) + "]]"
+
+  prepareData: () ->
+    flag_array = ("==#{f.flag}" for f in @flags)
+    flag_array.join("|")
+
+  refreshGhosts: () ->
+    @drawGhost $.parseJSON(f.flag), index for f, index in @flags
+
+  eraseGhosts: () ->
+    @map.removeLayer f.layer for f in @flags when f.layer isnt null
+    @flags = []
+
+  drawGhost: (poly, index) ->
+    return if @flags[index].layer != null
+    ghost = @makePolygon(poly)
+    ghost.setStyle(
+      color:'#fff'
+      dashArray: '2,6'
+      weight: 2
+    )
+    ghost.addTo @map
+    @flags[index].layer = ghost
+
+  resetPolygon: () ->
+    @makeEditablePolygon()
+    @geo._reloadPolygon() # hacky
+    @geo._edited = false
+
+  polygonHasChanged: () ->
+    @geo._edited
 
 $ ->
   tutorialData =

@@ -52,7 +52,7 @@ class Address extends Inspector
       flag_str = flag_data.join("|")
     else
       # console.log "skipped"
-      flag_str = ",,NONE"
+      flag_str = "==NONE"
 
     @submitMultipleFlags(e, flag_str)
 
@@ -61,7 +61,7 @@ class Address extends Inspector
     for flag, contents of @flags
       latlng = contents.circle.getLatLng()
       txt = contents.value
-      r.push "#{latlng.lat},#{latlng.lng},#{txt}" if txt != "" && !contents.fake
+      r.push "#{latlng.lat}=#{latlng.lng}=#{txt}" if txt != "" && !contents.fake
     r
 
   onMapChange: (e) =>
@@ -129,7 +129,7 @@ class Address extends Inspector
     html = "<div id=\"num-x-#{x}-y-#{y}\" class=\"number-flag\"><div class=\"cont\"><input type=\"number\" class=\"input\" step=\"any\" placeholder=\"#\" /><a href=\"javascript:;\" class=\"num-close\">x</a></div></div>"
     el = $(html)
 
-    console.log "num-x-#{x}-y-#{y}"
+    # console.log "num-x-#{x}-y-#{y}"
 
     input = el.find(".input")
     close = el.find(".num-close")
