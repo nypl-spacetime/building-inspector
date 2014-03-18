@@ -303,7 +303,7 @@ class @Inspector
 
     @originalPolygon = ([coord[1],coord[0]] for coord in coordinates)
 
-    @originalPolygon = simplifyGeometry(@originalPolygon,0.00002) if coordinates.length > maxCorners
+    @originalPolygon = simplifyGeometry(@originalPolygon,0.00005) if coordinates.length > maxCorners
 
     if (!@geo)
       # console.table coordinates #, @currentGeo
