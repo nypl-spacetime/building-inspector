@@ -186,6 +186,43 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     width: 80px;
   }
 
+  &#pink-button, &#blue-button, &#green-button, &#yellow-button, &#black-button {
+    width: 40px;
+    margin-right: 0;
+    margin-left: 5px;
+    font-size: 10px;
+
+    &:hover {
+      background: $grayDarker;
+    }
+  }
+
+  &#pink-button {
+    color: $grayDarkest;
+    background-color: $pink;
+    margin-left: 0;
+    &:hover {
+      color: $white;
+    }
+  }
+
+  &#blue-button {
+    background-color: $blue;
+  }
+
+  &#green-button {
+    background-color: $greenPaper;
+  }
+
+  &#yellow-button {
+    background-color: $yellow;
+  }
+
+  &#black-button {
+    background-color: $grayDarkest;
+    margin-right: 0;
+  }
+
   &.active {
     font-size: 24px;
   }

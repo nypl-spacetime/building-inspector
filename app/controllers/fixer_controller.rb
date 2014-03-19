@@ -3,6 +3,20 @@ class FixerController < ApplicationController
 	before_filter :cookies_required, :except => :cookie_test
 	respond_to :json
 
+  def getProgress(task, mode)
+    session = getSession()
+    progress = {}
+    progress[:counts] = Polygon.grouped_by_sheet unless mode == "user"
+    if user_signed_in?
+      progress[:counts] = Flag.grouped_flags_for_user(current_user.id, task) unless mode == "all"
+      progress[:all_polygons_session] = Flag.flags_for_user(current_user.id, task)
+    else
+      progress[:counts] = Flag.grouped_flags_for_session(session, task) unless mode == "all"
+      progress[:all_polygons_session] = Flag.flags_for_session(session, task)
+    end
+    return progress
+  end
+
   # GEOMETRY
 
 	def geometry
@@ -16,34 +30,17 @@ class FixerController < ApplicationController
 	  @current_page = "progress"
 		# returns a GeoJSON object with the flags the session has sent so far
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
-		session = getSession()
-		@progress = {}
-		if user_signed_in?
-			@progress[:counts] = Flag.grouped_flags_for_user(current_user.id)
-			@progress[:all_polygons_session] = Flag.flags_for_user(current_user.id)
-		else
-			@progress[:counts] = Flag.grouped_flags_for_session(session)
-			@progress[:all_polygons_session] = Flag.flags_for_session(session)
-		end
-		@progress = @progress.to_json
+		@progress = getProgress("geometry","user").to_json
 	end
 
 	def progress_geometry_all
   	@current_page = "progress_all"
 		# returns a GeoJSON object with the flags the session has sent so far
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
-    session = getSession()
-		@progress = {}
-		@progress[:counts] = Polygon.grouped_by_sheet
-		if user_signed_in?
-			@progress[:all_polygons_session] = Flag.flags_for_user(current_user.id)
-		else
-			@progress[:all_polygons_session] = Flag.flags_for_session(session)
-		end
-		@progress = @progress.to_json
+    @progress = getProgress("geometry","all").to_json
 	end
 
-  def session_progress_for_sheet
+  def session_progress_geometry_for_sheet
     session = getSession()
     if params[:id] == nil
       respond_with("no id provided")
@@ -73,7 +70,7 @@ class FixerController < ApplicationController
     respond_with( @progress )
   end
 
-  def progress_sheet
+  def progress_sheet_geometry
       all_polygons = Polygon.select("id, consensus, dn, sheet_id, geometry").where(:sheet_id => params[:id])
 
       fix_poly = []
@@ -115,31 +112,14 @@ class FixerController < ApplicationController
 	  	@current_page = "progress_address"
 		# returns a GeoJSON object with the flags the session has sent so far
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
-		session = getSession()
-		@progress = {}
-		if user_signed_in?
-			@progress[:counts] = Flag.grouped_flags_for_user(current_user.id, "address")
-			@progress[:all_polygons_session] = Flag.flags_for_user(current_user.id, "address")
-		else
-			@progress[:counts] = Flag.grouped_flags_for_session(session, "address")
-			@progress[:all_polygons_session] = Flag.flags_for_session(session, "address")
-		end
-		@progress = @progress.to_json
+    @progress = getProgress("address","user").to_json
 	end
 
 	def progress_address_all
   	@current_page = "progress_address_all"
 		# returns a GeoJSON object with the flags the session has sent so far
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
-    session = getSession()
-		@progress = {}
-		@progress[:counts] = Polygon.grouped_by_sheet("address")
-		if user_signed_in?
-			@progress[:all_polygons_session] = Flag.flags_for_user(current_user.id, "address")
-		else
-			@progress[:all_polygons_session] = Flag.flags_for_session(session, "address")
-		end
-		@progress = @progress.to_json
+    @progress = getProgress("address","all").to_json
 	end
 
   def session_progress_address_for_sheet
@@ -181,16 +161,7 @@ class FixerController < ApplicationController
     @current_page = "progress_polygonfix"
     # returns a GeoJSON object with the flags the session has sent so far
     # NOTE: there might be more than one flag per polygon but this only returns each polygon once
-    session = getSession()
-    @progress = {}
-    if user_signed_in?
-      @progress[:counts] = Flag.grouped_flags_for_user(current_user.id, "polygonfix")
-      @progress[:all_polygons_session] = Flag.flags_for_user(current_user.id, "polygonfix")
-    else
-      @progress[:counts] = Flag.grouped_flags_for_session(session, "polygonfix")
-      @progress[:all_polygons_session] = Flag.flags_for_session(session, "polygonfix")
-    end
-    @progress = @progress.to_json
+    @progress = getProgress("polygonfix","user").to_json
   end
 
   def session_progress_polygonfix_for_sheet
@@ -211,6 +182,104 @@ class FixerController < ApplicationController
     @progress = {}
     @progress[:poly] = { :type => "FeatureCollection", :features => poly }
     respond_with( @progress )
+  end
+
+  # COLOR
+
+  def color
+    @current_page = "color"
+    sort_tasks()
+    @isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
+    cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
+    @map = getMap("color").to_json
+  end
+
+  def progress_color
+    @current_page = "progress_color"
+    # returns a GeoJSON object with the flags the session has sent so far
+    # NOTE: there might be more than one flag per polygon but this only returns each polygon once
+    @progress = getProgress("color","user").to_json
+  end
+
+  def progress_color_all
+    @current_page = "progress_color_all"
+    # returns a GeoJSON object with the flags the session has sent so far
+    # NOTE: there might be more than one flag per polygon but this only returns each polygon once
+    @progress = getProgress("color","all").to_json
+  end
+
+  def session_progress_color_for_sheet
+    session = getSession()
+    if params[:id] == nil
+      respond_with("no id provided")
+      return
+    end
+    if user_signed_in?
+      all_polygons = Flag.flags_for_sheet_for_user(params[:id],current_user.id, "color")
+    else
+      all_polygons = Flag.flags_for_sheet_for_session(params[:id],session, "color")
+    end
+    pink_poly = []
+    blue_poly = []
+    yellow_poly = []
+    green_poly = []
+    black_poly = []
+    all_polygons.each do |p|
+      if p[:flag_value]=="yellow"
+        yellow_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
+      elsif p[:flag_value]=="pink"
+        pink_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
+      elsif p[:flag_value]=="blue"
+        blue_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
+      elsif p[:flag_value]=="green"
+        green_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
+      elsif p[:flag_value]=="black"
+        black_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
+      end
+    end
+    @progress = {}
+    @progress[:yellow_poly] = { :type => "FeatureCollection", :features => yellow_poly }
+    @progress[:blue_poly] = { :type => "FeatureCollection", :features => blue_poly }
+    @progress[:pink_poly] = { :type => "FeatureCollection", :features => pink_poly }
+    @progress[:green_poly] = { :type => "FeatureCollection", :features => green_poly }
+    @progress[:black_poly] = { :type => "FeatureCollection", :features => black_poly }
+    respond_with( @progress )
+  end
+
+  def progress_sheet_color
+    all_polygons = Polygon.select("id, consensus, dn, sheet_id, geometry").where(:sheet_id => params[:id])
+
+    yellow_poly = []
+    pink_poly = []
+    blue_poly = []
+    green_poly = []
+    black_poly = []
+    nil_poly = []
+
+    all_polygons.each do |p|
+      if p[:consensus]=="yellow"
+        yellow_poly.push(p.to_geojson)
+      elsif p[:consensus]=="pink"
+        pink_poly.push(p.to_geojson)
+      elsif p[:consensus]=="blue"
+        blue_poly.push(p.to_geojson)
+      elsif p[:flag_value]=="green"
+        green_poly.push(p.to_geojson)
+      elsif p[:flag_value]=="black"
+        black_poly.push(p.to_geojson)
+      else
+        nil_poly.push(p.to_geojson)
+      end
+    end
+
+    @map = {}
+    @map[:yellow_poly] = { :type => "FeatureCollection", :features => yellow_poly }
+    @map[:blue_poly] = { :type => "FeatureCollection", :features => blue_poly }
+    @map[:pink_poly] = { :type => "FeatureCollection", :features => pink_poly }
+    @map[:green_poly] = { :type => "FeatureCollection", :features => green_poly }
+    @map[:black_poly] = { :type => "FeatureCollection", :features => black_poly }
+    @map[:nil_poly] = { :type => "FeatureCollection", :features => nil_poly }
+    respond_with( @map )
   end
 
   # OTHER

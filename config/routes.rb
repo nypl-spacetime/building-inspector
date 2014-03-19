@@ -32,8 +32,8 @@ Webappmini::Application.routes.draw do
   get "geometry/progress_all", to: "fixer#progress_geometry_all", :as => "geometry_progress_all"
 
   # footprints progress json endpoints
-  get "geometry/progress_user", to: "fixer#session_progress_for_sheet"
-  get "geometry/progress_sheet", to: "fixer#progress_sheet"
+  get "geometry/progress_user", to: "fixer#session_progress_geometry_for_sheet"
+  get "geometry/progress_sheet", to: "fixer#progress_sheet_geometry"
 
   # addresses
   get "address", to: "fixer#address", :as => "address"
@@ -51,6 +51,15 @@ Webappmini::Application.routes.draw do
   # polygonfix progress json endpoints
   get "polygonfix/progress_user", to: "fixer#session_progress_polygonfix_for_sheet"
   # TODO: progrees for sheet (requires consensus)
+
+  # colors
+  get "color", to: "fixer#color", :as => "color"
+  get "color/progress", to: "fixer#progress_color", :as => "color_progress"
+  get "color/progress_all", to: "fixer#progress_color_all", :as => "color_progress_all"
+
+  # colors progress json endpoints
+  get "color/progress_user", to: "fixer#session_progress_color_for_sheet"
+  get "color/progress_sheet", to: "fixer#progress_sheet_color"
 
   # json flagging
   post "fixer/flag", to: "fixer#flag_polygon"

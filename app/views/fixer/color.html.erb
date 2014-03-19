@@ -3,7 +3,7 @@
 <% content_for :dynamic_js do %>
   <script type="text/javascript">
   var addToHomeConfig = {
-   lifespan:4000
+    lifespan:4000
   };
   </script>
   <%= stylesheet_link_tag    "lib/vendor/add2home", :media => "all" %>
@@ -11,17 +11,22 @@
 
   <%= javascript_include_tag "lib/vendor/add2home" %>
 
-  <%= javascript_include_tag "inspector_address", {:id => "addressjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}"), "data-session" => "#{@isNew}", "data-map" => "#{@map}"} %>
+  <%= javascript_include_tag "inspector_color", {:id => "colorjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}"), "data-session" => "#{@isNew}", "data-map" => "#{@map}"} %>
 <% end %>
 
 <%= render :partial => "partials/nav" %>
 <%= render :partial => "partials/tutorial" %>
 
 <%= render :partial => "partials/main_container" %>
+
 <div id="controls">
   <div id="buttons">
     <div class="wrapper">
-      <a href="javascript:;" id="submit-button" title="Keyboard shortcut: +" rel="nofollow">NEXT / SKIP</a>
+      <a href="javascript:;" id="pink-button" title="Keyboard shortcut: 1" rel="nofollow">PINK</a>
+      <a href="javascript:;" id="blue-button" title="Keyboard shortcut: 2" rel="nofollow">BLUE</a>
+      <a href="javascript:;" id="yellow-button" title="Keyboard shortcut: 3" rel="nofollow">OCHRE</a>
+      <a href="javascript:;" id="green-button" title="Keyboard shortcut: 4" rel="nofollow">GREEN</a>
+      <a href="javascript:;" id="black-button" title="Keyboard shortcut: 5" rel="nofollow">GRAY</a>
     </div>
   </div>
 </div>

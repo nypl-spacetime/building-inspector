@@ -12,6 +12,9 @@
         <%# link_to "ALL INSPECTIONS", address_progress_path, :class => "popup-link" %>
       <% elsif @current_page=="progress_polygonfix" || @current_page=="progress_polygonfix_all" || @current_page=="polygonfix" %>
         <%= link_to "MY INSPECTIONS", polygonfix_progress_path, :class => (@current_page=="progress" ? "popup-link active" : "popup-link") %>
+      <% elsif @current_page=="progress_color" || @current_page=="progress_color_all" || @current_page=="color" %>
+        <%= link_to "MY INSPECTIONS", color_progress_path, :class => (@current_page=="progress_color" ? "popup-link active" : "popup-link") %>
+        <%= link_to "ALL INSPECTIONS", color_progress_all_path, :class => (@current_page=="progress_color_all" ? "popup-link active" : "popup-link") %>
       <% else %>
       <% end %>
         <div class="callout"></div>

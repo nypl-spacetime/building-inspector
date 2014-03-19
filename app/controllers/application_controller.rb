@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   def sort_tasks
     @global_tasks.unshift(@global_tasks.slice!(1,1)[0]) if @current_page=="polygonfix"
     @global_tasks.unshift(@global_tasks.slice!(2,1)[0]) if @current_page=="address"
+    @global_tasks.unshift(@global_tasks.slice!(3,1)[0]) if @current_page=="color"
   end
 
   private
@@ -28,6 +29,7 @@ class ApplicationController < ActionController::Base
     @global_tasks.push({:score => 0, :name => "Footprints", :path => geometry_path, :page => "fixer"})
     @global_tasks.push({:score => 0, :name => "Fix polygons", :path => polygons_path, :page => "polygonfix"})
     @global_tasks.push({:score => 0, :name => "Addresses", :path => address_path, :page => "address"})
+    @global_tasks.push({:score => 0, :name => "Colors", :path => color_path, :page => "color"})
   end
 
   # SESSION STUFF
