@@ -598,6 +598,12 @@ $ ->
         position: "top"
         polygon_index: 28
       }
+      {
+        element: "#link-help"
+        intro: "<strong>Now you're ready to begin adding addresses!</strong><br />You can always refer to this tutorial again by hitting the HELP button.<br />Have fun! And thanks for helping The New York Public Library."
+        position: "left"
+        polygon_index: 28
+      }
     ]
   new Address({tutorialData:tutorialData})
 
