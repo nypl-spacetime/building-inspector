@@ -290,12 +290,12 @@
 a#tweet {
   display: inline-block;
   color: $grayLightest;
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 15px;
   content: attr(data-icon);
   font-family:$iconfont;
   -webkit-font-smoothing: antialiased;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 #service-links {

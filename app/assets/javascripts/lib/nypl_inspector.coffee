@@ -294,7 +294,7 @@ class @Inspector
     @geo.addTo(@map)
 
   makeEditablePolygon: () ->
-    maxCorners = 8
+    maxCorners = 6
     # editable polyline works with [[lat,lon],[lat,lon],...] coordinates
     # geojson is [[[lon,lat],[lon,lat],...]]
     coordinates = $.parseJSON(@currentPolygon.geometry)[0]
@@ -304,7 +304,7 @@ class @Inspector
 
     @originalPolygon = ([coord[1],coord[0]] for coord in coordinates)
 
-    @originalPolygon = simplifyGeometry(@originalPolygon,0.00005) if coordinates.length > maxCorners
+    @originalPolygon = simplifyGeometry(@originalPolygon,0.000025) if coordinates.length > maxCorners
 
     if (!@geo)
       # console.table coordinates #, @currentGeo
