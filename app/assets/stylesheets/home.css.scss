@@ -66,6 +66,10 @@
     }
   }
 
+  a {
+    font-size: .8em;
+  }
+
   img {
     display: block;
     margin: 0 auto 10px;
@@ -420,7 +424,7 @@ polygon {
 
     &:hover {
       color: $grayDarkest;
-      background: $grayLightest;
+      background: $grayLighter;
     }
 
     @media screen and (max-width: $desktopwidth) {
