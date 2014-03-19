@@ -107,9 +107,9 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
 #map-highlight {
   position: absolute;
-  left: 30%;
+  left: 10%;
   right: 30%;
-  top: 20%;
+  top: 10%;
   bottom: 20%;
 }
 
@@ -205,7 +205,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     display: block;
   }
 
-  &#yes-button:hover, &#no-button:hover, &#fix-button:hover {
+  &#yes-button:hover, &#no-button:hover, &#fix-button:hover, &#submit-button:hover, &#add-button:hover, &#save-button:hover {
     background: $grayDarker;
   }
 

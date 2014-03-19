@@ -230,10 +230,10 @@ class @Inspector
       else
         # things are slightly different for editable polygon drawing
         @makeEditablePolygon()
-      # console.log @currentPolygon #, @currentGeo
-      # console.log @geo
       # center on the polygon
-      @map.fitBounds( @geo.getBounds() )
+      bounds = @geo.getBounds()
+      @map.fitBounds( bounds )
+      @map.setZoom( @map.getZoom()-1 ) if @options.tutorialOn
       @resetButtons()
     else
       return if @options.tutorialOn
@@ -289,6 +289,7 @@ class @Inspector
 
   makeRegularPolygon: () ->
     inspector = @
+    @map.removeLayer(@geo) if @geo
     @geo = @makePolygon($.parseJSON(@currentPolygon.geometry))
     @geo.addTo(@map)
 
