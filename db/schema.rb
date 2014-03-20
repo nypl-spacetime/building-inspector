@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140313152307) do
+ActiveRecord::Schema.define(:version => 20140320154554) do
+
+  create_table "consensuspolygons", :force => true do |t|
+    t.string   "task"
+    t.integer  "polygon_id"
+    t.text     "consensus"
+    t.integer  "override_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "consensuspolygons", ["polygon_id", "task"], :name => "index_task_consensus_on_polygon_id", :unique => true
+  add_index "consensuspolygons", ["task"], :name => "index_task"
 
   create_table "flags", :force => true do |t|
     t.string   "flag_type"

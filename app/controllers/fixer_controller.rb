@@ -3,20 +3,6 @@ class FixerController < ApplicationController
 	before_filter :cookies_required, :except => :cookie_test
 	respond_to :json
 
-  def getProgress(task, mode)
-    session = getSession()
-    progress = {}
-    progress[:counts] = Polygon.grouped_by_sheet unless mode == "user"
-    if user_signed_in?
-      progress[:counts] = Flag.grouped_flags_for_user(current_user.id, task) unless mode == "all"
-      progress[:all_polygons_session] = Flag.flags_for_user(current_user.id, task)
-    else
-      progress[:counts] = Flag.grouped_flags_for_session(session, task) unless mode == "all"
-      progress[:all_polygons_session] = Flag.flags_for_session(session, task)
-    end
-    return progress
-  end
-
   # GEOMETRY
 
 	def geometry
@@ -283,6 +269,20 @@ class FixerController < ApplicationController
   end
 
   # OTHER
+
+  def getProgress(task, mode)
+    session = getSession()
+    progress = {}
+    progress[:counts] = Polygon.grouped_by_sheet unless mode == "user"
+    if user_signed_in?
+      progress[:counts] = Flag.grouped_flags_for_user(current_user.id, task) unless mode == "all"
+      progress[:all_polygons_session] = Flag.flags_for_user(current_user.id, task)
+    else
+      progress[:counts] = Flag.grouped_flags_for_session(session, task) unless mode == "all"
+      progress[:all_polygons_session] = Flag.flags_for_session(session, task)
+    end
+    return progress
+  end
 
 	def status
 	  	@current_page = "status"
