@@ -6,28 +6,24 @@ class ApiController < ApplicationController
 		if params[:page] != nil && params[:page] != ''
 			page = params[:page].to_i
 		end
+		type = params[:task]
+		consensus = params[:consensus]
 		offset = per_page * (page-1)
 		# returns all the polygons with their consensus value
 		count = 0
-		columns = "id, geometry, sheet_id, consensus, dn, centroid_lat, centroid_lon"
-		if params[:flag_type] == nil
-			count = Polygon.select("COUNT(id) as pcount").where("consensus IS NOT NULL").first.pcount
-			poly = Polygon.select(columns).where("consensus IS NOT NULL").limit(per_page).offset(offset)
-		elsif params[:flag_type] == "yes"
-			count = Polygon.select("COUNT(id) as pcount").where("consensus = 'yes'").first.pcount
-			poly = Polygon.select(columns).where("consensus = 'yes'").limit(per_page).offset(offset)
-		elsif params[:flag_type] == "no"
-			count = Polygon.select("COUNT(id) as pcount").where("consensus = 'no'").first.pcount
-			poly = Polygon.select(columns).where("consensus = 'no'").limit(per_page).offset(offset)
-		elsif params[:flag_type] == "fix"
-			count = Polygon.select("COUNT(id) as pcount").where("consensus = 'fix'").first.pcount
-			poly = Polygon.select(columns).where("consensus = 'fix'").limit(per_page).offset(offset)
-		elsif params[:flag_type] == "all"
-			count = Polygon.select("COUNT(id) as pcount").first.pcount
-			poly = Polygon.select(columns).limit(per_page).offset(offset)
+		columns = "polygons.id, geometry, sheet_id, CP.consensus, dn, centroid_lat, centroid_lon"
+		join = " LEFT JOIN consensuspolygons AS CP ON CP.polygon_id = polygons.id"
+		where = "1=1"
+
+		if consensus != nil
+			where = "CP.task = "+Polygon.sanitize(type)+" AND CP.consensus = "+Polygon.sanitize(consensus)
 		end
+
+		count = Polygon.select("COUNT(polygons.id) as pcount").joins(join).where(where).first.pcount
+		poly = Polygon.select(columns).joins(join).where(where).limit(per_page).offset(offset)
+
 		msg = "List for informative purposes only. This is not a definitive list. This URL may be changed at any time without prior notice."
-	
+
 		geojson = []
 		poly.each do |p|
 			geojson.push(p.to_geojson)
@@ -57,14 +53,14 @@ class ApiController < ApplicationController
 		end
 		offset = per_page * (page-1)
 		# returns all the polygons with their consensus value
-		columns = "id, geometry, sheet_id, consensus, dn, centroid_lat, centroid_lon"
+		columns = "id, geometry, sheet_id, dn, centroid_lat, centroid_lon"
 		ids = params[:list].split(",").map {|id| id.to_i}
 		if ids.count > 0
 			count = Polygon.select("COUNT(id) as pcount").where("id IN (?)", ids).first.pcount
 			poly = Polygon.select(columns).where("id IN (?)", ids).offset(offset)
 		end
 		msg = "List for informative purposes only. This is not a definitive list. This URL may be changed at any time without prior notice."
-	
+
 		geojson = []
 
 		if poly

@@ -3,6 +3,20 @@ class ApplicationController < ActionController::Base
 
   before_filter :global_variables
 
+  before_filter :store_location
+
+  def store_location
+    # store last url - this is needed for post-login redirect to whatever the user last visited.
+    if ( !request.fullpath.include?("users/sign_in") &&
+         !request.fullpath.include?("users/sign_up") &&
+         !request.fullpath.include?("users/password") &&
+         !request.fullpath.include?("users/sign_out") &&
+         !request.fullpath.include?("users/auth") &&
+         !request.xhr?) # don't store ajax calls
+      session[:previous_url] = request.fullpath
+    end
+  end
+
   def sort_tasks
     @global_tasks.unshift(@global_tasks.slice!(1,1)[0]) if @current_page=="polygonfix"
     @global_tasks.unshift(@global_tasks.slice!(2,1)[0]) if @current_page=="address"
@@ -11,10 +25,14 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def after_sign_in_path_for(resource)
+    session[:previous_url] || root_path
+  end
+
   # Overwriting the sign_out redirect path method
   def after_sign_out_path_for(resource_or_scope)
     cookies.delete :session
-    geometry_path
+    session[:previous_url] || root_path
   end
 
   def check_admin!

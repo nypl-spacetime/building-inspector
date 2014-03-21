@@ -27,7 +27,7 @@ The original GeoJSON files do not have centroids (they were added and processed 
 
 `rake data_import:ingest_geojson id=SOMEID layer_id=SOMELAYERID bbox=SOMEBOUNDINGBOX force=true`
 
-This imports polygons from a file `public/files/SOMEID-traced.json` into the database **replacing** any polygons (and its corresponding flags) that are associated to ID `SOMEID`. 
+This imports polygons from a file `public/files/SOMEID-traced.json` into the database **replacing** any polygons (and its corresponding flags) that are associated to ID `SOMEID`.
 
 **NOTE:** So far only layers 859 and 860 are provided. Layer 859 has separate GeoJSON for centroids and polygons. Layer 860 sheets have a single file with both fields. Ingesting 859 requires a separate `data_import:ingest_centroid_bulk` process for centroids.
 
@@ -35,16 +35,31 @@ This imports polygons from a file `public/files/SOMEID-traced.json` into the dat
 
 The following API endpoints have been added to export the inspection consensus process (paginated by groups of 500). Consensus is defined by **agreement of 75% or more of three or more votes**:
 
-#### Polygon export → /api/polygons/:type/page/:page
+#### Polygon export → /api/polygons/…
 
-Accepts types: `all`, `yes`, `no`, `fix` with numeric paging (500 records per page).
+Active endpoints:
+````
+/api/polygons/:task/page/:page
+/api/polygons/:task/:consensus/page/:page
+```
 
-- `/api/polygons/all/page/PAGENUMBER` returns all polygons in `PAGENUMBER` regardless of their consensus value.
-- `/api/polygons/yes/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that have been marked as *correct*.
-- `/api/polygons/no/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that have been marked as *not buildings*.
-- `/api/polygons/fix/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that need to be *fixed*.
+Accept tasks:
+`geometry`, `color`, `polygonfix`, `address` with numeric paging (500 records per page).
 
-### Copyright 2013 The New York Public Library
+`consensus` values depend on the task and perhaps only useful in the `geometry` and `color` tasks.
+
+- `/api/polygons/geometry/page/PAGENUMBER` returns all polygons in `PAGENUMBER` regardless of their consensus value.
+- `/api/polygons/geometry/yes/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that have been marked as *correct*.
+- `/api/polygons/geometry/no/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that have been marked as *not buildings*.
+- `/api/polygons/geometry/fix/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that need to be *fixed*.
+
+### Version notes
+
+- 2.0 Second release with `address`, `polygonfix` and `color` tasks. Refactored and improved code. New API endpoints.
+- 1.1 Added API endpoints
+- 1.0 First release with single `geometry` task
+
+### Copyright 2013-2014 The New York Public Library
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

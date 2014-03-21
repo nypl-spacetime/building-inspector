@@ -116,7 +116,7 @@ class Polygonfix extends Inspector
     return "[[" + ("[#{p.join(",")}]" for p in p_array) + "]]"
 
   prepareData: () ->
-    flag_array = ("==#{f.flag}" for f in @flags)
+    flag_array = ("#{f.flag}==" for f in @flags)
     flag_array.join("|")
 
   refreshGhosts: () ->

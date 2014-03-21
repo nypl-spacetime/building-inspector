@@ -17,9 +17,14 @@ class SheetsController < ApplicationController
   # GET /sheets/1.json
   def show
     @sheet = Sheet.find(params[:id])
-    
-    all_polygons = @sheet.polygons
-    
+
+    # TODO: allow for admin review of progress in all tasks
+    if params[:type] == nil # ALWAYS nil FOR NOW
+      params[:type] = "geometry"
+    end
+
+    all_polygons = Sheet.progress_for_task(@sheet.id, params[:type])
+
     fix_poly = []
     yes_poly = []
     no_poly = []

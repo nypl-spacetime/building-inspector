@@ -5,10 +5,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if @user.persisted?
       flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Facebook"
       sign_in @user, :event => :authentication
-      redirect_to geometry_path
+      redirect_to session[:previous_url] # || root_path
     else
       session["devise.facebook_data"] = request.env["omniauth.auth"]
-      redirect_to geometry_path
+      redirect_to root_path
     end
   end
 
@@ -17,10 +17,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if @user.persisted?
       flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Google"
       sign_in @user, :event => :authentication
-      redirect_to geometry_path
+      redirect_to session[:previous_url] # || root_path
     else
       session["devise.google_data"] = request.env["omniauth.auth"]
-      redirect_to geometry_path
+      redirect_to root_path
     end
   end
 
@@ -29,10 +29,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if @user.persisted?
       flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Twitter"
       sign_in @user, :event => :authentication
-      redirect_to geometry_path
+      redirect_to session[:previous_url] # || root_path
     else
       session["devise.twitter_data"] = request.env["omniauth.auth"]
-      redirect_to geometry_path
+      redirect_to root_path
     end
   end
 

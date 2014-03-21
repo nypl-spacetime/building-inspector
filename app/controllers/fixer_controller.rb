@@ -57,7 +57,7 @@ class FixerController < ApplicationController
   end
 
   def progress_sheet_geometry
-      all_polygons = Polygon.select("id, consensus, dn, sheet_id, geometry").where(:sheet_id => params[:id])
+      all_polygons = Sheet.progress_for_task(params[:id], "geometry")
 
       fix_poly = []
       yes_poly = []
@@ -233,7 +233,7 @@ class FixerController < ApplicationController
   end
 
   def progress_sheet_color
-    all_polygons = Polygon.select("id, consensus, dn, sheet_id, geometry").where(:sheet_id => params[:id])
+    all_polygons = Sheet.progress_for_task(params[:id], "color")
 
     yellow_poly = []
     pink_poly = []
@@ -293,7 +293,18 @@ class FixerController < ApplicationController
 		map = {}
 		# map[:map] = Sheet.random
 		map[:map] = Sheet.random_unprocessed(type)
-		map[:poly] = map[:map].mini(session, type)
+
+    if map[:map] == nil
+      map[:status] = {}
+      map[:status][:session_id] = session
+      map[:status][:map_polygons] = 0
+      map[:status][:map_polygons_session] = 0
+      map[:status][:all_sheets] = Sheet.count
+      map[:status][:all_polygons] = Polygon.count
+      return map
+    end
+
+		map[:poly] = map[:map].polygons_for_task(type, session)
 		map[:status] = {}
 		map[:status][:session_id] = session
 		map[:status][:map_polygons] = map[:map].polygons.count
@@ -319,53 +330,41 @@ class FixerController < ApplicationController
 
   # FLAGGING
 
-	def flag_polygon(type="geometry")
-	    if params[:t] != nil
-	      type = params[:t]
-	    end
-		session = getSession()
-		@flag = Flag.new
-		@flag[:is_primary] = true
-		@flag[:polygon_id] = params[:i]
-		@flag[:flag_value] = params[:f]
-		@flag[:session_id] = session
-		@flag[:flag_type] = type
-		if @flag.save
-			fl = Polygon.connection.execute("UPDATE polygons SET flag_count = flag_count+1 WHERE id = #{params[:i]}")
-			respond_with( @flag )
-		else
-			respond_with( @flag.errors )
-		end
-	end
-
-  def many_flags_one_polygon
+  def apply_flags_to_polygon
     session = getSession()
     # assuming json like so:
     # id: poly_id
-    # flags: "lat,lng,value|lat,lng,value|lat,lng,value|..."
+    # flags: "value,lat,lng|value,lat,lng|value,lat,lng|..."
     flags = params[:f].split("|")
     poly_id = params[:i]
     type = params[:t]
-    if poly_id == nil || flags == nil || flags.count <= 0
+    if poly_id == nil || flags == nil
         respond_with( "empty_poly" )
         return
     end
+
+    puts "@@@@@@@@ FLAG"
+    puts flags
+    puts params[:f]
+    puts flags.count
+    puts flags.split("=")
+
     uniques = []
     flags.each do |f|
     	contents = f.split("=")
     	# at least have a value
-        if contents[2] == nil || uniques.index(contents[2]) != nil
+        if contents[0] == nil # || uniques.index(contents[0]) != nil
             next
         end
         flag = Flag.new
         flag[:is_primary] = true
         flag[:polygon_id] = poly_id
-        flag[:flag_value] = contents[2]
-        if contents[0] != ""
-        	flag[:latitude] = contents[0]
-        end
+        flag[:flag_value] = contents[0]
         if contents[1] != ""
-          flag[:longitude] = contents[1]
+        	flag[:latitude] = contents[1]
+        end
+        if contents[2] != ""
+          flag[:longitude] = contents[2]
         end
         flag[:session_id] = session
         flag[:flag_type] = type

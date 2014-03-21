@@ -52,7 +52,7 @@ class Address extends Inspector
       flag_str = flag_data.join("|")
     else
       # console.log "skipped"
-      flag_str = "==NONE"
+      flag_str = "NONE=="
 
     @submitMultipleFlags(e, flag_str)
 
@@ -61,7 +61,7 @@ class Address extends Inspector
     for flag, contents of @flags
       latlng = contents.circle.getLatLng()
       txt = contents.value
-      r.push "#{latlng.lat}=#{latlng.lng}=#{txt}" if txt != "" && !contents.fake
+      r.push "#{txt}=#{latlng.lat}=#{latlng.lng}" if txt != "" && !contents.fake
     r
 
   onMapChange: (e) =>

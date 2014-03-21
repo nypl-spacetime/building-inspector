@@ -1,25 +1,43 @@
 namespace :db do
 
-  desc "Give a polygon counts"
-  task :generate_flag_count => :environment do
-    flags = Flag.select("COUNT(id) as flag_count, polygon_id").group(:polygon_id).order(:polygon_id)
-    flags.each do |f|
-      p = Polygon.find(f.polygon_id)
-      p.flag_count = f.flag_count
-      p.save
-    end
-  end
-
   desc "Process consensus in POLYGONS (recurring)"
   task :calculate_consensus => :environment do
-    yes_query = Flag.connection.execute("UPDATE polygons SET consensus = 'yes' WHERE consensus IS NULL AND flag_count >= 3 AND ((SELECT COUNT(id) FROM flags WHERE flags.polygon_id = polygons.id AND flags.flag_value = 'yes')::float/polygons.flag_count::float) >= 0.75")
-    no_query = Flag.connection.execute("UPDATE polygons SET consensus = 'no' WHERE consensus IS NULL AND flag_count >= 3 AND ((SELECT COUNT(id) FROM flags WHERE flags.polygon_id = polygons.id AND flags.flag_value = 'no')::float/polygons.flag_count::float) >= 0.75")
-    fix_query = Flag.connection.execute("UPDATE polygons SET consensus = 'fix' WHERE consensus IS NULL AND flag_count >= 3 AND ((SELECT COUNT(id) FROM flags WHERE flags.polygon_id = polygons.id AND flags.flag_value = 'fix')::float/polygons.flag_count::float) >= 0.75")
-    undecided_query = Flag.connection.execute("UPDATE polygons SET consensus = 'fix' WHERE consensus IS NULL AND flag_count >= 10")
+    yes_query = Flag.connection.execute(build_query_for_task_value("geometry", "yes", 0.75))
+    no_query = Flag.connection.execute(build_query_for_task_value("geometry", "no", 0.75))
+    fix_query = Flag.connection.execute(build_query_for_task_value("geometry", "fix", 0.75))
+    pink_query = Flag.connection.execute(build_query_for_task_value("color", "pink", 0.75))
+    blue_query = Flag.connection.execute(build_query_for_task_value("color", "blue", 0.75))
+    yellow_query = Flag.connection.execute(build_query_for_task_value("color", "yellow", 0.75))
+    green_query = Flag.connection.execute(build_query_for_task_value("color", "green", 0.75))
+    black_query = Flag.connection.execute(build_query_for_task_value("color", "black", 0.75))
   end
 
-  desc "Process consensus in SHEETS (recurring)"
-  task :sheet_consensus => :environment do
-    query = Sheet.connection.execute("UPDATE sheets SET consensus='done' WHERE id IN ( SELECT S.id FROM sheets S WHERE S.id NOT IN (SELECT DISTINCT P.sheet_id  FROM polygons P WHERE  P.consensus IS NULL) )")
+  def build_query_for_task_value(task, value, threshold)
+    "INSERT INTO consensuspolygons
+  (consensus, task, polygon_id, created_at, updated_at)
+  SELECT '#{value}' AS consensus, '#{task}' AS task, P.id AS polygon_id, now(), now()
+  FROM polygons AS P
+  LEFT JOIN consensuspolygons AS C
+  ON C.polygon_id = P.id
+  AND C.task = '#{task}'
+  INNER JOIN (
+    SELECT _F.polygon_id, _F.flag_value, COUNT(*) AS flag_count
+    FROM flags AS _F
+    WHERE _F.flag_value = '#{value}'
+    GROUP BY _F.polygon_id, _F.flag_value
+    HAVING COUNT(*) >= 3
+  ) AS F
+  ON F.polygon_id = P.id
+  INNER JOIN (
+    SELECT _F.polygon_id, COUNT(*) AS flag_count
+    FROM flags AS _F
+    GROUP BY _F.polygon_id
+    HAVING COUNT(*) >= 3
+  ) AS FCOUNT
+  ON FCOUNT.polygon_id = P.id
+  WHERE
+    C.id IS NULL AND
+    F.flag_count::float / FCOUNT.flag_count::float >= #{threshold}"
   end
+
 end

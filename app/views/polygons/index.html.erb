@@ -6,7 +6,6 @@
     <th>Status</th>
     <th><%= sortable "sheet", "Sheet" %></th>
     <th><%= sortable "flag_count", "Flag count" %></th>
-    <th><%= sortable "consensus", "Consensus" %></th>
     <th>Color</th>
     <th></th>
     <th></th>
@@ -19,7 +18,6 @@
     <td><%= polygon.status %></td>
     <td><%= link_to polygon.sheet_id, sheet_path(polygon.sheet_id) %></td>
     <td><%= polygon.flag_count %></td>
-    <td><%= polygon.consensus %></td>
     <td><%= polygon.color %></td>
     <td><%= link_to 'Show', polygon %></td>
     <td><%= link_to 'Edit', edit_polygon_path(polygon) %></td>

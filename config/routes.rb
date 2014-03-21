@@ -62,13 +62,14 @@ Webappmini::Application.routes.draw do
   get "color/progress_sheet", to: "fixer#progress_sheet_color"
 
   # json flagging
-  post "fixer/flag", to: "fixer#flag_polygon"
-  post "fixer/flagmulti", to: "fixer#many_flags_one_polygon"
+  post "fixer/flag", to: "fixer#apply_flags_to_polygon"
 
   # api endpoints
   get "api/polygons"
-  get "api/polygons/:flag_type", to: "api#polygons"
-  get "api/polygons/:flag_type/page/:page", to: "api#polygons"
+  get "api/polygons/:task", to: "api#polygons"
+  get "api/polygons/:task/page/:page", to: "api#polygons"
+  get "api/polygons/:task/:consensus", to: "api#polygons"
+  get "api/polygons/:task/:consensus/page/:page", to: "api#polygons"
   get "api/polygons_for_ids", to: "api#polygons_for_ids"
 
   root :to => "general#home"

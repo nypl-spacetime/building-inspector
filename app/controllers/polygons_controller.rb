@@ -15,19 +15,6 @@ class PolygonsController < ApplicationController
     end
   end
 
-  # GET /consensus
-  # GET /consensus.json
-  def consensus
-    @total = Polygon.count
-    @consensus_total = Polygon.where("consensus IS NOT NULL").count
-    @consensus_counts = Polygon.connection.execute("SELECT P.consensus, COUNT(*)::float/(SELECT COUNT(*) FROM polygons WHERE consensus IS NOT NULL)::float AS percent FROM polygons P WHERE consensus IS NOT NULL GROUP BY P.consensus")
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @polygons }
-    end
-  end
-
   # GET /polygons/1
   # GET /polygons/1.json
   def show

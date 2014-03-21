@@ -56,11 +56,13 @@
 
   li {
     float: left;
-    width: 33%;
+    width: 25%;
     text-align: center;
     font-size: 1.25em;
     line-height: 1.25em;
     @media screen and (max-width: $desktopwidth) {
+      width: 50%;
+      margin-bottom: 20px;
       font-size: 1em;
       line-height: 1em;
     }

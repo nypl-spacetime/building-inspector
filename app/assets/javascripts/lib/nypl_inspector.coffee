@@ -133,7 +133,7 @@ class @Inspector
   submitMultipleFlags: (event, data) ->
     @removeButtonListeners()
     event.preventDefault()
-    @prepareFlagSubmission(data, "/fixer/flagmulti.json")
+    @prepareFlagSubmission(data, "/fixer/flag")
 
   prepareFlagSubmission: (data, url) ->
     @clearScreen()
@@ -177,14 +177,17 @@ class @Inspector
 
     $(@options.tweetID).attr "href", twitterurl
 
+  showMessage: (msg) ->
+    el = $("#map-message")
+    el.html("<span>" + msg + "</span>")
+    .show().delay(2000).fadeOut(1000)
+
   showInspectingMessage: () ->
     return if @layer_id == @loadedData.map.layer_id or @options.tutorialOn
     @layer_id = @loadedData.map.layer_id
     msg = "Now inspecting:<br/><strong>Brooklyn, 1855</strong>"
     msg = "Now inspecting:<br/><strong>Manhattan, 1857-62</strong>" if @layer_id == 859 # hack // eventually add to sheet table
-    el = $("#map-inspecting")
-    el.html("<span>" + msg + "</span>")
-    .show().delay(2000).fadeOut(1000)
+    @showMessage(msg)
 
   invokeTutorial: () =>
     if (window.innerWidth < 500)
@@ -258,7 +261,8 @@ class @Inspector
           inspector.processPolygons(data)
         else
           # retry until you find a good map
-          inspector.getPolygons()
+          msg = "<strong>No unprocessed polygons found for this task</strong><br />Good news! This seems to be complete. Maybe try another task?"
+          inspector.showMessage(msg)
       )
 
   processPolygons: (data) ->
