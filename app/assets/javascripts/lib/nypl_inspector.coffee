@@ -125,12 +125,7 @@ class @Inspector
     @addButtonListeners() unless @options.tutorialOn
     # rest should be implemented in the inspector instance
 
-  submitSingleFlag: (event, data) ->
-    @removeButtonListeners()
-    event.preventDefault()
-    @prepareFlagSubmission(data, "/fixer/flag")
-
-  submitMultipleFlags: (event, data) ->
+  submitFlag: (event, data) ->
     @removeButtonListeners()
     event.preventDefault()
     @prepareFlagSubmission(data, "/fixer/flag")

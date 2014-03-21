@@ -85,23 +85,23 @@ class Color extends Inspector
 
   submitPinkFlag: (e) =>
     @activateButton("pink") unless @options.tutorialOn
-    @submitSingleFlag(e, "pink")
+    @submitFlag(e, "pink")
 
   submitBlueFlag: (e) =>
     @activateButton("blue") unless @options.tutorialOn
-    @submitSingleFlag(e, "blue")
+    @submitFlag(e, "blue")
 
   submitYellowFlag: (e) =>
     @activateButton("yellow") unless @options.tutorialOn
-    @submitSingleFlag(e, "yellow")
+    @submitFlag(e, "yellow")
 
   submitGreenFlag: (e) =>
     @activateButton("green") unless @options.tutorialOn
-    @submitSingleFlag(e, "green")
+    @submitFlag(e, "green")
 
   submitBlackFlag: (e) =>
     @activateButton("black") unless @options.tutorialOn
-    @submitSingleFlag(e, "black")
+    @submitFlag(e, "black")
 
 $ ->
   tutorialData =

@@ -54,7 +54,7 @@ class Address extends Inspector
       # console.log "skipped"
       flag_str = "NONE=="
 
-    @submitMultipleFlags(e, flag_str)
+    @submitFlag(e, flag_str)
 
   prepareData: () =>
     r = []

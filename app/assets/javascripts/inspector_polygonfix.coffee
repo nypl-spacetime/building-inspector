@@ -95,13 +95,13 @@ class Polygonfix extends Inspector
       flag_str = @getFixedPolygon()
       flag_str = "NOFIX" if !flag_str
       # console.log flag_str
-      @submitSingleFlag(e, flag_str)
+      @submitFlag(e, flag_str)
     else
       @activateButton("save") unless @options.tutorialOn
       # add current flag if good
       @addPolygonToFlags()
       flag_str = @prepareData()
-      @submitMultipleFlags(e, flag_str)
+      @submitFlag(e, flag_str)
 
   getFixedPolygon: () ->
     # prepares the new polygon in GeoJSON-ish format

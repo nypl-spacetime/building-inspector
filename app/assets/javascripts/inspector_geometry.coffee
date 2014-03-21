@@ -67,15 +67,15 @@ class Geometry extends Inspector
 
   submitYesFlag: (e) =>
     @activateButton("yes") unless @options.tutorialOn
-    @submitSingleFlag(e, "yes")
+    @submitFlag(e, "yes")
 
   submitNoFlag: (e) =>
     @activateButton("no") unless @options.tutorialOn
-    @submitSingleFlag(e, "no")
+    @submitFlag(e, "no")
 
   submitFixFlag: (e) =>
     @activateButton("fix") unless @options.tutorialOn
-    @submitSingleFlag(e, "fix")
+    @submitFlag(e, "fix")
 
 $ ->
   tutorialData =
