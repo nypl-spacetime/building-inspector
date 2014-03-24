@@ -294,9 +294,18 @@ class FixerController < ApplicationController
 		# map[:map] = Sheet.random
 		map[:map] = Sheet.random_unprocessed(type)
 
+    map[:status] = {}
+    map[:status][:session_id] = session
+
+    if user_signed_in?
+      map[:status][:all_polygons_session] = Flag.flags_for_user(current_user.id, type)
+    else
+      map[:status][:all_polygons_session] = Flag.flags_for_session(session, type)
+    end
+
     if map[:map] == nil
-      map[:status] = {}
-      map[:status][:session_id] = session
+      # no map was found, send empty stuff
+      map[:poly] = []
       map[:status][:map_polygons] = 0
       map[:status][:map_polygons_session] = 0
       map[:status][:all_sheets] = Sheet.count
@@ -305,17 +314,10 @@ class FixerController < ApplicationController
     end
 
 		map[:poly] = map[:map].polygons_for_task(type, session)
-		map[:status] = {}
-		map[:status][:session_id] = session
 		map[:status][:map_polygons] = map[:map].polygons.count
 		map[:status][:map_polygons_session] = map[:poly].count
 		map[:status][:all_sheets] = Sheet.count
 		map[:status][:all_polygons] = Polygon.count
-		if user_signed_in?
-		  map[:status][:all_polygons_session] = Flag.flags_for_user(current_user.id, type)
-		else
-		  map[:status][:all_polygons_session] = Flag.flags_for_session(session, type)
-		end
 		return map
 	end
 
@@ -334,7 +336,7 @@ class FixerController < ApplicationController
     session = getSession()
     # assuming json like so:
     # id: poly_id
-    # flags: "value,lat,lng|value,lat,lng|value,lat,lng|..."
+    # flags: "value=lat=lng|value=lat=lng|value=lat=lng|..."
     flags = params[:f].split("|")
     poly_id = params[:i]
     type = params[:t]
@@ -342,12 +344,6 @@ class FixerController < ApplicationController
         respond_with( "empty_poly" )
         return
     end
-
-    puts "@@@@@@@@ FLAG"
-    puts flags
-    puts params[:f]
-    puts flags.count
-    puts flags.split("=")
 
     uniques = []
     flags.each do |f|

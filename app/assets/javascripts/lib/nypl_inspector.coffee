@@ -54,7 +54,7 @@ class @Inspector
       touchZoom: @options.touchZoom
       animate: true
       attributionControl: false
-      minZoom: 18
+      minZoom: 12
       maxZoom: 21
       dragging: @options.draggableMap
     )
@@ -172,17 +172,17 @@ class @Inspector
 
     $(@options.tweetID).attr "href", twitterurl
 
-  showMessage: (msg) ->
+  showMessage: (msg, fade) ->
     el = $("#map-message")
-    el.html("<span>" + msg + "</span>")
-    .show().delay(2000).fadeOut(1000)
+    el.html("<span>" + msg + "</span>").show()
+    el.delay(2000).fadeOut(1000) if fade
 
   showInspectingMessage: () ->
     return if @layer_id == @loadedData.map.layer_id or @options.tutorialOn
     @layer_id = @loadedData.map.layer_id
     msg = "Now inspecting:<br/><strong>Brooklyn, 1855</strong>"
     msg = "Now inspecting:<br/><strong>Manhattan, 1857-62</strong>" if @layer_id == 859 # hack // eventually add to sheet table
-    @showMessage(msg)
+    @showMessage(msg, true)
 
   invokeTutorial: () =>
     if (window.innerWidth < 500)
@@ -231,7 +231,7 @@ class @Inspector
       # center on the polygon
       bounds = @geo.getBounds()
       @map.fitBounds( bounds )
-      @map.setZoom( @map.getZoom()-1 ) if @options.tutorialOn
+      # @map.setZoom( @map.getZoom()-1 ) if @options.tutorialOn
       @resetButtons()
     else
       return if @options.tutorialOn
@@ -239,34 +239,43 @@ class @Inspector
       @currentIndex = -1
       @currentPolygon = {}
       @allPolygonsSession = 0
-      @getPolygons()
+      if @polyData.length == 0
+        # no map found, die
+        @endGame()
+      else
+        @getPolygons()
+
+  endGame:() ->
+    # no map found, die
+    msg = "<strong>No unprocessed polygons found for this task</strong><br />Good news! This seems to be complete. Maybe try another task?"
+    @showMessage(msg, false)
+    $(@options.buttonsID).hide()
 
   getPolygons: () ->
     inspector = @
-    mapdata = $(@options.jsdataID).data("map")
-    if @firstLoad && mapdata.poly.length > 0
+    if @firstLoad
+      # using embedded map data
       @firstLoad = false
-      $(@options.loaderID).remove()
+      mapdata = $(@options.jsdataID).data("map")
       @processPolygons(mapdata)
     else
       $.getJSON("/fixer/map.json?type=#{@options.task}", (data) ->
         # console.log(d);
-        if data.poly.length > 0
-          $(inspector.options.loaderID).remove()
-          inspector.processPolygons(data)
-        else
-          # retry until you find a good map
-          msg = "<strong>No unprocessed polygons found for this task</strong><br />Good news! This seems to be complete. Maybe try another task?"
-          inspector.showMessage(msg)
+        inspector.processPolygons(data)
       )
 
   processPolygons: (data) ->
-    data.poly = Utils.shuffle(data.poly)
+    $(@options.loaderID).remove()
     @loadedData = data
     @polyData = data.poly
     @updateScore()
-    @showInspectingMessage()
-    @showNextPolygon()
+    if @polyData?.length > 0
+      data.poly = Utils.shuffle(data.poly)
+      @showInspectingMessage()
+      @showNextPolygon()
+    else
+      #this only happens when no map was found with polygons
+      @endGame()
 
   makePolygon: (poly) ->
     inspector = @

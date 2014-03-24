@@ -72,11 +72,11 @@ class Polygonfix extends Inspector
 
   showPolygon: (e) =>
     # overriding the superclass method
-    @geo._reloadPolygon() # hacky
+    @geo?._reloadPolygon() # hacky
 
   hidePolygon: (e) =>
     # overriding the superclass method
-    @geo._hideAll() # hacky
+    @geo?._hideAll() # hacky
 
   addPolygonToFlags: (e) =>
     return if !@polygonHasChanged

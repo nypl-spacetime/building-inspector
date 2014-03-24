@@ -68,7 +68,7 @@ class Address extends Inspector
     # console.log "changed!"
     # check if current polygon is somewhat visible in view
     # so user does not get lost
-    if @geo.getBounds? and not @map.getBounds().intersects(@geo.getBounds())
+    if @geo?.getBounds? and not @map.getBounds().intersects(@geo.getBounds())
       @map.fitBounds( @geo.getBounds() )
     for flag, contents of @flags
       latlng = contents.circle.getLatLng()
