@@ -2,16 +2,18 @@ namespace :db do
 
   desc "Process consensus in POLYGONS (recurring)"
   task :calculate_consensus => :environment do
+    min_count = 3
+    threshold = 0.75
     # geometry
-    yes_query = Flag.connection.execute(build_consensus_query_for_task_value("geometry", "yes", 3, 0.75))
-    no_query = Flag.connection.execute(build_consensus_query_for_task_value("geometry", "no", 3, 0.75))
-    fix_query = Flag.connection.execute(build_consensus_query_for_task_value("geometry", "fix", 3, 0.75))
+    yes_query = Flag.connection.execute(build_consensus_query_for_task_value("geometry", "yes", min_count, threshold))
+    no_query = Flag.connection.execute(build_consensus_query_for_task_value("geometry", "no", min_count, threshold))
+    fix_query = Flag.connection.execute(build_consensus_query_for_task_value("geometry", "fix", min_count, threshold))
     # colors
-    pink_query = Flag.connection.execute(build_consensus_query_for_task_value("color", "pink", 3, 0.75))
-    blue_query = Flag.connection.execute(build_consensus_query_for_task_value("color", "blue", 3, 0.75))
-    yellow_query = Flag.connection.execute(build_consensus_query_for_task_value("color", "yellow", 3, 0.75))
-    green_query = Flag.connection.execute(build_consensus_query_for_task_value("color", "green", 3, 0.75))
-    black_query = Flag.connection.execute(build_consensus_query_for_task_value("color", "black", 3, 0.75))
+    pink_query = Flag.connection.execute(build_consensus_query_for_task_value("color", "pink", min_count, threshold))
+    blue_query = Flag.connection.execute(build_consensus_query_for_task_value("color", "blue", min_count, threshold))
+    yellow_query = Flag.connection.execute(build_consensus_query_for_task_value("color", "yellow", min_count, threshold))
+    green_query = Flag.connection.execute(build_consensus_query_for_task_value("color", "green", min_count, threshold))
+    black_query = Flag.connection.execute(build_consensus_query_for_task_value("color", "black", min_count, threshold))
   end
 
   def build_consensus_query_for_task_value(task, value, min_count, threshold)
