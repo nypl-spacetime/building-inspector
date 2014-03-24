@@ -54,6 +54,7 @@ class General
         $("#link-geometry").addClass("active") if index==0
         $("#link-polygonfix").addClass("active") if index==1
         $("#link-address").addClass("active") if index==2
+        $("#link-color").addClass("active") if index==3
     )
     $("#link-geometry").on("mouseover", ()->
       $("#home-slideshow").swipeshow().goTo(0)
@@ -63,6 +64,9 @@ class General
     )
     $("#link-address").on("mouseover", ()->
       $("#home-slideshow").swipeshow().goTo(2)
+    )
+    $("#link-color").on("mouseover", ()->
+      $("#home-slideshow").swipeshow().goTo(3)
     )
     # $("#link-address").addClass("active")
     # $("#link-polygonfix").addClass("active")

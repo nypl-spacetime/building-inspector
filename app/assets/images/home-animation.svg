@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 960 300" enable-background="new 0 0 960 300" xml:space="preserve">
-<polygon class="poly-yes" fill="none" stroke="#FF0000" stroke-width="4" stroke-miterlimit="10" points="333,188 385.4,158.5 433.3,221.2 377.3,253.6 "/>
-<polygon class="poly-no" fill="none" stroke="#FF0000" stroke-width="4" stroke-miterlimit="10" points="414.1,138.1 395,110.8 425.9,95.8 446.6,124.1 "/>
-<polygon class="poly-fix" fill="none" stroke="#FF0000" stroke-width="4" stroke-miterlimit="10" points="562.3,163.1 483.4,73.2 565.3,51.1 648.6,135.1 "/>
-<polygon class="poly-fix2" fill="none" stroke="#FF0000" stroke-width="4" stroke-miterlimit="10" points="562.3,163.1 472.4,59.2 565.3,51.1 648.6,135.1 "/>
-<polygon class="poly-fix3" fill="none" stroke="#FF0000" stroke-width="4" stroke-miterlimit="10" points="562.3,163.1 472.4,59.2 551.3,37.1 648.6,135.1 "/>
-<polygon class="poly-address" fill="none" stroke="#FF0000" stroke-width="4" stroke-miterlimit="10" points="498.2,188.2 530.6,175.7 477.5,110.8 446.6,124.1 "/>
-</svg>
+          <svg version="1.1" class="intro-path" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 960 300" enable-background="new 0 0 960 300" xml:space="preserve">
+            <polygon class="poly-a" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="333,188 385.4,158.5 433.3,221.2 377.3,253.6 "/>
+            <polygon class="poly-b" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="498.2,188.2 530.6,175.7 477.5,110.8 446.6,124.1 "/>
+            <polygon class="poly-c" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="562.3,163.1 472.4,59.2 551.3,37.1 648.6,135.1 "/>
+          </svg>

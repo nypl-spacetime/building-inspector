@@ -141,7 +141,7 @@ class @Progress
         c = 'cluster-large'
         if count < 10
           c = 'cluster-small'
-        else if count < 30
+        else if count < 100
           c = 'cluster-medium'
         new L.DivIcon
           html: Humanize.compactInteger(count)

@@ -132,6 +132,11 @@
   color: $white;
   @include border-radius(4px);
 
+  &.color {
+    font-size: .8em;
+    padding: 5px 10px;
+  }
+
   &.red {
     background-color: $nocolor;
   }
@@ -142,6 +147,15 @@
 
   &.green {
     background-color: $yescolor;
+  }
+
+  &.pink {
+    color: $grayDarkest;
+    background-color: $pink;
+  }
+
+  &.black {
+    background-color: $grayDarkest;
   }
 }
 
@@ -398,6 +412,64 @@ polygon {
     }
   }
 }
+
+#slide4 {
+  .wrap {
+    margin-top: -300px;
+  }
+  #slide4-a {
+    left: -120px;
+    top: -64px;
+    @include transition-delay(1.5s);
+  }
+  #slide4-b {
+    top: -88px;
+    left: -10px;
+    @include transition-delay(2.5s);
+  }
+  #slide4-c {
+    left: 50px;
+    top: -130px;
+    @include transition-delay(3.5s);
+  }
+  #slide4-d {
+    top: -112px;
+    left: -158px;
+    @include transition-delay(4.5s);
+  }
+  &.active {
+    .wrap {
+      margin-top: auto;
+    }
+    .poly-a {
+      @include animation(dash .5s ease-in forwards .5s);
+    }
+    .poly-b {
+      @include animation(dash .5s ease-in forwards 1.5s);
+    }
+    .poly-c {
+      @include animation(dash .5s ease-in forwards 2.5s);
+    }
+    .poly-d {
+      @include animation(dash .5s ease-in forwards 3.5s);
+    }
+    #slide4-a {
+      top: 184px;
+    }
+    #slide4-b {
+      top: 132px;
+    }
+    #slide4-c {
+      top: 70px;
+      @include animation(moveMarkerC);
+    }
+    #slide4-d {
+      top: 78px;
+    }
+  }
+}
+
+
 
 #slide-buttons {
   position: absolute;

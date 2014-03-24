@@ -2,9 +2,11 @@ namespace :db do
 
   desc "Process consensus in POLYGONS (recurring)"
   task :calculate_consensus => :environment do
+    # geometry
     yes_query = Flag.connection.execute(build_query_for_task_value("geometry", "yes", 0.75))
     no_query = Flag.connection.execute(build_query_for_task_value("geometry", "no", 0.75))
     fix_query = Flag.connection.execute(build_query_for_task_value("geometry", "fix", 0.75))
+    # colors
     pink_query = Flag.connection.execute(build_query_for_task_value("color", "pink", 0.75))
     blue_query = Flag.connection.execute(build_query_for_task_value("color", "blue", 0.75))
     yellow_query = Flag.connection.execute(build_query_for_task_value("color", "yellow", 0.75))

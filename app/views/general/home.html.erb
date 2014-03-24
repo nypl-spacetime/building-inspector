@@ -61,11 +61,28 @@
             <polygon class="poly-c" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="562.3,163.1 472.4,59.2 551.3,37.1 648.6,135.1 "/>
           </svg>
         </li>
+        <li id="slide4" class="slide">
+          <%= link_to "", address_path, {:id => "slide-address"} %>
+          <div class="wrap">
+            <div id="slide4-a" class="control color pink">PINK</div>
+            <div id="slide4-b" class="control color pink">PINK</div>
+            <div id="slide4-c" class="control color green">GREEN</div>
+            <div id="slide4-d" class="control color black">GRAY</div>
+          </div>
+          <h4>CLASSIFY<br />COLORS</h4>
+          <svg version="1.1" class="intro-path" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 960 300" enable-background="new 0 0 960 300" xml:space="preserve">
+            <polygon class="poly-a" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="333,188 385.4,158.5 433.3,221.2 377.3,253.6 "/>
+            <polygon class="poly-b" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="498.2,188.2 530.6,175.7 477.5,110.8 446.6,124.1 "/>
+            <polygon class="poly-c" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="562.3,163.1 472.4,59.2 551.3,37.1 648.6,135.1 "/>
+            <polygon class="poly-d" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="352.5,110.6 377.6,97.2 389.8,113.1 364.2,126.7 "/>
+          </svg>
+        </li>
       </ul>
       <div id="slide-buttons">
         <%= link_to "CHECK FOOTPRINTS", geometry_path, {:id => "link-geometry", :class => "home-link"} %>
         <%= link_to "FIX POLYGONS", polygons_path, {:id => "link-polygonfix", :class => "home-link"} %>
         <%= link_to "ENTER ADDRESSES", address_path, {:id => "link-address", :class => "home-link"} %>
+        <%= link_to "CLASSIFY COLORS", color_path, {:id => "link-color", :class => "home-link"} %>
       </div>
     </div>
     <% if @has_score %>
@@ -73,13 +90,13 @@
         <p>
           So far you've inspected:
           <ul>
-            <li><%= image_tag("icon-geometry.svg", :class=>"task-icon") %> <strong><%= @score_geometry %></strong> building footprints
+            <li><%= link_to(image_tag("icon-geometry.svg", :class=>"task-icon"), geometry_path) %> <strong><%= @score_geometry %></strong> building footprints
               <br /><%= link_to("Inspect more!", geometry_path) %></li>
-            <li><%= image_tag("icon-address.svg", :class=>"task-icon") %> <strong><%= @score_address %></strong> building addresses
+            <li><%= link_to(image_tag("icon-address.svg", :class=>"task-icon"), address_path) %> <strong><%= @score_address %></strong> building addresses
               <br /><%= link_to("Inspect more!", address_path) %></li>
-            <li><%= image_tag("icon-polygonfix.svg", :class=>"task-icon") %> fixed <strong><%= @score_polygonfix %></strong> building polygons
+            <li><%= link_to(image_tag("icon-polygonfix.svg", :class=>"task-icon"), polygons_path) %> fixed <strong><%= @score_polygonfix %></strong> building polygons
               <br /><%= link_to("Inspect more!", polygons_path) %></li>
-            <li><%= image_tag("icon-color.svg", :class=>"task-icon") %> fixed <strong><%= @score_color %></strong> building colors
+            <li><%= link_to(image_tag("icon-color.svg", :class=>"task-icon"), color_path) %> classified <strong><%= @score_color %></strong> building colors
               <br /><%= link_to("Inspect more!", color_path) %></li>
           </ul>
         </p>
