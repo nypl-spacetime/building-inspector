@@ -340,7 +340,7 @@ class @Inspector
         #   clickable: false
       )
     else
-      @map._editablePolygons = [] # hack cause the leaflet plugin does not destroy preexisting polygons
+      @map._editablePolygons = [] # hack because the leaflet plugin does not destroy preexisting polygons
       @geo.updateLatLngs(@originalPolygon)
     @geo.addTo(@map)
 

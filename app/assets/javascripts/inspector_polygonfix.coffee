@@ -62,9 +62,12 @@ class Polygonfix extends Inspector
     @isMultiple = $("#multiple-polygon").is(':checked')
     @updateMultipleStatus()
     if !@isMultiple && @flags.length > 0
-      @originalPolygon = @flags[0]
+      # kind of hacky but allows for first poly to be shown
+      # so user doesnt lose the very first fix they did
+      @map._editablePolygons = []
+      @geo.updateLatLngs(@flags[0].layer.getLatLngs())
+      @geo.addTo(@map)
       @eraseGhosts()
-      @resetPolygon()
 
   updateMultipleStatus: () ->
     if (@isMultiple)
