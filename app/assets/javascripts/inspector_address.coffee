@@ -300,7 +300,7 @@ $ ->
       }
       {
         element: "#map-highlight"
-        intro: "A house divided cannot stand? Abe Lincoln should have spent more time in New York. While this proved to be an apt metaphor for our nation torn asunder, large structures were actually frequently divided on the inside and were given more than one address (without collapsing as a result). Give us both numbers. <br /> They could be on the same street..."
+        intro: "A house divided cannot stand? Abe Lincoln should have spent more time in New York. While this proved to be an apt metaphor for our nation torn asunder, large structures were actually frequently divided on the inside and were given more than one address (without collapsing as a result). Give us both numbers. <br /> They could be on the same street, like this one..."
         position: "right"
         polygon_index: 5
       }
@@ -395,8 +395,14 @@ $ ->
         polygon_index: 12
       }
       {
+        element: ".leaflet-control-zoom.leaflet-bar.leaflet-control"
+        intro: "Space is always at a premium in NYC and some properties may have more than one building on it - one right on the street and another in the backyard. Both of them share the same address. Use the zoom function to see who owns this building. "
+        position: "right"
+        polygon_index: 13
+      }
+      {
         element: "#map-highlight"
-        intro: "Space is always at a premium in NYC and some properties may have more than one building on it - one right on the street and another in the backyard. Both of them share the same address. This backlot structure is a part of 17 Morton St."
+        intro: "This backlot structure is a part of 17 Morton St."
         position: "right"
         polygon_index: 13
       }
