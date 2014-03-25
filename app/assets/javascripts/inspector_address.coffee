@@ -240,25 +240,25 @@ $ ->
       }
       {
         element: "#map-highlight"
-        intro: "Seems easy right? We'll take you through a few examples so you can see some harder \"edge cases\" as well. "
+        intro: "Seems easy right? Well this one is anyway - mark it 20. But we'll take you through a few more examples so you can see some harder \"edge cases\" as well. "
         position: "right"
         polygon_index: 0
       }
       {
         element: "#submit-button"
-        intro: "[no text provided]"
+        intro: "Okay smart guy. Hit next and we'll get to some tough ones!"
         position: "top"
         polygon_index: 0
       }
       {
         element: "#map-highlight"
-        intro: "It's easy to be fooled by those olde tyme numbers. 47 or 17? If you can't tell, look to addresses around it. It's near the 20s, so it must be ye olde 17. Click it and type it in. "
+        intro: "It can be easy to be fooled by those olde tyme numbers. 47 or 17? If you can't tell, look to addresses around it. It's near the 20s, so it must be ye olde 17. Click-eth it and type-eth it in. "
         position: "right"
         polygon_index: 1
       }
       {
         element: "#submit-button"
-        intro: "Hit next to save it. "
+        intro: "Hit next to save it and move on. "
         position: "top"
         polygon_index: 1
       }
@@ -288,7 +288,7 @@ $ ->
       }
       {
         element: "#map-highlight"
-        intro: "But, what if there is no number at all? Well that's just a headache. "
+        intro: "But, what if there is no number at all? Well that's just a headache so we won't even bother with these. "
         position: "right"
         polygon_index: 4
       }
@@ -300,13 +300,13 @@ $ ->
       }
       {
         element: "#map-highlight"
-        intro: "A house divided cannot stand? Abe Lincoln should have spent more time in New York. Large structures may be divided on the inside and can have more than one address (and not collapse as a result). Give us both numbers. They could be on the same street..."
+        intro: "A house divided cannot stand? Abe Lincoln should have spent more time in New York. While this proved to be an apt metaphor for our nation torn asunder, large structures were actually frequently divided on the inside and were given more than one address (without collapsing as a result). Give us both numbers. <br /> They could be on the same street..."
         position: "right"
         polygon_index: 5
       }
       {
         element: "#submit-button"
-        intro: "[no text provided]"
+        intro: "Hit next to save 'em."
         position: "top"
         polygon_index: 5
       }
@@ -318,7 +318,7 @@ $ ->
       }
       {
         element: "#submit-button"
-        intro: "[no text provided]"
+        intro: "You know what to do."
         position: "top"
         polygon_index: 6
       }
@@ -330,7 +330,7 @@ $ ->
       }
       {
         element: "#submit-button"
-        intro: "[no text provided]"
+        intro: "Yep, hit next."
         position: "top"
         polygon_index: 7
       }
@@ -342,7 +342,7 @@ $ ->
       }
       {
         element: "#submit-button"
-        intro: "[no text provided]"
+        intro: "I know, I know \" Next, next, next, next, <strong> NEXT!</strong>\" Sorry for all the redundancy but this is just how tutorials work!"
         position: "top"
         polygon_index: 8
       }
@@ -354,25 +354,25 @@ $ ->
       }
       {
         element: "#submit-button"
-        intro: "[no text provided]"
+        intro: "Next. (at least you'll be an expert at hitting next by the end of this)"
         position: "top"
         polygon_index: 9
       }
       {
         element: "#map-highlight"
-        intro: "Soooooooo many numbers!  "
+        intro: "Soooooooo many numbers! We'll take 'em all! "
         position: "right"
         polygon_index: 10
       }
       {
         element: "#submit-button"
-        intro: "We'll take 'em all!"
+        intro: "Clearly, next."
         position: "top"
         polygon_index: 10
       }
       {
         element: "#map-highlight"
-        intro: "Don't get confused if you see a number ON the polygon. This is just how many stories/floors/levels the building has - NOT the address. This particular building is three stories high and has no street number.  "
+        intro: "Now don't get confused if you see a number <strong> ON </strong> the polygon. This is just how many stories/floors/levels the building has - NOT the address. This particular building is three stories high and has no street number.  "
         position: "right"
         polygon_index: 11
       }
@@ -390,7 +390,7 @@ $ ->
       }
       {
         element: "#submit-button"
-        intro: "[no text provided]"
+        intro: "Ext-nay (a little pig latin always keeps things interesting right?)"
         position: "top"
         polygon_index: 12
       }
@@ -401,56 +401,50 @@ $ ->
         polygon_index: 13
       }
       {
-        element: ".leaflet-control-zoom.leaflet-bar.leaflet-control"
-        intro: "(mga added) Zoom out to have a better view"
-        position: "left"
-        polygon_index: 13
-      }
-      {
         element: "#submit-button"
-        intro: "[no text provided]"
+        intro: "You know what to do."
         position: "top"
         polygon_index: 13
       }
       {
-        element: "#map-highlight"
-        intro: "This can get tricky when dealing with funky boundary lines. When you run into this, look for one or two that seem to be primary dividers of multiple properties and use that to decide what belongs to whom. "
+        element: ".leaflet-control-zoom.leaflet-bar.leaflet-control"
+        intro: "This can get tricky when dealing with funky boundary lines. When you run into this, look for one or two that seem to be primary dividers of multiple properties and use that to decide what belongs to whom. Zooming out a bit might make it easier to determine. "
         position: "right"
         polygon_index: 14
       }
       {
-        element: ".leaflet-control-zoom.leaflet-bar.leaflet-control"
-        intro: "(mga added) Zoom out to have a better view"
-        position: "left"
+        element: "#map-highlight"
+        intro: "Enter the number when you figure it out."
+        position: "top"
         polygon_index: 14
       }
       {
         element: "#submit-button"
-        intro: "[no text provided]"
+        intro: "You know the rest!"
         position: "top"
         polygon_index: 14
       }
       {
         element: "#map-highlight"
-        intro: "Like this one - even though this back lot structure is closer to 65 Second Street, look at how it follows the property line of 52 First Street. Mark it 52."
+        intro: "Here's another - even though this back lot structure is closer to 65 Second Street, look at how it follows the property line of 52 First Street. Mark it 52."
         position: "right"
         polygon_index: 15
       }
       {
         element: "#submit-button"
-        intro: "[no text provided]"
+        intro: "!TXEN (hold computer up to mirror to reveal this secret instruction.)"
         position: "top"
         polygon_index: 15
       }
       {
         element: "#map-highlight"
-        intro: "The narrow alley leading to this building is a horserun - bascially a 19th century driveway. The structure was probably the stable for number 67, so mark it 67. "
+        intro: "The narrow alley leading to this building is a horserun - bascially a 19th century driveway. The structure was probably the stable for number 67, so mark it 67... "
         position: "right"
         polygon_index: 16
       }
       {
         element: "#submit-button"
-        intro: "[no text provided]"
+        intro: "And submit it the best way you know how."
         position: "top"
         polygon_index: 16
       }
@@ -462,7 +456,7 @@ $ ->
       }
       {
         element: "#submit-button"
-        intro: "[no text provided]"
+        intro: "Whichever is cool with us. Hit next to continue."
         position: "top"
         polygon_index: 17
       }
@@ -474,19 +468,19 @@ $ ->
       }
       {
         element: "#submit-button"
-        intro: "[no text provided]"
+        intro: "Next, of course. You're showing remarkable patience and fortitude with this. You should really be proud of yourself!"
         position: "top"
         polygon_index: 18
       }
       {
         element: "#map-highlight"
-        intro: "Structures may be set farther back from the road than you'd expect. Maybe the people at 46 Leonard just really wanted a front yard."
+        intro: "Another thing to remember is that structures may be set farther back from the road than you'd expect. Maybe the people at 46 Leonard just really wanted a front yard."
         position: "right"
         polygon_index: 19
       }
       {
         element: "#submit-button"
-        intro: "[no text provided]"
+        intro: "Duh."
         position: "top"
         polygon_index: 19
       }
@@ -498,19 +492,37 @@ $ ->
       }
       {
         element: "#submit-button"
-        intro: "[no text provided]"
+        intro: "What do we want? <br /> <strong> NEXT! </strong> <br /> When do we want it? <br /> <strong> NOW! </strong>"
         position: "top"
         polygon_index: 20
       }
       {
+          element: ".leaflet-control-zoom.leaflet-bar.leaflet-control"
+        intro: "This structure was actually built to house the world's longest hot dog. No probably not, but it's very long. Zoom out to see who it belongs to. "
+        position: "right"
+        polygon_index: 26
+      }
+      {
         element: "#map-highlight"
-        intro: "It looks like this could be a backlot building for 222 or 220 but don't be fooled! Anything that faces the street like that is probably a separate property. This one just doesn't have a number. Skip it like a flat stone on a calm lake!"
+        intro: "I'm thinking it extends from 103."
+        position: "top"
+        polygon_index: 26
+      }
+      {
+        element: "#submit-button"
+        intro: "Next."
+        position: "top"
+        polygon_index: 26
+      }
+      {
+        element: "#map-highlight"
+        intro: "It looks like this could be a backlot building for 222 or 220 but don't be fooled! Anything that faces the street like that is probably a separate property. This one just doesn't have a number."
         position: "right"
         polygon_index: 21
       }
       {
         element: "#submit-button"
-        intro: "[no text provided]"
+        intro: "[So skip it like a flat stone on a calm lake!"
         position: "top"
         polygon_index: 21
       }
@@ -522,21 +534,9 @@ $ ->
       }
       {
         element: "#submit-button"
-        intro: "[no text provided]"
+        intro: "Aaaaaaaaaaaaaand NEXT!"
         position: "top"
         polygon_index: 22
-      }
-      {
-        element: "#map-highlight"
-        intro: "?"
-        position: "right"
-        polygon_index: 23
-      }
-      {
-        element: "#submit-button"
-        intro: "[no text provided]"
-        position: "top"
-        polygon_index: 23
       }
       {
         element: "#map-highlight"
@@ -564,31 +564,19 @@ $ ->
       }
       {
         element: "#map-highlight"
-        intro: "This structure was actually built to house the world's longest hot dog. No probably not, but it is one seriously long building. Looks like it extends from 103."
-        position: "right"
-        polygon_index: 26
-      }
-      {
-        element: "#submit-button"
-        intro: "[no text provided]"
-        position: "top"
-        polygon_index: 26
-      }
-      {
-        element: "#map-highlight"
         intro: "Always pay more attention to boundary lines than color. This building is probably a part of 11 Leonard Street, even though it's shaded like its neighbor on West Broadway. "
         position: "right"
         polygon_index: 27
       }
       {
         element: "#submit-button"
-        intro: "[no text provided]"
+        intro: "I swear this is the last one - Next!"
         position: "top"
         polygon_index: 27
       }
       {
         element: "#map-highlight"
-        intro: "The backlot buildings tend to be the trickiest, but hopefully these tips will make it a little bit easier. If you run in to trouble you can always review this tutorial again... "
+        intro: "Remember that the backlot buildings tend to be the trickiest, but hopefully these tips will make it a little bit easier. <br /> If you run into trouble, you can always review this tutorial again... "
         position: "right"
         polygon_index: 28
       }
