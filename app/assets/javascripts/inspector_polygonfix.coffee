@@ -22,8 +22,7 @@ class Polygonfix extends Inspector
     @map.on('dragstart', @onMapDragStart)
     @map.on('dragend', @onMapDragEnd)
 
-    $("#multiple-polygon").on("change click", @multipleBuildingClick)
-    $("#multiple-text").on("click", @multipleBuildingClick)
+    $("#multiple-polygon").on("change", @multipleBuildingClick)
 
   addButtonListeners: () =>
     super()
@@ -59,8 +58,13 @@ class Polygonfix extends Inspector
     @showPolygon()
 
   multipleBuildingClick: (e) =>
+    return if @isMultiple && @flags.length > 1 && !confirm("Some buildings you have created will be lost if you uncheck this. Continue?")
     @isMultiple = $("#multiple-polygon").is(':checked')
     @updateMultipleStatus()
+    if !@isMultiple && @flags.length > 0
+      @originalPolygon = @flags[0]
+      @eraseGhosts()
+      @resetPolygon()
 
   updateMultipleStatus: () ->
     if (@isMultiple)
