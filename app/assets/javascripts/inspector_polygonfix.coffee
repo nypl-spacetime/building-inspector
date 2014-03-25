@@ -12,7 +12,7 @@ class Polygonfix extends Inspector
     @isMultiple = false
 
   clearScreen: () =>
-    $("#multiple-polygon:checkbox").attr('checked', false)
+    document.getElementById("multiple-polygon").checked = false
     @multipleBuildingClick()
     @eraseGhosts()
     super()
@@ -58,16 +58,23 @@ class Polygonfix extends Inspector
     @showPolygon()
 
   multipleBuildingClick: (e) =>
-    return if @isMultiple && @flags.length > 1 && !confirm("Some buildings you have created will be lost if you uncheck this. Continue?")
+    if @isMultiple && @flags.length > 1 && !confirm("Some buildings you have created will be lost if you uncheck this. Continue?")
+      # user regrets unchecking this thing
+      document.getElementById("multiple-polygon").checked = true
+      @isMultiple = true
+      return
     @isMultiple = $("#multiple-polygon").is(':checked')
     @updateMultipleStatus()
     if !@isMultiple && @flags.length > 0
-      # kind of hacky but allows for first poly to be shown
+      # super hacky but allows for first poly to be shown
       # so user doesnt lose the very first fix they did
       @map._editablePolygons = []
-      @geo.updateLatLngs(@flags[0].layer.getLatLngs())
+      poly = ([coord[1],coord[0]] for coord in $.parseJSON(@flags[0].flag)[0])
+      @geo.updateLatLngs(poly)
       @geo.addTo(@map)
+      @geo._edited = true
       @eraseGhosts()
+      @showPolygon()
 
   updateMultipleStatus: () ->
     if (@isMultiple)
@@ -86,7 +93,7 @@ class Polygonfix extends Inspector
     @geo?._hideAll() # hacky
 
   addPolygonToFlags: (e) =>
-    return if !@polygonHasChanged
+    return if !@polygonHasChanged()
     flag = @getFixedPolygon()
     if flag
       @flags.push(
