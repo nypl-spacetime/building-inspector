@@ -409,7 +409,7 @@ $ ->
       {
         element: ".leaflet-control-zoom.leaflet-bar.leaflet-control"
         intro: "Space is always at a premium in NYC and some properties may have more than one building on it - one right on the street and another in the backyard. Both of them share the same address. Use the zoom function to see who owns this building. "
-        position: "right"
+        position: "left"
         polygon_index: 13
       }
       {
