@@ -415,7 +415,7 @@ $ ->
       {
         element: ".leaflet-control-zoom.leaflet-bar.leaflet-control"
         intro: "This can get tricky when dealing with funky boundary lines. When you run into this, look for one or two that seem to be primary dividers of multiple properties and use that to decide what belongs to whom. Zooming out a bit might make it easier to determine. "
-        position: "right"
+        position: "left"
         polygon_index: 14
       }
       {
@@ -505,7 +505,7 @@ $ ->
       {
           element: ".leaflet-control-zoom.leaflet-bar.leaflet-control"
         intro: "This structure was actually built to house the world's longest hot dog. No probably not, but it's very long. Zoom out to see who it belongs to. "
-        position: "right"
+        position: "left"
         polygon_index: 26
       }
       {
