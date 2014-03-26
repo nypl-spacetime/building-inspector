@@ -1,0 +1,37 @@
+<% content_for :page_title do %>Data - Building Inspector by NYPL Labs<% end %>
+<% content_for :dynamic_js do %>
+  <%= stylesheet_link_tag    "home", :media => "all" %>
+<% end %>
+
+<%= render :partial => "partials/nav" %>
+
+<div id="main-container">
+  <div class="intro about">
+    <h3>FREE POLYGONS FOR FUN (AND PROFIT)!</h3>
+
+    <p>Some stuff describing the API. Add styling to code and a bunch moar info.</p>
+
+    <h4>All polygons</h4>
+    <pre>
+        <code class="bash">/api/polygons/geometry</code>
+    </pre>
+
+    <h4>Polygons with consensus = yes</h4>
+    <pre>
+        <code class="bash">/api/polygons/geometry/yes</code>
+    </pre>
+
+    <h4>Polygons with consensus = no</h4>
+    <pre>
+        <code class="bash">/api/polygons/geometry/no</code>
+    </pre>
+
+    <h4>Polygons with consensus = fix</h4>
+    <pre>
+        <code class="bash">/api/polygons/geometry/fix</code>
+    </pre>
+
+  </div>
+</div>
+
+<%= render :partial => "partials/footer" %>

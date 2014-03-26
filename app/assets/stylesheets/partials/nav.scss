@@ -79,39 +79,44 @@
   // }
 
   &#link-logout {
-    width: 200px;
+    width: 170px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    @media screen and (max-width: $desktopwidth) {
+      width: auto
+    }
   }
 
   &#link-login, &#link-logout {
     // line-height: 24px;
 
-    &:before {
-      content: "0";
-    }
+    // &:before {
+    //   content: "0";
+    // }
   }
 
   &#link-help {
     margin-right: 1px;
-    &:before {
-      content: "?";
-    }
+    // &:before {
+    //   content: "?";
+    // }
   }
 
   &#link-about {
-    &:before {
-      content: "i";
-    }
+    // &:before {
+    //   content: "i";
+    // }
   }
 
   &#link-login, &#link-logout {
   }
 
-  &#link-about {
+  &#link-about, &#link-data {
     display: block;
     float: right;
+    margin-right: 20px;
 
     @media screen and (max-width: $desktopwidth) {
       float: none;
@@ -119,13 +124,17 @@
     }
   }
 
-  &:before {
-    margin-right: 5px;
-    // font-size: 11px;
-    content: attr(data-icon);
-    font-family:$iconfont;
-    -webkit-font-smoothing: antialiased;
+  &#link-data {
+    margin-right: 0;
   }
+
+  // &:before {
+  //   margin-right: 5px;
+  //   // font-size: 11px;
+  //   content: attr(data-icon);
+  //   font-family:$iconfont;
+  //   -webkit-font-smoothing: antialiased;
+  // }
 
   @media screen and (max-width: $desktopwidth) {
     // font-size: 9px;

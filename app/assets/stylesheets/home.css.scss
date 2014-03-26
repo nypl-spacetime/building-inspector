@@ -34,6 +34,10 @@
 
     @media screen and (max-width: $desktopwidth) {
       width: auto;
+
+      &.about {
+        padding-top: 50px;
+      }
     }
   }
 }
