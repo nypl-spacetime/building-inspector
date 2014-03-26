@@ -261,6 +261,7 @@ $ ->
         intro: "Hit next to save it and move on. "
         position: "top"
         polygon_index: 1
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -270,9 +271,10 @@ $ ->
       }
       {
         element: "#submit-button"
-        intro: "Boom! Hit next to save!"
+        intro: "Boom! Hit next to save and continue!"
         position: "top"
         polygon_index: 2
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -285,6 +287,7 @@ $ ->
         intro: "Next!"
         position: "top"
         polygon_index: 3
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -297,6 +300,7 @@ $ ->
         intro: "Skip it like a jump rope!"
         position: "top"
         polygon_index: 4
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -309,6 +313,7 @@ $ ->
         intro: "Hit next to save 'em."
         position: "top"
         polygon_index: 5
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -321,6 +326,7 @@ $ ->
         intro: "You know what to do."
         position: "top"
         polygon_index: 6
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -333,6 +339,7 @@ $ ->
         intro: "Yep, hit next."
         position: "top"
         polygon_index: 7
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -345,6 +352,7 @@ $ ->
         intro: "I know, I know \" Next, next, next, next, <strong> NEXT!</strong>\" Sorry for all the redundancy but this is just how tutorials work!"
         position: "top"
         polygon_index: 8
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -357,6 +365,7 @@ $ ->
         intro: "Next. (at least you'll be an expert at hitting next by the end of this)"
         position: "top"
         polygon_index: 9
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -369,6 +378,7 @@ $ ->
         intro: "Clearly, next."
         position: "top"
         polygon_index: 10
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -381,6 +391,7 @@ $ ->
         intro: "Skip it like your weird cousin's wedding!"
         position: "top"
         polygon_index: 11
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -393,6 +404,7 @@ $ ->
         intro: "Ext-nay (a little pig latin always keeps things interesting right?)"
         position: "top"
         polygon_index: 12
+        ixactive: true
       }
       {
         element: ".leaflet-control-zoom.leaflet-bar.leaflet-control"
@@ -411,6 +423,7 @@ $ ->
         intro: "You know what to do."
         position: "top"
         polygon_index: 13
+        ixactive: true
       }
       {
         element: ".leaflet-control-zoom.leaflet-bar.leaflet-control"
@@ -429,6 +442,7 @@ $ ->
         intro: "You know the rest!"
         position: "top"
         polygon_index: 14
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -441,6 +455,7 @@ $ ->
         intro: "!TXEN (hold computer up to mirror to reveal this secret instruction.)"
         position: "top"
         polygon_index: 15
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -453,6 +468,7 @@ $ ->
         intro: "And submit it the best way you know how."
         position: "top"
         polygon_index: 16
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -465,6 +481,7 @@ $ ->
         intro: "Whichever is cool with us. Hit next to continue."
         position: "top"
         polygon_index: 17
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -477,6 +494,7 @@ $ ->
         intro: "Next, of course. You're showing remarkable patience and fortitude with this. You should really be proud of yourself!"
         position: "top"
         polygon_index: 18
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -489,6 +507,7 @@ $ ->
         intro: "Duh."
         position: "top"
         polygon_index: 19
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -501,6 +520,7 @@ $ ->
         intro: "What do we want? <br /> <strong> NEXT! </strong> <br /> When do we want it? <br /> <strong> NOW! </strong>"
         position: "top"
         polygon_index: 20
+        ixactive: true
       }
       {
           element: ".leaflet-control-zoom.leaflet-bar.leaflet-control"
@@ -519,6 +539,7 @@ $ ->
         intro: "Next."
         position: "top"
         polygon_index: 26
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -531,6 +552,7 @@ $ ->
         intro: "[So skip it like a flat stone on a calm lake!"
         position: "top"
         polygon_index: 21
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -543,6 +565,7 @@ $ ->
         intro: "Aaaaaaaaaaaaaand NEXT!"
         position: "top"
         polygon_index: 22
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -555,6 +578,7 @@ $ ->
         intro: "[no text provided]"
         position: "top"
         polygon_index: 24
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -567,6 +591,7 @@ $ ->
         intro: " Like Wild Horses on a Rolling Stones playlist!"
         position: "top"
         polygon_index: 25
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -579,6 +604,7 @@ $ ->
         intro: "I swear this is the last one - Next!"
         position: "top"
         polygon_index: 27
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -591,6 +617,7 @@ $ ->
         intro: "Or skip it like your 10-year high school reunion!"
         position: "top"
         polygon_index: 28
+        ixactive: true
       }
       {
         element: "#link-help"
