@@ -26,6 +26,8 @@ class FixerController < ApplicationController
     @progress = getProgress("geometry","all").to_json
 	end
 
+  # - JSON endpoints for progress
+
   def session_progress_geometry_for_sheet
     session = getSession()
     if params[:id] == nil
@@ -57,30 +59,30 @@ class FixerController < ApplicationController
   end
 
   def progress_sheet_geometry
-      all_polygons = Sheet.progress_for_task(params[:id], "geometry")
+    all_polygons = Sheet.progress_for_task(params[:id], "geometry")
 
-      fix_poly = []
-      yes_poly = []
-      no_poly = []
-      nil_poly = []
+    fix_poly = []
+    yes_poly = []
+    no_poly = []
+    nil_poly = []
 
-      all_polygons.each do |p|
-        if p[:consensus]=="fix"
-          fix_poly.push(p.to_geojson)
-        elsif p[:consensus]=="yes"
-          yes_poly.push(p.to_geojson)
-        elsif p[:consensus]=="no"
-          no_poly.push(p.to_geojson)
-        else
-          nil_poly.push(p.to_geojson)
-        end
+    all_polygons.each do |p|
+      if p[:consensus]=="fix"
+        fix_poly.push(p.to_geojson)
+      elsif p[:consensus]=="yes"
+        yes_poly.push(p.to_geojson)
+      elsif p[:consensus]=="no"
+        no_poly.push(p.to_geojson)
+      else
+        nil_poly.push(p.to_geojson)
       end
+    end
 
-      @map = {}
-      @map[:fix_poly] = { :type => "FeatureCollection", :features => fix_poly }
-      @map[:no_poly] = { :type => "FeatureCollection", :features => no_poly }
-      @map[:yes_poly] = { :type => "FeatureCollection", :features => yes_poly }
-      @map[:nil_poly] = { :type => "FeatureCollection", :features => nil_poly }
+    @map = {}
+    @map[:fix_poly] = { :type => "FeatureCollection", :features => fix_poly }
+    @map[:no_poly] = { :type => "FeatureCollection", :features => no_poly }
+    @map[:yes_poly] = { :type => "FeatureCollection", :features => yes_poly }
+    @map[:nil_poly] = { :type => "FeatureCollection", :features => nil_poly }
     respond_with( @map )
   end
 
@@ -107,6 +109,8 @@ class FixerController < ApplicationController
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
     @progress = getProgress("address","all").to_json
 	end
+
+  # - JSON endpoints for progress
 
   def session_progress_address_for_sheet
     # the address progress for a given sheet id
@@ -149,6 +153,8 @@ class FixerController < ApplicationController
     # NOTE: there might be more than one flag per polygon but this only returns each polygon once
     @progress = getProgress("polygonfix","user").to_json
   end
+
+  # - JSON endpoints for progress
 
   def session_progress_polygonfix_for_sheet
     session = getSession()
@@ -193,6 +199,8 @@ class FixerController < ApplicationController
     # NOTE: there might be more than one flag per polygon but this only returns each polygon once
     @progress = getProgress("color","all").to_json
   end
+
+  # - JSON endpoints for progress
 
   def session_progress_color_for_sheet
     session = getSession()
@@ -313,7 +321,7 @@ class FixerController < ApplicationController
       return map
     end
 
-		map[:poly] = map[:map].polygons_for_task(type, session)
+		map[:poly] = map[:map].polygons_for_task(session, type)
 		map[:status][:map_polygons] = map[:map].polygons.count
 		map[:status][:map_polygons_session] = map[:poly].count
 		map[:status][:all_sheets] = Sheet.count

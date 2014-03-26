@@ -1,5 +1,6 @@
 class Usersession < ActiveRecord::Base
   belongs_to :user
+  has_many :flags, :foreign_key => :session_id, :primary_key => :session_id
   attr_accessible :user_id, :session_id
 
   def self.find_user_by_session_id(session_id)

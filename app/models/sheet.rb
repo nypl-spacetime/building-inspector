@@ -2,15 +2,30 @@ class Sheet < ActiveRecord::Base
   has_many :polygons, :dependent => :destroy
   attr_accessible :bbox, :map_id, :map_url, :status, :layer_id, :consensus, :consensus_address
 
-  def polygons_for_task(type="geometry", session_id = nil)
-    Sheet.polygons_for_task(self[:id], type, session_id)
+  def polygons_for_task(session_id = nil, type="geometry")
+    Sheet.polygons_for_task(self[:id], session_id, type)
   end
 
-  def self.polygons_for_task(sheet_id, type="geometry", session_id = nil)
+  def self.polygons_for_task(sheet_id, session_id = nil, type="geometry")
     # only the necessary data of a sheet's polygons
     sheet_id = Sheet.sanitize(sheet_id)
+    session_id = Sheet.sanitize(session_id)
+    type = Sheet.sanitize(type)
     if session_id != nil
-      join = "LEFT JOIN flags AS F ON polygons.id = F.polygon_id AND F.session_id = "+Sheet.sanitize(session_id) + " "
+      # find all the sessions associated to this session_id via its user_id if any
+      join = "LEFT JOIN flags AS F ON polygons.id = F.polygon_id
+              AND F.session_id IN (
+                SELECT #{session_id}
+                UNION
+                  SELECT _S.session_id
+                  FROM (
+                    SELECT __S.user_id FROM usersessions __S
+                    WHERE __S.session_id = #{session_id}
+                    AND __S.user_id IS NOT NULL
+                  ) S
+                  INNER JOIN usersessions _S
+                  ON _S.user_id = S.user_id
+              )"
       where = "sheet_id = #{sheet_id} AND F.session_id IS NULL AND CP.id IS NULL"
     else
       join = " "
@@ -19,34 +34,30 @@ class Sheet < ActiveRecord::Base
 
     case type
     when "geometry"
-      join += "LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.polygon_id AND CP.task = "+ Sheet.sanitize(type)
+      join += "LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.polygon_id AND CP.task = #{type}"
     when "address", "color"
-      join += "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.polygon_id AND CPG.task = 'geometry' AND CPG.consensus = 'yes' LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.polygon_id AND CP.task = " + Sheet.sanitize(type)
+      join += "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.polygon_id AND CPG.task = 'geometry' AND CPG.consensus = 'yes' LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.polygon_id AND CP.task = #{type}"
     when "polygonfix"
-      join += "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.polygon_id AND CPG.task = 'geometry' AND CPG.consensus = 'fix' LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.polygon_id AND CP.task = " + Sheet.sanitize(type)
+      join += "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.polygon_id AND CPG.task = 'geometry' AND CPG.consensus = 'fix' LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.polygon_id AND CP.task = #{type}"
     end
 
     Polygon.select("polygons.id, polygons.color, polygons.geometry, polygons.sheet_id, polygons.status, polygons.dn, CP.consensus").joins(join).where(where)
   end
 
-  def self.progress_for_task(sheet_id, type, session_id = nil)
+  def self.progress_for_task(sheet_id, type)
     sheet_id = Sheet.sanitize(sheet_id)
+    type = Sheet.sanitize(type)
 
     columns = "polygons.id, geometry, sheet_id, CP.consensus, dn, centroid_lat, centroid_lon"
-    join = "LEFT JOIN flags AS F ON polygons.id = F.polygon_id LEFT JOIN consensuspolygons AS CP ON CP.polygon_id = polygons.id AND CP.task = "+Sheet.sanitize(type)
+    join = "LEFT JOIN flags AS F ON polygons.id = F.polygon_id LEFT JOIN consensuspolygons AS CP ON CP.polygon_id = polygons.id AND CP.task = #{type}"
     where = " sheet_id = #{sheet_id} "
-
-    if session_id != nil
-      where += " AND F.session_id = "+Sheet.sanitize(session_id) + " "
-    end
-
-    join += " "
 
     poly = Polygon.select(columns).joins(join).where(where)
 
   end
 
   def self.random_unprocessed(type="geometry")
+    type = Sheet.sanitize(type)
     join = " "
     case type
     when "geometry"
@@ -59,7 +70,7 @@ class Sheet < ActiveRecord::Base
       # sheet has not been totally processed for geometry
       join = "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.polygon_id AND CPG.task = 'geometry' AND CPG.consensus = 'fix'"
     end
-    join += " LEFT JOIN consensuspolygons AS CP ON CP.polygon_id = polygons.id AND CP.task = " + Sheet.sanitize(type)
+    join += " LEFT JOIN consensuspolygons AS CP ON CP.polygon_id = polygons.id AND CP.task = #{type}"
     bunch = Polygon.select(:sheet_id).joins(join).where("CP.id IS NULL").limit(200)
 
     return nil unless bunch.count > 0
