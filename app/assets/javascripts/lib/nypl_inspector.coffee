@@ -324,8 +324,8 @@ class @Inspector
       )
       newPointIcon = L.icon(
         iconUrl: '/assets/polygonfix/editmarker2.png'
-        iconSize: [32, 32]
-        iconAnchor: [16, 16]
+        iconSize: [36, 36]
+        iconAnchor: [18, 18]
       )
       @geo = L.Polygon.PolygonEditor(@originalPolygon,
         maxMarkers: 10000
