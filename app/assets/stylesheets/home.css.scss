@@ -30,6 +30,19 @@
     }
   }
 
+  dl {
+    padding: 0 10px 0 40px;
+    max-width: 480px;
+  }
+
+  dt {
+    font-weight: bold;
+  }
+
+  dd {
+    margin-bottom: 1.1em;
+  }
+
   .intro {
 
     @media screen and (max-width: $desktopwidth) {
@@ -37,6 +50,10 @@
 
       &.about {
         padding-top: 50px;
+      }
+
+      pre code {
+        font-size: 0.8em;
       }
     }
   }

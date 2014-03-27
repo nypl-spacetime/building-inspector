@@ -1,34 +1,184 @@
 <% content_for :page_title do %>Data - Building Inspector by NYPL Labs<% end %>
 <% content_for :dynamic_js do %>
   <%= stylesheet_link_tag    "home", :media => "all" %>
+  <%= stylesheet_link_tag    "lib/vendor/highlight.default", :media => "all" %>
+  <%= javascript_include_tag "lib/vendor/highlight.pack" %>
+  <script>hljs.initHighlightingOnLoad();</script>
 <% end %>
 
 <%= render :partial => "partials/nav" %>
 
 <div id="main-container">
   <div class="intro about">
-    <h3>FREE POLYGONS FOR FUN (AND PROFIT)!</h3>
+    <h3>FREE polygons for fun (and profit)!</h3>
 
-    <p>Some stuff describing the API. Add styling to code and a bunch moar info.</p>
+    <p>Why bother classifying thousands of building footprints if you can't get your hands on the resulting data, right? Well, fear not! Building Inspector has been conceived from the beginning to be open. As volunteers like yourself inspect polygons the API endpoints below get updated (daily) to reflect the latest data (both the perfect and the imperfect bits).</p>
 
-    <h4>All polygons</h4>
+    <p>Read below for some basic documentation. If you need more detailed information, check out the <%= link_to "source code on GitHub", "https://github.com/NYPL/building-inspector" %> or drop us a line at <%= link_to "buildinginspector@nypl.org", "mailto:buildinginspector@nypl.org" %> or at <%= link_to "our Twitter account", "http://www.twitter.com/nypl_labs" %>.</p>
+
+    <h5><a name="contents"></a>Contents</h5>
+    <ul>
+      <li><strong><%= link_to "Basics", "#basics" %></strong></li>
+      <li><strong><%= link_to "Geometry", "#geometry" %></strong></li>
+      <li><strong><%= link_to "Color", "#color" %></strong></li>
+    </ul>
+
+    <h4><a name="basics"></a>Some basics</h4>
+
+    <p>In order to understand the API endpoints you first need to understand some basic Building Inspector concepts:</p>
+
+    <dl>
+        <dt>GeoJSON</dt>
+        <dd>Everything in this API is returned as a <%= link_to "GeoJSON string", "http://geojson.org/" %>. You can easily verify/visualize the output using <%= link_to "GeoJSONLint", "http://geojsonlint.com/" %>.</dd>
+        <dt>Polygon</dt>
+        <dd>The building block of the Building Inspector. Polygons are building footprints produced by the <%= link_to "NYPL Map Vectorizer", "https://github.com/NYPL/map-vectorizer" %>. The vectorizer produces some extra metadata that you can safely ignore (and may or may not be outputted by the API.</dd>
+        <dt>Sheet</dt>
+        <dd>Polygons come from atlas sheets scanned one at a time and then geo-rectified via the <%= link_to "NYPL Map Warper", "http://maps.nypl.org/warper" %>. The vectorizer goes through each sheet and extracts buildings as best it can; and it's not good enough, that's why this site exists: to validate and improve the output of the vectorizer. Each polygon is associated to a <code>sheet_id</code>.</dd>
+        <dt>Task</dt>
+        <dd>The type of inspection being made to a polygon. Right now there are <em>four tasks</em>: <code>geometry</code>, <code>polygonfix</code>, <code>address</code> and <code>color</code>.</dd>
+        <dt>Consensus</dt>
+        <dd>In order to improve results, we present the same polygon for the same task to multiple users. We then make a decision of which value is the correct one depending on the different inspections. This is what we call &ldquo;consensus&rdquo; and it varies from task to task. <strong>This API only returns consensus values.</strong></dd>
+        <dt>Geometry task</dt>
+        <dd>This is the main/first task for any polygon. You are inspecting a polygon to find out if its shape: matches a building (value: <code>YES</code>), matches part of a building but needs fixing (value: <code>FIX</code>) or does not match a building at all (value: <code>NO</code>).</dd>
+        <dt>Polygonfix task</dt>
+        <dd>Polygons that are classified as <code>FIX</code> get sent to this task. Its purpose is to create new geometry(ies) that will better match the building(s). The resulting value is(are) GeoJSON geometry(ies).</dd>
+        <dt>Address task</dt>
+        <dd>Polygons that are classified as <code>YES</code> get sent to this task. Its purpose is to find the address numbers (if any) associated to a given polygon. The resulting value is an array of address numbers with their latitude and longitude values or <code>NONE</code>.</dd>
+        <dt>Colors task</dt>
+        <dd>Polygons that are classified as <code>YES</code> also get sent to this task. Its purpose is to find the colors present in a building. The resulting value is a comma-separated string with any of the colors. Current possible colors are <code>pink</code>, <code>blue</code>, <code>yellow</code>, <code>green</code> and <code>black</code>.</dd>
+    </dl>
+    <p><strong>Note:</strong> Not all tasks and consensus types have been implemented. If you <em>definitely have to have</em> those polygons (and we can't blame you) contact us at <%= link_to "our Twitter account", "http://www.twitter.com/nypl_labs" %>.
+    <h5>Pagination</h5>
+    <p>All results are paginated by <strong>batches of 500 results</strong> (you can always get fewer). You can append <code>/page/:page</code> to any endpoint to request the specific page. If you do not request a specific page, the first one will be returned. If you attempt to access a page beyond the last page you'll be returned an empty GeoJSON result.</p>
+    <h4><a name="geometry"></a>Geometry</h4>
+    <h5>GET /api/polygons/geometry/:value</h5>
+    <p>Returns the list of polygons that have a consensus of <code>:value</code> (yes, no, fix). If no value is provided, <em>all</em> polygons will be returned regardless of their consensus.</p>
+    <h6>Example response</h6>
     <pre>
-        <code class="bash">/api/polygons/geometry</code>
+        <code class="json">
+{
+  "message": "List for informative purposes only.",
+  "polygon_count": "2",
+  "page": 1,
+  "per_page": 500,
+  "total_pages": 1,
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "consensus": "yes",
+        "id": 73000,
+        "dn": 1002010,
+        "sheet_id": 138
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-73.9981514825787, 40.75699146852938],
+            [-73.99820209636397, 40.757014472045185],
+            [-73.99816666671428, 40.75706431296879],
+            [-73.99809833810419, 40.757035558594346],
+            [-73.9981312370646, 40.75698955156937],
+            [-73.99813629844313, 40.75698571764918],
+            [-73.9981514825787, 40.75699146852938]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "consensus": "yes",
+        "id": 73001,
+        "dn": 1005025,
+        "sheet_id": 138
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-73.9976238409442, 40.75697150401845],
+            [-73.99763605041814, 40.75696082476952],
+            [-73.99764622497976, 40.75696349458192],
+            [-73.99778052919307, 40.75702223042746],
+            [-73.99778256410538, 40.75703023985692],
+            [-73.99775204042055, 40.75707028698976],
+            [-73.9976055267333, 40.75700621156564],
+            [-73.99760349182097, 40.75699820213328],
+            [-73.9976238409442, 40.75697150401845]
+          ]
+        ]
+      }
+    }
+  ]
+}        </code>
     </pre>
-
-    <h4>Polygons with consensus = yes</h4>
+    <h4><a name="color"></a>Color</h4>
+    <h5>GET /api/polygons/color/:value</h5>
+    <p>Returns the list of polygons that were marked as "yes" in the geometry task and have a consensus of <code>:value</code> (pink, blue, yellow, green, black).</p>
+    <h6>Example response</h6>
     <pre>
-        <code class="bash">/api/polygons/geometry/yes</code>
-    </pre>
-
-    <h4>Polygons with consensus = no</h4>
-    <pre>
-        <code class="bash">/api/polygons/geometry/no</code>
-    </pre>
-
-    <h4>Polygons with consensus = fix</h4>
-    <pre>
-        <code class="bash">/api/polygons/geometry/fix</code>
+        <code class="json">
+{
+  "message": "List for informative purposes only.",
+  "polygon_count": "2",
+  "page": 1,
+  "per_page": 500,
+  "total_pages": 1,
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "consensus": "yellow",
+        "id": 73000,
+        "dn": 1002010,
+        "sheet_id": 138
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-73.9981514825787, 40.75699146852938],
+            [-73.99820209636397, 40.757014472045185],
+            [-73.99816666671428, 40.75706431296879],
+            [-73.99809833810419, 40.757035558594346],
+            [-73.9981312370646, 40.75698955156937],
+            [-73.99813629844313, 40.75698571764918],
+            [-73.9981514825787, 40.75699146852938]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "consensus": "pink",
+        "id": 73001,
+        "dn": 1005025,
+        "sheet_id": 138
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-73.9976238409442, 40.75697150401845],
+            [-73.99763605041814, 40.75696082476952],
+            [-73.99764622497976, 40.75696349458192],
+            [-73.99778052919307, 40.75702223042746],
+            [-73.99778256410538, 40.75703023985692],
+            [-73.99775204042055, 40.75707028698976],
+            [-73.9976055267333, 40.75700621156564],
+            [-73.99760349182097, 40.75699820213328],
+            [-73.9976238409442, 40.75697150401845]
+          ]
+        ]
+      }
+    }
+  ]
+}        </code>
     </pre>
 
   </div>
