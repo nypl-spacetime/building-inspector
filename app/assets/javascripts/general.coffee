@@ -39,6 +39,7 @@ class General
       ".legend-link"
       "#link-try"
       "#link-back"
+      "#toc a"
     ]
     @mobileClick id for id in overrides
 
