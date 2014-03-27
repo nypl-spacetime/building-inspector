@@ -156,8 +156,10 @@ class Color extends Inspector
   updateMultipleStatus: () ->
     if (@isMultiple)
       $(".secondary").show()
+      $("#controls").addClass("multiple")
     else
       $(".secondary").hide()
+      $("#controls").removeClass("multiple")
 
   submitMulticolorFlag: (e) =>
     @activateButton("save") unless @options.tutorialOn
