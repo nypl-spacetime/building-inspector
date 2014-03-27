@@ -44,7 +44,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     width: 230px;
     margin: 0 auto;
 
-    @include clearfix;
+    // @include clearfix;
   }
 
   .multiple {
@@ -184,6 +184,12 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   &#save-button {
     background: $green;
     width: 80px;
+
+    &.color {
+      position: absolute;
+      top: 25px;
+      right: -95px;
+    }
   }
 
   &#pink-button, &#blue-button, &#green-button, &#yellow-button, &#black-button {
@@ -197,7 +203,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     }
   }
 
-  &#pink-button {
+  &#pink-button, &#pink-button.pressed {
     color: $grayDarkest;
     background-color: $pink;
     margin-left: 0;
@@ -206,19 +212,19 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     }
   }
 
-  &#blue-button {
+  &#blue-button, &#blue-button.pressed {
     background-color: $blue;
   }
 
-  &#green-button {
+  &#green-button, &#green-button.pressed {
     background-color: $greenPaper;
   }
 
-  &#yellow-button {
+  &#yellow-button, &#yellow-button.pressed {
     background-color: $yellow;
   }
 
-  &#black-button {
+  &#black-button, &#black-button.pressed {
     background-color: $grayDarkest;
     margin-right: 0;
   }
@@ -248,6 +254,14 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
   &.secondary {
     display: none;
+  }
+
+  &#pink-button, &#blue-button, &#green-button, &#yellow-button, &#black-button, &#save-buttton {
+    border: 1px solid transparent;
+
+    &.pressed {
+      border-color: $white;
+    }
   }
 }
 

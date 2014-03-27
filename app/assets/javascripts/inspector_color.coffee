@@ -8,12 +8,18 @@ class Color extends Inspector
       jsdataID: '#colorjs'
       task: 'color'
     super(options)
+    @flags = []
+    @isMultiple = false
 
   clearScreen: () =>
+    document.getElementById("multiple-color").checked = false
+    @clearFlags()
+    @updateMultipleStatus()
     super()
 
   addEventListeners: () =>
     super()
+    $("#multiple-color").on("change", @multipleColorClick)
 
   addButtonListeners: () =>
     super()
@@ -23,6 +29,7 @@ class Color extends Inspector
     $("#yellow-button").on("click", @submitYellowFlag)
     $("#green-button").on("click", @submitGreenFlag)
     $("#black-button").on("click", @submitBlackFlag)
+    $("#save-button").on("click", @submitMulticolorFlag)
 
     $("#pink-button").on("dblclick", (e) ->
       e.preventDefault()
@@ -37,6 +44,10 @@ class Color extends Inspector
       e.preventDefault()
     )
     $("#black-button").on("dblclick", (e) ->
+      e.preventDefault()
+    )
+
+    $("#save-button").on("dblclick", (e) ->
       e.preventDefault()
     )
 
@@ -64,6 +75,7 @@ class Color extends Inspector
     $("#yellow-button").unbind()
     $("#green-button").unbind()
     $("#black-button").unbind()
+    $("#save-button").unbind()
 
   activateButton: (button) ->
     $("#blue-button").addClass("inactive") if button != "blue"
@@ -71,37 +83,90 @@ class Color extends Inspector
     $("#yellow-button").addClass("inactive") if button != "yellow"
     $("#green-button").addClass("inactive") if button != "green"
     $("#black-button").addClass("inactive") if button != "black"
+    $("#save-button").addClass("inactive") if button != "save"
     $("#blue-button").addClass("active") if button == "blue"
     $("#pink-button").addClass("active") if button == "pink"
     $("#yellow-button").addClass("active") if button == "yellow"
+    $("#green-button").addClass("active") if button == "green"
+    $("#black-button").addClass("active") if button == "black"
+    $("#save-button").addClass("active") if button == "save"
+
+  multipleColorClick: (e) =>
+    @isMultiple = $("#multiple-color").is(':checked')
+    @updateMultipleStatus()
+    @resetButtons()
+    if !@isMultiple && @flags.length > 0
+      # there were active buttons
+      @clearFlags()
+
 
   resetButtons: () ->
     super()
-    $("#blue-button").removeClass("active inactive")
-    $("#pink-button").removeClass("active inactive")
-    $("#yellow-button").removeClass("active inactive")
-    $("#green-button").removeClass("active inactive")
-    $("#black-button").removeClass("active inactive")
+    $("#blue-button").removeClass("active inactive pressed")
+    $("#pink-button").removeClass("active inactive pressed")
+    $("#yellow-button").removeClass("active inactive pressed")
+    $("#green-button").removeClass("active inactive pressed")
+    $("#black-button").removeClass("active inactive pressed")
+    $("#save-button").removeClass("active inactive pressed")
 
   submitPinkFlag: (e) =>
-    @activateButton("pink") unless @options.tutorialOn
-    @submitFlag(e, "pink")
+    @activateButton("pink") unless @options.tutorialOn || @isMultiple
+    if !@isMultiple
+      @submitFlag(e, "pink")
+    else
+      @toggleColor("pink")
 
   submitBlueFlag: (e) =>
-    @activateButton("blue") unless @options.tutorialOn
-    @submitFlag(e, "blue")
+    @activateButton("blue") unless @options.tutorialOn || @isMultiple
+    if !@isMultiple
+      @submitFlag(e, "blue")
+    else
+      @toggleColor("blue")
 
   submitYellowFlag: (e) =>
-    @activateButton("yellow") unless @options.tutorialOn
-    @submitFlag(e, "yellow")
+    @activateButton("yellow") unless @options.tutorialOn || @isMultiple
+    if !@isMultiple
+      @submitFlag(e, "yellow")
+    else
+      @toggleColor("yellow")
 
   submitGreenFlag: (e) =>
-    @activateButton("green") unless @options.tutorialOn
-    @submitFlag(e, "green")
+    @activateButton("green") unless @options.tutorialOn || @isMultiple
+    if !@isMultiple
+      @submitFlag(e, "green")
+    else
+      @toggleColor("green")
 
   submitBlackFlag: (e) =>
-    @activateButton("black") unless @options.tutorialOn
-    @submitFlag(e, "black")
+    @activateButton("black") unless @options.tutorialOn || @isMultiple
+    if !@isMultiple
+      @submitFlag(e, "black")
+    else
+      @toggleColor("black")
+
+  toggleColor: (color) ->
+    if @flags.indexOf(color) == -1
+      #not in list, add
+      @flags.push(color)
+      $("##{color}-button").addClass("pressed")
+    else
+      @flags.splice(@flags.indexOf(color),1) unless @flags.indexOf(color) == -1
+      $("##{color}-button").removeClass("pressed")
+
+  updateMultipleStatus: () ->
+    if (@isMultiple)
+      $(".secondary").show()
+    else
+      $(".secondary").hide()
+
+  submitMulticolorFlag: (e) =>
+    @activateButton("save") unless @options.tutorialOn
+    @submitFlag(e, @flags.join(","))
+    @clearFlags()
+
+  clearFlags: () ->
+    @flags = []
+    @isMultiple = false
 
 $ ->
   tutorialData =

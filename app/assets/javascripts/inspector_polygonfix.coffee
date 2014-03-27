@@ -13,7 +13,8 @@ class Polygonfix extends Inspector
 
   clearScreen: () =>
     document.getElementById("multiple-polygon").checked = false
-    @multipleBuildingClick()
+    @isMultiple = false
+    @updateMultipleStatus()
     @eraseGhosts()
     super()
 
