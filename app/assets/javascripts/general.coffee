@@ -27,6 +27,7 @@ class General
       ".slide a"
       ".popup-link"
       "#home-logo"
+      "#link-data"
       "#link-help"
       "#link-about"
       "#logout-link"
