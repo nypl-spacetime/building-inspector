@@ -43,7 +43,7 @@ Active endpoints:
 ````
 /api/polygons/:task/page/:page
 /api/polygons/:task/:consensus/page/:page
-```
+````
 
 Accept tasks:
 `geometry`, `color`, `polygonfix`, `address` with numeric paging (500 records per page).

@@ -31,11 +31,11 @@
         <dt>GeoJSON</dt>
         <dd>Everything in this API is returned as a <%= link_to "GeoJSON string", "http://geojson.org/" %>. You can easily verify/visualize the output using <%= link_to "GeoJSONLint", "http://geojsonlint.com/" %>.</dd>
         <dt>Polygon</dt>
-        <dd>The building block of the Building Inspector. Polygons are building footprints produced by the <%= link_to "NYPL Map Vectorizer", "https://github.com/NYPL/map-vectorizer" %>. The vectorizer produces some extra metadata that you can safely ignore (and may or may not be outputted by the API.</dd>
+        <dd>The building block of the Building Inspector. Polygons are building footprints produced by the <%= link_to "NYPL Map Vectorizer", "https://github.com/NYPL/map-vectorizer" %>. The vectorizer produces some extra metadata that you can safely ignore (and may or may not be outputted by the API).</dd>
         <dt>Sheet</dt>
         <dd>Polygons come from atlas sheets scanned one at a time and then geo-rectified via the <%= link_to "NYPL Map Warper", "http://maps.nypl.org/warper" %>. The vectorizer goes through each sheet and extracts buildings as best it can; and it's not good enough, that's why this site exists: to validate and improve the output of the vectorizer. Each polygon is associated to a <code>sheet_id</code>.</dd>
         <dt>Task</dt>
-        <dd>The type of inspection being made to a polygon. Right now there are <em>four tasks</em>: <code>geometry</code>, <code>polygonfix</code>, <code>address</code> and <code>color</code>.</dd>
+        <dd>The type of inspection being made to a polygon. Right now there are four tasks: <code>geometry</code>, <code>polygonfix</code>, <code>address</code> and <code>color</code>.</dd>
         <dt>Consensus</dt>
         <dd>In order to improve results, we present the same polygon for the same task to multiple users. We then make a decision of which value is the correct one depending on the different inspections. This is what we call &ldquo;consensus&rdquo; and it varies from task to task. <strong>This API only returns consensus values.</strong></dd>
         <dt>Geometry task</dt>
