@@ -95,6 +95,10 @@ class Color extends Inspector
     @isMultiple = $("#multiple-color").is(':checked')
     @updateMultipleStatus()
     @resetButtons()
+    intro = @intro
+    window.setTimeout( () ->
+      intro.nextStep()
+    , 200) if @options.tutorialOn
     if !@isMultiple && @flags.length > 0
       # there were active buttons
       @clearFlags()
@@ -176,176 +180,60 @@ $ ->
     steps: [
             {
               element: "#map-highlight"
-              intro: "<strong>Here's how the app works</strong><br />We'll show you one computer-generated building outline at a time, laid over the original map."
+              intro: "testing the colors tutorial. click NEXT here."
               position: "bottom"
               polygon_index: -1
             }
             {
-              element: "#buttons .wrapper"
-              intro: "Along with 3 buttons:<br /><strong>YES</strong> (keyboard 3) for when the outline matches a building footprint<br /><strong>FIX</strong> (keyboard 2) for when the outline mostly matches, but needs correcting<br /><strong>NO</strong> (keyboard 1) for when the outline is not around a building"
+              element: "#lower-controls"
+              intro: "this highlights only the buttons"
               position: "top"
               polygon_index: -1
             }
             {
-              element: "#buttons .wrapper"
-              intro: "Let's walk through a few examples…"
+              element: "#buttons .multiple"
+              intro: "now we highlight the checkbox (checking it will prompt the next step)"
               position: "top"
               polygon_index: -1
             }
             {
-              element: "#map-highlight"
-              intro: "This outline matches the original building footprint."
-              position: "right"
-              polygon_index: -1
-            }
-            {
-              element: "#pink-button"
-              intro: "Press YES to tag it as correct and continue to the next one."
+              element: "#lower-controls"
+              intro: "notice how the controls have changed!<br />click some colors and SAVE"
               position: "top"
               polygon_index: -1
               ixactive: true
             }
             {
               element: "#map-highlight"
-              intro: "This outline does't match a building at all, but rather the <strong>space between buildings</strong>."
+              intro: "we go back to the map but mention how the checkbox has been deactivated."
               position: "right"
               polygon_index: 0
-            }
-            {
-              element: "#blue-button"
-              intro: "Press NO to tag it as wrong."
-              position: "top"
-              polygon_index: 0
-              ixactive: true
             }
             {
               element: "#map-highlight"
-              intro: "Sometimes that inter-building space has a darker shade."
+              intro: "and show some other polygon"
               position: "right"
-              polygon_index: 1
+              polygon_index: 0
             }
             {
-              element: "#blue-button"
-              intro: "Be vigilant!"
-              position: "top"
+              element: "#map-highlight"
+              intro: "and another"
+              position: "right"
               polygon_index: 1
               ixactive: true
             }
             {
               element: "#map-highlight"
-              intro: "Sometimes the computer is <strong>just a little bit off</strong> (e.g. here it missed a skylight).<br />Your input can help us to train it to recognize these in the future."
+              intro: "and another"
               position: "right"
               polygon_index: 2
             }
             {
-              element: "#yellow-button"
-              intro: "Press FIX to indicate so."
-              position: "top"
-              polygon_index: 2
-              ixactive: true
-            }
-            {
               element: "#map-highlight"
-              intro: "But don't let perfect be the enemy of good."
+              intro: "you get the drill"
               position: "right"
               polygon_index: 3
-            }
-            {
-              element: "#pink-button"
-              intro: "This one's good enough. Press YES and keep going."
-              position: "top"
-              polygon_index: 3
               ixactive: true
-            }
-            {
-              element: "#map-highlight"
-              intro: "Some buildings have multiple parts. When in doubt, refer to the original map. <strong>Broken lines mean connected structures.</strong> Solid lines mean separate ones."
-              position: "right"
-              polygon_index: 4
-            }
-            {
-              element: ".leaflet-control-zoom.leaflet-bar.leaflet-control"
-              intro: "That's a large building! Use zoom in/out to view it better."
-              position: "left"
-              polygon_index: 4
-            }
-            {
-              element: "#pink-button"
-              intro: "Now you can approve it."
-              position: "top"
-              polygon_index: 4
-              ixactive: true
-            }
-            {
-              element: "#map-highlight"
-              intro: "Defer to those original lines (broken vs. solid) criteria for <strong>multi-colored buildings</strong> also."
-              position: "right"
-              polygon_index: 5
-            }
-            {
-              element: "#pink-button"
-              intro: "That's a YES!"
-              position: "top"
-              polygon_index: 5
-              ixactive: true
-            }
-            {
-              element: "#map-highlight"
-              intro: "Good!<br />This one is actually <strong>two separate</strong> buildings."
-              position: "right"
-              polygon_index: 6
-            }
-            {
-              element: "#yellow-button"
-              intro: "That's a FIXer."
-              position: "top"
-              polygon_index: 6
-              ixactive: true
-            }
-            {
-              element: "#map-highlight"
-              intro: "Easy, right?<br />But keep an eye out.. Occasionally a <strong>crease or seam in the map</strong> throws off the computer."
-              position: "right"
-              polygon_index: 7
-            }
-            {
-              element: "#yellow-button"
-              intro: "Those are FIXes."
-              position: "top"
-              polygon_index: 7
-              ixactive: true
-            }
-            {
-              element: "#map-highlight"
-              intro: "Sometimes the computer makes a real mess."
-              position: "right"
-              polygon_index: 8
-            }
-            {
-              element: "#blue-button"
-              intro: "Teach that computer a lesson!"
-              position: "top"
-              polygon_index: 8
-              ixactive: true
-            }
-            {
-              element: "#map-highlight"
-              intro: "Yikes! It really screwed this one up."
-              position: "right"
-              polygon_index: 9
-            }
-            {
-              element: "#blue-button"
-              intro: "Laugh at the poor computer and move on."
-              position: "top"
-              polygon_index: 9
-              ixactive: true
-            }
-            {
-              element: "#link-help"
-              intro: "<strong>Now you're ready to begin checking buildings!</strong><br />You can always refer to this tutorial again by hitting the HELP button.<br />Have fun! And thanks for helping The New York Public Library."
-              position: "left"
-              polygon_index: 9
             }
         ]
   new Color({tutorialData:tutorialData})

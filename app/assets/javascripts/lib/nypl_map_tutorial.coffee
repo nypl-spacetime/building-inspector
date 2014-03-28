@@ -67,6 +67,9 @@ class @NYPL_Map_Tutorial
     @opts.exitFunction?()
     @intro.exit() if @intro
 
+  nextStep: () ->
+    @intro.nextStep()
+
   goToStep: (index) ->
     @intro.goToStep(index)
 

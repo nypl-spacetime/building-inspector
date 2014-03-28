@@ -43,7 +43,7 @@ L.Polygon.polygonEditor = L.Polygon.extend({
             this._prepareMapIfNeeded();
 
             /*
-             * Utility method added to this map to retreive editable 
+             * Utility method added to this map to retreive editable
              * polylines.
              */
             if(!this._map.getEditablePolylines) {
@@ -53,9 +53,9 @@ L.Polygon.polygonEditor = L.Polygon.extend({
             }
 
             /**
-             * Since all point editing is done by marker events, markers 
+             * Since all point editing is done by marker events, markers
              * will be the main holder of the polyline points locations.
-             * Every marker contains a reference to the newPointMarker 
+             * Every marker contains a reference to the newPointMarker
              * *before* him (=> the first marker has newPointMarker=null).
              */
             this._parseOptions(options);
@@ -91,7 +91,7 @@ L.Polygon.polygonEditor = L.Polygon.extend({
         };
 
         /**
-         * Check if is busy adding/moving new nodes. Note, there may be 
+         * Check if is busy adding/moving new nodes. Note, there may be
          * *other* editable polylines on the same map which *are* busy.
          */
         this._isBusy = function() {
@@ -140,8 +140,8 @@ L.Polygon.polygonEditor = L.Polygon.extend({
         };
 
         /**
-         * Show only markers in current map bounds *is* there are only a certain 
-         * number of markers. This method is called on eventy that change map 
+         * Show only markers in current map bounds *is* there are only a certain
+         * number of markers. This method is called on eventy that change map
          * bounds.
          */
         this._showBoundMarkers = function() {
@@ -179,8 +179,8 @@ L.Polygon.polygonEditor = L.Polygon.extend({
         };
 
         /**
-         * Used when adding/moving points in order to disable the user to mess 
-         * with other markers (+ easier to decide where to put the point 
+         * Used when adding/moving points in order to disable the user to mess
+         * with other markers (+ easier to decide where to put the point
          * without too many markers).
          */
         this._hideAll = function(except) {
@@ -232,7 +232,7 @@ L.Polygon.polygonEditor = L.Polygon.extend({
         }
 
         /**
-         * Reload polyline. If it is busy, then the bound markers will not be 
+         * Reload polyline. If it is busy, then the bound markers will not be
          * shown. Call _setBusy(false) before this method!
          */
         this._reloadPolygon = function(fixAroundPointNo) {
@@ -244,7 +244,7 @@ L.Polygon.polygonEditor = L.Polygon.extend({
         }
 
         /**
-         * Reload polyline. If it is busy, then the bound markers will not be 
+         * Reload polyline. If it is busy, then the bound markers will not be
          * shown. Call _setBusy(false) before this method!
          */
         this._setMarkers = function() {
@@ -269,7 +269,7 @@ L.Polygon.polygonEditor = L.Polygon.extend({
         }
 
         /**
-         * Reload polyline. If it is busy, then the bound markers will not be 
+         * Reload polyline. If it is busy, then the bound markers will not be
          * shown. Call _setBusy(false) before this method!
          */
         this._eraseMarkers = function() {
@@ -285,10 +285,10 @@ L.Polygon.polygonEditor = L.Polygon.extend({
         }
 
         /**
-         * Add two markers (a point marker and his newPointMarker) for a 
+         * Add two markers (a point marker and his newPointMarker) for a
          * single point.
          *
-         * Markers are not added on the map here, the marker.addTo(map) is called 
+         * Markers are not added on the map here, the marker.addTo(map) is called
          * only later when needed first time because of performance issues.
          */
         this._addMarkers = function(pointNo, latLng, fixNeighbourPositions) {
@@ -386,7 +386,7 @@ L.Polygon.polygonEditor = L.Polygon.extend({
             //         //console.log('points:' + points);
             //         //console.log('contexts:' + contexts);
 
-            //         // Need to know the current polyline order numbers, because 
+            //         // Need to know the current polyline order numbers, because
             //         // the splitted one need to be inserted immediately after:
             //         var originalPolygonNo = that._map._editablePolygons.indexOf(that);
 
@@ -517,12 +517,12 @@ L.Polygon.polygonEditor.addInitHook(function () {
         this._addMethods();
 
         /**
-         * When addint a new point we must disable the user to mess with other 
-         * markers. One way is to check everywhere if the user is busy. The 
-         * other is to just remove other markers when the user is doing 
+         * When addint a new point we must disable the user to mess with other
+         * markers. One way is to check everywhere if the user is busy. The
+         * other is to just remove other markers when the user is doing
          * somethinng.
          *
-         * TODO: Decide the right way to do this and then leave only _busy or 
+         * TODO: Decide the right way to do this and then leave only _busy or
          * _hideAll().
          */
         this._busy = false;
@@ -542,21 +542,21 @@ L.Polygon.polygonEditor.addInitHook(function () {
  *
  * latlngs    ... a list of points (or two-element tuples with coordinates)
  * options    ... polyline options
- * contexts   ... custom contexts for every point in the polyline. Must have the 
- *                same number of elements as latlngs and this data will be 
+ * contexts   ... custom contexts for every point in the polyline. Must have the
+ *                same number of elements as latlngs and this data will be
  *                preserved when new points are added or polylines splitted.
  * polygonNo ... insert this polyline in a specific order (used when splitting).
  *
  * More about contexts:
- * This is an array of objects that will be kept as "context" for every 
- * point. Marker will keep this value as marker.context. New markers will 
+ * This is an array of objects that will be kept as "context" for every
+ * point. Marker will keep this value as marker.context. New markers will
  * have context set to null.
  *
  * Contexts must be the same size as the polyline size!
  *
- * By default, even without calling this method -- every marker will have 
- * context with one value: marker.context.originalPointNo with the 
- * original order number of this point. The order may change if some 
+ * By default, even without calling this method -- every marker will have
+ * context with one value: marker.context.originalPointNo with the
+ * original order number of this point. The order may change if some
  * markers before this one are delted or new added.
  */
 L.Polygon.PolygonEditor = function(latlngs, options, contexts, polygonNo) {

@@ -107,7 +107,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
 #map-highlight {
   position: absolute;
-  left: 10%;
+  left: 30%;
   right: 30%;
   top: 10%;
   bottom: 20%;
@@ -265,7 +265,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     border: 1px solid transparent;
 
     &.pressed {
-      border-color: $white;
+      border-color: $red;
     }
   }
 }
