@@ -2,6 +2,7 @@ class @Inspector
 
   constructor: (options) ->
     window.nypl_inspector = @ # to make it accessible from console
+    @desktopWidth = 600
 
     defaults =
       editablePolygon: false
@@ -11,8 +12,8 @@ class @Inspector
       loaderID: "#loader"
       tutorialOn: true
       tutorialData: {}
-      tutorialID: "#map-tutorial"
-      tutorialHighlightID: "#map-highlight"
+      tutorialType: "intro"
+      tutorialURL: ""
       buttonsID: "#buttons"
       task: '' # geometry, address, polygonfix
       jsdataID: ''
@@ -185,34 +186,64 @@ class @Inspector
     @showMessage(msg, true)
 
   invokeTutorial: () =>
-    if (window.innerWidth < 500)
-      @hideOthers()
-      $(@options.tutorialID).unswipeshow()
-      $(@options.tutorialID).show()
-      $(@options.tutorialID).swipeshow
-        mouse: true
-        autostart: false
-      .goTo 0
+    if window.innerWidth >= @desktopWidth
+      if @options.tutorialType == "intro"
+        @_polyData = Utils.clone(@polyData)
+        @polyData = Utils.clone(@options.tutorialData.poly.poly)
+        @_currentIndex = @currentIndex - 1
+        @currentIndex = -1
+        @showNextPolygon()
     else
-      @_polyData = Utils.clone(@polyData)
-      @polyData = Utils.clone(@options.tutorialData.poly.poly)
-      @_currentIndex = @currentIndex - 1
-      @currentIndex = -1
-      @showNextPolygon()
-      @buildTutorial()
+      @hideOthers()
+    @buildTutorial()
     @options.tutorialOn = true
+
+  buildTutorial: () ->
+    @intro = new NYPL_Map_Tutorial(
+      inspector: @
+      desktopWidth: @desktopWidth
+      type: @options.tutorialType
+      url: @options.tutorialURL
+      tutorialID: "#map-tutorial"
+      highlightID: "#map-highlight"
+      steps: @options.tutorialData.steps
+      changeFunction: @parseTutorial
+      exitFunction: @hideTutorial
+      ixactiveFunction: @addButtonListeners
+      ixinactiveFunction: @removeButtonListeners
+      highlightclickFunction: @onTutorialClick
+    )
+    @intro.init()
+
+  hideTutorial: () =>
+    if window.innerWidth >= @desktopWidth
+      @clearScreen()
+      @polyData = Utils.clone(@_polyData)
+      @currentIndex = @_currentIndex
+      @showNextPolygon()
+    else
+      @showOthers()
+    @options.tutorialOn = false
+
+  parseTutorial: () =>
+    if @currentIndex != @intro.getCurrentPolygonIndex() + 1
+      @currentIndex = @intro.getCurrentPolygonIndex()
+      @showNextPolygon()
+    @
 
   hideOthers: () ->
     $("#main-container").hide()
     $("#controls").hide()
     $("#score").hide()
+    $("#nypl-mini").hide()
     $("#top-nav").removeClass("open")
-    $("#map-tutorial").hide()
+    $("#map-tutorial").show()
 
   showOthers: () ->
     $("#main-container").show()
     $("#controls").show()
     $("#score").show()
+    $("#nypl-mini").show()
     $("#map-tutorial").hide()
 
   showNextPolygon: () ->
@@ -353,32 +384,3 @@ class @Inspector
   hidePolygon: (e) =>
     @geo.setStyle (feature) ->
       opacity: 0
-
-  buildTutorial: () ->
-    @intro = new NYPL_Map_Tutorial(
-      highlightID: @options.tutorialHighlightID
-      steps: @options.tutorialData.steps
-      changeFunction: @parseTutorial
-      exitFunction: @hideTutorial
-      ixactiveFunction: @addButtonListeners
-      ixinactiveFunction: @removeButtonListeners
-      highlightclickFunction: @onTutorialClick
-    )
-    @intro.init()
-
-  parseTutorial: () =>
-    if @currentIndex != @intro.getCurrentPolygonIndex() + 1
-      @currentIndex = @intro.getCurrentPolygonIndex()
-      @showNextPolygon()
-    @
-
-  hideTutorial: () =>
-    console.log "end of tutorial"
-    @clearScreen()
-    if (window.innerWidth < 500)
-      @showOthers()
-    else
-      @polyData = Utils.clone(@_polyData)
-      @currentIndex = @_currentIndex
-      @showNextPolygon()
-    @options.tutorialOn = false

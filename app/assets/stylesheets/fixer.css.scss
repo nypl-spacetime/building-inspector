@@ -377,6 +377,31 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   }
 }
 
+#tutorial-video {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 111111;
+  background: rgba(0,0,0,.75);
+}
+
+#tutorial-video-wrapper {
+  margin: 100px auto 0;
+  width: 500px;
+  position: relative;
+
+  .close {
+    right: -24px;
+    top: -20px;
+
+    &:before {
+      color: $grayLightest;
+    }
+  }
+}
+
 // introjs overrides
 .tutorial {
   font-family: $mainfont;
