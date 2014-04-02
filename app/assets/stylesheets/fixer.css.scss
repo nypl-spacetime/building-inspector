@@ -304,10 +304,6 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   background-color: $gray;
   // @include box-shadow(0, 0, 15px);
 
-  @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
-    display: none !important;
-  }
-
   #link-exit-tutorial {
     font-size: 30px;
     width: 160px;
@@ -395,6 +391,11 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   .close {
     right: -24px;
     top: -20px;
+
+    @media screen and (max-width: $desktopwidth) {
+      right: 5px;
+      top: -35px;
+    }
 
     &:before {
       color: $grayLightest;

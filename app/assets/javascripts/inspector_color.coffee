@@ -2,8 +2,7 @@ class Color extends Inspector
 
   constructor: (options) ->
     options =
-      scrollWheelZoom: false
-      touchZoom: false
+      draggableMap: true
       tutorialData: options.tutorialData
       jsdataID: '#colorjs'
       task: 'color'

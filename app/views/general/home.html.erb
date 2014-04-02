@@ -1,14 +1,6 @@
 <% content_for :page_title do %>Building Inspector by NYPL Labs<% end %>
 <% content_for :dynamic_js do %>
   <%= stylesheet_link_tag    "home", :media => "all" %>
-  <script type="text/javascript">
-  // scroll to top (hide bar in ios)
-  window.addEventListener("load",function() {
-    setTimeout(function(){
-      window.scrollTo(0, 1);
-    }, 0);
-  });
-  </script>
 <% end %>
 
 <%= render :partial => "partials/nav" %>

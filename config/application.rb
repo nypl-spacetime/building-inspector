@@ -64,5 +64,8 @@ module Webappmini
     config.assets.precompile += ["*.svg","*.eot","*.woff","*.ttf","*.js","*.css"]
 
     config.assets.paths << Rails.root.join("app", "assets", "files", "fonts")
+
+    # for 404 handling
+    config.exceptions_app = self.routes
   end
 end

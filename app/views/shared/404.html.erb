@@ -1,0 +1,19 @@
+<% content_for :page_title do %>Cookies Required<% end %>
+<% content_for :dynamic_js do %>
+  <%= stylesheet_link_tag    "home", :media => "all" %>
+<% end %>
+<%= render :partial => "partials/nav" %>
+
+<div id="main-container">
+  <div class="intro">
+    <h3>Polygon not found!</h3>
+    <p>We couldn't find the page you are looking for. It might be an outdated link or a typo in the URL. Maybe you can <%= link_to "try our homepage", root_path %> or get busy with one of these:</p>
+    <ul>
+      <% @global_tasks.each do |task| %>
+      <%= content_tag :li, (link_to task[:name], task[:path], {:rel=>"nofollow"}) %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<%= render :partial => "partials/footer" %>

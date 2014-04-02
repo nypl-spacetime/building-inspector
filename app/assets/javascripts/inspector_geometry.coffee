@@ -2,8 +2,7 @@ class Geometry extends Inspector
 
   constructor: (options) ->
     options =
-      scrollWheelZoom: false
-      touchZoom: false
+      draggableMap: true
       tutorialData: options.tutorialData
       jsdataID: '#geometryjs'
       task: 'geometry'

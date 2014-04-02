@@ -4,6 +4,8 @@ class @NYPL_Map_Tutorial
     @_parseOptions(options)
     @_currentStep = 0
     @intro = introJs()
+    window.onresize = () =>
+      @resizeTutorial()
     @
 
   _parseOptions: (options)=>
@@ -19,11 +21,18 @@ class @NYPL_Map_Tutorial
     if @options.type == "video"
       # always video
       @initVideo()
+      @resizeTutorial()
     else if window.innerWidth >= @options.desktopWidth
       @initFancy()
-    else
+    else if @options.type != "video"
       @initSlideshow()
     @
+
+  resizeTutorial: () ->
+    w = window.innerWidth
+    return if w >= @options.desktopWidth
+    $("#tutorial-video-wrapper").width(w)
+    $("#tutorial-video-wrapper iframe").width(w)
 
   initVideo: () ->
     t = @

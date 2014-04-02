@@ -24,6 +24,11 @@ class GeneralController < ApplicationController
     @has_score = true if @score_geometry > 0 || @score_address > 0 || @score_polygonfix > 0
   end
 
+  def not_found
+    @current_page = "homepage"
+    render :template => "shared/404"
+  end
+
   def about
     @current_page = "homepage"
   end

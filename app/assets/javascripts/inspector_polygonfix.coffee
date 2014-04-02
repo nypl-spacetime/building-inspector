@@ -6,6 +6,7 @@ class Polygonfix extends Inspector
       tutorialURL: "//player.vimeo.com/video/90657474?title=0&amp;byline=0&amp;portrait=0"
       editablePolygon: true
       draggableMap: true
+      constrainMapToPolygon: false
       tutorialData: {}
       jsdataID: '#polygonfixjs'
       task: 'polygonfix'

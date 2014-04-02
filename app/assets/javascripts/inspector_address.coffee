@@ -17,7 +17,6 @@ class Address extends Inspector
   addEventListeners: () =>
     super()
     @map.on('click', @onMapClick)
-    @map.on('move', @onMapChange)
 
     inspector = @
 
@@ -63,18 +62,6 @@ class Address extends Inspector
       txt = contents.value
       r.push "#{txt}=#{latlng.lat}=#{latlng.lng}" if txt != "" && !contents.fake
     r
-
-  onMapChange: (e) =>
-    # console.log "changed!"
-    # check if current polygon is somewhat visible in view
-    # so user does not get lost
-    if @geo?.getBounds? and not @map.getBounds().intersects(@geo.getBounds())
-      @map.fitBounds( @geo.getBounds() )
-    for flag, contents of @flags
-      latlng = contents.circle.getLatLng()
-      xy = @map.latLngToContainerPoint(latlng)
-      contents.elem.css("left",xy.x)
-      contents.elem.css("top",xy.y)
 
   onTutorialClick: (e) =>
     console.log "tutclick", e

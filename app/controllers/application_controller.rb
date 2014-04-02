@@ -69,6 +69,7 @@ class ApplicationController < ActionController::Base
 
   def cookie_test
     if cookies["cookie_test"].blank?
+      @current_page = "homepage"
       logger.warn("=== cookies are disabled")
       render :template => "shared/cookies_required"
     else

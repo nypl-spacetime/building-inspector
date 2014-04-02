@@ -20,9 +20,6 @@ class General
 
     @activateSlideshow()
 
-    if (window.innerWidth < 500)
-      document.title = "Bldg Inspector"
-
     overrides = [
       ".slide a"
       ".popup-link"
@@ -74,6 +71,12 @@ class General
     # $("#link-polygonfix").addClass("active")
 
   resizeSVG: () =>
+
+    if (window.innerWidth < 500)
+      document.title = document.title.replace("Building Inspector", "Bldg Inspector")
+    else
+      document.title = document.title.replace("Bldg Inspector", "Building Inspector")
+
     maxWidth = 960
     maxHeight = 300
     w = $("#home-slideshow").width()

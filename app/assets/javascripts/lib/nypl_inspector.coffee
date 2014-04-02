@@ -7,6 +7,7 @@ class @Inspector
     defaults =
       editablePolygon: false
       draggableMap: false
+      constrainMapToPolygon: true
       touchZoom: true
       scrollWheelZoom: true
       loaderID: "#loader"
@@ -90,8 +91,21 @@ class @Inspector
             , 1000
         )
     )
+    @map.on('move', @onMapChange)
     @addButtonListeners()
     # rest should be implemented in the inspector instance
+
+  onMapChange: (e) =>
+    return if !@options.constrainMapToPolygon
+    # check if current polygon is somewhat visible in view
+    # so user does not get lost
+    if @geo?.getBounds? and not @map.getBounds().intersects(@geo.getBounds())
+      @map.fitBounds( @geo.getBounds() )
+    for flag, contents of @flags
+      latlng = contents.circle.getLatLng()
+      xy = @map.latLngToContainerPoint(latlng)
+      contents.elem.css("left",xy.x)
+      contents.elem.css("top",xy.y)
 
   onTutorialClick: (e) =>
     # should be implemented in the inspector instance
@@ -194,7 +208,8 @@ class @Inspector
         @currentIndex = -1
         @showNextPolygon()
     else
-      @hideOthers()
+      if @options.tutorialType != "video"
+        @hideOthers()
     @buildTutorial()
     @options.tutorialOn = true
 
@@ -221,8 +236,7 @@ class @Inspector
       @polyData = Utils.clone(@_polyData)
       @currentIndex = @_currentIndex
       @showNextPolygon()
-    else
-      @showOthers()
+    @showOthers()
     @options.tutorialOn = false
 
   parseTutorial: () =>

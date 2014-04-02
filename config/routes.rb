@@ -73,5 +73,7 @@ Webappmini::Application.routes.draw do
   get "api/polygons/:task/:consensus/page/:page", to: "api#polygons"
   get "api/polygons_for_ids", to: "api#polygons_for_ids"
 
+  match "/404", :to => "general#not_found"
+
   root :to => "general#home"
 end

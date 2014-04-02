@@ -1,23 +1,14 @@
 <% content_for :page_title do %>Cookies Required<% end %>
 <% content_for :dynamic_js do %>
-	<script type="text/javascript">
-	// scroll to top (hide bar in ios)
-	window.addEventListener("load",function() {
-		setTimeout(function(){
-			window.scrollTo(0, 1);
-		}, 0);
-	});
-	</script>
+  <%= stylesheet_link_tag    "home", :media => "all" %>
 <% end %>
+<%= render :partial => "partials/nav" %>
+
 <div id="main-container">
-	<div id="logo-background">
-		<h1 class="logo"><span>Building Inspector</span></h1>
-
-	    <%= link_to "GO!", geometry_path, :id => "link-try" %>
-
-	    <div id="intro">
-	    	<p>Cookies are required to use the Building Inspector. Please activate cookies and try again.</p>
-			<%= render :partial => "partials/footer" %>
-	    </div>
-	</div>
+  <div class="intro">
+    <h3>Cookies required</h3>
+    <p>Cookies are required to use the Building Inspector (we need those to keep track of your score and make sure all polygons are treated fairly). Please activate cookies and try again.</p>
+  </div>
 </div>
+
+<%= render :partial => "partials/footer" %>
