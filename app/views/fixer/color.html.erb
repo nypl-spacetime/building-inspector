@@ -11,6 +11,16 @@
 <%= render :partial => "partials/main_container", locals: {css_class: "compact"} %>
 
 <div id="controls" class="compact">
+  <div class="legend">
+    <div class="caption">use this legend to help you choose a color</div>
+    <ul>
+      <%= content_tag :li, "pink", :class => "color-legend pink" %>
+      <%= content_tag :li, "blue", :class => "color-legend blue" %>
+      <%= content_tag :li, "yellow", :class => "color-legend yellow" %>
+      <%= content_tag :li, "green", :class => "color-legend green" %>
+      <%= content_tag :li, "gray", :class => "color-legend gray" %>
+    </ul>
+  </div>
   <div id="buttons">
     <div class="wrapper">
       <div class="multiple">
