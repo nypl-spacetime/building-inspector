@@ -27,7 +27,7 @@ class Color extends Inspector
     $("#blue-button").on("click", @submitBlueFlag)
     $("#yellow-button").on("click", @submitYellowFlag)
     $("#green-button").on("click", @submitGreenFlag)
-    $("#black-button").on("click", @submitBlackFlag)
+    $("#gray-button").on("click", @submitGrayFlag)
     $("#save-button").on("click", @submitMulticolorFlag)
 
     $("#pink-button").on("dblclick", (e) ->
@@ -42,7 +42,7 @@ class Color extends Inspector
     $("#green-button").on("dblclick", (e) ->
       e.preventDefault()
     )
-    $("#black-button").on("dblclick", (e) ->
+    $("#gray-button").on("dblclick", (e) ->
       e.preventDefault()
     )
 
@@ -64,8 +64,8 @@ class Color extends Inspector
         when 99 then inspector.submitYellowFlag(e)
         when 52 then inspector.submitGreenFlag(e)
         when 100 then inspector.submitGreenFlag(e)
-        when 53 then inspector.submitBlackFlag(e)
-        when 101 then inspector.submitBlackFlag(e)
+        when 53 then inspector.submitGrayFlag(e)
+        when 101 then inspector.submitGrayFlag(e)
 
   removeButtonListeners: () =>
     super()
@@ -73,7 +73,7 @@ class Color extends Inspector
     $("#blue-button").unbind()
     $("#yellow-button").unbind()
     $("#green-button").unbind()
-    $("#black-button").unbind()
+    $("#gray-button").unbind()
     $("#save-button").unbind()
 
   activateButton: (button) ->
@@ -81,13 +81,13 @@ class Color extends Inspector
     $("#pink-button").addClass("inactive") if button != "pink"
     $("#yellow-button").addClass("inactive") if button != "yellow"
     $("#green-button").addClass("inactive") if button != "green"
-    $("#black-button").addClass("inactive") if button != "black"
+    $("#gray-button").addClass("inactive") if button != "gray"
     $("#save-button").addClass("inactive") if button != "save"
     $("#blue-button").addClass("active") if button == "blue"
     $("#pink-button").addClass("active") if button == "pink"
     $("#yellow-button").addClass("active") if button == "yellow"
     $("#green-button").addClass("active") if button == "green"
-    $("#black-button").addClass("active") if button == "black"
+    $("#gray-button").addClass("active") if button == "gray"
     $("#save-button").addClass("active") if button == "save"
 
   multipleColorClick: (e) =>
@@ -109,7 +109,7 @@ class Color extends Inspector
     $("#pink-button").removeClass("active inactive pressed")
     $("#yellow-button").removeClass("active inactive pressed")
     $("#green-button").removeClass("active inactive pressed")
-    $("#black-button").removeClass("active inactive pressed")
+    $("#gray-button").removeClass("active inactive pressed")
     $("#save-button").removeClass("active inactive pressed")
 
   submitPinkFlag: (e) =>
@@ -140,12 +140,12 @@ class Color extends Inspector
     else
       @toggleColor("green")
 
-  submitBlackFlag: (e) =>
-    @activateButton("black") unless @options.tutorialOn || @isMultiple
+  submitGrayFlag: (e) =>
+    @activateButton("gray") unless @options.tutorialOn || @isMultiple
     if !@isMultiple
-      @submitFlag(e, "black")
+      @submitFlag(e, "gray")
     else
-      @toggleColor("black")
+      @toggleColor("gray")
 
   toggleColor: (color) ->
     if @flags.indexOf(color) == -1

@@ -197,7 +197,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     }
   }
 
-  &#pink-button, &#blue-button, &#green-button, &#yellow-button, &#black-button {
+  &#pink-button, &#blue-button, &#green-button, &#yellow-button, &#gray-button {
     width: 40px;
     margin-right: 0;
     margin-left: 5px;
@@ -229,7 +229,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     background-color: $yellow;
   }
 
-  &#black-button, &#black-button.pressed {
+  &#gray-button, &#gray-button.pressed {
     background-color: $grayDarkest;
     margin-right: 0;
   }
@@ -261,7 +261,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     display: none;
   }
 
-  &#pink-button, &#blue-button, &#green-button, &#yellow-button, &#black-button, &#save-buttton {
+  &#pink-button, &#blue-button, &#green-button, &#yellow-button, &#gray-button, &#save-buttton {
     border: 1px solid transparent;
 
     &.pressed {

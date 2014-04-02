@@ -13,9 +13,9 @@ class ColorProgress extends Progress
 
     p.map.off 'moveend', p.applyHighlights
 
-    console.log data
+    # console.log data
 
-    return if data.nil_poly?.features.length==0 && data.green_poly.features.length==0 && data.yellow_poly.features.length==0 && data.pink_poly.features.length==0 && data.blue_poly.features.length==0 && data.black_poly.features.length==0
+    return if data.nil_poly?.features.length==0 && data.green_poly.features.length==0 && data.yellow_poly.features.length==0 && data.pink_poly.features.length==0 && data.blue_poly.features.length==0 && data.gray_poly.features.length==0
 
     m = p.sheet
 
@@ -25,7 +25,7 @@ class ColorProgress extends Progress
     blue_color = '#00747A'
     yellow_color = '#FF9D00'
     green_color = '#37AD80'
-    black_color = '#303030'
+    gray_color = '#303030'
     nil_color = '#908b85'
 
     blue_json = L.geoJson(data.blue_poly,
@@ -49,10 +49,14 @@ class ColorProgress extends Progress
     green_json = L.geoJson(data.green_poly,
       style: (feature) ->
         $.extend p.options.polygonStyle, {fillColor: green_color}
+      onEachFeature: (f, l) ->
+        p.highlights.push(l)
     )
-    black_json = L.geoJson(data.black_poly,
+    gray_json = L.geoJson(data.gray_poly,
       style: (feature) ->
-        $.extend p.options.polygonStyle, {fillColor: black_color}
+        $.extend p.options.polygonStyle, {fillColor: gray_color}
+      onEachFeature: (f, l) ->
+        p.highlights.push(l)
     )
     nil_json = L.geoJson(data.nil_poly,
       style: (feature) ->
@@ -77,9 +81,9 @@ class ColorProgress extends Progress
       green_json.addTo(m)
       bounds.extend(green_json.getBounds())
 
-    if data.black_poly?.features.length>0
-      black_json.addTo(m)
-      bounds.extend(black_json.getBounds())
+    if data.gray_poly?.features.length>0
+      gray_json.addTo(m)
+      bounds.extend(gray_json.getBounds())
 
     if data.nil_poly?.features.length>0
       nil_json.addTo(m)

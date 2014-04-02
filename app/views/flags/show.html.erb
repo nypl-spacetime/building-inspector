@@ -35,6 +35,11 @@
   <%= @flag.is_primary %>
 </p>
 
+<p>
+  <b>Created at:</b>
+  <%= @flag.created_at %>
+</p>
+
 
 <%= link_to 'Edit', edit_flag_path(@flag) %> |
 <%= link_to 'Back', flags_path %>

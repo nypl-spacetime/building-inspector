@@ -45,7 +45,7 @@
         <dt>Address task</dt>
         <dd>Polygons that are classified as <code>YES</code> get sent to this task. Its purpose is to find the address numbers (if any) associated to a given polygon. The resulting value is an array of address numbers with their latitude and longitude values or <code>NONE</code>.</dd>
         <dt>Colors task</dt>
-        <dd>Polygons that are classified as <code>YES</code> also get sent to this task. Its purpose is to find the colors present in a building. The resulting value is a comma-separated string with any of the colors. Current possible colors are <code>pink</code>, <code>blue</code>, <code>yellow</code>, <code>green</code> and <code>black</code>.</dd>
+        <dd>Polygons that are classified as <code>YES</code> also get sent to this task. Its purpose is to find the colors present in a building. The resulting value is a comma-separated string with any of the colors. Current possible colors are <code>pink</code>, <code>blue</code>, <code>yellow</code>, <code>green</code> and <code>gray</code>.</dd>
     </dl>
     <p><strong>Note:</strong> Not all tasks and consensus types have been implemented. If you <em>definitely have to have</em> those polygons (and we can't blame you) contact us at <%= link_to "our Twitter account", "http://www.twitter.com/nypl_labs" %>.
     <h5>Pagination</h5>
@@ -117,7 +117,7 @@
     </pre>
     <h4><a name="color"></a>Color</h4>
     <h5>GET /api/polygons/color/:value</h5>
-    <p>Returns the list of polygons that were marked as "yes" in the geometry task and have a consensus of <code>:value</code> (pink, blue, yellow, green, black).</p>
+    <p>Returns the list of polygons that were marked as "yes" in the geometry task and have a consensus of <code>:value</code> (pink, blue, yellow, green, gray).</p>
     <h6>Example response</h6>
     <pre>
         <code class="json">

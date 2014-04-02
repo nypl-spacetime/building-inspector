@@ -217,7 +217,7 @@ class FixerController < ApplicationController
     blue_poly = []
     yellow_poly = []
     green_poly = []
-    black_poly = []
+    gray_poly = []
     all_polygons.each do |p|
       if p[:flag_value]=="yellow"
         yellow_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
@@ -227,8 +227,8 @@ class FixerController < ApplicationController
         blue_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
       elsif p[:flag_value]=="green"
         green_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
-      elsif p[:flag_value]=="black"
-        black_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
+      elsif p[:flag_value]=="gray"
+        gray_poly.push({ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
       end
     end
     @progress = {}
@@ -236,7 +236,7 @@ class FixerController < ApplicationController
     @progress[:blue_poly] = { :type => "FeatureCollection", :features => blue_poly }
     @progress[:pink_poly] = { :type => "FeatureCollection", :features => pink_poly }
     @progress[:green_poly] = { :type => "FeatureCollection", :features => green_poly }
-    @progress[:black_poly] = { :type => "FeatureCollection", :features => black_poly }
+    @progress[:gray_poly] = { :type => "FeatureCollection", :features => gray_poly }
     respond_with( @progress )
   end
 
@@ -247,7 +247,7 @@ class FixerController < ApplicationController
     pink_poly = []
     blue_poly = []
     green_poly = []
-    black_poly = []
+    gray_poly = []
     nil_poly = []
 
     all_polygons.each do |p|
@@ -259,8 +259,8 @@ class FixerController < ApplicationController
         blue_poly.push(p.to_geojson)
       elsif p[:flag_value]=="green"
         green_poly.push(p.to_geojson)
-      elsif p[:flag_value]=="black"
-        black_poly.push(p.to_geojson)
+      elsif p[:flag_value]=="gray"
+        gray_poly.push(p.to_geojson)
       else
         nil_poly.push(p.to_geojson)
       end
@@ -271,7 +271,7 @@ class FixerController < ApplicationController
     @map[:blue_poly] = { :type => "FeatureCollection", :features => blue_poly }
     @map[:pink_poly] = { :type => "FeatureCollection", :features => pink_poly }
     @map[:green_poly] = { :type => "FeatureCollection", :features => green_poly }
-    @map[:black_poly] = { :type => "FeatureCollection", :features => black_poly }
+    @map[:gray_poly] = { :type => "FeatureCollection", :features => gray_poly }
     @map[:nil_poly] = { :type => "FeatureCollection", :features => nil_poly }
     respond_with( @map )
   end
