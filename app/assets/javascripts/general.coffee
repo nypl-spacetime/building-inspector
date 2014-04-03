@@ -7,11 +7,6 @@ class General
     window.onresize = () =>
       @resizeSVG()
 
-    window.setTimeout(
-        () =>
-          @toggleAppMenu()
-        , 1000
-    )
     $("#link-nav-menu").on("click", @toggleAppMenu)
     $("#link-login").on("click", @toggleSigninPopup)
     $("#link-view-inspections").on("click", @toggleProgressPopup)

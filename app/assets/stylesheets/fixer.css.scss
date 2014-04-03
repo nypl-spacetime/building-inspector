@@ -78,7 +78,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     bottom: 110px;
   }
 
-  &.progress {
+  &.progress, &.transparent {
     bottom: 0;
   }
 
@@ -179,6 +179,19 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     }
   }
 
+  &.transparent {
+    background: transparent;
+    height: 140px;
+
+    &.multiple {
+      height: 175px;
+    }
+
+    .wrapper {
+      width: 310px;
+    }
+  }
+
   @media screen and (max-width: $desktopwidth) {
     background: transparent;
     height: 80px;
@@ -241,44 +254,44 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
     &.color {
       width: 136px;
-      margin-left: 47px;
+      margin-left: 90px;
     }
   }
 
   &#pink-button, &#blue-button, &#green-button, &#yellow-button, &#gray-button {
-    width: 40px;
-    margin-right: 0;
-    margin-left: 5px;
-    font-size: 14px;
-
-    &:hover {
-      background: $grayDarker;
-    }
+    float: left;
+    width: 56px;
+    height: 40px;
+    margin-right: 5px;
+    margin-left: 0;
+    line-height: 22px;
+    font-size: 12px;
+    color: $grayDarkest;
   }
 
   &#pink-button, &#pink-button.pressed {
-    color: $grayDarkest;
-    background-color: $pink;
+    background: asset-url("color/pink.jpg", image);
     margin-left: 0;
-    &:hover {
-      color: $white;
-    }
   }
 
   &#blue-button, &#blue-button.pressed {
-    background-color: $blue;
+    background: asset-url("color/blue.jpg", image);
+    // background-color: $blue;
   }
 
   &#green-button, &#green-button.pressed {
-    background-color: $greenPaper;
+    background: asset-url("color/green.jpg", image);
+    // background-color: $greenPaper;
   }
 
   &#yellow-button, &#yellow-button.pressed {
-    background-color: $yellow;
+    background: asset-url("color/yellow.jpg", image);
+    // background-color: $yellow;
   }
 
   &#gray-button, &#gray-button.pressed {
-    background-color: $grayDarkest;
+    background: asset-url("color/gray.jpg", image);
+    // background-color: $grayDarkest;
     margin-right: 0;
   }
 
@@ -310,10 +323,11 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   }
 
   &#pink-button, &#blue-button, &#green-button, &#yellow-button, &#gray-button, &#save-buttton {
-    border: 1px solid transparent;
+    border: 1px solid $gray;
 
     &.pressed {
-      border-color: $red;
+      color: $white;
+      border-color: $white;
     }
   }
 }

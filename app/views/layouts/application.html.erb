@@ -1,42 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><%= yield :page_title %></title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-	
-	<meta name="viewport" content="minimum-scale=1.0, width=device-width, maximum-scale=1, user-scalable=no ,initial-scale=1.0" />
+  <title><%= yield :page_title %></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  
+  <meta name="viewport" content="minimum-scale=1.0, width=device-width, maximum-scale=1, user-scalable=no ,initial-scale=1.0" />
 
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-	<link rel="apple-touch-icon" href="/apple-touch-icon-iphone.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-ipad.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-iphone4.png">
-	<!-- <link rel="apple-touch-startup-image" href="/startup-retina.png" media="screen and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)"> -->
-	<link rel="apple-touch-startup-image" href="/startup-5.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)">
-	<link rel="apple-touch-startup-image" href="/startup.png" media="screen and (device-height: 480px)">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon-iphone.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-ipad.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-iphone4.png">
+  <!-- <link rel="apple-touch-startup-image" href="/startup-retina.png" media="screen and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)"> -->
+  <link rel="apple-touch-startup-image" href="/startup-5.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)">
+  <link rel="apple-touch-startup-image" href="/startup.png" media="screen and (device-height: 480px)">
 
-	<%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
 
-	<!--[if lte IE 9]>
-	<style type="text/css">
-	#ie8 {
-		display: block !important;
-	}
-	</style>
-	<![endif]-->
+  <!--[if lte IE 9]>
+  <style type="text/css">
+  #ie8 {
+    display: block !important;
+  }
+  </style>
+  <![endif]-->
 
   <script type="text/javascript">
   var addToHomeConfig = {
+    animationIn: 'bubble',
+    animationOut: 'drop',
+    returningVisitor: true,
     lifespan:4000
   };
   </script>
 
-	<%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "application" %>
 
-	<%= csrf_meta_tags %>
+  <%= csrf_meta_tags %>
 
-	<%= yield :dynamic_js %>
+  <%= yield :dynamic_js %>
 
   <script type="text/javascript" src="http://fast.fonts.net/jsapi/a539ff1d-f018-4158-bc00-3e1ca58dffce.js"></script>
 
@@ -44,7 +47,7 @@
 <body>
 
 <div id="ie8">
-	<p>Building Inspector is not compatible with Internet Explorer 9 or earlier. Please <a href="http://microsoft.com/ie">download a more recent version</a> or try <a href="http://www.getfirefox.com">another browser</a>.</p>
+  <p>Building Inspector is not compatible with Internet Explorer 9 or earlier. Please <a href="http://microsoft.com/ie">download a more recent version</a> or try <a href="http://www.getfirefox.com">another browser</a>.</p>
 </div>
 
 <%= yield %>
