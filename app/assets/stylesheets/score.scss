@@ -11,14 +11,14 @@
   float: right;
   margin: 37px 0 0 0;
 
-	@media screen and (max-width: $desktopwidth) {
-		background: $grayDarker;
-		height: 32px;
-		position: fixed;
-		right: 0;
-		top: -37px;
-		padding: 8px 10px 0;
-	}
+  @media screen and (max-width: $desktopwidth) {
+    background: $grayDarker;
+    height: 32px;
+    position: fixed;
+    right: 0;
+    top: -37px;
+    padding: 8px 10px 0;
+  }
 }
 
 #score-number {
@@ -28,9 +28,9 @@
   color: $black;
   font-weight: bold;
   height: 10px;
-	@media screen and (max-width: $desktopwidth) {
-		line-height: 16px;
-	}
+  @media screen and (max-width: $desktopwidth) {
+    line-height: 16px;
+  }
 }
 
 #link-view-inspections {
@@ -38,29 +38,30 @@
 }
 
 #score-progress {
-	// float: right;
-	// text-align: right;
-	// font-size: 0.7em;
+  // float: right;
+  // text-align: right;
+  // font-size: 0.7em;
 
 }
 
 #link-exit {
-	content: attr(data-icon);
-	content: ' x';
-	font-family:$iconfont;
-	-webkit-font-smoothing: antialiased;
-	text-transform: none;
-	font-size: 11px;
+  content: attr(data-icon);
+  content: ' x';
+  font-family:$iconfont;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-transform: none;
+  font-size: 11px;
 
-	@media screen and (max-width: $desktopwidth) {
-		font-size: 9px;
-		padding: 2px 4px;
-	}
+  @media screen and (max-width: $desktopwidth) {
+    font-size: 9px;
+    padding: 2px 4px;
+  }
 }
 
 #map-total {
-	color: $grayDarkest;
-	font-size: 12px;
+  color: $grayDarkest;
+  font-size: 12px;
 }
 
 

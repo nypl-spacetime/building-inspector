@@ -209,11 +209,11 @@
 // Buttons
 // -------------------------
 @mixin drr-button($base-color: "default", $base-bg-color: "default", $size: "default", $highlight-color: "auto", $highlight-bg-color: "auto") {
-  
+
   // color
   color: $base-color;
   background: $base-bg-color;
-  
+
   // resets
   display: inline-block;
   *display: inline;
@@ -222,13 +222,13 @@
   text-shadow: none;
   vertical-align: middle;
   cursor: pointer;
-  border: 0;  
+  border: 0;
   filter: none;
   *zoom: 1;
   text-decoration: none;
   @include border-radius(0);
   @include box-shadow(0, 0, 0, 0);
-  
+
   // Size: mini, small, default, or large
   @if $size == "large" {
     font-size: $fontSizeLarge;
@@ -243,7 +243,7 @@
     font-size: $baseFontSize;
     padding: $paddingSmall $basePadding;
   }
-  
+
   &:hover,
   &:focus {
     text-decoration: none;
@@ -259,12 +259,12 @@
     } @else {
       background: $highlight-bg-color;
     }
-  }  
+  }
 }
 
 // Inverse
 // -------------------------
-@mixin drr-inverse($alpha: 1) {  
+@mixin drr-inverse($alpha: 1) {
   background-color: rgba($bodyBackgroundInverse, $alpha);
   color: $textColorInverse;
   a {
@@ -281,8 +281,8 @@
 @mixin drr-icon($content: "none") {
   @if ( $content != "none") {
     content: "#{$content}";
-  }  
-  font-family: $iconFontFamily;  
+  }
+  font-family: $iconFontFamily;
   display: inline-block;
   width: auto;
   height: auto;
@@ -291,6 +291,7 @@
   margin-top: 0;
   speak: none;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-transform: none;
   line-height: 1;
   font-weight: normal;
@@ -307,8 +308,8 @@
   white-space: nowrap;
   input[type="text"] {
     @if $width != "default" {
-      width: $width; 
-    }    
+      width: $width;
+    }
     font-size: $baseFontSize;
     position: relative;
     margin-bottom: 0;
@@ -365,13 +366,13 @@
 // Alert
 // -------------------------
 @mixin drr-alert($type: "info") {
-  color: $textColor; 
+  color: $textColor;
   padding: $basePadding;
   font-size: $smallFontSize;
   margin: 0 0 $baseLineHeight / 2;
   text-shadow: none;
   border: 0;
-  @include border-radius(0);   
+  @include border-radius(0);
   @if $type == "danger" {
     background: $componentDangerBackground;
   } @else if $type == "success" {

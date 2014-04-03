@@ -32,342 +32,344 @@ $headerdivwidth: 160px;
 $headerbreakpoint: 920px;
 
 @mixin clearfix {
-	&:before, &:after {
-		content: "\0020"; 
-		display: block; 
-		height: 0; 
-		overflow: hidden; 
-	}
-	&:after {
-		clear: both;
-	}
-	zoom:1;
+  &:before, &:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    overflow: hidden;
+  }
+  &:after {
+    clear: both;
+  }
+  zoom:1;
 }
 
 @mixin itemlink { // standardize the item link regardless of nesting
-	li {
-		float: none;
+  li {
+    float: none;
 
-		a {
-			border-bottom: 1px solid $headeritembordercolor;
-			background: $headeritembackgroundcolor;
-			color: $headeritemlinkcolor;
-			margin: 0 5px;
-			padding: 5px 10px 0 10px;
+    a {
+      border-bottom: 1px solid $headeritembordercolor;
+      background: $headeritembackgroundcolor;
+      color: $headeritemlinkcolor;
+      margin: 0 5px;
+      padding: 5px 10px 0 10px;
 
-			&:hover {
-				background: $headeritemlinkhoverbackgroundcolor;
-				color: $headeritemlinkhovercolor;
-			}
-		}
+      &:hover {
+        background: $headeritemlinkhoverbackgroundcolor;
+        color: $headeritemlinkhovercolor;
+      }
+    }
 
-		&:last-child a {
-			border-bottom: none;
-		}
-	}
+    &:last-child a {
+      border-bottom: none;
+    }
+  }
 }
 
 #nypl-header {
-	background: $headerbackgroundcolor;
-	font-size: .8em;
+  background: $headerbackgroundcolor;
+  font-size: .8em;
     margin: 0;
     padding: 0;
     position: relative;
     z-index: 201;
 
-	@media print {
-		display: none;
-	}
+  @media print {
+    display: none;
+  }
 
     a {
-    	text-decoration: none;
+      text-decoration: none;
     }
 
     #nypl-menu-toggle {
-    	display: none;
-    	width: 30px;
-		content: attr(data-icon);
-		font-family:$iconfont;
-		color: $headerlinkcolor;
-		font-size: 24px;
-		position: absolute;
-		right: 0;
-		top: 7px;
-		z-index: 11111;
-		-webkit-font-smoothing: antialiased;
+      display: none;
+      width: 30px;
+    content: attr(data-icon);
+    font-family:$iconfont;
+    color: $headerlinkcolor;
+    font-size: 24px;
+    position: absolute;
+    right: 0;
+    top: 7px;
+    z-index: 11111;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
-		@media screen and (min-width: 0px) and (max-width: $headerbreakpoint) {
-			display: block;
-		}
-	}
+    @media screen and (min-width: 0px) and (max-width: $headerbreakpoint) {
+      display: block;
+    }
+  }
 
-	#nypl-search-top {
-		position: absolute;
-		display: none;
-		background: $nypl-search-background;
-		top: 40px;
-		left: 600px;
-		width: $headersearchwidth;
-		border: 1px solid $headeritembordercolor;
-		border-top: none;
+  #nypl-search-top {
+    position: absolute;
+    display: none;
+    background: $nypl-search-background;
+    top: 40px;
+    left: 600px;
+    width: $headersearchwidth;
+    border: 1px solid $headeritembordercolor;
+    border-top: none;
 
-		@media screen and (min-width: 0px) and (max-width: $headerbreakpoint) {
-			// position: relative;
-			top: 40px;
-			right: 0;
-			left: 0;
-			width: auto;
-		}
+    @media screen and (min-width: 0px) and (max-width: $headerbreakpoint) {
+      // position: relative;
+      top: 40px;
+      right: 0;
+      left: 0;
+      width: auto;
+    }
 
-		&.visible {
-			display: block;
-		}
+    &.visible {
+      display: block;
+    }
 
-		#nypl-search-block-form {
-			margin: 0;
-			padding: 5px 5px 5px 5px;
-			@include clearfix;
+    #nypl-search-block-form {
+      margin: 0;
+      padding: 5px 5px 5px 5px;
+      @include clearfix;
 
-			input.form-text {
-				display: block;
-				border: 1px solid $headeritembordercolor;
-				width: $headersearchwidth - 22;
-				margin-bottom: 5px;
-				font-size: 14px;
+      input.form-text {
+        display: block;
+        border: 1px solid $headeritembordercolor;
+        width: $headersearchwidth - 22;
+        margin-bottom: 5px;
+        font-size: 14px;
 
-				@media screen and (min-width: 0px) and (max-width: $headerbreakpoint) {
-					width: 100%;
-					padding: 0;
-					height: 40px;
-				}
-			}
+        @media screen and (min-width: 0px) and (max-width: $headerbreakpoint) {
+          width: 100%;
+          padding: 0;
+          height: 40px;
+        }
+      }
 
-			input.catalog_button, input.nypl_button {
-				display: block;
-				width: 40%;
-				border: none;
-				padding: 8px;
-				font-size: 1.2em;
-				color: white;
-				-webkit-appearance: none;
-				cursor: pointer;
-			}
+      input.catalog_button, input.nypl_button {
+        display: block;
+        width: 40%;
+        border: none;
+        padding: 8px;
+        font-size: 1.2em;
+        color: white;
+        -webkit-appearance: none;
+        cursor: pointer;
+      }
 
-			input.catalog_button{
-				float: left;
-				background-color: $headerbuttoncatalogcolor;
-			}
+      input.catalog_button{
+        float: left;
+        background-color: $headerbuttoncatalogcolor;
+      }
 
-			input.nypl_button{
-				float: right;
-				background-color: $headerbuttonnyplcolor;
-			}
-		}
-	}
+      input.nypl_button{
+        float: right;
+        background-color: $headerbuttonnyplcolor;
+      }
+    }
+  }
 
-	#nypl-navbar {
-		position: relative;
-		height: $headerheight;
+  #nypl-navbar {
+    position: relative;
+    height: $headerheight;
 
-		@media screen and (min-width: 0px) and (max-width: $headerbreakpoint) {
-			height: auto;
-		}
+    @media screen and (min-width: 0px) and (max-width: $headerbreakpoint) {
+      height: auto;
+    }
 
-		a {
-			display: block;
-			height: $headerheight - 10;
-		}
+    a {
+      display: block;
+      height: $headerheight - 10;
+    }
 
-		> li {
-			float: left;
-			position: relative;
-			height: $headerheight;
+    > li {
+      float: left;
+      position: relative;
+      height: $headerheight;
 
-			@media screen and (min-width: 0px) and (max-width: $headerbreakpoint) {
-				display: none;
-				float: none;
-			}
+      @media screen and (min-width: 0px) and (max-width: $headerbreakpoint) {
+        display: none;
+        float: none;
+      }
 
-			&.visible {
-				display: block;	
-			}
+      &.visible {
+        display: block;
+      }
 
-			a {
-				background: $headerbackgroundcolor;
-				color: $headerlinkcolor;
-				padding: 7px 15px 3px 15px;
+      a {
+        background: $headerbackgroundcolor;
+        color: $headerlinkcolor;
+        padding: 7px 15px 3px 15px;
 
-				&:hover {
-					background-color: $headerhovercolor;
-					color: $headerlinkhovercolor;
-				}
-			}
+        &:hover {
+          background-color: $headerhovercolor;
+          color: $headerlinkhovercolor;
+        }
+      }
 
-			&:hover {
-				@media screen and (min-width: $headerbreakpoint) {
-					> a {
-						background-color: $headerhovercolor;
-						color: $headerlinkhovercolor;
-					}
+      &:hover {
+        @media screen and (min-width: $headerbreakpoint) {
+          > a {
+            background-color: $headerhovercolor;
+            color: $headerlinkhovercolor;
+          }
 
-					> div {
-						left: -$headerborderthickness;
-						height: 1px;
-						overflow: hidden;
-						opacity: 0; // hack... if not partially visible tap becomes click in mobilesafari
-						
-						&.show {
-							opacity: 1; // hack... if not partially visible tap becomes click in mobilesafari
-							height: auto;
-							overflow: auto;
-						}
-					}
-				}
-			}
+          > div {
+            left: -$headerborderthickness;
+            height: 1px;
+            overflow: hidden;
+            opacity: 0; // hack... if not partially visible tap becomes click in mobilesafari
 
-			&.home, &.search {
-				&:hover {
-					> a {
-						color: $headerlinkcolor;
-						background-color: $headerbackgroundcolor;
-					}
-				}
+            &.show {
+              opacity: 1; // hack... if not partially visible tap becomes click in mobilesafari
+              height: auto;
+              overflow: auto;
+            }
+          }
+        }
+      }
 
-				a:hover {
-					color: $headerlinkcolor;
-					background-color: $headerbackgroundcolor;
-				}
+      &.home, &.search {
+        &:hover {
+          > a {
+            color: $headerlinkcolor;
+            background-color: $headerbackgroundcolor;
+          }
+        }
 
-				> a:before {
-					content: attr(data-icon);
-					font-family:$iconfont;
-					color: $headerlinkcolor;
-					position: absolute;
-					-webkit-font-smoothing: antialiased;
-				}
+        a:hover {
+          color: $headerlinkcolor;
+          background-color: $headerbackgroundcolor;
+        }
 
-				> a span {
-					display: none;
-				}
-			}
+        > a:before {
+          content: attr(data-icon);
+          font-family:$iconfont;
+          color: $headerlinkcolor;
+          position: absolute;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
 
-			&.home {
-				overflow: hidden;
-				background: $headerbackgroundcolor;
-				width: 70px;
+        > a span {
+          display: none;
+        }
+      }
 
-				@media screen and (min-width: 0px) and (max-width: $headerbreakpoint) {
-					display: block;
-				}
+      &.home {
+        overflow: hidden;
+        background: $headerbackgroundcolor;
+        width: 70px;
 
-				a:before {
-					content: 'W';
-					font-size: 66px;
-					top: 12px;
-					left: -2px;
-				}
-			}
+        @media screen and (min-width: 0px) and (max-width: $headerbreakpoint) {
+          display: block;
+        }
 
-			&.search {
-				color: $headertextcolor;
-				background: $headerbackgroundcolor;
-				width: 60px;
-				
-				@media screen and (min-width: 0px) and (max-width: $headerbreakpoint) {
-					// width: auto;
-					position: absolute;
-					display: block;
-					height: 30px;
-					right: 30px;
-					top: 4px;
-				}
+        a:before {
+          content: 'W';
+          font-size: 66px;
+          top: 12px;
+          left: -2px;
+        }
+      }
 
-				> a:before {
-					content: 'o';
-					font-size: 20px;
-					top: 4px;
-					left: 14px;
-				}
+      &.search {
+        color: $headertextcolor;
+        background: $headerbackgroundcolor;
+        width: 60px;
 
-				a {
-					display: inline;
-					padding: 0;
+        @media screen and (min-width: 0px) and (max-width: $headerbreakpoint) {
+          // width: auto;
+          position: absolute;
+          display: block;
+          height: 30px;
+          right: 30px;
+          top: 4px;
+        }
 
-					// @media screen and (min-width: 0px) and (max-width: $headerbreakpoint) {
-					// 	display: none;
-					// }
-				}
-			}
+        > a:before {
+          content: 'o';
+          font-size: 20px;
+          top: 4px;
+          left: 14px;
+        }
 
-			> div {
-				position: absolute;
-				top: $headerheight;
-				left: -9999px;
-				z-index: 1111;
+        a {
+          display: inline;
+          padding: 0;
 
-				background: transparent;
-				width: $headerdivwidth;
+          // @media screen and (min-width: 0px) and (max-width: $headerbreakpoint) {
+          //  display: none;
+          // }
+        }
+      }
 
-				&.my-nypl {
-					width: 440px;
-				}
+      > div {
+        position: absolute;
+        top: $headerheight;
+        left: -9999px;
+        z-index: 1111;
 
-				&.explore {
-					width: 540px;
-				}
+        background: transparent;
+        width: $headerdivwidth;
 
-				&.research {
-					width: 640px;
-				}
+        &.my-nypl {
+          width: 440px;
+        }
 
-				&.using-the-library {
-					width: 480px;
-				}
+        &.explore {
+          width: 540px;
+        }
 
-				&.support-the-library {
-					width: 200px;
-				}
+        &.research {
+          width: 640px;
+        }
 
-				> ul {
-					float: left;
-					background-color: $headeritembackgroundcolor;
-					padding-top: 5px;
-					padding-bottom: 5px;
+        &.using-the-library {
+          width: 480px;
+        }
 
-					border: $headerborderthickness solid $headerbordercolor;
-					border-top: none;
+        &.support-the-library {
+          width: 200px;
+        }
 
-					@include clearfix;
+        > ul {
+          float: left;
+          background-color: $headeritembackgroundcolor;
+          padding-top: 5px;
+          padding-bottom: 5px;
 
-					li {
-						background-color: $headeritembackgroundcolor;
-						float: left;
+          border: $headerborderthickness solid $headerbordercolor;
+          border-top: none;
 
-						h5 {
-							color: $headeritemgrouptitlecolor;
-							padding: 5px 15px;
-							font-size: 1em;
-							line-height: 1em;
-						}
+          @include clearfix;
 
-						> ul {
-							position: relative;
-							padding-top: 0;
-							@include itemlink;
-						}
-					}
+          li {
+            background-color: $headeritembackgroundcolor;
+            float: left;
 
-					&.simple {
-						width: initial;
-						background-color: $headeritembackgroundcolor;
-						@include clearfix;
+            h5 {
+              color: $headeritemgrouptitlecolor;
+              padding: 5px 15px;
+              font-size: 1em;
+              line-height: 1em;
+            }
 
-						@include itemlink;
-					}
+            > ul {
+              position: relative;
+              padding-top: 0;
+              @include itemlink;
+            }
+          }
 
-				}
-			}
-		}
-	}
+          &.simple {
+            width: initial;
+            background-color: $headeritembackgroundcolor;
+            @include clearfix;
+
+            @include itemlink;
+          }
+
+        }
+      }
+    }
+  }
 }
 

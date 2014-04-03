@@ -128,17 +128,7 @@
     margin-right: 0;
   }
 
-  // &:before {
-  //   margin-right: 5px;
-  //   // font-size: 11px;
-  //   content: attr(data-icon);
-  //   font-family:$iconfont;
-  //   -webkit-font-smoothing: antialiased;
-  // }
-
   @media screen and (max-width: $desktopwidth) {
-    // font-size: 9px;
-    // padding: 2px 4px;
   }
 }
 
@@ -151,12 +141,12 @@
 
   h1.logo {
     background: asset-url("logo-horizontal.svg", image) center no-repeat;
-      -webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     color: $grayLightest;
     width: 235px;
     height: 38px;
     background-size: 100%;
-    // margin: 0 auto;
     float: left;
     margin-top: 30px;
     margin-left: 0;
@@ -238,6 +228,7 @@
         content: attr(data-icon);
         font-family:$iconfont;
         -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
         content: "V";
         position: absolute;
         right: 10px;
@@ -304,6 +295,7 @@ a#tweet {
   content: attr(data-icon);
   font-family:$iconfont;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   font-size: 20px;
 }
 
@@ -458,6 +450,7 @@ a#tweet {
       content: attr(data-icon);
       font-family:$iconfont;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       font-size: 16px;
       display: block;
       width: 40px;

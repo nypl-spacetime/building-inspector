@@ -121,54 +121,6 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   right: 0;
   background: $gray;
 
-  .legend {
-    width: 320px;
-    margin: -56px auto 0;
-    text-align: center;
-    font-size: 14px;
-
-    @include clearfix;
-
-    .caption {
-      clear: both;
-      @include text-shadow($white -1px 1px);
-    }
-
-    .color-legend {
-      float: left;
-      width: 60px;
-      height: 30px;
-      margin-left: 5px;
-      font-size: 12px;
-      line-height: 32px;
-      text-transform: uppercase;
-
-      &.pink {
-        background: asset-url("color/pink.jpg", image);
-      }
-
-      &.blue {
-        background: asset-url("color/blue.jpg", image);
-      }
-
-      &.yellow {
-        background: asset-url("color/yellow.jpg", image);
-      }
-
-      &.green {
-        background: asset-url("color/green.jpg", image);
-      }
-
-      &.gray {
-        background: asset-url("color/gray.jpg", image);
-      }
-
-      &:first-child {
-        margin-left: 0;
-      }
-    }
-  }
-
   &.compact {
     height: 110px;
 
