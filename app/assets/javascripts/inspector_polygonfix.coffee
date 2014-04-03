@@ -15,7 +15,7 @@ class Polygonfix extends Inspector
     @isMultiple = false
 
   clearScreen: () =>
-    document.getElementById("multiple-polygon").checked = false
+    document.getElementById("multiple-checkbox").checked = false
     @isMultiple = false
     @updateMultipleStatus()
     @eraseGhosts()
@@ -26,7 +26,7 @@ class Polygonfix extends Inspector
     @map.on('dragstart', @onMapDragStart)
     @map.on('dragend', @onMapDragEnd)
 
-    $("#multiple-polygon").on("change", @multipleBuildingClick)
+    $("#multiple-checkbox").on("change", @multipleBuildingClick)
 
   addButtonListeners: () =>
     super()
@@ -64,10 +64,10 @@ class Polygonfix extends Inspector
   multipleBuildingClick: (e) =>
     if @isMultiple && @flags.length > 1 && !confirm("Some buildings you have created will be lost if you uncheck this. Continue?")
       # user regrets unchecking this thing
-      document.getElementById("multiple-polygon").checked = true
+      document.getElementById("multiple-checkbox").checked = true
       @isMultiple = true
       return
-    @isMultiple = $("#multiple-polygon").is(':checked')
+    @isMultiple = $("#multiple-checkbox").is(':checked')
     @updateMultipleStatus()
     if !@isMultiple && @flags.length > 0
       # super hacky but allows for first poly to be shown

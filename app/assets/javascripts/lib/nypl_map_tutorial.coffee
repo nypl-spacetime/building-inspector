@@ -116,6 +116,9 @@ class @NYPL_Map_Tutorial
   goToStep: (index) ->
     @intro.goToStep(index)
 
+  getCurrentPolygon: () ->
+    @options.steps[@intro._currentStep]
+
   getCurrentPolygonIndex: () ->
     @options.steps[@intro._currentStep].polygon_index
 

@@ -7,18 +7,18 @@ class Color extends Inspector
       jsdataID: '#colorjs'
       task: 'color'
     super(options)
-    @flags = []
     @isMultiple = false
+    @flags = []
 
   clearScreen: () =>
-    document.getElementById("multiple-color").checked = false
+    document.getElementById("multiple-checkbox").checked = false
     @clearFlags()
     @updateMultipleStatus()
     super()
 
   addEventListeners: () =>
     super()
-    $("#multiple-color").on("change", @multipleColorClick)
+    $("#multiple-checkbox").on("change", @multipleColorClick)
 
   addButtonListeners: () =>
     super()
@@ -91,20 +91,20 @@ class Color extends Inspector
     $("#save-button").addClass("active") if button == "save"
 
   multipleColorClick: (e) =>
-    @isMultiple = $("#multiple-color").is(':checked')
+    @isMultiple = $("#multiple-checkbox").is(':checked')
     @multipleClickInterfaceUpdates()
     @intro.nextStep() if @options.tutorialOn
 
   parseTutorial: (e) =>
     super()
     # console.log @intro.intro._currentStep, e
-    t = @
-    if @intro._currentStep == 3
+    if @intro.getCurrentPolygon().multipleactive
       @isMultiple = true
     else
       @isMultiple = false
-    document.getElementById("multiple-color").checked = @isMultiple
+    document.getElementById("multiple-checkbox").checked = @isMultiple
     @multipleClickInterfaceUpdates()
+    t = @
     window.setTimeout( () ->
       t.intro.refresh()
     , 100)
@@ -212,6 +212,7 @@ $ ->
               position: "top"
               polygon_index: -1
               ixactive: true
+              multipleactive: true
             }
             {
               element: "#map-highlight"
