@@ -239,7 +239,7 @@ class @Inspector
     @showOthers()
     @options.tutorialOn = false
 
-  parseTutorial: () =>
+  parseTutorial: (e) =>
     if @currentIndex != @intro.getCurrentPolygonIndex() + 1
       @currentIndex = @intro.getCurrentPolygonIndex()
       @showNextPolygon()

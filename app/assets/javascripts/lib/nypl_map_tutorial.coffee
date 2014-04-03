@@ -63,7 +63,7 @@ class @NYPL_Map_Tutorial
       showBullets: t.options.showBullets
       exitOnOverlayClick: false
       steps: @options.steps
-    ).onchange () ->
+    ).onbeforechange (e) ->
       t._currentStep = t.intro._currentStep
       onOverlay = (t.options.steps[t._currentStep].element == t.options.highlightID)
       # overriding some CSS
@@ -71,8 +71,8 @@ class @NYPL_Map_Tutorial
       $(".introjs-helperLayer").addClass("noMap") if !onOverlay
       # end CSS stuff
       t.options.highlightElement.unbind('click')
-      t.options.changeFunction?()
-      t.options.highlightElement.on('click', t.options.highlightclickFunction) if t.options.highlightclickFunction && onOverlay
+      t.options.changeFunction?(e)
+      t.options.highlightElement.on('click', t.options.highlightclickFunction) if t.options.highlightclickFunction? && onOverlay
       t.options.ixinactiveFunction?()
       t.options.ixactiveFunction?() if t.options.steps[t._currentStep].ixactive
     .oncomplete () ->
@@ -109,6 +109,9 @@ class @NYPL_Map_Tutorial
 
   nextStep: () ->
     @intro.nextStep()
+
+  refresh: () ->
+    @intro.refresh()
 
   goToStep: (index) ->
     @intro.goToStep(index)

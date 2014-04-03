@@ -51,7 +51,7 @@ class Color extends Inspector
     )
 
     $("body").keyup (e)->
-      console.log "key", e.which
+      # console.log "key", e.which
       switch e.which
         # IMPORTANT:
         # a listener to key 32 (space)
@@ -92,16 +92,27 @@ class Color extends Inspector
 
   multipleColorClick: (e) =>
     @isMultiple = $("#multiple-color").is(':checked')
+    @multipleClickInterfaceUpdates()
+    @intro.nextStep() if @options.tutorialOn
+
+  parseTutorial: (e) =>
+    super()
+    # console.log @intro.intro._currentStep, e
+    t = @
+    if @intro._currentStep == 3
+      @isMultiple = true
+    else
+      @isMultiple = false
+    document.getElementById("multiple-color").checked = @isMultiple
+    @multipleClickInterfaceUpdates()
+    window.setTimeout( () ->
+      t.intro.refresh()
+    , 100)
+
+  multipleClickInterfaceUpdates: () ->
     @updateMultipleStatus()
     @resetButtons()
-    intro = @intro
-    window.setTimeout( () ->
-      intro.nextStep()
-    , 200) if @options.tutorialOn
-    if !@isMultiple && @flags.length > 0
-      # there were active buttons
-      @clearFlags()
-
+    @clearFlags() if !@isMultiple && @flags.length > 0
 
   resetButtons: () ->
     super()
@@ -212,26 +223,26 @@ $ ->
               element: "#map-highlight"
               intro: "and show some other polygon"
               position: "right"
-              polygon_index: 0
-            }
-            {
-              element: "#map-highlight"
-              intro: "and another"
-              position: "right"
               polygon_index: 1
-              ixactive: true
             }
             {
               element: "#map-highlight"
               intro: "and another"
               position: "right"
               polygon_index: 2
+              ixactive: true
+            }
+            {
+              element: "#map-highlight"
+              intro: "and another"
+              position: "right"
+              polygon_index: 3
             }
             {
               element: "#map-highlight"
               intro: "you get the drill"
               position: "right"
-              polygon_index: 3
+              polygon_index: 4
               ixactive: true
             }
         ]
