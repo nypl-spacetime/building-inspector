@@ -107,7 +107,7 @@ class Color extends Inspector
     t = @
     window.setTimeout( () ->
       t.intro.refresh()
-    , 100)
+    , 200)
 
   multipleClickInterfaceUpdates: () ->
     @updateMultipleStatus()
