@@ -212,6 +212,7 @@ $ ->
               intro: "Baby blue would have been commercial space, like a dry goods or grocery store."
               position: "right"
               polygon_index: 0
+              ixactive: true
             }
             {
               element: "#map-highlight"
@@ -221,13 +222,20 @@ $ ->
             }
             {
             element: "#green-button"
-            intro: "In the app, you can drag the page down over the buttons - which are made from actual parts of the map - to compare and see what the best match is."
+            intro: "In the app, you can drag the page down over the buttons - which are made from actual parts of the map - to see what the best match is."
             position: "right"
             polygon_index: 1
+            ixactive: true
             }
             {
-            element: "#buttons .multiple"
-            intro: "If a footprint has more than one color, it could have been a mixed-use building or been made of different materials. Click this check box and you'll be able to select multiple colors."
+            element: "#map-highlight"
+            intro: "If a footprint has more than one color, it could have been a mixed-use building or been made of different materials."
+            position: "right"
+            polygon_index: 2
+            }
+            {
+            element: " #buttons .multiple"
+            intro: " Click this check box and you'll be able to select multiple colors."
             position: "top"
             polygon_index: 2
             }
