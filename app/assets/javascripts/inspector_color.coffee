@@ -107,7 +107,7 @@ class Color extends Inspector
     t = @
     window.setTimeout( () ->
       t.intro.refresh()
-    , 200)
+    , 100)
 
   multipleClickInterfaceUpdates: () ->
     @updateMultipleStatus()
@@ -190,58 +190,60 @@ $ ->
     steps: [
             {
               element: "#map-highlight"
-              intro: "testing the colors tutorial. click NEXT here."
+              intro: "The color of the building footprint tells us what it was made of and what it was used for. You can help us recreate the New York City of the past by telling us what these structures were."
               position: "bottom"
               polygon_index: -1
             }
             {
               element: "#lower-controls"
-              intro: "this highlights only the buttons"
-              position: "top"
-              polygon_index: -1
-            }
-            {
-              element: "#buttons .multiple"
-              intro: "now we highlight the checkbox (checking it will prompt the next step)"
-              position: "top"
-              polygon_index: -1
-            }
-            {
-              element: "#lower-controls"
-              intro: "notice how the controls have changed!<br />click some colors and SAVE"
+              intro: "All you have to do is examine the highlighted footprint and click the color that matches it. <br /> <br /> Pink means it was a brick or stone residential building. Click the pink button and move on!"
               position: "top"
               polygon_index: -1
               ixactive: true
-              multipleactive: true
             }
             {
               element: "#map-highlight"
-              intro: "we go back to the map but mention how the checkbox has been deactivated."
+              intro: "Baby blue would have been commercial space, like a dry goods or grocery store."
               position: "right"
               polygon_index: 0
             }
             {
               element: "#map-highlight"
-              intro: "and show some other polygon"
+              intro: "Yikes! Green meant \"hazardous!\" Could have been  slaughterhouse or some sort of refinery."
               position: "right"
               polygon_index: 1
             }
             {
-              element: "#map-highlight"
-              intro: "and another"
-              position: "right"
+              element: "#buttons .multiple"
+              intro: "If a footprint has more than one color, it could have been a mixed-use building or been made of different materials. <br /> <br /> Click this check box and you'll be able to select multiple colors."
+              position: "top"
               polygon_index: 2
-              ixactive: true
             }
             {
-              element: "#map-highlight"
-              intro: "and another"
-              position: "right"
+              element: "#lower-controls"
+              intro: "A little pink, a little green - and voila! Save your masterpiece and go to the next one!"
+              position: "top"
+              polygon_index: 2
+              ixactive: true
+              multipleactive: true
+            }
+            {
+              element: "#buttons .multiple"
+              intro: "Another multi-color. Remember to click the box"
+              position: "top"
               polygon_index: 3
             }
             {
-              element: "#map-highlight"
-              intro: "you get the drill"
+              element: "#lower-controls"
+              intro: "Yellow means a frame house. This must have been an addition or renovation on the brick part. "
+              position: "top"
+              polygon_index: 3
+              ixactive: true
+              multipleactive: true
+            }
+            {
+              element: "#lower-controls"
+              intro: "Okay, you get the idea - now color away! And thanks for helping NYPL!"
               position: "right"
               polygon_index: 4
               ixactive: true
