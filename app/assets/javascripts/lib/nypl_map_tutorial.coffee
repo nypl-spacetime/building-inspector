@@ -36,7 +36,7 @@ class @NYPL_Map_Tutorial
 
   initVideo: () ->
     t = @
-    html = '<div id="tutorial-video"><div id="tutorial-video-wrapper"><iframe src="'+@options.url+'" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe><a href="javascript:;" class="close" id="tutorial-close"><span>CLOSE</span></a></div></div>'
+    html = '<div id="tutorial-video"><div id="tutorial-video-wrapper"><iframe src="'+@options.url+'" width="600" height="401" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe><a href="javascript:;" class="close" id="tutorial-close"><span>CLOSE</span></a></div></div>'
     el = $(html)
     el.find("#tutorial-close").on "click", (e) ->
       # console.log e

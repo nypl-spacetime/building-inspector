@@ -396,6 +396,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   }
 }
 
+// TODO: tutorial stuff should be in separate file
 #tutorial-video {
   position: fixed;
   top: 0;
@@ -408,7 +409,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
 #tutorial-video-wrapper {
   margin: 100px auto 0;
-  width: 500px;
+  width: 600px;
   position: relative;
 
   .close {
