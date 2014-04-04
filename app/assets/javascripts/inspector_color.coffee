@@ -190,62 +190,74 @@ $ ->
     steps: [
             {
               element: "#map-highlight"
-              intro: "The color of the building footprint tells us what it was made of and what it was used for. You can help us recreate the New York City of the past by telling us what these structures were."
-              position: "bottom"
+              intro: " <strong>Here's how the app works.</strong> <br /> We'll show you one highlighted polygon at a time - and you tell us what color it is. <strong> Easy Right? </strong> <br /> <br /> But why do we want to know?"
+              position: "left"
               polygon_index: -1
             }
             {
-              element: "#lower-controls"
-              intro: "All you have to do is examine the highlighted footprint and click the color that matches it. <br /> <br /> Pink means it was a brick or stone residential building. Click the pink button and move on!"
+              element: "#map-highlight"
+              intro: "The color of the building footprint tells us what it was made of and what it was used for. You can help us recreate the New York City of the past by telling us what these structures were. <br / > <br /> We compile everything you tell us and make all the information available to anyone who wants it!"
+              position: "right"
+              polygon_index: -1
+            }
+            {
+              element: "#pink-button"
+              intro: "All you have to do is examine the highlighted footprint and click the color that it matches. <br /> <br /> Pink means it was a brick or stone residential building. Click the pink button and move on!"
               position: "top"
               polygon_index: -1
               ixactive: true
             }
             {
-              element: "#map-highlight"
+              element: "#blue-button"
               intro: "Baby blue would have been commercial space, like a dry goods or grocery store."
               position: "right"
               polygon_index: 0
             }
             {
               element: "#map-highlight"
-              intro: "Yikes! Green meant \"hazardous!\" Could have been  slaughterhouse or some sort of refinery."
-              position: "right"
+              intro: "Yikes! Green meant \"hazardous!\" Could have been  slaughterhouse or some sort of refinery. <br /> <br /> Sometimes it's hard to tell between green and yellow - like this guy and his neighbor. "
+              position: "left"
               polygon_index: 1
             }
             {
-              element: "#buttons .multiple"
-              intro: "If a footprint has more than one color, it could have been a mixed-use building or been made of different materials. <br /> <br /> Click this check box and you'll be able to select multiple colors."
-              position: "top"
-              polygon_index: 2
+            element: "#green-button"
+            intro: "In the app, you can drag the page down over the buttons - which are made from actual parts of the map - to compare and see what the best match is."
+            position: "right"
+            polygon_index: 1
+            }
+            {
+            element: "#buttons .multiple"
+            intro: "If a footprint has more than one color, it could have been a mixed-use building or been made of different materials. Click this check box and you'll be able to select multiple colors."
+            position: "top"
+            polygon_index: 2
             }
             {
               element: "#lower-controls"
               intro: "A little pink, a little green - and voila! Save your masterpiece and go to the next one!"
-              position: "top"
+              position: "right"
               polygon_index: 2
               ixactive: true
               multipleactive: true
             }
             {
               element: "#buttons .multiple"
-              intro: "Another multi-color. Remember to click the box"
+              intro: "Another multi-color. Remember to click the box."
               position: "top"
               polygon_index: 3
             }
             {
               element: "#lower-controls"
-              intro: "Yellow means a frame house. This must have been an addition onto a brick building. "
+              intro: "Yellow means a frame house. This must have been an addition or renovation on the brick part. "
               position: "top"
               polygon_index: 3
               ixactive: true
               multipleactive: true
             }
             {
-              element: "#link-help"
-              intro: "Okay, you get the idea - <strong>now color away!</strong> <br /> You can always refer to this tutorial again by hitting the HELP button.  Have fun and thanks for helping NYPL with this project!"
+              element: "#lower-controls"
+              intro: "Okay, you get the idea - now color away! And thanks for helping NYPL!"
               position: "right"
-              polygon_index: 3
+              polygon_index: 4
               ixactive: true
             }
         ]
