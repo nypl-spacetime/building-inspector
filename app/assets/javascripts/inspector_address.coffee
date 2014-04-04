@@ -230,6 +230,7 @@ $ ->
         intro: "Piece of cake, right? Like this one - mark it 20...  "
         position: "right"
         polygon_index: 0
+        ixactive: true
       }
       {
         element: "#submit-button"
@@ -240,8 +241,9 @@ $ ->
       {
         element: "#submit-button"
         intro: "What if there is no number at all? Skip it and move on. "
-        position: "right"
+        position: "top"
         polygon_index: 4
+        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -258,13 +260,13 @@ $ ->
       }
       {
         element: "#map-highlight"
-        intro: "It can be easy to be fooled by those olde tyme numbers. 47 or 17? If you can't tell, check th neighbors. This one's near the 20s, so it must be ye olde 17. Click. Type. Proceed. "
+        intro: "It can be easy to be fooled by those olde tyme numbers. 47 or 17? If you can't tell, check the neighbors. This one's near the 20s, so it must be ye olde 17. Click. Type. Proceed. "
         position: "right"
         polygon_index: 1
       }
       {
         element: "#submit-button"
-        intro: "Hit next to save it and move on. <br /> <br /> Okay, you probably get the concept of hitting \"Next\" at this point - so we're just going to roll through some examples <strong>lighting round style</strong> and trust that when the time comes for the real thing - you'll know what to do!"
+        intro: "Hit next to save it and move on. <br /> <br /> Okay, you probably get the concept of hitting \"Next\" at this point - so we're just going to roll through some examples <strong>lightning round style</strong> and trust that when the time comes for the real thing - you'll know what to do!"
         position: "top"
         polygon_index: 1
         ixactive: true
@@ -295,20 +297,20 @@ $ ->
       }
       {
         element: "#map-highlight"
-        intro: "Watch out: sometimes you'll find a number <strong> ON </strong> the polygon. That's a floor count - not an address. "
+        intro: "Watch out: sometimes you'll find a number <strong> ON </strong> the polygon. That's a floor count - not an address. This building doesn't seem to have one."
         position: "right"
         polygon_index: 11
       }
       {
         element: "#submit-button"
-        intro: "Skip it like your weird cousin's wedding!"
+        intro: "So skip it like your weird cousin's wedding!"
         position: "top"
         polygon_index: 11
         ixactive: true
       }
       {
         element: "#map-highlight"
-        intro: "Be careful of reading the numbers upside down! This is a 60, not an 09. Always check the neighbors if you're not sure."
+        intro: "Be careful of reading the numbers upside down! This is 60, not 09. Always check the neighbors if you're not sure."
         position: "right"
         polygon_index: 12
       }
