@@ -274,7 +274,7 @@ class @Inspector
         # things are slightly different for editable polygon drawing
         @makeEditablePolygon()
       # center on the polygon
-      bounds = @geo.getBounds().pad(1)
+      bounds = @geo.getBounds().pad(.1)
       @map.fitBounds( bounds )
       # @map.setZoom( @map.getZoom()-1 ) if @options.tutorialOn
       @resetButtons()
