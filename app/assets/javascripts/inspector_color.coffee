@@ -235,17 +235,17 @@ $ ->
             }
             {
               element: "#lower-controls"
-              intro: "Yellow means a frame house. This must have been an addition or renovation on the brick part. "
+              intro: "Yellow means a frame house. This must have been an addition onto a brick building. "
               position: "top"
               polygon_index: 3
               ixactive: true
               multipleactive: true
             }
             {
-              element: "#lower-controls"
-              intro: "Okay, you get the idea - now color away! And thanks for helping NYPL!"
+              element: "#link-help"
+              intro: "Okay, you get the idea - <strong>now color away!</strong> <br /> You can always refer to this tutorial again by hitting the HELP button.  Have fun and thanks for helping NYPL with this project!"
               position: "right"
-              polygon_index: 4
+              polygon_index: 3
               ixactive: true
             }
         ]
