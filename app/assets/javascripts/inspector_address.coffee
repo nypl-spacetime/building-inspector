@@ -237,6 +237,7 @@ $ ->
         intro: "and hit next."
         position: "top"
         polygon_index: 0
+        ixactive: true
       }
       {
         element: "#submit-button"
