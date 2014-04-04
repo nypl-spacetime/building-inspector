@@ -171,8 +171,8 @@ class @Inspector
           t: type
           f: data
         success: () ->
-          inspector.hideSpinner()
           inspector.showNextPolygon()
+          inspector.hideSpinner()
       )
 
   showSpinner: () ->
