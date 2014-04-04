@@ -214,7 +214,7 @@ $ ->
     steps: [
       {
         element: "#map-highlight"
-        intro: "Generally speaking, it's really easy to match most buildings with their street numbers. Click on the address number next to highlighted structure and type it into the text box that pops up."
+        intro: "By and large, it's pretty easy to match most buildings with their street numbers. Click on the address number next to highlighted structure and type it into the text box that pops up. Don't worry about the street names - we'll get those later."
         position: "right"
         polygon_index: -1
       }
@@ -227,32 +227,25 @@ $ ->
       }
       {
         element: "#map-highlight"
-        intro: "Seems easy right? Well this one is anyway - mark it 20. But we'll take you through a few more examples so you can see some harder \"edge cases\" as well. "
+        intro: "Piece of cake, right? Like this one - mark it 20...  "
         position: "right"
         polygon_index: 0
       }
       {
         element: "#submit-button"
-        intro: "Okay smart guy. Hit next and we'll get to some tough ones!"
+        intro: "and hit next."
         position: "top"
         polygon_index: 0
       }
       {
-        element: "#map-highlight"
-        intro: "It can be easy to be fooled by those olde tyme numbers. 47 or 17? If you can't tell, look to addresses around it. It's near the 20s, so it must be ye olde 17. Click-eth it and type-eth it in. "
-        position: "right"
-        polygon_index: 1
-      }
-      {
         element: "#submit-button"
-        intro: "Hit next to save it and move on. "
-        position: "top"
-        polygon_index: 1
-        ixactive: true
+        intro: "What if there is no number at all? Skip it and move on. "
+        position: "right"
+        polygon_index: 4
       }
       {
         element: "#map-highlight"
-        intro: "If an address includes a fraction, decimalize it! Turn that 1/2 into a \".5.\" This would be 395.5 "
+        intro: "Now for some trickier \"edge cases.\" If an address includes a fraction, decimalize it! Turn that 1/2 into a \".5.\" This would be 395.5 "
         position: "right"
         polygon_index: 2
       }
@@ -265,111 +258,44 @@ $ ->
       }
       {
         element: "#map-highlight"
-        intro: "Times change and so do addresses. When you see new numbers written in under the old ones, enter both!  They were both right at some point and it's all info we can use."
+        intro: "It can be easy to be fooled by those olde tyme numbers. 47 or 17? If you can't tell, check th neighbors. This one's near the 20s, so it must be ye olde 17. Click. Type. Proceed. "
         position: "right"
-        polygon_index: 3
+        polygon_index: 1
       }
       {
         element: "#submit-button"
-        intro: "Next!"
+        intro: "Hit next to save it and move on. <br /> <br /> Okay, you probably get the concept of hitting \"Next\" at this point - so we're just going to roll through some examples <strong>lighting round style</strong> and trust that when the time comes for the real thing - you'll know what to do!"
         position: "top"
-        polygon_index: 3
+        polygon_index: 1
         ixactive: true
       }
       {
         element: "#map-highlight"
-        intro: "But, what if there is no number at all? Well that's just a headache so we won't even bother with these. "
-        position: "right"
-        polygon_index: 4
-      }
-      {
-        element: "#submit-button"
-        intro: "Skip it like a jump rope!"
-        position: "top"
-        polygon_index: 4
-        ixactive: true
-      }
-      {
-        element: "#map-highlight"
-        intro: "A house divided cannot stand? Abe Lincoln should have spent more time in New York. While this proved to be an apt metaphor for our nation torn asunder, large structures were actually frequently divided on the inside and were given more than one address (without collapsing as a result). Give us both numbers. <br /> They could be on the same street, like this one..."
+        intro: "Buildings with more than one number? We'll take as many as we can get. Click and type both of them."
         position: "right"
         polygon_index: 5
       }
       {
-        element: "#submit-button"
-        intro: "Hit next to save 'em."
-        position: "top"
-        polygon_index: 5
-        ixactive: true
-      }
-      {
         element: "#map-highlight"
-        intro: "On corner buildings on two streets..."
-        position: "right"
-        polygon_index: 6
-      }
-      {
-        element: "#submit-button"
-        intro: "You know what to do."
-        position: "top"
-        polygon_index: 6
-        ixactive: true
-      }
-      {
-        element: "#map-highlight"
-        intro: "On three streets..."
+        intro: "Sometimes the numbers wrap around a building. Grab 'em all!"
         position: "right"
         polygon_index: 7
       }
       {
-        element: "#submit-button"
-        intro: "Yep, hit next."
-        position: "top"
-        polygon_index: 7
-        ixactive: true
-      }
-      {
         element: "#map-highlight"
-        intro: "On parallel streets... "
-        position: "right"
-        polygon_index: 8
-      }
-      {
-        element: "#submit-button"
-        intro: "I know, I know \" Next, next, next, next, <strong> NEXT!</strong>\" Sorry for all the redundancy but this is just how tutorials work!"
-        position: "top"
-        polygon_index: 8
-        ixactive: true
-      }
-      {
-        element: "#map-highlight"
-        intro: "Or bizarre labyrinthine escape routes! Yes officer, he ran into 108 Wall Street and took off out of 121 Front Street! Smoke screen!"
+        intro: "Or you might find bizarre labyrinthine escape routes! \"Yes officer, he ran into 108 Wall Street and took off out of 121 Front Street!\" Smoke screen!"
         position: "right"
         polygon_index: 9
       }
-      {
-        element: "#submit-button"
-        intro: "Next. (at least you'll be an expert at hitting next by the end of this)"
-        position: "top"
-        polygon_index: 9
-        ixactive: true
-      }
-      {
+       {
         element: "#map-highlight"
-        intro: "Soooooooo many numbers! We'll take 'em all! "
+        intro: "Times change and so do addresses. When you see new numbers written in under the old ones, enter both!"
         position: "right"
-        polygon_index: 10
-      }
-      {
-        element: "#submit-button"
-        intro: "Clearly, next."
-        position: "top"
-        polygon_index: 10
-        ixactive: true
+        polygon_index: 3
       }
       {
         element: "#map-highlight"
-        intro: "Now don't get confused if you see a number <strong> ON </strong> the polygon. This is just how many stories/floors/levels the building has - NOT the address. This particular building is three stories high and has no street number.  "
+        intro: "Watch out: sometimes you'll find a number <strong> ON </strong> the polygon. That's a floor count - not an address. "
         position: "right"
         polygon_index: 11
       }
@@ -382,80 +308,45 @@ $ ->
       }
       {
         element: "#map-highlight"
-        intro: "Be careful of reading the numbers upside down! This is a 60, not an 09. Always check other nearby addresses to make sure you're reading it correctly."
+        intro: "Be careful of reading the numbers upside down! This is a 60, not an 09. Always check the neighbors if you're not sure."
         position: "right"
         polygon_index: 12
       }
       {
-        element: "#submit-button"
-        intro: "Ext-nay (a little pig latin always keeps things interesting right?)"
-        position: "top"
-        polygon_index: 12
-        ixactive: true
-      }
-      {
         element: ".leaflet-control-zoom.leaflet-bar.leaflet-control"
-        intro: "Space is always at a premium in NYC and some properties may have more than one building on it - one right on the street and another in the backyard. Both of them share the same address. Use the zoom function to see who owns this building. "
+        intro: "Finally: backlots! You may need to zoom out to see what's going on with these. "
         position: "left"
         polygon_index: 13
       }
       {
         element: "#map-highlight"
-        intro: "This backlot structure is a part of 17 Morton St."
+        intro: "Generally, take the straightest route to the street, and use that address. This one's probably 17."
         position: "right"
         polygon_index: 13
       }
       {
-        element: "#submit-button"
-        intro: "You know what to do."
-        position: "top"
-        polygon_index: 13
-        ixactive: true
-      }
-      {
         element: ".leaflet-control-zoom.leaflet-bar.leaflet-control"
-        intro: "This can get tricky when dealing with funky boundary lines. When you run into this, look for one or two that seem to be primary dividers of multiple properties and use that to decide what belongs to whom. Zooming out a bit might make it easier to determine. "
+        intro: "Again, you'll want to zoom out. This can get kind of tricky.  "
         position: "left"
         polygon_index: 14
       }
       {
         element: "#map-highlight"
-        intro: "Enter the number when you figure it out."
+        intro: "Take your best guess and let the geometry guide you. Dividing lines that anchor multiple properties evenly often suggest to which street a backlot belongs."
         position: "top"
         polygon_index: 14
       }
       {
-        element: "#submit-button"
-        intro: "You know the rest!"
-        position: "top"
-        polygon_index: 14
-        ixactive: true
-      }
-      {
-        element: "#map-highlight"
-        intro: "Here's another - even though this back lot structure is closer to 65 Second Street, look at how it follows the property line of 52 First Street. Mark it 52."
-        position: "right"
-        polygon_index: 15
-      }
-      {
-        element: "#submit-button"
-        intro: "!TXEN (hold computer up to mirror to reveal this secret instruction.)"
-        position: "top"
-        polygon_index: 15
-        ixactive: true
-      }
-      {
-        element: "#map-highlight"
-        intro: "The narrow alley leading to this building is a horserun - bascially a 19th century driveway. The structure was probably the stable for number 67, so mark it 67... "
-        position: "right"
+        element: ".leaflet-control-zoom.leaflet-bar.leaflet-control"
+        intro: "Zoom it on out my friend!"
+        position: "left"
         polygon_index: 16
       }
       {
-        element: "#submit-button"
-        intro: "And submit it the best way you know how."
-        position: "top"
+        element: "#map-highlight"
+        intro: "Okay. Now, the narrow alley leading to this building is a horserun - bascially a 19th century driveway. The structure was probably the stable or \"horse garage\" for number 67. "
+        position: "right"
         polygon_index: 16
-        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -464,79 +355,20 @@ $ ->
         polygon_index: 17
       }
       {
-        element: "#submit-button"
-        intro: "Whichever is cool with us. Hit next to continue."
-        position: "top"
-        polygon_index: 17
-        ixactive: true
-      }
-      {
         element: "#map-highlight"
-        intro: "This one too. It might have been a carriage house (horse garage) shared by 556 and 554. It's another tossup. "
-        position: "right"
-        polygon_index: 18
-      }
-      {
-        element: "#submit-button"
-        intro: "Next, of course. You're showing remarkable patience and fortitude with this. You should really be proud of yourself!"
-        position: "top"
-        polygon_index: 18
-        ixactive: true
-      }
-      {
-        element: "#map-highlight"
-        intro: "Another thing to remember is that structures may be set farther back from the road than you'd expect. Maybe the people at 46 Leonard just really wanted a front yard."
+        intro: "Another thing to remember is that structures may be set farther back from the road than you'd expect. Maybe the folks at 46 Leonard just really wanted a front yard."
         position: "right"
         polygon_index: 19
       }
       {
-        element: "#submit-button"
-        intro: "Duh."
-        position: "top"
-        polygon_index: 19
-        ixactive: true
-      }
-      {
         element: "#map-highlight"
-        intro: "Here's another that's set back: 114 West Broadway. In this case you'd have to enter through a narrow opening between the neighbors walls to get back there!"
-        position: "right"
-        polygon_index: 20
-      }
-      {
-        element: "#submit-button"
-        intro: "What do we want? <br /> <strong> NEXT! </strong> <br /> When do we want it? <br /> <strong> NOW! </strong>"
-        position: "top"
-        polygon_index: 20
-        ixactive: true
-      }
-      {
-          element: ".leaflet-control-zoom.leaflet-bar.leaflet-control"
-        intro: "This structure was actually built to house the world's longest hot dog. No probably not, but it's very long. Zoom out to see who it belongs to. "
-        position: "left"
-        polygon_index: 26
-      }
-      {
-        element: "#map-highlight"
-        intro: "I'm thinking it extends from 103."
-        position: "top"
-        polygon_index: 26
-      }
-      {
-        element: "#submit-button"
-        intro: "Next."
-        position: "top"
-        polygon_index: 26
-        ixactive: true
-      }
-      {
-        element: "#map-highlight"
-        intro: "It looks like this could be a backlot building for 222 or 220 but don't be fooled! Anything that faces the street like that is probably a separate property. This one just doesn't have a number."
+        intro: "It looks like this could be a backlot building for 222 or 220 but don't be fooled! Anything that faces the street like that is probably a separate property. <br /> <br /> This one just doesn't have a number..."
         position: "right"
         polygon_index: 21
       }
       {
         element: "#submit-button"
-        intro: "[So skip it like a flat stone on a calm lake!"
+        intro: "So skip it like a flat stone on a calm lake!"
         position: "top"
         polygon_index: 21
         ixactive: true
@@ -548,24 +380,10 @@ $ ->
         polygon_index: 22
       }
       {
-        element: "#submit-button"
-        intro: "Aaaaaaaaaaaaaand NEXT!"
-        position: "top"
-        polygon_index: 22
-        ixactive: true
-      }
-      {
         element: "#map-highlight"
         intro: "If the number is written right between two buildings, and there isn't another number on the other side of either, you can assign both buildings the same address. Both this one and the green L-shaped structure next to it are 693. "
         position: "right"
         polygon_index: 24
-      }
-      {
-        element: "#submit-button"
-        intro: "[no text provided]"
-        position: "top"
-        polygon_index: 24
-        ixactive: true
       }
       {
         element: "#map-highlight"
@@ -575,7 +393,7 @@ $ ->
       }
       {
         element: "#submit-button"
-        intro: " Like Wild Horses on a Rolling Stones playlist!"
+        intro: "Like Wild Horses on a Rolling Stones playlist!"
         position: "top"
         polygon_index: 25
         ixactive: true
@@ -587,15 +405,8 @@ $ ->
         polygon_index: 27
       }
       {
-        element: "#submit-button"
-        intro: "I swear this is the last one - Next!"
-        position: "top"
-        polygon_index: 27
-        ixactive: true
-      }
-      {
         element: "#map-highlight"
-        intro: "Remember that the backlot buildings tend to be the trickiest, but hopefully these tips will make it a little bit easier. <br /> If you run into trouble, you can always review this tutorial again... "
+        intro: "That's about it! The back lots can be tricky, but hopefully these tips will make it a little bit easier. <br /> <br /> If you run into trouble, you can always review this tutorial again... "
         position: "right"
         polygon_index: 28
       }
