@@ -153,6 +153,7 @@ class @Inspector
       @intro.goToStep(@intro._currentStep+2)
       return
 
+    @showSpinner()
     type = @options.task
 
     _gaq.push(['_trackEvent', 'Flag', type])
@@ -170,8 +171,15 @@ class @Inspector
           t: type
           f: data
         success: () ->
+          inspector.hideSpinner()
           inspector.showNextPolygon()
       )
+
+  showSpinner: () ->
+    $("#controls .wrapper").append(Utils.spinner().el)
+
+  hideSpinner: () ->
+    $("#controls .wrapper .spinner").remove()
 
   updateScore: () ->
     if @allPolygonsSession == 0

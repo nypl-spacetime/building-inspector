@@ -47,6 +47,11 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     @include clearfix;
   }
 
+  .spinner {
+    left: 50%;
+    top: 36px;
+  }
+
   .multiple {
     text-align: center;
     text-transform: none;
