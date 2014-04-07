@@ -30,9 +30,10 @@ class @NYPL_Map_Tutorial
 
   resizeTutorial: () ->
     w = window.innerWidth
+    maxheight = 300
     return if w >= @options.desktopWidth
-    $("#tutorial-video-wrapper").width(w)
-    $("#tutorial-video-wrapper iframe").width(w)
+    $("#tutorial-video-wrapper").width(w).height(maxheight)
+    $("#tutorial-video-wrapper iframe").width(w).height(maxheight)
 
   initVideo: () ->
     t = @

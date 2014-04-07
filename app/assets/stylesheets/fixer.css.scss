@@ -412,6 +412,10 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   width: 600px;
   position: relative;
 
+  @media screen and (max-width: $desktopwidth) {
+    margin-top: 40px;
+  }
+
   .close {
     right: -24px;
     top: -20px;
