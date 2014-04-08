@@ -108,16 +108,19 @@ class General
   onBodyClick: (e) ->
     if !$(e.target).closest('#top-nav.open').length
       $("#top-nav.open").removeClass("open")
+      $("#task-toggle").removeClass("open")
     if !$(e.target).closest('#task-container').length
       $("#task-container .hidden").hide()
     if !$(e.target).closest('.popup').length
       $('.popup').hide()
+      $("#task-toggle").removeClass("open")
 
   onTaskClick: (e) ->
     $('.popup').hide()
     e.preventDefault()
     e.stopPropagation()
     $("#task-container .hidden").toggle()
+    $("#task-toggle").addClass("open")
 
 $ ->
   window._gen = new General()

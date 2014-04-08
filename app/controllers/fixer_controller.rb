@@ -349,7 +349,7 @@ class FixerController < ApplicationController
     poly_id = params[:i]
     type = params[:t]
     if poly_id == nil || flags == nil
-        respond_with( "empty_poly" )
+        render :text => "empty_poly"
         return
     end
 

@@ -1,8 +1,9 @@
-@import "lib/drr-base";
+@import "lib/drr-variables";
 @import "lib/nypl-header";
 @import "lib/css3-mixins";
 @import "lib/button-mixins";
 @import "compass/utilities/general/clearfix";
+@import "compass/css3/box-shadow";
 @import "variables";
 
 html {
@@ -163,7 +164,7 @@ a, a:link, a:visited, a:hover {
 }
 
 #main-container {
-  background: $grayLight;
+  background: $grayLightest;
   padding-top: 100px;
 
   @media screen and (max-width: $desktopwidth) {
@@ -218,7 +219,7 @@ a, a:link, a:visited, a:hover {
   }
 }
 
-.intro {
+#intro {
   width: 100%;
   max-width: $desktopwidth;
   margin: 0 auto;
@@ -302,6 +303,39 @@ a.home-big-link {
     &:last-child {
       @include rounded-corners(0 0 10px 10px);
     }
+  }
+}
+
+#not-found {
+  margin-top: -12px;
+  background: $black;
+  text-align: right;
+
+  .shadow {
+    width: 960px;
+    height: 339px;
+    margin: 0 auto;
+    background: asset-url("404.jpg", image) no-repeat;
+    @include box-shadow(-468px 0px 54px -30px $black inset, 40px 0px 20px -30px $black inset);
+    color: $white;
+
+    @media screen and (max-width: $desktopwidth) {
+      width: auto;
+      @include box-shadow(-150px 0px 230px -30px $black inset);
+    }
+  }
+
+  h3 {
+    padding-top: 30px;
+    margin-right: 20px;
+  }
+
+  p {
+    margin-right: 20px;
+  }
+
+  a {
+    color: $red;
   }
 }
 

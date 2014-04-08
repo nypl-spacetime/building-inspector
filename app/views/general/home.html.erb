@@ -6,7 +6,12 @@
 <%= render :partial => "partials/nav" %>
 
 <div id="main-container">
-  <div class="intro">
+  <div id="intro">
+    <div class="welcome">
+      <h3>Help trace<br />New York City's past</h3>
+      <p>The <em>New York Public Library</em> is training computers how to recognize building shapes and other information from old city maps. Help us clean up the data so that it can be used in research, teaching and civic hacking.</p>
+      <%= link_to "LEARN MORE", "javascript:;", :class => "link-learn-more" %>
+    </div>
     <div id="home-slideshow" class="swipeshow">
       <ul class="slides">
         <li id="slide1" class="slide">
@@ -31,7 +36,7 @@
             <div id="slide3-c" class="marker"></div>
             <div id="slide3-d" class="marker"></div>
           </div>
-          <h4>FIX<br />POLYGONS</h4>
+          <h4>FIX<br />FOOTPRINTS</h4>
           <svg version="1.1" class="intro-path" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 960 300" enable-background="new 0 0 960 300" xml:space="preserve">
             <polygon class="poly-a" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="562.3,163.1 483.4,73.2 565.3,51.1 648.6,135.1 "/>
             <polygon class="poly-b" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="562.3,163.1 472.4,59.2 565.3,51.1 648.6,135.1 "/>
@@ -72,7 +77,7 @@
       </ul>
       <div id="slide-buttons">
         <%= link_to "CHECK FOOTPRINTS", geometry_path, {:id => "link-geometry", :class => "home-link"} %>
-        <%= link_to "FIX POLYGONS", polygons_path, {:id => "link-polygonfix", :class => "home-link"} %>
+        <%= link_to "FIX FOOTPRINTS", polygons_path, {:id => "link-polygonfix", :class => "home-link"} %>
         <%= link_to "ENTER ADDRESSES", address_path, {:id => "link-address", :class => "home-link"} %>
         <%= link_to "CLASSIFY COLORS", color_path, {:id => "link-color", :class => "home-link"} %>
       </div>
@@ -94,14 +99,6 @@
         </p>
     </div>
     <% end %>
-    <h3>Help trace<br />New York City's past</h3>
-    <p>The <em>New York Public Library</em> is training computers how to recognize building shapes and other information from old city maps. Help us clean up the data so that it can be used in research, teaching and civic hacking.</p>
-    <p>Currently under inspection:
-    <ul>
-      <li><em>Maps of the City of Brooklyn, 1855</em> </li>
-      <li><em>Maps of the City of New York, 1857-62</em></li>
-    </ul>
-    </p>
   </div>
 </div>
 

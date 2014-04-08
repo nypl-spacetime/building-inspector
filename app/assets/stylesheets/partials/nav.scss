@@ -1,4 +1,4 @@
-@import "lib/drr-base";
+@import "lib/drr-variables";
 @import "lib/nypl-header";
 @import "lib/css3-mixins";
 @import "lib/button-mixins";
@@ -215,6 +215,10 @@
   width: 160px;
   background: $grayLightest;
   @include border-radius(3px);
+
+  &.open {
+    @include box-shadow(0px, 3px, 6px, 0px, $black);
+  }
 
   @media screen and (max-width: $desktopwidth) {
     width: 100%;
