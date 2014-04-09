@@ -104,14 +104,21 @@ $welcomecolor: #23190D;
   }
 
   h5 {
-    margin-top: 0;
-    padding-top: 40px;
+    margin-top: 50px;
     font-weight: normal;
+
+    @media screen and (max-width: $desktopwidth) {
+      font-size: 1.2em;
+    }
   }
 
   p {
     width: 70%;
     margin: 0 auto 1em;
+
+    @media screen and (max-width: $desktopwidth) {
+      font-size: 1.5em;
+    }
   }
 
   .link-learn-more {
