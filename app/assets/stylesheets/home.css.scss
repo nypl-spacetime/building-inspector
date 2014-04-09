@@ -62,25 +62,73 @@
   }
 }
 
-#intro .welcome {
-  background: asset-url("welcome.jpg", image);
-  background-size: cover;
+$welcomecolor: #23190D;
+
+#welcome {
   text-align: center;
-  padding: 50px 0 0;
+  background: $welcomecolor;
+  color: $white;
+  font-size: 1.1em;
+
+  @media screen and (max-width: $desktopwidth) {
+    font-size: 0.7em;
+  }
+
+  .wrapper {
+    width: 960px;
+    min-height: 400px;
+    margin: 0 auto;
+    background: asset-url("welcome.jpg", image);
+    background-attachment: fixed;
+    background-position: 50% 0px;
+    @include box-shadow(-40px 0px 20px -30px $welcomecolor inset, 40px 0px 20px -30px $welcomecolor inset);
+    @include clearfix;
+
+    @media screen and (max-width: $desktopwidth) {
+      width: auto;
+      min-height: 300px;
+    }
+  }
 
   h3 {
-    margin: 0 auto 20px;
+    margin: 20px auto 10px;
+    font-size: 4em;
+    font-weight: normal;
+    line-height: 0.9em;
+  }
+
+  h4 {
+    margin: 0;
+    margin-bottom: 40px;
+    font-weight: normal;
+  }
+
+  h5 {
+    margin-top: 0;
+    padding-top: 40px;
+    font-weight: normal;
   }
 
   p {
-    margin-bottom: 0;
-    margin-left: auto;
-    margin-right: auto;
+    width: 70%;
+    margin: 0 auto 1em;
   }
 
   .link-learn-more {
     display: block;
-    margin: 40px 0 0;
+    width: 220px;
+    margin: 40px auto 40px;
+    padding: 15px 0px;
+    background: $green;
+    color: white;
+    font-size: 1.5em;
+    line-height: normal;
+
+    @include transition(background-color, .2s);
+
+    &:hover {
+      background: $red;
+    }
   }
 }
 

@@ -6,12 +6,18 @@
 <%= render :partial => "partials/nav" %>
 
 <div id="main-container">
-  <div id="intro">
-    <div class="welcome">
-      <h3>Help trace<br />New York City's past</h3>
-      <p>The <em>New York Public Library</em> is training computers how to recognize building shapes and other information from old city maps. Help us clean up the data so that it can be used in research, teaching and civic hacking.</p>
-      <%= link_to "LEARN MORE", "javascript:;", :class => "link-learn-more" %>
+  <div id="welcome">
+    <div class="wrapper">
+      <h5>The New York Public Library presents</h5>
+      <h3>Building Inspector</h3>
+      <h4>Kill Time. Make History.</h4>
+      <hr />
+      <p>Welcome citizen cartographers!<br />The Library wants to make its New York City historical atlases as interactive as the maps you use today on your computer or smartphone, allowing you to search yesterday's places and streets.</p>
+      <p>To do this, we need your help identifying building footprints and other information from digitized city atlases. We've trained computers to do some of the heavy lifting and have designed simple tasks for our public to take us the rest of the way. Help build an unparalleled open resource for anyone who wants to study, teach, or hack New York City's past.</p>
+      <%= link_to "GET STARTED", "javascript:;", :class => "link-learn-more" %>
     </div>
+  </div>
+  <div id="intro">
     <div id="home-slideshow" class="swipeshow">
       <ul class="slides">
         <li id="slide1" class="slide">
