@@ -189,7 +189,7 @@ $welcomecolor: #23190D;
   top: 0;
 }
 
-.slide {
+#intro .slide {
   h4 {
     margin-top: 10px;
     margin-left: 20px;
@@ -198,10 +198,10 @@ $welcomecolor: #23190D;
     color: $grayDarkest;
 
     @media screen and (max-width: $desktopwidth) {
-      margin-top: 0;
-      margin-left: 50px;
-      font-size: 24px;
-      line-height: 24px;
+      font-size: 1.6em;
+      line-height: .9em;
+      margin-top: 5px;
+      margin-left: 30px;
     }
   }
   a {
