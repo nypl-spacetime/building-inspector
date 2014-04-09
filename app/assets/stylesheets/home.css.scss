@@ -119,7 +119,7 @@ $welcomecolor: #23190D;
     width: 220px;
     margin: 40px auto 40px;
     padding: 15px 0px;
-    background: $green;
+    background: $red;
     color: white;
     font-size: 1.5em;
     line-height: normal;
@@ -127,7 +127,7 @@ $welcomecolor: #23190D;
     @include transition(background-color, .2s);
 
     &:hover {
-      background: $red;
+      background: $green;
     }
   }
 }
