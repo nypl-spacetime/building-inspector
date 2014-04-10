@@ -36,7 +36,7 @@ h3 {
 }
 
 ::selection {
-  background-color: $green;
+  background-color: $red;
   color: $grayLightest;
 }
 
@@ -131,38 +131,6 @@ a, a:link, a:visited, a:hover {
   }
 }
 
-#logo-background {
-  background: asset-url("logo-building.jpg", image);
-  display: inline-block;
-  margin: 20px 0 20px 100px;
-  padding: 40px;
-  @include border-radius(10px);
-
-  @media screen and (max-width: $desktopwidth) {
-    padding: 20px;
-    @include border-radius(5px);
-  }
-
-  a {
-    display: inline-block;
-    padding: 20px;
-    text-align: center;
-    text-decoration: none;
-    color: $white;
-    background-color: $yescolor;
-    font-size: 2em;
-    font-weight: bold;
-    @include border-radius(3px);
-
-    @include transition(background-color, 0.2s);
-
-    &:hover {
-      color: $grayDark;
-      background-color: $white;
-    }
-  }
-}
-
 #main-container {
   background: $grayLightest;
   padding-top: 100px;
@@ -170,10 +138,6 @@ a, a:link, a:visited, a:hover {
   @media screen and (max-width: $desktopwidth) {
     padding-top: 0;
   }
-
-  // @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
-  //   display: none;
-  // }
 }
 
 #nypl-mini {
@@ -254,55 +218,6 @@ a, a:link, a:visited, a:hover {
   p {
     text-align: left;
     color: $grayDarkest;
-  }
-}
-
-#map-about {
-  position: relative;
-  z-index: 110;
-  background-color: $white;
-  color: $grayDarkest;
-}
-
-
-a.home-big-link {
-  display: block;
-  width: 130px;
-  margin: 0 auto 2px auto;
-  padding: 10px 12px;
-  font-size: 12px;
-  text-transform: uppercase;
-  text-align: center;
-  text-decoration: none;
-  color: $white;
-  background: $yescolor;
-
-  &:hover {
-    color: $white;
-    text-decoration: none;
-    background: $grayDarkest;
-  }
-
-  &:first-child {
-    @include rounded-corners(5px 5px 0 0);
-  }
-
-  &:last-child {
-    @include rounded-corners(0 0 5px 5px);
-  }
-
-  @media screen and (min-width: $desktopwidth) {
-    padding: 20px 4px;
-    width: 170px;
-    font-size: 18px;
-
-    &:first-child {
-      @include rounded-corners(10px 10px 0 0);
-    }
-
-    &:last-child {
-      @include rounded-corners(0 0 10px 10px);
-    }
   }
 }
 
@@ -403,22 +318,3 @@ a.home-big-link {
   }
 }
 
-#landscape-alert {
-  display: none;
-  text-transform: uppercase;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  color: $grayLightest;
-  text-align: center;
-
-  p {
-    margin: 100px 100px 0;
-  }
-
-  // @media all and (max-device-width: $desktopwidth) and (orientation:landscape) {
-  //   // display: block;
-  // }
-}

@@ -16,6 +16,7 @@
 //= require lib/vendor/intro
 //= require lib/vendor/jquery.swipeshow.min
 //= require lib/vendor/spin.min
+//= require lib/vendor/jquery.scrollTo.min
 //= require lib/vendor/humanize.min
 //= require lib/vendor/simplifygeometry-0.0.1.min
 //= require lib/vendor/add2home
