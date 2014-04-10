@@ -5,6 +5,7 @@
 @import "compass/css3/transform";
 @import "compass";
 @import "animate";
+@import "partials/home-explained";
 
 #main-container {
   // background: url(/assets/pattern.svg) $grayLight -50px 120px;
@@ -99,7 +100,6 @@ $welcomecolor: #23190D;
 
   h4 {
     margin: 0;
-    margin-bottom: 40px;
     font-weight: normal;
   }
 
@@ -110,6 +110,12 @@ $welcomecolor: #23190D;
     @media screen and (max-width: $desktopwidth) {
       font-size: 1.2em;
     }
+  }
+
+  hr {
+    border: 1px solid white;
+    width: 100px;
+    margin: 40px auto;
   }
 
   p {
@@ -133,6 +139,7 @@ $welcomecolor: #23190D;
   font-size: 1.5em;
   line-height: normal;
 
+  @include border-radius(5px);
   @include transition(background-color, .2s);
 
   &:hover {
