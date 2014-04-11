@@ -1,4 +1,87 @@
-#rectified-svg {
-  width: 400px;
-  height: 455px;
+@import "animate";
+
+@include keyframes(capture) {
+  0% {background-position: 0 0; }
+  75% {background-position: -400px 0;}
+  100% {background-position: 0 0;}
+}
+
+#home-explained {
+  .header {
+    padding-top: 80px;
+    @include clearfix;
+
+
+    h3, h4 {
+      color: $white;
+    }
+
+    h3 {
+      font-size: 2em;
+      text-transform: uppercase;
+    }
+
+    h4 {
+      font-weight: normal;
+    }
+
+    a {
+      color: $orange;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .grouper {
+    margin: 20px 0;
+    @include clearfix;
+  }
+
+  .numeral {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    margin: 0 auto;
+    font-weight: normal;
+    border: 2px solid white;
+    @include border-radius(40px);
+    line-height: 40px;
+    text-align: center;
+    color: $white;
+  }
+
+  .first {
+    background: asset-url("home/explained-1.jpg", image);
+    text-align: center;
+    height: 230px;
+  }
+
+
+  h3, h4, h5 {
+    text-align: center;
+  }
+
+  h3, h4, h5, p {
+    max-width: none;
+  }
+
+  .left {
+    width: 510px;
+    float: left;
+  }
+
+  .right {
+    width: 400px;
+    float: right;
+    margin-left: 20px;
+  }
+
+  .capture-graphic {
+    width: 400px;
+    height: 400px;
+    background: asset-url("home/capture.png", image);
+    @include animation(capture 4s steps(1) infinite);
+  }
 }

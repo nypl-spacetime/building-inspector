@@ -1,6 +1,28 @@
 <div id="home-explained">
-  <h2>How does this work?</h2>
-  <p>(work in progress... ignore for now)</p>
-  <p>It all begins in one of our <%= link_to "10,000+ atlases", "http://maps.nypl.org" %></p>
-  <div id="rectified-svg"><%= render :partial => "partials/map.vectorized.svg" %></div>
+  <div class="header first">
+    <h4 class="numeral">1</h4>
+    <h3>It all starts with atlases</h3>
+    <h4>We have <%= link_to "tens of thousands", "http://maps.nypl.org" %> of them…</h4>
+  </div>
+  <div class="grouper">
+    <div class="capture-graphic right"></div>
+    <p class="left">this is a paragraph where we describe in a few sentences the collection. the long stuff should be in the about page. it mentions the image scanning process of the graphic to the right.</p>
+  </div>
+  <div class="grouper">
+    <h4 class="numeral">2</h4>
+    <h3>Rectify</h3>
+    <div class="right"><%= image_tag "home/rectify.png" %></div>
+    <p class="left">about rectify.</p>
+  </div>
+  <div class="grouper">
+    <h4 class="numeral">3</h4>
+    <h3>Vectorize</h3>
+    <div class="right"><%= image_tag "home/vectorize.jpg" %></div>
+    <p class="left">about vectorize.</p>
+  </div>
+  <div class="grouper">
+    <h4 class="numeral">4</h4>
+    <h3>Inspect!</h3>
+    <p class="left">yup...</p>
+  </div>
 </div>
