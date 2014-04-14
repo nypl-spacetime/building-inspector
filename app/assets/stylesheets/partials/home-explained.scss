@@ -127,6 +127,10 @@
   }
 }
 
+img.animated {
+  @include border-radius(5px);
+}
+
 #link-explained-get-started {
   display: block;
   width: 220px;

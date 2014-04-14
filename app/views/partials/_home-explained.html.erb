@@ -10,23 +10,23 @@
   <div class="grouper">
     <h4 class="numeral">1</h4>
     <h3>Scan</h3>
-    <div id="capture-graphic" class="right">
+    <div id="capture-graphic" class="left">
       <div class="camera"></div>
       <div class="flash"></div>
     </div>
-    <p class="left">To make these amazing collections widely available to the public, we first scan them, i.e., capture a bunch of pixels, creating a high resolution digital copy. The maps are then optimized for deep zooming and a copy is made for safekeeping in our digital repository. They are then presented through our Digital Collections page and on the Map Warper, where they can be downloaded, in high resolution, under a <%= link_to "Creative Commons CC0 Creative Commons 1.0 Universal Public Domain Dedication", "http://creativecommons.org/publicdomain/zero/1.0/" %> and queued up for further transformation, like warping and tracing.</p>
+    <p class="right">To make these amazing collections widely available to the public, we first scan them, i.e., capture a bunch of pixels, creating a high resolution digital copy. The maps are then optimized for deep zooming and a copy is made for safekeeping in our digital repository. They are then presented through our Digital Collections page and on the Map Warper, where they can be downloaded, in high resolution, under a <%= link_to "Creative Commons CC0 Creative Commons 1.0 Universal Public Domain Dedication", "http://creativecommons.org/publicdomain/zero/1.0/" %> and queued up for further transformation, like warping and tracing.</p>
   </div>
   <div class="grouper">
     <h4 class="numeral">2</h4>
     <h3>Rectify</h3>
-    <div class="right"><%= image_tag "home/rectify.png" %></div>
+    <div class="right"><%= image_tag "home/rectify.gif", :class => "animated" %></div>
     <p class="left">While <em>images</em> of maps are nice, but our users really want is compare <em>multiple</em> maps showing the same location. The problem is that mapmakers rarely put your study area in the same place from year to year and to boot, they use different scales, pagination schemas, and (gasp!) sometimes north is not at top. So, we borrowed and modified open source software and built the Map Warper, a tool designed to enable you to align a map, or multiple maps, to match and study locations on the planet earth.</p>
   </div>
   <div class="grouper">
     <h4 class="numeral">3</h4>
     <h3>Vectorize</h3>
-    <div class="right"><%= image_tag "home/vectorize.jpg" %></div>
-    <p class="left">But what if you were looking a place whose name has changed, or if you were studying numerous (many) places on maps and as “machine readable data”, or if you were a library hoping to use old maps to help identify and organize other information - like newspaper articles, photos, menus or theater playbills - about those same places. To unlock this potential, we first need to digitally trace the warped maps, i.e. turn pixels (rasters) into lines (vectors). This type of reverse engineering, the conversion of paper maps into data, is highly laborious, so we have been training computers to take a first pass, building on existing open source computer vision and statistical analysis software. Our digital colleagues help us identify geographic features, but we need to inspect their work, and leave the higher end assignments to people (hopefully you!), as a series of fun, bite-sized tasks designed to tell us more about old places.</p>
+    <div class="left"><%= image_tag "home/vectorize.gif", :class => "animated" %></div>
+    <p class="right">But what if you were looking a place whose name has changed, or if you were studying numerous (many) places on maps and as “machine readable data”, or if you were a library hoping to use old maps to help identify and organize other information - like newspaper articles, photos, menus or theater playbills - about those same places. To unlock this potential, we first need to digitally trace the warped maps, i.e. turn pixels (rasters) into lines (vectors). This type of reverse engineering, the conversion of paper maps into data, is highly laborious, so we have been training computers to take a first pass, building on existing open source computer vision and statistical analysis software. Our digital colleagues help us identify geographic features, but we need to inspect their work, and leave the higher end assignments to people (hopefully you!), as a series of fun, bite-sized tasks designed to tell us more about old places.</p>
   </div>
   <div class="grouper">
     <h4 class="numeral">4</h4>
