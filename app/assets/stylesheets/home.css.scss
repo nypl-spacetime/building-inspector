@@ -113,7 +113,7 @@ $welcomecolor: #23190D;
   }
 
   hr {
-    border: 1px solid white;
+    border: 1px solid $white;
     width: 100px;
     margin: 40px auto;
   }
@@ -135,7 +135,7 @@ $welcomecolor: #23190D;
   margin: 40px auto 40px;
   padding: 15px 0px;
   background: $red;
-  color: white;
+  color: $white;
   font-size: 1.5em;
   line-height: normal;
 

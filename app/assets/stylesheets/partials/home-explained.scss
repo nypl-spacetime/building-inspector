@@ -128,9 +128,22 @@
 }
 
 #link-explained-get-started {
-  @extend #link-learn-more;
+  display: block;
+  width: 220px;
+  margin: 40px auto 40px;
+  padding: 15px 0px;
+  background: $red;
   color: $white !important;
+  font-size: 1.5em;
+  line-height: normal;
   text-align: center;
+
+  @include border-radius(5px);
+  @include transition(background-color, .2s);
+
+  &:hover {
+    background: $green;
+  }
 }
 
 
