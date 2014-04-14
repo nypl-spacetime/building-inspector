@@ -1,29 +1,37 @@
 <div id="home-explained">
   <div class="header first">
     <h3>It all starts with atlases</h3>
-    <h4>We have <%= link_to "tens of thousands", "http://maps.nypl.org" %> of them…</h4>
+    <h4>The NYPL’s <%= link_to "Lionel Pincus & Princess Firyal Map Division", "http://maps.nypl.org" %> about half a million maps and 20,000 books and atlases published over the last five hundred years…</h4>
+  </div>
+  <div class="grouper">
+    <p class="centered">Our atlases span the globe at many scales, diverse cartographic representations of landscapes transforming across time. Dutch world atlases and pilot books mirror their 17th century global expansion, 18th century English atlases follow unfolding battles during the American Revolution and 19th century fire insurance atlases track myriad changes to the urban fabric.</p>
+    <p class="centered">The Library has, through the generosity of the IMLS and NEH, scanned more than 20,000 images of maps and atlas plates over the years. Of those, more than 10,000 images from fire insurance atlases, detail New York City as it changes.</p>
   </div>
   <div class="grouper">
     <h4 class="numeral">1</h4>
     <h3>Scan</h3>
-    <div class="capture-graphic right"></div>
-    <p class="left">this is a paragraph where we describe in a few sentences the collection. the long stuff should be in the about page. it mentions the image scanning process of the graphic to the right.</p>
+    <div id="capture-graphic" class="right">
+      <div class="camera"></div>
+      <div class="flash"></div>
+    </div>
+    <p class="left">To make these amazing collections widely available to the public, we first scan them, i.e., capture a bunch of pixels, creating a high resolution digital copy. The maps are then optimized for deep zooming and a copy is made for safekeeping in our digital repository. They are then presented through our Digital Collections page and on the Map Warper, where they can be downloaded, in high resolution, under a Creative Commons CC0 Creative Commons 1.0 Universal Public Domain Dedication and queued up for further transformation, like warping and tracing.</p>
   </div>
   <div class="grouper">
     <h4 class="numeral">2</h4>
     <h3>Rectify</h3>
     <div class="right"><%= image_tag "home/rectify.png" %></div>
-    <p class="left">about rectify.</p>
+    <p class="left">While <em>images</em> of maps are nice, but our users really want is compare <em>multiple</em> maps showing the same location. The problem is that mapmakers rarely put your study area in the same place from year to year and to boot, they use different scales, pagination schemas, and (gasp!) sometimes north is not at top. So, we borrowed and modified tools from the open source software tools and built the Map Warper, a tool designed to enable you to align a map, or multiple maps, to match and study locations on the planet earth.</p>
   </div>
   <div class="grouper">
     <h4 class="numeral">3</h4>
     <h3>Vectorize</h3>
     <div class="right"><%= image_tag "home/vectorize.jpg" %></div>
-    <p class="left">about vectorize.</p>
+    <p class="left">But what if you were studying an old place that now has a different name, or if you wanted to study many of the places on maps, but as “machine readable data”, or if you were a library wishing to identify and organize other information - like newspaper articles, photos, menus or theater playbills - geographically, i.e., using the information on old maps as an organizational framework. To unlock this potential, we first need to digitally trace the warped maps, i.e. turn pixels (rasters) into lines (vectors). This type of reverse engineering, the conversion of paper maps into data, is highly laborious, so we have been training computers to take a first pass, building on existing open source computer vision and statistical analysis software. Our digital colleagues help us identify geographic features, but we need to check their work, and leave the higher end work to you, as a series of bite-sized tasks designed to tell us more about old places.</p>
   </div>
   <div class="grouper">
     <h4 class="numeral">4</h4>
     <h3>Inspect!</h3>
-    <p class="left">yup...</p>
+    <p class="centered">some moar text</p>
+    <%= link_to "GET STARTED", "javascript:;", :id => "link-explained-get-started", :class => "learn-more" %>
   </div>
 </div>

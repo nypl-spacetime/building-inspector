@@ -6,19 +6,16 @@
 @import "compass";
 @import "animate";
 
-@include keyframes(capture) {
-  0% {background-position: 0 0; }
-  75% {background-position: -400px 0;}
-  100% {background-position: 0 0;}
-}
-
 #home-explained {
   .header {
-    padding-top: 80px;
+    padding-top: 110px;
     @include clearfix;
 
 
     h3, h4 {
+      width: 70%;
+      margin-left: auto;
+      margin-right: auto;
       color: $white;
     }
 
@@ -29,6 +26,7 @@
 
     h4 {
       font-weight: normal;
+      line-height: 1.3em;
     }
 
     a {
@@ -40,9 +38,10 @@
     }
   }
 
-  .grouper {
-    margin: 20px 0;
-    @include clearfix;
+  .first {
+    background: asset-url("home/explained-1.jpg", image);
+    text-align: center;
+    height: 200px;
   }
 
   .numeral {
@@ -58,13 +57,6 @@
     color: $white;
   }
 
-  .first {
-    background: asset-url("home/explained-1.jpg", image);
-    text-align: center;
-    height: 230px;
-  }
-
-
   h3, h4, h5 {
     text-align: center;
   }
@@ -74,20 +66,71 @@
   }
 
   .left {
-    width: 510px;
+    width: 400px;
     float: left;
   }
 
   .right {
     width: 400px;
     float: right;
-    margin-left: 20px;
   }
 
-  .capture-graphic {
-    width: 400px;
-    height: 400px;
-    background: asset-url("home/capture.png", image);
-    @include animation(capture 4s steps(1) infinite);
+}
+
+.grouper {
+  margin: 20px 0;
+  @include clearfix;
+}
+
+.centered {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.5em;
+  text-align: center;
+  line-height: 1.5em;
+}
+
+@include keyframes(atlas) {
+  0% {background-position: 433px 169px; }
+  25% {background-position: 33px 169px;}
+  85% {background-position: 33px 169px;}
+  100% {background-position: -433px 169px;}
+}
+
+@include keyframes(flash) {
+  0% {background-position: -400px 0; }
+  55% {background-position: 1px 0;}
+  75% {background-position: -400px 0;}
+}
+
+#capture-graphic {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  background: asset-url("home/capture-atlas.png", image) 33px 169px no-repeat;
+  @include animation(atlas 1.5s ease-out infinite);
+
+  .camera {
+    width: 29px;
+    height: 58px;
+    margin: 37px auto 0;
+    background: asset-url("home/capture-camera.png", image) no-repeat;
+  }
+
+  .flash {
+    width: 206px;
+    height: 151px;
+    margin: 5px auto 0;
+    background: asset-url("home/capture-flash.png", image) no-repeat;
+    @include animation(flash 1.5s steps(1) infinite);
   }
 }
+
+#link-explained-get-started {
+  @extend #link-learn-more;
+  color: $white !important;
+  text-align: center;
+}
+
+
