@@ -11,22 +11,8 @@
     padding-top: 110px;
     @include clearfix;
 
-
     h3, h4 {
-      width: 70%;
-      margin-left: auto;
-      margin-right: auto;
       color: $white;
-    }
-
-    h3 {
-      font-size: 2em;
-      text-transform: uppercase;
-    }
-
-    h4 {
-      font-weight: normal;
-      line-height: 1.3em;
     }
 
     a {
@@ -44,42 +30,106 @@
     height: 200px;
   }
 
+  h3, h4, h5 {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    color: $grayDarkest;
+    text-align: center;
+  }
+
+  h3 {
+    font-size: 2em;
+    text-transform: uppercase;
+    @media screen and (max-width: $desktopwidth) {
+      margin-bottom: 0 !important;
+    }
+  }
+
+  h4 {
+    font-weight: normal;
+    line-height: 1.3em;
+  }
+
   .numeral {
     width: 40px;
     height: 40px;
     padding: 0;
     margin: 0 auto;
     font-weight: normal;
-    border: 2px solid white;
-    @include border-radius(40px);
+    border: 2px solid $grayDarkest;
     line-height: 40px;
+    @include border-radius(40px);
     text-align: center;
-    color: $white;
-  }
+    color: $grayDarkest;
 
-  h3, h4, h5 {
-    text-align: center;
+    @media screen and (max-width: $desktopwidth) {
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      font-size: 16px;
+      text-indent: 3px;
+      margin-bottom: 10px;
+      @include border-radius(20px);
+    }
   }
 
   h3, h4, h5, p {
     max-width: none;
+
+    @media screen and (max-width: $desktopwidth) {
+      margin: 0 20px 1em;
+      padding: 0;
+      width: 280px;
+    }
   }
 
-  .left {
-    width: 400px;
-    float: left;
-  }
-
-  .right {
-    width: 400px;
-    float: right;
+  p {
+    @media screen and (max-width: $desktopwidth) {
+      line-height: 1.5em;
+    }
   }
 
 }
 
+.left {
+  width: 400px;
+  float: left;
+  text-align: right;
+}
+
+.right {
+  width: 400px;
+  float: right;
+  text-align: left;
+}
+
+.left, .right {
+  @media screen and (max-width: $desktopwidth) {
+    float: none;
+    margin: 10px auto 20px;
+    text-align: center;
+  }
+}
+
 .grouper {
-  margin: 20px 0;
+  width: 820px;
+  margin: 20px auto 2em;
   @include clearfix;
+
+  p {
+    font-size: 1.2em;
+    line-height: 1.75em;
+  }
+
+  @media screen and (max-width: $desktopwidth) {
+    width: 320px;
+    margin: 10px auto 20px;
+
+    p {
+      font-size: 1em;
+    }
+  }
 }
 
 .centered {
@@ -89,6 +139,16 @@
   font-size: 1.5em;
   text-align: center;
   line-height: 1.5em;
+}
+
+.graphic {
+  @include border-radius(5px);
+  @include clearfix;
+  @media screen and (max-width: $desktopwidth) {
+    @include border-radius(0);
+    margin-left: -45px;
+    margin-bottom: 0;
+  }
 }
 
 @include keyframes(atlas) {
@@ -108,7 +168,7 @@
   position: relative;
   width: 400px;
   height: 400px;
-  background: asset-url("home/capture-atlas.png", image) 33px 169px no-repeat;
+  background: $grayDark asset-url("home/capture-atlas.png", image) 33px 169px no-repeat;
   @include animation(atlas 1.5s ease-out infinite);
 
   .camera {
@@ -127,8 +187,38 @@
   }
 }
 
-img.animated {
-  @include border-radius(5px);
+@include keyframes(sheet) {
+  0% {
+    @include transform(rotate(0deg) scale(1));
+  }
+  30% {
+    @include transform(rotate(-57deg) scale(.38));
+  }
+  100% {
+    @include transform(rotate(-57deg) scale(.38));
+  }
+}
+
+#rectify-graphic {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  background: asset-url("home/rectify-mapbox.gif", image) no-repeat;
+  @include clearfix;
+
+  .sheet {
+    position: absolute;
+    width: 632px;
+    height: 335px;
+    background: asset-url("home/rectify-sheet.jpg", image) no-repeat;
+    left: -118px;
+    top: 34px;
+    @include animation(sheet 3s ease-out infinite);
+  }
+}
+
+#vectorize-graphic {
+  background: asset-url("home/vectorize.jpg", image) no-repeat;
 }
 
 #link-explained-get-started {

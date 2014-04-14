@@ -195,8 +195,8 @@ a, a:link, a:visited, a:hover {
     max-width: $desktopwidth/2;
 
     @media screen and (max-width: $desktopwidth) {
-      font-size: .9em;
-      line-height: 1.1em;
+      font-size: 1em;
+      line-height: 1.5em;
     }
   }
 
