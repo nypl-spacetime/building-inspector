@@ -3,7 +3,8 @@ class Color extends Inspector
   constructor: (options) ->
     options =
       draggableMap: true
-      tutorialData: options.tutorialData
+      tutorialType:"video"
+      tutorialURL: "//player.vimeo.com/video/91450313?title=0&amp;byline=0&amp;portrait=0"
       jsdataID: '#colorjs'
       task: 'color'
     super(options)
@@ -185,89 +186,5 @@ class Color extends Inspector
     @isMultiple = false
 
 $ ->
-  tutorialData =
-    poly: {"bbox":"","poly":[{"geometry":"[[[-74.00041350010514,40.71075562555572],[-74.00043872602114,40.71075592407098],[-74.00048694656115,40.710770708149596],[-74.00047200899458,40.71080599090039],[-74.00046220038438,40.71081096505221],[-74.00039862451166,40.710806677548995],[-74.00040432704478,40.71075686842555],[-74.00041350010514,40.71075562555572]]]"},{"geometry":"[[[-74.00167200309124,40.71217269958505],[-74.0017258228943,40.712199501394686],[-74.00173324631541,40.71228721633261],[-74.00167200309124,40.71229939895374],[-74.00166272381486,40.71229696242969],[-74.0016590121043,40.71217026305637],[-74.00167200309124,40.71217269958505]]]"},{"geometry":"[[[-74.00135954224791,40.7125011782237],[-74.00137599394264,40.712499214667965],[-74.00137898515986,40.71250314177939],[-74.00139992368044,40.71257775685259],[-74.00135355981347,40.71258757461915],[-74.00134009933595,40.712585611065954],[-74.00131616959817,40.712510996001555],[-74.00135954224791,40.7125011782237]]]"},{"geometry":"[[[-74.0000234701769,40.71199907242701],[-74.00013810701674,40.711987685193925],[-74.00015280130634,40.712046702932405],[-73.9999729442663,40.71207190599898],[-73.99996075420003,40.71200759850303],[-74.0000234701769,40.71199907242701]]]"},{"geometry":"[[[-73.99899076635921,40.70993809970345],[-73.99902012445038,40.70993381690824],[-73.99902991048079,40.70993809970345],[-73.99904622053143,40.71013082520275],[-73.9990429585213,40.710237894683566],[-73.99899076635921,40.71024646023459],[-73.99896793228832,40.71015652189385],[-73.99894836022754,40.70995094808743],[-73.99896140826806,40.70994238249839],[-73.99899076635921,40.70993809970345]]]"},{"geometry":"[[[-74.00128923343982,40.71251542043633],[-74.00130989628322,40.71251115645181],[-74.0013120422146,40.712514492440526],[-74.00133460777533,40.71258861516279],[-74.00127294340406,40.7125998237558],[-74.00124824858894,40.71252506140648],[-74.00128923343982,40.71251542043633]]]"}]}
-    steps: [
-            {
-              element: "#map-highlight"
-              intro: " <strong>Here's how the app works.</strong> <br /> We'll show you one highlighted polygon at a time - and you tell us what color it is. <strong> Easy Right? </strong> <br /> <br /> But why do we want to know?"
-              position: "left"
-              polygon_index: -1
-            }
-            {
-              element: "#map-highlight"
-              intro: "The color of the building footprint tells us what it was made of and what it was used for. You can help us recreate the New York City of the past by telling us what these structures were. <br / > <br /> We compile everything you tell us and make all the information available to anyone who wants it!"
-              position: "right"
-              polygon_index: -1
-            }
-            {
-              element: "#pink-button"
-              intro: "All you have to do is examine the highlighted footprint and click the color that it matches. <br /> <br /> Pink means it was a brick or stone residential building. Click the pink button and move on!"
-              position: "top"
-              polygon_index: -1
-              ixactive: true
-            }
-            {
-              element: "#blue-button"
-              intro: "Baby blue would have been commercial space, like a dry goods or grocery store."
-              position: "right"
-              polygon_index: 0
-              ixactive: true
-            }
-            {
-              element: "#map-highlight"
-              intro: "Yikes! Green meant \"hazardous!\" Could have been  slaughterhouse or some sort of refinery. <br /> <br /> Sometimes it's hard to tell between green and yellow - like this guy and his neighbor. "
-              position: "left"
-              polygon_index: 1
-            }
-            {
-            element: "#green-button"
-            intro: "In the app, you can drag the page down over the buttons - which are made from actual parts of the map - to see what the best match is."
-            position: "right"
-            polygon_index: 1
-            ixactive: true
-            }
-            {
-            element: "#map-highlight"
-            intro: "If a footprint has more than one color, it could have been a mixed-use building or been made of different materials."
-            position: "right"
-            polygon_index: 2
-            }
-            {
-            element: " #buttons .multiple"
-            intro: " Click this check box and you'll be able to select multiple colors."
-            position: "top"
-            polygon_index: 2
-            }
-            {
-              element: "#lower-controls"
-              intro: "A little pink, a little green - and voila! Save your masterpiece and go to the next one!"
-              position: "right"
-              polygon_index: 2
-              ixactive: true
-              multipleactive: true
-            }
-            {
-              element: "#buttons .multiple"
-              intro: "Another multi-color. Remember to click the box."
-              position: "top"
-              polygon_index: 3
-            }
-            {
-              element: "#lower-controls"
-              intro: "Yellow means a frame house. This must have been an addition or renovation on the brick part. "
-              position: "top"
-              polygon_index: 3
-              ixactive: true
-              multipleactive: true
-            }
-            {
-              element: "#lower-controls"
-              intro: "Okay, you get the idea - now color away! And thanks for helping NYPL!"
-              position: "right"
-              polygon_index: 4
-              ixactive: true
-            }
-        ]
-  new Color({tutorialData:tutorialData})
+  new Color()
 

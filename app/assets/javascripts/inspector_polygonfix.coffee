@@ -3,7 +3,7 @@ class Polygonfix extends Inspector
   constructor: (options) ->
     options =
       tutorialType:"video"
-      tutorialURL: "//player.vimeo.com/video/91014756?title=0&amp;byline=0&amp;portrait=0"
+      tutorialURL: "//player.vimeo.com/video/91019591?title=0&amp;byline=0&amp;portrait=0"
       editablePolygon: true
       draggableMap: true
       constrainMapToPolygon: false

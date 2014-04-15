@@ -36,6 +36,10 @@
     margin-right: auto;
     color: $grayDarkest;
     text-align: center;
+
+    @media screen and (max-width: $desktopwidth) {
+      width: auto;
+    }
   }
 
   h3 {
@@ -80,13 +84,13 @@
     @media screen and (max-width: $desktopwidth) {
       margin: 0 20px 1em;
       padding: 0;
-      width: 280px;
     }
   }
 
   p {
     @media screen and (max-width: $desktopwidth) {
       line-height: 1.5em;
+      width: 280px;
     }
   }
 

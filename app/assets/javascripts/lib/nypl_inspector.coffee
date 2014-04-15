@@ -176,10 +176,11 @@ class @Inspector
       )
 
   showSpinner: () ->
-    $("#controls .wrapper").append(Utils.spinner().el)
+    @hideSpinner()
+    $("#controls").prepend(Utils.spinner().el)
 
   hideSpinner: () ->
-    $("#controls .wrapper .spinner").remove()
+    $("#controls .spinner").remove()
 
   updateScore: () ->
     if @allPolygonsSession == 0

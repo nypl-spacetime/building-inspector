@@ -7,8 +7,8 @@ class FixerController < ApplicationController
 
 	def geometry
 	  @current_page = "fixer"
-		@isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
-		cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
+		@isNew = (cookies[:geometry_first_visit]!="no" || params[:tutorial]=="true") ? true : false
+		cookies[:geometry_first_visit] = { :value => "no", :expires => 15.days.from_now }
 		@map = getMap("geometry").to_json
 	end
 
@@ -91,8 +91,8 @@ class FixerController < ApplicationController
 	def address
 		@current_page = "address"
 		sort_tasks()
-		@isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
-		cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
+		@isNew = (cookies[:address_first_visit]!="no" || params[:tutorial]=="true") ? true : false
+		cookies[:address_first_visit] = { :value => "no", :expires => 15.days.from_now }
 		@map = getMap("address").to_json
 	end
 
@@ -142,8 +142,8 @@ class FixerController < ApplicationController
   def polygonfix
     @current_page = "polygonfix"
     sort_tasks()
-    @isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
-    cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
+    @isNew = (cookies[:polygonfix_first_visit]!="no" || params[:tutorial]=="true") ? true : false
+    cookies[:polygonfix_first_visit] = { :value => "no", :expires => 15.days.from_now }
     @map = getMap("polygonfix").to_json
   end
 
@@ -181,8 +181,8 @@ class FixerController < ApplicationController
   def color
     @current_page = "color"
     sort_tasks()
-    @isNew = (cookies[:first_visit]!="no" || params[:tutorial]=="true") ? true : false
-    cookies[:first_visit] = { :value => "no", :expires => 15.days.from_now }
+    @isNew = (cookies[:color_first_visit]!="no" || params[:tutorial]=="true") ? true : false
+    cookies[:color_first_visit] = { :value => "no", :expires => 15.days.from_now }
     @map = getMap("color").to_json
   end
 
