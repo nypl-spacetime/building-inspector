@@ -24,13 +24,10 @@ Webappmini::Application.routes.draw do
   get "general/win", :as => "win"
 
   # footprints
-  get "building", to: "fixer#geometry", :as => "building"
-  get "geometry", to: "fixer#geometry", :as => "geometry"
-  get "fixer/geometry"
-  get "fixer/progress", to: "fixer#progress_geometry", :as => "building_progress"
-  get "fixer/progress_all", to: "fixer#progress_geometry_all", :as => "building_progress_all"
-  get "geometry/progress", to: "fixer#progress_geometry", :as => "geometry_progress"
-  get "geometry/progress_all", to: "fixer#progress_geometry_all", :as => "geometry_progress_all"
+  # this uses a different route as the task name for user friendliness purposes
+  get "footprint", to: "fixer#geometry", :as => "geometry"
+  get "footprint/progress", to: "fixer#progress_geometry", :as => "geometry_progress"
+  get "footprint/progress_all", to: "fixer#progress_geometry_all", :as => "geometry_progress_all"
 
   # footprints progress json endpoints
   get "geometry/progress_user", to: "fixer#session_progress_geometry_for_sheet"
@@ -46,8 +43,9 @@ Webappmini::Application.routes.draw do
   # TODO: progrees for sheet (requires consensus)
 
   # polygonfix
-  get "polygonfix", to: "fixer#polygonfix", :as => "polygons"
-  get "polygonfix/progress", to: "fixer#progress_polygonfix", :as => "polygonfix_progress"
+  # this uses a different route as the task name for user friendliness purposes
+  get "fix", to: "fixer#polygonfix", :as => "polygonfix"
+  get "fix/progress", to: "fixer#progress_polygonfix", :as => "polygonfix_progress"
 
   # polygonfix progress json endpoints
   get "polygonfix/progress_user", to: "fixer#session_progress_polygonfix_for_sheet"

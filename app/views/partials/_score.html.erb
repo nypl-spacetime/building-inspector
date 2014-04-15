@@ -4,7 +4,7 @@
     <div class="popup-wrapper">
       <%= link_to "VIEW ", "javascript:;", :id => "link-view-inspections", :rel=>"nofollow" %>
       <div id="score-progress" class="popup progress">
-      <% if @current_page=="progress" || @current_page=="progress_all" || @current_page=="fixer" %>
+      <% if @current_page=="progress" || @current_page=="progress_all" || @current_page=="geometry" %>
         <%= link_to "MY INSPECTIONS", geometry_progress_path, :class => (@current_page=="progress" ? "popup-link active" : "popup-link") %>
         <%= link_to "ALL INSPECTIONS", geometry_progress_all_path, :class => (@current_page=="progress_all" ? "popup-link active" : "popup-link") %>
       <% elsif @current_page=="progress_address" || @current_page=="progress_address_all" || @current_page=="address" %>

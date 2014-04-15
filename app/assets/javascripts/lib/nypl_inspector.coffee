@@ -73,7 +73,7 @@ class @Inspector
 
     inspector = @
 
-    history.replaceState("fixer","",@options.task)
+    # history.replaceState({},"",@options.task)
 
     @options.tutorialOn = $(@options.jsdataID).data("session")
 
@@ -389,7 +389,7 @@ class @Inspector
         color: '#b00'
         weight: 3
         opacity: 0.5
-        # dashArray: '1,16'
+        dashArray: '4,16'
         fill: false
         #   clickable: false
       )

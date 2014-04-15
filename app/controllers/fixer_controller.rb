@@ -6,7 +6,7 @@ class FixerController < ApplicationController
   # GEOMETRY
 
 	def geometry
-	  @current_page = "fixer"
+	  @current_page = "geometry"
 		@isNew = (cookies[:geometry_first_visit]!="no" || params[:tutorial]=="true") ? true : false
 		cookies[:geometry_first_visit] = { :value => "no", :expires => 15.days.from_now }
 		@map = getMap("geometry").to_json
