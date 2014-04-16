@@ -29,6 +29,10 @@ class GeneralController < ApplicationController
     render :template => "shared/404"
   end
 
+  def home_explained
+    render :partial => "partials/home-explained"
+  end
+
   def about
     @current_page = "homepage"
   end

@@ -7,6 +7,18 @@ class Home
         duration: 400
       )
     )
+    @setWaypoints()
+
+  setWaypoints: () ->
+    $("#intro").waypoint( (direction)->
+      $("#intro").waypoint('destroy')
+      $.get('/general/home_explained', (data) ->
+        d = $(data)
+        $("#waypoint").append(d)
+        .hide()
+        .fadeIn(1000)
+      )
+    )
 
 $ ->
   new Home()
