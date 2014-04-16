@@ -1,9 +1,9 @@
 @import "lib/css3-mixins";
 @import "lib/button-mixins";
-@import "compass/utilities/general/clearfix";
 @import "variables";
-@import "compass/css3/transform";
 @import "compass";
+@import "compass/css3/transform";
+@import "compass/utilities/general/clearfix";
 @import "animate";
 @import "partials/home-explained";
 
@@ -34,6 +34,7 @@
   dl {
     padding: 0 10px 0 40px;
     max-width: 480px;
+    color: $grayDarker;
   }
 
   dt {
@@ -49,6 +50,21 @@
 #intro {
 
   padding-bottom: 50px;
+
+  h3.major {
+    width: auto;
+    max-width: none;
+    color: $grayDarkest;
+    text-align: center;
+    margin: 2em 0;
+    font-size: 3em;
+    font-weight: normal;
+
+    @media screen and (max-width: $desktopwidth) {
+      font-size: 20px;
+      line-height: 20px;
+    }
+  }
 
   @media screen and (max-width: $desktopwidth) {
     width: auto;
@@ -70,6 +86,7 @@ $welcomecolor: #23190D;
   background: $welcomecolor;
   color: $white;
   font-size: 1.1em;
+  @include box-shadow(0 -280px 110px -135px $grayLightest inset);
 
   @media screen and (max-width: $desktopwidth) {
     font-size: 0.7em;
@@ -83,6 +100,7 @@ $welcomecolor: #23190D;
     background-attachment: fixed;
     background-position: 50% 0px;
     @include box-shadow(-40px 0px 20px -30px $welcomecolor inset, 40px 0px 20px -30px $welcomecolor inset);
+    @include box-shadow(0 -280px 110px -135px $grayLightest inset);
     @include clearfix;
 
     @media screen and (max-width: $desktopwidth) {
@@ -137,7 +155,7 @@ $welcomecolor: #23190D;
 #link-learn-more {
   display: block;
   width: 220px;
-  margin: 40px auto 40px;
+  margin: 70px auto 35px;
   padding: 15px 0px;
   background: $red;
   color: $white;
@@ -164,7 +182,7 @@ $welcomecolor: #23190D;
 #home-scores {
   font-size: 1em;
   line-height: 1em;
-  margin: 2em 0;
+  margin: 6em 0;
   @include clearfix;
 
   h3 {
@@ -172,6 +190,7 @@ $welcomecolor: #23190D;
     max-width: none;
     color: $grayDarkest;
     text-align: center;
+    font-weight: normal;
   }
 
   ul {

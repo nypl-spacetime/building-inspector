@@ -1,14 +1,14 @@
 @import "lib/css3-mixins";
 @import "lib/button-mixins";
-@import "compass/utilities/general/clearfix";
 @import "variables";
-@import "compass/css3/transform";
 @import "compass";
+@import "compass/css3/transform";
+@import "compass/utilities/general/clearfix";
 @import "animate";
 
 #home-explained {
   .header {
-    padding-top: 110px;
+    padding-top: 160px;
     @include clearfix;
 
     h3, h4 {
@@ -27,7 +27,13 @@
   .first {
     background: asset-url("home/explained-1.jpg", image);
     text-align: center;
-    height: 200px;
+    height: 300px;
+    background-size: cover;
+    @include box-shadow(0 230px 110px -100px $grayLightest inset);
+
+    @media screen and (max-width: $desktopwidth) {
+      height: 200px;
+    }
   }
 
   h3, h4, h5 {
@@ -88,6 +94,7 @@
   }
 
   p {
+    color: $grayDark;
     @media screen and (max-width: $desktopwidth) {
       line-height: 1.5em;
       width: 280px;

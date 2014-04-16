@@ -13,8 +13,8 @@ html {
 body {
   font-family: $mainfont;
   font-size: $baseFontSize;
-  background: $gray;
-  color: $grayDarker;
+  background: $grayLight;
+  color: $gray;
 }
 
 div {
@@ -190,6 +190,10 @@ a, a:link, a:visited, a:hover {
   background: $grayLightest;
   @include clearfix;
 
+  h1, h2, h3, h4, h5, h6 {
+    color: $grayDarkest;
+  }
+
   h1, h2, h3, h4, h5, h6, p {
     padding: 0 10px 0 20px;
     max-width: $desktopwidth/2;
@@ -217,7 +221,7 @@ a, a:link, a:visited, a:hover {
 .about {
   p {
     text-align: left;
-    color: $grayDarkest;
+    color: $grayDarker;
   }
 }
 
