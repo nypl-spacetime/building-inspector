@@ -15,6 +15,7 @@ class General
 
 
     overrides = [
+      ".link-task"
       ".slide a"
       ".popup-link"
       "#home-logo"

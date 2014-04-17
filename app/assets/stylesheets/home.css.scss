@@ -220,8 +220,10 @@ $welcomecolor: #23190D;
     text-align: center;
     font-size: 1.25em;
     line-height: 1.25em;
+
     @media screen and (max-width: $desktopwidth) {
       width: 49%;
+      height: 120px;
       margin-bottom: 20px;
       font-size: 1em;
       line-height: 1em;

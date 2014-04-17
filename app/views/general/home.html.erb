@@ -97,18 +97,16 @@
     <% if @has_score %>
     <div id="home-scores">
         <h3>Your inspections so far</h3>
-        <p>
-          <ul>
-            <li><%= link_to(image_tag("icon-geometry.svg", :class=>"task-icon"), geometry_path, :class=>"link-task") %> <strong><%= @score_geometry %></strong> footprints checked
-              <br /><%= link_to("Inspect more!", geometry_path, :class=>"link-task") %></li>
-            <li><%= link_to(image_tag("icon-polygonfix.svg", :class=>"task-icon"), polygonfix_path, :class=>"link-task") %> <strong><%= @score_polygonfix %></strong> footprints fixed
-              <br /><%= link_to("Inspect more!", polygonfix_path, :class=>"link-task") %></li>
-            <li><%= link_to(image_tag("icon-address.svg", :class=>"task-icon"), address_path, :class=>"link-task") %> <strong><%= @score_address %></strong> buildings addressed
-              <br /><%= link_to("Inspect more!", address_path, :class=>"link-task") %></li>
-            <li><%= link_to(image_tag("icon-color.svg", :class=>"task-icon"), color_path, :class=>"link-task") %> <strong><%= @score_color %></strong> color IDs
-              <br /><%= link_to("Inspect more!", color_path, :class=>"link-task") %></li>
-          </ul>
-        </p>
+        <ul>
+          <li><%= link_to(image_tag("icon-geometry.svg", :class=>"task-icon"), geometry_path, :class=>"link-task") %> <strong><%= @score_geometry %></strong> footprints checked
+            <br /><%= link_to("Inspect more!", geometry_path, :class=>"link-task") %></li>
+          <li><%= link_to(image_tag("icon-polygonfix.svg", :class=>"task-icon"), polygonfix_path, :class=>"link-task") %> <strong><%= @score_polygonfix %></strong> footprints fixed
+            <br /><%= link_to("Inspect more!", polygonfix_path, :class=>"link-task") %></li>
+          <li><%= link_to(image_tag("icon-address.svg", :class=>"task-icon"), address_path, :class=>"link-task") %> <strong><%= @score_address %></strong> buildings addressed
+            <br /><%= link_to("Inspect more!", address_path, :class=>"link-task") %></li>
+          <li><%= link_to(image_tag("icon-color.svg", :class=>"task-icon"), color_path, :class=>"link-task") %> <strong><%= @score_color %></strong> color IDs
+            <br /><%= link_to("Inspect more!", color_path, :class=>"link-task") %></li>
+        </ul>
     </div>
     <% end %>
     <div id="waypoint"></div>
