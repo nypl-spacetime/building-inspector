@@ -97,7 +97,7 @@
     color: $grayDark;
     @media screen and (max-width: $desktopwidth) {
       line-height: 1.5em;
-      width: 280px;
+      // width: 280px;
     }
   }
 
@@ -120,6 +120,7 @@
     float: none;
     margin: 10px auto 20px;
     text-align: center;
+    width: auto;
   }
 }
 
@@ -150,6 +151,10 @@
   font-size: 1.5em;
   text-align: center;
   line-height: 1.5em;
+
+  @media screen and (max-width: $desktopwidth) {
+    width: auto;
+  }
 }
 
 .graphic {

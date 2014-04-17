@@ -196,7 +196,7 @@ a, a:link, a:visited, a:hover {
 
   h1, h2, h3, h4, h5, h6, p {
     padding: 0 10px 0 20px;
-    max-width: $desktopwidth/2;
+    // max-width: $desktopwidth/2;
 
     @media screen and (max-width: $desktopwidth) {
       font-size: 1em;

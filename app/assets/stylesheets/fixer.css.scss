@@ -408,7 +408,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 }
 
 #tutorial-video-wrapper {
-  margin: 100px auto 0;
+  margin: 40px auto 0;
   width: 600px;
   position: relative;
 
@@ -428,6 +428,23 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     &:before {
       color: $grayLightest;
     }
+  }
+}
+
+#tutorial-header {
+  text-align: center;
+  color: white;
+  font-size: 1.4em;
+  width: 70%;
+  margin: 20px auto;
+
+  @media screen and (max-width: $desktopwidth) {
+    position: absolute;
+    left: 0;
+    top: -55px;
+    width: 85%;
+    font-size: 1em;
+    line-height: 1.2em;
   }
 }
 

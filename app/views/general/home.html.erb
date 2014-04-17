@@ -37,7 +37,7 @@
           </svg>
         </li>
         <li id="slide3" class="slide">
-          <%= link_to "", polygons_path, {:id => "slide-polygonfix"} %>
+          <%= link_to "", polygonfix_path, {:id => "slide-polygonfix"} %>
           <div class="wrap">
             <div id="slide3-a" class="marker"></div>
             <div id="slide3-b" class="marker"></div>
@@ -85,7 +85,7 @@
       </ul>
       <div id="slide-buttons">
         <%= link_to "CHECK FOOTPRINTS", geometry_path, {:id => "link-geometry", :class => "home-link"} %>
-        <%= link_to "FIX FOOTPRINTS", polygons_path, {:id => "link-polygonfix", :class => "home-link"} %>
+        <%= link_to "FIX FOOTPRINTS", polygonfix_path, {:id => "link-polygonfix", :class => "home-link"} %>
         <%= link_to "ENTER ADDRESSES", address_path, {:id => "link-address", :class => "home-link"} %>
         <%= link_to "CLASSIFY COLORS", color_path, {:id => "link-color", :class => "home-link"} %>
       </div>
@@ -99,14 +99,14 @@
         <h3>Your inspections so far</h3>
         <p>
           <ul>
-            <li><%= link_to(image_tag("icon-geometry.svg", :class=>"task-icon"), geometry_path) %> <strong><%= @score_geometry %></strong> footprints checked
-              <br /><%= link_to("Inspect more!", geometry_path) %></li>
-            <li><%= link_to(image_tag("icon-polygonfix.svg", :class=>"task-icon"), polygons_path) %> <strong><%= @score_polygonfix %></strong> footprints fixed
-              <br /><%= link_to("Inspect more!", polygons_path) %></li>
-            <li><%= link_to(image_tag("icon-address.svg", :class=>"task-icon"), address_path) %> <strong><%= @score_address %></strong> buildings addressed
-              <br /><%= link_to("Inspect more!", address_path) %></li>
-            <li><%= link_to(image_tag("icon-color.svg", :class=>"task-icon"), color_path) %> <strong><%= @score_color %></strong> color IDs
-              <br /><%= link_to("Inspect more!", color_path) %></li>
+            <li><%= link_to(image_tag("icon-geometry.svg", :class=>"task-icon"), geometry_path, :class=>"link-task") %> <strong><%= @score_geometry %></strong> footprints checked
+              <br /><%= link_to("Inspect more!", geometry_path, :class=>"link-task") %></li>
+            <li><%= link_to(image_tag("icon-polygonfix.svg", :class=>"task-icon"), polygonfix_path, :class=>"link-task") %> <strong><%= @score_polygonfix %></strong> footprints fixed
+              <br /><%= link_to("Inspect more!", polygonfix_path, :class=>"link-task") %></li>
+            <li><%= link_to(image_tag("icon-address.svg", :class=>"task-icon"), address_path, :class=>"link-task") %> <strong><%= @score_address %></strong> buildings addressed
+              <br /><%= link_to("Inspect more!", address_path, :class=>"link-task") %></li>
+            <li><%= link_to(image_tag("icon-color.svg", :class=>"task-icon"), color_path, :class=>"link-task") %> <strong><%= @score_color %></strong> color IDs
+              <br /><%= link_to("Inspect more!", color_path, :class=>"link-task") %></li>
           </ul>
         </p>
     </div>
