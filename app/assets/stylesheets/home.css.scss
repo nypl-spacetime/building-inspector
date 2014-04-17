@@ -10,6 +10,7 @@
 #main-container {
   // background: url(/assets/pattern.svg) $grayLight -50px 120px;
   // background-size: 40%;
+  background: $grayLightest;
 
   em {
     font-weight: normal;
@@ -47,6 +48,17 @@
 
 }
 
+.subhead {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.5em;
+  text-align: center;
+  line-height: 1.5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
 #intro {
 
   padding-bottom: 50px;
@@ -56,7 +68,7 @@
     max-width: none;
     color: $grayDarkest;
     text-align: center;
-    margin: 2em 0;
+    margin: 2em 0 1em;
     font-size: 3em;
     font-weight: normal;
 
@@ -86,7 +98,7 @@ $welcomecolor: #23190D;
   background: $welcomecolor;
   color: $white;
   font-size: 1.1em;
-  @include box-shadow(0 -280px 110px -135px $grayLightest inset);
+  // @include box-shadow(0 -280px 110px -135px $grayLightest inset);
 
   @media screen and (max-width: $desktopwidth) {
     font-size: 0.7em;
@@ -100,7 +112,7 @@ $welcomecolor: #23190D;
     background-attachment: fixed;
     background-position: 50% 0px;
     @include box-shadow(-40px 0px 20px -30px $welcomecolor inset, 40px 0px 20px -30px $welcomecolor inset);
-    @include box-shadow(0 -280px 110px -135px $grayLightest inset);
+    // @include box-shadow(0 -280px 110px -135px $grayLightest inset);
     @include clearfix;
 
     @media screen and (max-width: $desktopwidth) {
@@ -152,15 +164,16 @@ $welcomecolor: #23190D;
 
 }
 
-#link-learn-more {
+.big-button {
   display: block;
   width: 220px;
   margin: 70px auto 35px;
   padding: 15px 0px;
   background: $red;
-  color: $white;
+  color: $white !important;
   font-size: 1.5em;
   line-height: normal;
+  text-align: center;
 
   @include border-radius(5px);
   @include transition(background-color, .2s);
@@ -168,6 +181,10 @@ $welcomecolor: #23190D;
   &:hover {
     background: $green;
   }
+}
+
+#link-random-task {
+  margin-top: 0;
 }
 
 #home-slideshow {

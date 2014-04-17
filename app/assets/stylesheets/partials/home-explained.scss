@@ -29,7 +29,7 @@
     text-align: center;
     height: 300px;
     background-size: cover;
-    @include box-shadow(0 230px 110px -100px $grayLightest inset);
+    // @include box-shadow(0 230px 110px -100px $grayLightest inset);
 
     @media screen and (max-width: $desktopwidth) {
       height: 200px;
@@ -230,25 +230,6 @@
 
 #vectorize-graphic {
   background: asset-url("home/vectorize.jpg", image) no-repeat;
-}
-
-#link-explained-get-started {
-  display: block;
-  width: 220px;
-  margin: 40px auto 40px;
-  padding: 15px 0px;
-  background: $red;
-  color: $white !important;
-  font-size: 1.5em;
-  line-height: normal;
-  text-align: center;
-
-  @include border-radius(5px);
-  @include transition(background-color, .2s);
-
-  &:hover {
-    background: $green;
-  }
 }
 
 

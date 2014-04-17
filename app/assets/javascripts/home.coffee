@@ -1,16 +1,15 @@
 class Home
 
   constructor: () ->
+    h = @
     $(".learn-more").click( ()->
-      $.scrollTo("#home-slideshow",
-        easing:   "swing"
-        duration: 400
-      )
+      h.getStarted()
     )
     @setWaypoints()
     @activateSlideshow()
 
   setWaypoints: () ->
+    h = @
     $("#link-learn-more").waypoint( (direction)->
       $("#link-learn-more").waypoint('destroy')
       $.get('/general/home_explained', (data) ->
@@ -19,12 +18,15 @@ class Home
         .hide()
         .fadeIn(1000)
         $("#waypoint .learn-more").click( ()->
-          $.scrollTo("#home-slideshow",
-            easing:   "swing"
-            duration: 400
-          )
+          h.getStarted()
         )
       )
+    )
+
+  getStarted: () ->
+    $.scrollTo("#intro",
+      easing:   "swing"
+      duration: 400
     )
 
   activateSlideshow: () ->

@@ -13,12 +13,13 @@
       <h3>Building Inspector</h3>
       <h4>Kill Time. Make History.</h4>
       <hr />
-      <p>Welcome citizen cartographers!<br />The Library wants to make New York City history fully discoverable on the web, opening our vast collections to anyone who wishes to study, teach, or hack the city's past. To tie it all together, we need your help identifying building footprints and other information from old maps. We've trained computers to do some of the heavy lifting and have designed simple data-cleaning tasks for you to take us the rest of the way.</p>
-      <%= link_to "GET STARTED", "javascript:;", :id => "link-learn-more", :class => "learn-more" %>
+      <p>Welcome citizen cartographers!<br />The Library is working to make New York City's history discoverable, teachable, and hackable for everyone on the Internet. To do this, we need your help to identify details from old maps. We've trained computers to do some of the heavy lifting and have designed some simple tasks for you to take us the rest of the way.</p>
+      <%= link_to "GET STARTED", "javascript:;", :id => "link-learn-more", :class => "learn-more big-button" %>
     </div>
   </div>
   <div id="intro">
-    <h3 class="major">Here are the ways you can help:</h3>
+    <h3 class="major">HERE'S HOW YOU CAN HELP</h3>
+    <p class="subhead"><em>try any task you like, see which one(s) you like best</em></p>
     <div id="home-slideshow" class="swipeshow">
       <ul class="slides">
         <li id="slide1" class="slide">
@@ -89,18 +90,22 @@
         <%= link_to "CLASSIFY COLORS", color_path, {:id => "link-color", :class => "home-link"} %>
       </div>
     </div>
+    <div>
+      <p class="subhead">or:</p>
+      <%= link_to "RANDOM TASK", "#{@global_tasks.sample[:path]}", :id => "link-random-task", :class => "big-button" %>
+    </div>
     <% if @has_score %>
     <div id="home-scores">
         <h3>Your inspections so far</h3>
         <p>
           <ul>
-            <li><%= link_to(image_tag("icon-geometry.svg", :class=>"task-icon"), geometry_path) %> <strong><%= @score_geometry %></strong> building footprints
+            <li><%= link_to(image_tag("icon-geometry.svg", :class=>"task-icon"), geometry_path) %> <strong><%= @score_geometry %></strong> footprints checked
               <br /><%= link_to("Inspect more!", geometry_path) %></li>
-            <li><%= link_to(image_tag("icon-address.svg", :class=>"task-icon"), address_path) %> <strong><%= @score_address %></strong> building addresses
-              <br /><%= link_to("Inspect more!", address_path) %></li>
-            <li><%= link_to(image_tag("icon-polygonfix.svg", :class=>"task-icon"), polygons_path) %> fixed <strong><%= @score_polygonfix %></strong> building footprints
+            <li><%= link_to(image_tag("icon-polygonfix.svg", :class=>"task-icon"), polygons_path) %> <strong><%= @score_polygonfix %></strong> footprints fixed
               <br /><%= link_to("Inspect more!", polygons_path) %></li>
-            <li><%= link_to(image_tag("icon-color.svg", :class=>"task-icon"), color_path) %> classified <strong><%= @score_color %></strong> building colors
+            <li><%= link_to(image_tag("icon-address.svg", :class=>"task-icon"), address_path) %> <strong><%= @score_address %></strong> buildings addressed
+              <br /><%= link_to("Inspect more!", address_path) %></li>
+            <li><%= link_to(image_tag("icon-color.svg", :class=>"task-icon"), color_path) %> classified <strong><%= @score_color %></strong> color IDs
               <br /><%= link_to("Inspect more!", color_path) %></li>
           </ul>
         </p>
