@@ -1,12 +1,16 @@
 <div id="home-explained">
-  <h3 class="major">How does it all work?</h3>
+  <h3 class="major">WHAT'S THE BIG IDEA?</h3>
+  <p class="subhead">Imagine if the maps you use on your computer or smartphone today had a magic switch that let you explore the geography of the past.</p>
+  <p>The Library wants to make that possible for New York City, using its vast collections to let you dive into history at the street level. Digitizing maps is the first step. But taking pictures of old atlases doesn't immediately give us access to all the rich detail those maps contain. Things like: building footprints, addresses, property types (residential vs. commercial), construction materials, street names, and the routes those streets took. All the data is there but it's locked inside shapes, patterns, and texts that require human eyes to decipher. So we've rolled up our sleeves and are working to set the information free.</p>
+  <p class="centered">Why?</p>
+  <p>Because with that information organized and searchable, we can ask new kinds of questions about history. It will allow our interfaces to drop pins accurately on digital maps when you search for a forgotten place. It will allow you to explore a city's past on foot with your mobile device, 'checking in' to ghostly establishments (Empire State Building, meet Waldorf-Astoria Hotel). And it will allow us to link other historical documents to those places: archival records, old newspapers, business directories, photographs, restaurant menus, theater playbills etc., opening up new ways to research, learn, and discover the past.</p>
+  <p class="centered">So how do we do this?</p>
   <div class="header first">
     <h3>It all starts with atlases</h3>
-    <h4>The NYPL’s <%= link_to "Lionel Pincus & Princess Firyal Map Division", "http://maps.nypl.org" %> about half a million maps and 20,000 books and atlases published over the last five hundred years…</h4>
+    <h4>NYPL’s <%= link_to "Lionel Pincus & Princess Firyal Map Division", "http://maps.nypl.org" %> houses about half a million maps and 20,000 books and atlases published over the last five hundred years…</h4>
   </div>
   <div class="grouper">
-    <p class="centered">Our atlases span the globe at many scales, diverse cartographic representations of landscapes transforming across time. Dutch world atlases and pilot books mirror their 17th century global expansion, 18th century English atlases follow unfolding battles during the American Revolution and 19th century fire insurance atlases track myriad changes to the urban fabric.</p>
-    <p class="centered">The Library has, through the generosity of the IMLS and NEH, scanned more than 20,000 images of maps and atlas plates over the years. Of those, more than 10,000 images from fire insurance atlases, detail New York City as it changes.</p>
+    <p class="centered">Our atlases span the globe across time and at many scales. You can trace the Dutch empire's global expansion through 17th Century world maps and pilot books; follow the battles of the American Revolution through 18th Century English atlases; and (as in this project) track changes to New York's urban landscape through maps commissioned by 19th Century insurance companies.</p>
   </div>
   <div class="grouper">
     <h4 class="numeral">1</h4>
@@ -15,7 +19,7 @@
       <div class="camera"></div>
       <div class="flash"></div>
     </div>
-    <div class="right"><p>To make these amazing collections widely available to the public, we first scan them, i.e., capture a bunch of pixels, creating a high resolution digital copy. The maps are then optimized for deep zooming and a copy is made for safekeeping in our digital repository. They are then presented through our Digital Collections page and on the Map Warper, where they can be downloaded, in high resolution, under a <%= link_to "Creative Commons CC0 Creative Commons 1.0 Universal Public Domain Dedication", "http://creativecommons.org/publicdomain/zero/1.0/" %> and queued up for further transformation, like warping and tracing.</p></div>
+    <div class="right"><p>First we create a high-resolution digital image of the original paper map. We make copies of the image and store them for safekeeping in our digital repository. The maps are then formatted for deep zooming and are presented to the public via our <a href="http://digitalcollections.nypl.org">Digital Collections</a> and <a href="http://maps.nypl.org">Map Warper</a> websites, where they can be downloaded in high resolution and queued up for further transformation.</p></div>
   </div>
   <div class="grouper">
     <h4 class="numeral">2</h4>
@@ -23,18 +27,18 @@
     <div id="rectify-graphic" class="right graphic">
       <div class="sheet"></div>
     </div>
-    <div class="left"><p>While <em>images</em> of maps are nice, but our users really want is compare <em>multiple</em> maps showing the same location. The problem is that mapmakers rarely put your study area in the same place from year to year and to boot, they use different scales, pagination schemas, and (gasp!) sometimes north is not at top. So, we borrowed and modified open source software and built the Map Warper, a tool designed to enable you to align a map, or multiple maps, to match and study locations on the planet earth.</p></div>
+    <div class="left"><p>While images of old maps are nice, what our users really want is to compare maps from different periods. The trouble is, mapmakers rarely laid things out in ways that allow us to conveniently overlay the images. Locations appear in different parts of the page from year to year. To make matters worse, cartographers used different scales, pagination schemas, and (gasp!) sometimes didn't even put north at the top of the page. So we modified open source software and built the <a href="http://maps.nypl.org">Map Warper</a>, a tool suite for library staff and public volunteers to align maps to precise latitude-longitude points on the planet Earth. This normalizes all of our map images to the same digital base map, making comparisons easy.</p></div>
   </div>
   <div class="grouper">
     <h4 class="numeral">3</h4>
     <h3>Vectorize</h3>
     <div id="vectorize-graphic" class="left graphic"><%= image_tag "home/vectorize.gif", :class => "animated" %></div>
-    <div class="right"><p>But what if you were looking a place whose name has changed, or if you were studying numerous (many) places on maps and as “machine readable data”, or if you were a library hoping to use old maps to help identify and organize other information - like newspaper articles, photos, menus or theater playbills - about those same places. To unlock this potential, we first need to digitally trace the warped maps, i.e. turn pixels (rasters) into lines (vectors). This type of reverse engineering, the conversion of paper maps into data, is highly laborious, so we have been training computers to take a first pass, building on existing open source computer vision and statistical analysis software. Our digital colleagues help us identify geographic features, but we need to inspect their work, and leave the higher end assignments to people (hopefully you!), as a series of fun, bite-sized tasks designed to tell us more about old places.</p></div>
+    <div class="right"><p>Next up is identifying specific features from the maps. This involves identifying shapes (most commonly, building footprints) and converting them into <a href="http://en.wikipedia.org/wiki/Vector_graphics">vector graphics</a>. This is fancy talk for a different way of handling images on computers. It treats them not as grids of pixels (called <a href="http://en.wikipedia.org/wiki/Raster_graphics">raster graphics</a>), but as geometry (points and lines). Vector data is lighter weight and therefore faster to manipulate on a computer (think scaling up and down). Staff and volunteers have been working to trace building shapes by hand but the work is time-consuming (and, frankly, pretty dull). So to get through these mountains of data, we're training computers to do a first pass on the maps, 'automagically' recognizing building footprints and other features. It works pretty darn well, but as with most image processing techniques, it's not perfect. Enter: you!</p></div>
   </div>
   <div class="grouper">
     <h4 class="numeral">4</h4>
     <h3>Inspect!</h3>
-    <p class="centered">some moar text</p>
+    <p class="centered">In the age of the Internet, we see no reason why a public library can't be built collaboratively like Wikipedia or an open source software project. So we're asking your help to build a resource that is free and open to all. The computers have done an initial sweep, doing their best to identify building footprints and other data. Next comes quality control, which we've broken it up into bite-sized tasks involving the pattern recognition and contextual thinking skills that human beings excel at. We've taken care to design these tasks to be intuitive, fun, and to make the best possible use of your time and effort (we recommend checking out the tutorials first). We hope you'll <a href="mailto:buildinginspector@nypl.org">let us know</a> how we can improve. Thank you in advance for your participation!</p>
     <%= link_to "GET STARTED", "javascript:;", :id => "link-explained-get-started", :class => "learn-more big-button" %>
   </div>
 </div>
