@@ -150,7 +150,7 @@ class Polygonfix extends Inspector
     ghost.setStyle(
       color:'#fff'
       dashArray: '2,6'
-      weight: 2
+      weight: 3
     )
     ghost.addTo @map
     @flags[index].layer = ghost

@@ -388,8 +388,8 @@ class @Inspector
         # style: (feature) ->
         color: '#b00'
         weight: 3
-        opacity: 0.5
-        dashArray: '4,16'
+        opacity: 1
+        dashArray: '6,12'
         fill: false
         #   clickable: false
       )
