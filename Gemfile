@@ -15,7 +15,7 @@ gem 'compass-rails'
 
 gem 'animate'
 
-gem 'thin'
+gem 'unicorn'
 
 gem 'devise'
 
