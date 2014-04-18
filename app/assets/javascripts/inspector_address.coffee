@@ -6,7 +6,7 @@ class Address extends Inspector
     options =
       draggableMap: true
       tutorialType:"video"
-      tutorialURL: "//player.vimeo.com/video/91450313?title=0&amp;byline=0&amp;portrait=0"
+      tutorialURL: "//player.vimeo.com/video/92360461?title=0&amp;byline=0&amp;portrait=0"
       jsdataID: '#addressjs'
       task: 'address'
     super(options)
