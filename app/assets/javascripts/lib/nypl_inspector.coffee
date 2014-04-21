@@ -245,7 +245,7 @@ class @Inspector
       @polyData = Utils.clone(@_polyData)
       @currentIndex = @_currentIndex
       @showNextPolygon()
-    @showOthers()
+    # @showOthers()
     @options.tutorialOn = false
 
   parseTutorial: (e) =>

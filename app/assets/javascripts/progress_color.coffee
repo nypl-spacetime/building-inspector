@@ -5,6 +5,7 @@ class ColorProgress extends Progress
       jsdataID: '#progressjs'
       highlightClass: ".polygon-highlight"
       task: 'color'
+      tweetString: "_score_ building materials classified! Data mining old maps with Building Inspector from @NYPLMaps @nypl_labs"
       mode: $('#progressjs').data("mode")
     super(options)
 

@@ -5,6 +5,7 @@ class AddressProgress extends Progress
       jsdataID: '#progressjs'
       highlightClass: ".polygon-highlight"
       task: 'address'
+      tweetString: "_score_ addresses found! Data mining old maps with Building Inspector from @NYPLMaps @nypl_labs"
       mode: $('#progressjs').data("mode")
     super(options)
 

@@ -4,18 +4,28 @@
     <div class="popup-wrapper">
       <%= link_to "VIEW ", "javascript:;", :id => "link-view-inspections", :rel=>"nofollow" %>
       <div id="score-progress" class="popup progress">
+
       <% if @current_page=="progress" || @current_page=="progress_all" || @current_page=="geometry" %>
         <%= link_to "MY INSPECTIONS", geometry_progress_path, :class => (@current_page=="progress" ? "popup-link active" : "popup-link") %>
         <%= link_to "ALL INSPECTIONS", geometry_progress_all_path, :class => (@current_page=="progress_all" ? "popup-link active" : "popup-link") %>
+        <%= link_to "← KEEP INSPECTING", geometry_path, :class => "popup-link" unless @current_page == "geometry" %>
+
       <% elsif @current_page=="progress_address" || @current_page=="progress_address_all" || @current_page=="address" %>
-        <%= link_to "MY INSPECTIONS", address_progress_path, :class => (@current_page=="progress" ? "popup-link active" : "popup-link") %>
+        <%= link_to "MY INSPECTIONS", address_progress_path, :class => (@current_page=="progress_address" ? "popup-link active" : "popup-link") %>
         <%# link_to "ALL INSPECTIONS", address_progress_path, :class => "popup-link" %>
+        <%= link_to "← KEEP INSPECTING", address_path, :class => "popup-link" unless @current_page == "address" %>
+
       <% elsif @current_page=="progress_polygonfix" || @current_page=="progress_polygonfix_all" || @current_page=="polygonfix" %>
-        <%= link_to "MY INSPECTIONS", polygonfix_progress_path, :class => (@current_page=="progress" ? "popup-link active" : "popup-link") %>
+        <%= link_to "MY INSPECTIONS", polygonfix_progress_path, :class => (@current_page=="progress_polygonfix" ? "popup-link active" : "popup-link") %>
+        <%= link_to "← KEEP INSPECTING", polygonfix_path, :class => "popup-link" unless @current_page == "polygonfix" %>
+
       <% elsif @current_page=="progress_color" || @current_page=="progress_color_all" || @current_page=="color" %>
         <%= link_to "MY INSPECTIONS", color_progress_path, :class => (@current_page=="progress_color" ? "popup-link active" : "popup-link") %>
         <%= link_to "ALL INSPECTIONS", color_progress_all_path, :class => (@current_page=="progress_color_all" ? "popup-link active" : "popup-link") %>
+        <%= link_to "← KEEP INSPECTING", color_path, :class => "popup-link" unless @current_page == "color" %>
+
       <% else %>
+
       <% end %>
         <div class="callout"></div>
       </div>

@@ -5,6 +5,7 @@ class PolygonfixProgress extends Progress
       jsdataID: '#progressjs'
       highlightClass: ".polygon-highlight"
       task: 'polygonfix'
+      tweetString: "_score_ footprints fixed! Data mining old maps with Building Inspector from @NYPLMaps @nypl_labs"
       mode: $('#progressjs').data("mode")
     super(options)
 
