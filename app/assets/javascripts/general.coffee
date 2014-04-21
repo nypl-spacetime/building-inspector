@@ -2,10 +2,13 @@ class General
 
   constructor: () ->
     # // scroll to top (hide bar in ios)
+    h = @
+
     window.scrollTo(0, 1)
 
-    window.onresize = () =>
-      @resizeSVG()
+    $(window).on('resize', () ->
+      h.trimTitle()
+    )
 
     $("#link-nav-menu").on("click", @toggleAppMenu)
     $("#link-login").on("click", @toggleSigninPopup)
@@ -35,22 +38,11 @@ class General
     ]
     @mobileClick id for id in overrides
 
-  resizeSVG: () =>
-
-    if (window.innerWidth < 500)
+  trimTitle: () =>
+    if (window.innerWidth > 500)
       document.title = document.title.replace("Building Inspector", "Bldg Inspector")
     else
       document.title = document.title.replace("Bldg Inspector", "Building Inspector")
-
-    maxWidth = 960
-    maxHeight = 300
-    w = $("#home-slideshow").width()
-    # console.log "size:", w
-    return if !(w > 0 && w < maxWidth)
-    offset = (maxWidth - w) / 2
-    svgs = document.getElementsByClassName("intro-path");
-    for svg in svgs
-      svg.setAttribute("viewBox", "#{offset} 0 #{w} #{maxHeight}");
 
   mobileClick: (id) ->
     elem = $(id)

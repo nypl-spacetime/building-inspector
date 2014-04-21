@@ -2,9 +2,16 @@ class Home
 
   constructor: () ->
     h = @
+
+    $(window).on('resize', () ->
+      h.resizeSVG()
+    )
+
     $(".learn-more").click( ()->
       h.getStarted()
     )
+
+    @resizeSVG()
     @setWaypoints()
     @activateSlideshow()
 
@@ -28,6 +35,17 @@ class Home
       easing:   "swing"
       duration: 400
     )
+
+  resizeSVG: () =>
+    maxWidth = 960
+    maxHeight = 300
+    w = $("#home-slideshow").width()
+    # console.log "size:", w
+    return if !(w > 0 && w < maxWidth)
+    offset = (maxWidth - w) / 2
+    svgs = document.getElementsByClassName("intro-path");
+    for svg in svgs
+      svg.setAttribute("viewBox", "#{offset} 0 #{w} #{maxHeight}");
 
   activateSlideshow: () ->
     $("#home-slideshow").swipeshow(
