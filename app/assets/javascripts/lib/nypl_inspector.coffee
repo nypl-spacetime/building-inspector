@@ -50,7 +50,7 @@ class @Inspector
     @initMap()
 
   initMap: () ->
-    @map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859-final/859spec.json',
+    @map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859/859spec.json',
       zoomControl: false
       scrollWheelZoom: @options.scrollWheelZoom
       touchZoom: @options.touchZoom
