@@ -1,21 +1,24 @@
+<% soon = soon || false %>
 <div id="top-nav">
   <div class="scrollable">
     <div id="nav-branding">
       <%= link_to (content_tag "span","The New York Public Library"), "http://www.nypl.org", {:class => "nypl-logo", :title => "Visit NYPL.org"} %>
       <h1 class="logo"><a href="/" id="home-logo"><span>Building Inspector</span></a></h1>
     </div>
+    <% if !soon %>
     <%= render :partial => "partials/task-nav" %>
     <div id="service-links">
       <%= render :partial => "partials/login" %>
       <%= link_to "DATA", data_path, {:id => "link-data", :class => "icon"} %>
       <%= link_to "ABOUT", about_path, {:id => "link-about", :class => "icon"} %>
     </div>
+    <% end %>
 
     <div id="nav-credits">
       <p>A project of <%= link_to "NYPL Labs", "http://www.nypl.org/collections/labs" %> and the <%= link_to "Lionel Pincus and Princess Firyal Map Division", "http://www.nypl.org/locations/schwarzman/map-division" %>.</p>
     </div>
   </div>
-  <%= render :partial => "partials/score" unless controller_name == "general" %>
+  <%= render :partial => "partials/score" unless controller_name == "general" || soon %>
   <div id="nav-toggle">
     <%= link_to "MENU", "javascript:;", {:id => "link-nav-menu", :class => "hamburger", :title => "Toggle menu"} %>
   </div>

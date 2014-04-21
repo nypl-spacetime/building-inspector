@@ -74,5 +74,7 @@ Webappmini::Application.routes.draw do
 
   match "/404", :to => "general#not_found"
 
-  root :to => "general#home"
+  get "homenew" => "general#home"
+
+  root :to => "general#soon"
 end

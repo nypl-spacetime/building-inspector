@@ -1,0 +1,21 @@
+<% content_for :page_title do %>Building Inspector by NYPL Labs<% end %>
+<% content_for :dynamic_js do %>
+  <%= stylesheet_link_tag "home", :media => "all" %>
+  <%= javascript_include_tag "home" %>
+<% end %>
+
+<%= render :partial => "partials/nav", :locals => {soon: true} %>
+
+<div id="main-container">
+  <div id="welcome">
+    <div class="wrapper">
+      <h5>The New York Public Library presents</h5>
+      <h3>Building Inspector</h3>
+      <h4>Kill Time. Make History.</h4>
+      <hr />
+      <p>Welcome citizen cartographers!<br />The new version of the Building Inspector is coming soon. Stay tuned!</p>
+    </div>
+  </div>
+</div>
+
+<%= render :partial => "partials/footer" %>
