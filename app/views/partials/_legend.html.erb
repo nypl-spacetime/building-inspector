@@ -1,13 +1,23 @@
-	<div id="legend">
-		<% if @current_page=="progress_all" || @current_page=="progress" %>
-		<ul>
-			<li><span class="color yes"></span> Yes</li>
-			<li><span class="color no"></span> No</li>
-			<li><span class="color fix"></span> Fix</li>
-		<% if @current_page=="progress_all" %>
-			<li><span class="color nil"></span> Pending</li>
-		<% else %>
-		<% end %>
-		</ul>
-		<% end %>
-	</div>
+  <div id="legend">
+    <% if type=="progress_geometry" %>
+    <ul>
+      <li><span class="color yes"></span> Yes</li>
+      <li><span class="color no"></span> No</li>
+      <li><span class="color fix"></span> Fix</li>
+      <% if mode=="all" %>
+      <li><span class="color nil"></span> Pending</li>
+      <% end %>
+    </ul>
+    <% elsif type=="progress_color" %>
+    <ul>
+      <li><span class="color pink"></span> Pink</li>
+      <li><span class="color blue"></span> Blue</li>
+      <li><span class="color yellow"></span> Yellow</li>
+      <li><span class="color green"></span> Green</li>
+      <li><span class="color gray"></span> Gray</li>
+      <% if mode=="all" %>
+      <li><span class="color nil"></span> Pending</li>
+      <% end %>
+    </ul>
+    <% end %>
+  </div>

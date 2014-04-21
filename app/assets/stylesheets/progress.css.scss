@@ -45,6 +45,7 @@
     top: auto;
     bottom: 10px;
     left: 50px;
+    right: 50px;
   }
 
   ul {
@@ -79,6 +80,26 @@
 
     &.nil {
       background: $grayLight;
+    }
+
+    &.pink {
+      background: $pink;
+    }
+
+    &.blue {
+      background: $blue;
+    }
+
+    &.yellow {
+      background: $yellow;
+    }
+
+    &.green {
+      background: $green;
+    }
+
+    &.gray {
+      background: $gray;
     }
   }
 }
