@@ -6,6 +6,7 @@ class Geometry extends Inspector
       tutorialType:"video"
       tutorialURL: "//player.vimeo.com/video/91450313?title=0&amp;byline=0&amp;portrait=0"
       jsdataID: '#geometryjs'
+      tweetString: "_score_ checked! Data mining old maps with Building Inspector from @NYPLMaps @nypl_labs"
       task: 'geometry'
     super(options)
 

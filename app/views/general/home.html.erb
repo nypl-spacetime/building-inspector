@@ -13,13 +13,13 @@
       <h3>Building Inspector</h3>
       <h4>Kill Time. Make History.</h4>
       <hr />
-      <p>Welcome citizen cartographers!<br />The Library is working to make New York City's history discoverable, teachable, and hackable for everyone on the Internet. To do this, we need your help to identify details from old maps. We've trained computers to do some of the heavy lifting and have designed some simple tasks for you to take us the rest of the way.</p>
+      <p>Welcome citizen cartographers!<br />Help unlock New York City's past by identifying buildings and other details on beautiful old maps.</p>
       <%= link_to "GET STARTED", "javascript:;", :id => "link-learn-more", :class => "learn-more big-button" %>
     </div>
   </div>
   <div id="intro">
-    <h3 class="major">HERE'S HOW YOU CAN HELP</h3>
-    <p class="subhead"><em>try any task you like, see which one(s) you like best</em></p>
+    <h3 class="major">HOW YOU CAN HELP</h3>
+    <p class="subhead">The Library is training computers to recognize building shapes and other data on digitized insurance atlases. Via these easy, bite-sized tasks, you can help check the computers' work and capture other valuable information.</p>
     <div id="home-slideshow" class="swipeshow">
       <ul class="slides">
         <li id="slide1" class="slide">
@@ -91,12 +91,13 @@
       </div>
     </div>
     <div>
+      <p class="subhead">try any task you like, see which one(s) you like best</p>
       <p class="subhead">or:</p>
       <%= link_to "SURPRISE ME!", "#{@global_tasks.sample[:path]}", :id => "link-random-task", :class => "big-button" %>
     </div>
     <% if @has_score %>
     <div id="home-scores">
-        <h3>Your inspections so far</h3>
+        <h3>Your inspections so far:</h3>
         <ul>
           <li><%= link_to(image_tag("icon-geometry.svg", :class=>"task-icon"), geometry_path, :class=>"link-task") %> <strong><%= @score_geometry %></strong> footprints checked
             <br /><%= link_to("Inspect more!", geometry_path, :class=>"link-task") %></li>
@@ -109,7 +110,18 @@
         </ul>
     </div>
     <% end %>
-    <div id="waypoint"></div>
+
+<div id="home-explained">
+  <h3 class="major">WHY THIS MATTERS</h3>
+  <p class="subhead"><strong>Imagine if maps had a magic switch that let you explore the geography of the past.</strong></p>
+  <p class="subhead">The Library wants to do this for New York City, turning historical atlases into time machines.</p>
+  <p class="subhead">To do it we need to harvest all the fantastic detail from the original maps: building footprints, addresses, construction materials etc. — clues that will help unlock a million stories. With this information organized and searchable, you can ask new kinds of questions about history. Peel back the layers of the city and replay its growth. 'Check in' to vanished establishments and meet their ghostly proprietors. Or discover related historical documents (newspapers, photographs, business directories…) linked by place and time.</p>
+    <%= link_to "GET STARTED", "javascript:;", :id => "link-explained-get-started", :class => "learn-more big-button" %>
+  <p class="centered"><%= link_to "Learn more", about_path %></p>
+  </div>
+</div>
+
+
   </div>
 </div>
 

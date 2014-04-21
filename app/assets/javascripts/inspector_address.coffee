@@ -8,6 +8,7 @@ class Address extends Inspector
       tutorialType:"video"
       tutorialURL: "//player.vimeo.com/video/92360461?title=0&amp;byline=0&amp;portrait=0"
       jsdataID: '#addressjs'
+      tweetString: "_score_ addresses found! Data mining old maps with Building Inspector from @NYPLMaps @nypl_labs"
       task: 'address'
     super(options)
 
