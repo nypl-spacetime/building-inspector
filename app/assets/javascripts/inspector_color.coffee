@@ -4,7 +4,7 @@ class Color extends Inspector
     options =
       draggableMap: true
       tutorialType:"video"
-      tutorialURL: "//player.vimeo.com/video/91450313?title=0&amp;byline=0&amp;portrait=0"
+      tutorialURL: "//player.vimeo.com/video/92555926?title=0&amp;byline=0&amp;portrait=0"
       jsdataID: '#colorjs'
       tweetString: "_score_ building materials classified! Data mining old maps with Building Inspector from @NYPLMaps @nypl_labs"
       task: 'color'
