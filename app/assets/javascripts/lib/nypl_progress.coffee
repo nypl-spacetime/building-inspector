@@ -1,6 +1,11 @@
 class @Progress
 
   constructor: (options) ->
+    # HACK: testing for IE 10 or earlier
+    match = /Trident\/6.0/g.test(navigator.userAgent)
+    if match # detect trident engine so IE
+        $("#ie8").show()
+
     window.nypl_progress = @ # to make it accessible from console
 
     @ids = [] # for timed animations (highlights)
