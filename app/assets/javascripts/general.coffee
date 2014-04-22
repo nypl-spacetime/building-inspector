@@ -16,7 +16,6 @@ class General
     $("#task-container .shown").on("click", @onTaskClick)
     $("body").on("click", @onBodyClick)
 
-
     overrides = [
       ".link-task"
       ".slide a"

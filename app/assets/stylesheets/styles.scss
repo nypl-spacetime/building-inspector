@@ -317,8 +317,18 @@ a, a:link, a:visited, a:hover {
   background: $grayDarker;
   z-index: 11111;
 
+  a {
+    color: $orange;
+  }
+
   p {
     padding: 100px 100px 0;
+  }
+}
+
+@media screen and (min-width:0\0) { 
+  #ie8 {
+    display: block !important;
   }
 }
 
