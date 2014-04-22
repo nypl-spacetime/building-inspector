@@ -6,6 +6,7 @@
     <th><%= sortable "email", "Email" %></th>
     <th><%= sortable "role", "Role" %></th>
     <th><%= sortable "provider", "Provider" %></th>
+    <th>Checker flags</th>
     <th></th>
     <th></th>
     <th></th>
@@ -17,6 +18,7 @@
     <td><%= user.email %></td>
     <td><%= user.role %></td>
     <td><%= user.provider %></td>
+    <td><%= Flag.flags_for_user(user.id) %></td>
     <td><%= link_to 'Show', user %></td>
     <td><%= link_to 'Edit', edit_user_path(user) %></td>
     <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
