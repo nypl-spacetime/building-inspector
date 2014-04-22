@@ -1,7 +1,6 @@
 <% content_for :page_title do %>About - Building Inspector by NYPL Labs<% end %>
 <% content_for :dynamic_js do %>
   <%= stylesheet_link_tag    "home", :media => "all" %>
-  <%= javascript_include_tag "about" %>
 <% end %>
 
 <%= render :partial => "partials/nav" %>
@@ -92,11 +91,6 @@
     <p>This is a big leap forward in the work of digitizing old maps. Until now, feature extraction has been done manually by staff and volunteers, tracing each individual building footprint painstakingly by hand. This is a difficult task, usually requiring on-site training, and so it can take months or years to complete a single atlas. The Vectorizer, however, can crunch through an entire borough map in a matter of hours. The data's not perfect, but it's good enough to start figuring out easier, crowd-friendly tasks for validating and correcting it (like the yes/no/fix process at the center of this app). And all of that public input can then be used to refine and improve the Vectorizer process. Human-computer collaboration!</p>
 
     <p>But enough yapping. Let's inspect some buildings!</p>
-
-    <div id="waypoint"></div>
-    <div id="logo-background">
-      <%= link_to "GO!", geometry_path, :id => "link-try" %>
-    </div>
 
     <h4>CREDITS</h4>
     <p>
