@@ -3,7 +3,7 @@ class Polygonfix extends Inspector
   constructor: (options) ->
     options =
       tutorialType:"video"
-      tutorialURL: "//player.vimeo.com/video/91019591?title=0&amp;byline=0&amp;portrait=0"
+      tutorialURL: "//player.vimeo.com/video/91019591?autoplay=1&title=0&amp;byline=0&amp;portrait=0"
       editablePolygon: true
       draggableMap: true
       constrainMapToPolygon: false
@@ -24,6 +24,7 @@ class Polygonfix extends Inspector
 
   addEventListeners: () =>
     super()
+    @map.on('click', @onMapClick)
     @map.on('dragstart', @onMapDragStart)
     @map.on('dragend', @onMapDragEnd)
 
@@ -56,11 +57,20 @@ class Polygonfix extends Inspector
     $("#add-button").addClass("inactive") if button != "add"
     $("#add-button").addClass("active") if button == "add"
 
+  onMapClick: (e) =>
+    @updateButton()
+
   onMapDragStart: (e) =>
+    @updateButton()
     @hidePolygon()
 
   onMapDragEnd: (e) =>
+    @updateButton()
     @showPolygon()
+
+  updateButton: () ->
+    $("#submit-button").text("SKIP")
+    $("#submit-button").text("SAVE") if @polygonHasChanged()
 
   multipleBuildingClick: (e) =>
     if @isMultiple && @flags.length > 1 && !confirm("Some buildings you have created will be lost if you uncheck this. Continue?")

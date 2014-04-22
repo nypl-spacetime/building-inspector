@@ -6,7 +6,7 @@ class Address extends Inspector
     options =
       draggableMap: true
       tutorialType:"video"
-      tutorialURL: "//player.vimeo.com/video/92360461?title=0&amp;byline=0&amp;portrait=0"
+      tutorialURL: "//player.vimeo.com/video/92360461?autoplay=1&title=0&amp;byline=0&amp;portrait=0"
       jsdataID: '#addressjs'
       tweetString: "_score_ addresses found! Data mining old maps with Building Inspector from @NYPLMaps @nypl_labs"
       task: 'address'
@@ -94,6 +94,13 @@ class Address extends Inspector
     elem.css("left", x)
     $("#map-container").append(elem)
     elem.find(".input").focus()
+    @updateButton()
+
+  updateButton: () ->
+    $("#submit-button").text("SKIP")
+    for e, contents of @flags
+      $("#submit-button").text("SAVE")
+      break
 
   createFlag: (x, y, latlng, fake) ->
     @cleanEmptyFlags()
@@ -170,6 +177,7 @@ class Address extends Inspector
     flag = @flags["x-#{x}-y-#{y}"]
     @map.removeLayer flag.circle if flag.circle
     delete @flags["x-#{x}-y-#{y}"]
+    @updateButton()
 
   updateFlag: (x, y, value) =>
     @flags["x-#{x}-y-#{y}"].value = value
