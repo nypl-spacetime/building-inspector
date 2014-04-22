@@ -13,7 +13,7 @@
       <h3>Building Inspector</h3>
       <h4>Kill Time. Make History.</h4>
       <hr />
-      <p>Welcome citizen cartographers!<br />Help unlock New York City's past by identifying buildings and other details on beautiful old maps.</p>
+      <p>Welcome citizen cartographers!<br />Help unlock New York City's past by identifying<br />buildings and other details on beautiful old maps.</p>
       <%= link_to "GET STARTED", "javascript:;", :id => "link-learn-more", :class => "learn-more big-button" %>
     </div>
   </div>
@@ -99,13 +99,13 @@
     <div id="home-scores">
         <h3>Your inspections so far:</h3>
         <ul>
-          <li><%= link_to(image_tag("icon-geometry.svg", :class=>"task-icon"), geometry_path, :class=>"link-task") %> <strong><%= @score_geometry %></strong> footprints checked
+          <li><%= link_to(image_tag("icon-geometry.svg", :class=>"task-icon"), geometry_path, :class=>"link-task") %> <strong><%= @score_geometry %></strong> <%= "footprint".pluralize(@score_geometry) %> checked
             <br /><%= link_to("Inspect more!", geometry_path, :class=>"link-task") %></li>
-          <li><%= link_to(image_tag("icon-polygonfix.svg", :class=>"task-icon"), polygonfix_path, :class=>"link-task") %> <strong><%= @score_polygonfix %></strong> footprints fixed
+          <li><%= link_to(image_tag("icon-polygonfix.svg", :class=>"task-icon"), polygonfix_path, :class=>"link-task") %> <strong><%= @score_polygonfix %></strong> <%= "footprint".pluralize(@score_polygonfix) %> fixed
             <br /><%= link_to("Inspect more!", polygonfix_path, :class=>"link-task") %></li>
-          <li><%= link_to(image_tag("icon-address.svg", :class=>"task-icon"), address_path, :class=>"link-task") %> <strong><%= @score_address %></strong> buildings addressed
+          <li><%= link_to(image_tag("icon-address.svg", :class=>"task-icon"), address_path, :class=>"link-task") %> <strong><%= @score_address %></strong> <%= "building".pluralize(@score_address) %> addressed
             <br /><%= link_to("Inspect more!", address_path, :class=>"link-task") %></li>
-          <li><%= link_to(image_tag("icon-color.svg", :class=>"task-icon"), color_path, :class=>"link-task") %> <strong><%= @score_color %></strong> color IDs
+          <li><%= link_to(image_tag("icon-color.svg", :class=>"task-icon"), color_path, :class=>"link-task") %> <strong><%= @score_color %></strong> color <%= "ID".pluralize(@score_color) %>
             <br /><%= link_to("Inspect more!", color_path, :class=>"link-task") %></li>
         </ul>
     </div>

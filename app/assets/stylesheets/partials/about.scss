@@ -1,0 +1,33 @@
+@import "lib/css3-mixins";
+@import "lib/button-mixins";
+@import "variables";
+@import "compass";
+@import "compass/css3/transform";
+@import "compass/utilities/general/clearfix";
+@import "animate";
+
+#about-task-list {
+  text-align: center;
+
+  @include clearfix;
+
+  li {
+    float: left;
+    width: 45%;
+    height: 200px;
+    margin-bottom: 20px;
+
+    &:nth-child(even) {
+      float: right;
+    }
+
+    @media screen and (max-width: $desktopwidth) {
+      float: none !important;
+      width: auto;
+    }
+  }
+
+  a {
+    display: block;
+  }
+}

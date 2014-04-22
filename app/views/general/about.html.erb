@@ -8,6 +8,7 @@
 
 <div id="main-container">
   <div id="intro" class="about">
+  <div class="grouper">
     <h3 class="major">What's this all about?</h3>
 
     <p>For years The New York Public Library has collected maps documenting our ever-changing metropolis. Originally commissioned by insurance companies to assess property value and fire risk, these street atlases contain a wealth of detailed information about a city now largely lost to us: buildings long ago destroyed, streets renamed, whole neighborhoods redrawn or redefined. Making these lost places findable via contemporary digital maps allows us to drill down through the layers of urban change and study the city in profound new ways. But harvesting the data isn't easy.</p>
@@ -19,24 +20,24 @@
     <p>Building Inspector was made by <a href="http://www.nypl.org/labs">NYPL Labs</a> in collaboration with the <a href="http://www.nypl.org/locations/schwarzman/map-division"> Lionel Pincus and Princess Firyal Map Division</a> at The New York Public Library. </p>
 
     <p>Questions? Comments? Want to stay in touch as the project develops? Contact us at <a href="mailto:buildinginspector@nypl.org">buildinginspector@nypl.org</a> or reach out to us on <a href="https://twitter.com/nypl_labs">Twitter</a>.</p>
-
      <h3 class="major">How Your Contributions Help</h3>
      <p>Currently, there are four different types of inspections you can perform. Each is designed to extract a particular type of data from the maps. Here's what the different inspections tell us:</p>
 
-     <ul>
+     <ul id="about-task-list">
           <li><%= link_to(image_tag("icon-geometry.svg", :class=>"task-icon"), geometry_path, :class=>"link-task") %> <strong>Check Footprints</strong> - This establishes a baseline (literally!). We show you the buildings the computer identified, one outline at a time. You tell us whether it is right, wrong, or close but in need of fixing.</li>
           <li><%= link_to(image_tag("icon-polygonfix.svg", :class=>"task-icon"), polygonfix_path, :class=>"link-task") %> <strong>Fix Footprints</strong> - Take those slightly imperfect footprints identified by your fellow inspectors and get 'em into shape to be recorded for history.<br /></li>
           <li><%= link_to(image_tag("icon-address.svg", :class=>"task-icon"), address_path, :class=>"link-task") %> <strong>Enter Addresses</strong> -  Getting those original street numbers will help us to reference specific buildings in their historical context (and, eventually, to see who lived/worked there).<br /></li>
           <li><%= link_to(image_tag("icon-color.svg", :class=>"task-icon"), color_path, :class=>"link-task") %> <strong>Classify Colors</strong> - The original mapmakers color-coded the buildings to indicate construction materials and use types (residential vs. commercial). Identifying the colors helps us index these important details.<br /></li>
         </ul>
 
- <h3 class="major">How Is Accuracy Ensured?</h3>
+     <h3 class="major">How Is Accuracy Ensured?</h3>
 
-<p>Every time you inspect a building, you’re essentially casting a vote alongside your fellow Inspectors. We show the same footprint and task to several people and tally up those votes to decide whether they agree.</p>
+    <p>Every time you inspect a building, you’re essentially casting a vote alongside your fellow Inspectors. We show the same footprint and task to several people and tally up those votes to decide whether they agree.</p>
 
-<p>While each task has a different means to come to consensus, it’s useful to see an example. For Footprint Inspection, it’s coming to consensus on whether the computer-detected footprint is a Yes, No, or a Fix. We show the same footprint to at least 3 different people, and every 10 minutes we tally up the votes. If 75% or more agree, that footprint has reached “consensus” and the system removes it from the inspection queue. If the jury's still out, we keep the footprint in circulation until consensus is reached, focusing our collective efforts on the buildings most in need.</p>
+    <p>While each task has a different means to come to consensus, it’s useful to see an example. For Footprint Inspection, it’s coming to consensus on whether the computer-detected footprint is a Yes, No, or a Fix. We show the same footprint to at least 3 different people, and every 10 minutes we tally up the votes. If 75% or more agree, that footprint has reached “consensus” and the system removes it from the inspection queue. If the jury's still out, we keep the footprint in circulation until consensus is reached, focusing our collective efforts on the buildings most in need.</p>
 
-<p>The main takeaway here is: relax! Your fellow Inspectors have got your back. <em>It's no big deal if make a mistake once in a while, or make your best guess on an ambiguous case.</em> The community will double, triple, and quadruple check you, and you them. Go Team!</p>
+    <p>The main takeaway here is: relax! Your fellow Inspectors have got your back. <em>It's no big deal if make a mistake once in a while, or make your best guess on an ambiguous case.</em> The community will double, triple, and quadruple check you, and you them. Go Team!</p>
+  </div>
     <div id="home-explained">
   <h3 class="major">How Did We Get Here?</h3>
 
@@ -79,8 +80,7 @@
     <p class = "centered">When all these tasks come together, it produces incredibly important geospatial data about New York City’s historical buildings. You can learn more about the data and how to access it on our <a href=”/general/data”>Data page</a>. All inspection data produced by this project is released under a <a href=”https://creativecommons.org/publicdomain/zero/1.0/”>Creative Commons-0 Designation</a>, meaning you can use it however you like.</p>
 
   </div>
-</div>
-  
+  <div class="grouper">
     <h3  class="major">CREDITS</h3>
     <p>
     <strong>The Lionel Pincus and Princess Firyal Map Division, NYPL</strong><br />
@@ -112,7 +112,9 @@
     Jennifer Anderson - UX Designer, NYPL<br />
     Topomancy, LLC<br />
     Mike Resig
-    </p>
+    </p>  </div>
+</div>
+
   </div>
 </div>
 
