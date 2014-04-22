@@ -2,13 +2,21 @@ namespace :data_import do
 
   desc "Import a polygon GeoJSON for a sheet file"
   task :ingest_geojson => :environment do
-    id = ENV['id']
-    layer_id = ENV['layer_id']
-    bbox = ENV['bbox'] # W,S,E,N
+    if ENV['id']==nil
+      abort "You need to specify a sheet id"
+    end
+
+    if ENV['layer_id']==nil
+      abort "You need to specify a layer id"
+    end
 
     if ENV['force']==nil
       abort "This process was not forced (required due to destructive nature)"
     end
+
+    id = ENV['id']
+    layer_id = ENV['layer_id']
+    bbox = ENV['bbox'] # W,S,E,N
 
     process_file(id, bbox, layer_id)
   end
