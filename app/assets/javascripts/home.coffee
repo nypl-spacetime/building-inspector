@@ -53,7 +53,7 @@ class Home
       mouse: false
       initial: 0
       speed: 700
-      interval: 6000
+      interval: 5000
       onactivate: (slide, index) ->
         # console.log "activate", slide, index
         $("#slide-buttons a").removeClass("active")

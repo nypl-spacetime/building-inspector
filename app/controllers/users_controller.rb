@@ -1,10 +1,12 @@
 class UsersController < ApplicationController
   layout "admin"
   before_filter :check_admin!
+  helper_method :sort_column, :sort_direction
+
   # GET /users
   # GET /users.json
   def index
-    @users = User.paginate(:page => params[:page])
+    @users = User.order(sort_column + " " + sort_direction).paginate(:per_page => 100, :page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -82,4 +84,15 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+
+  def sort_column
+    User.column_names.include?(params[:sort]) ? params[:sort] : "id"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+
 end

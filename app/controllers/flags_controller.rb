@@ -6,9 +6,10 @@ class FlagsController < ApplicationController
   # GET /flags
   # GET /flags.json
   def index
-    @flags = Flag.order(sort_column + " " + sort_direction).paginate(:page => params[:page])
+    @flags = Flag.order(sort_column + " " + sort_direction).paginate(:per_page => 100, :page => params[:page])
 
     @total = Flag.count
+    @total_since_v2 = Flag.where("created_at > '2014-04-21'").count
 
     @unique = Flag.select("DISTINCT polygon_id").count
 
