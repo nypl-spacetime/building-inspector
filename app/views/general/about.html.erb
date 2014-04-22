@@ -10,17 +10,80 @@
   <div id="intro" class="about">
     <h3>What's this all about?</h3>
 
-    <p>For years The New York Public Library has collected maps documenting the ever-changing metropolis. Originally commissioned by insurance companies to assess property value and fire risk, these street atlases contain a wealth of detailed information about a city now largely lost to us: buildings long ago destroyed, streets renamed, whole neighborhoods redrawn or redefined. Making these lost places findable via contemporary digital maps allows us to drill down through the layers of urban change and study the city in profound new ways. But harvesting the data isn't easy.</p>
+    <p>For years The New York Public Library has collected maps documenting our ever-changing metropolis. Originally commissioned by insurance companies to assess property value and fire risk, these street atlases contain a wealth of detailed information about a city now largely lost to us: buildings long ago destroyed, streets renamed, whole neighborhoods redrawn or redefined. Making these lost places findable via contemporary digital maps allows us to drill down through the layers of urban change and study the city in profound new ways. But harvesting the data isn't easy.</p>
 
     <p>That's where the Building Inspector (and you) come in. This app is the latest in a series of public-facing tools designed by The Library to extract, correct and analyze data from historical maps. We're training computers to do the heavy lifting, and then distributing the remaining quality control tasks to smart, motivated citizens. The goal? To produce a comprehensive directory of old New York (or, as we like to think of it, a time machine).</p>
 
-    <p>Questions? Comments? Want to stay in touch as the project develops? Contact us at <a href="mailto:buildinginspector@nypl.org">buildinginspector@nypl.org</a>.</p>
+    <p>With that information organized and searchable, we can ask new kinds of questions about history. It will allow our interfaces to drop pins accurately on digital maps when you search for a forgotten place. It will allow you to explore a city's past on foot with your mobile device, 'checking in' to ghostly establishments (Empire State Building, meet Waldorf-Astoria Hotel). And it will allow us to link other historical documents to those places: archival records, old newspapers, business directories, photographs, restaurant menus, theater playbills etc., opening up new ways to research, learn, and discover the past.</p>
 
-                <h4>How is my work reviewed?</h4>
+    <p>Questions? Comments? Want to stay in touch as the project develops? Contact us at <a href="mailto:buildinginspector@nypl.org">buildinginspector@nypl.org</a> or reach out to us on <a href="https://twitter.com/nypl_labs">Twitter</a>.</p>
 
-<p>Every time you inspect a building, you’re essentially casting a vote along with several other Inspectors on whether the computer-detected footprint is a Yes, No, or a Fix. We show the same footprint to at least 3 different people, and every 10 minutes we tally up the votes. If 75% or more agree, that footprint has reached “consensus” and the system removes it from the inspection queue. If the jury's still out, we keep the footprint in circulation until consensus is reached, focusing our collective efforts on the buildings most in need.</p>
+     <h3>What Can I Do?</h3>
+     <p>There are several kinds of inspections you and your fellow Inspectors can do. Specifically, here's what the different inspections tell us:</p>
 
-<p>The main takeaway here is: relax! Your fellow Inspectors have got your back. It's no big deal if make a mistake once in a while, or make your best guess on an ambiguous case. The community will double, triple, and quadruple check you, and you them. Go Team!</p>
+     <ul>
+          <li><%= link_to(image_tag("icon-geometry.svg", :class=>"task-icon"), geometry_path, :class=>"link-task") %> <strong>Check Footprints</strong> - This establishes a baseline (literally!). We show you the buildings the computer identified, one outline at a time. You tell us whether it is right, wrong, or close but in need of fixing.</li>
+          <li><%= link_to(image_tag("icon-polygonfix.svg", :class=>"task-icon"), polygonfix_path, :class=>"link-task") %> <strong>Fix Footprints</strong> - Take those slightly imperfect footprints identified by your fellow inspectors and get 'em into shape to be recorded for history.<br /></li>
+          <li><%= link_to(image_tag("icon-address.svg", :class=>"task-icon"), address_path, :class=>"link-task") %> <strong>Enter Addresses</strong> -  Getting those original street numbers will help us to reference specific buildings in their historical context (and, eventually, to see who lived/worked there).<br /></li>
+          <li><%= link_to(image_tag("icon-color.svg", :class=>"task-icon"), color_path, :class=>"link-task") %> <strong>Classify Colors</strong> - The original mapmakers color-coded the buildings to indicate construction materials and use types (residential vs. commercial). Identifying the colors helps us index these important details.<br /></li>
+        </ul>
+
+        <p>Oh, and in case you were wondering. We put the same tasks in front of multiple volunteers until they agree. Quality control meets crowd control.</p>
+    
+    <div id="home-explained">
+  <h3 class="major">Where does this all come from?</h3>
+
+  <div class="header first">
+    <h3>It all starts with atlases</h3>
+    <h4>NYPL’s <%= link_to "Lionel Pincus & Princess Firyal Map Division", "http://maps.nypl.org" %> houses about half a million maps and 20,000 books and atlases published over the last five hundred years…</h4>
+  </div>
+  <div class="grouper">
+    <p class="centered">Our atlases span the globe across time and at many scales. You can trace the Dutch empire's global expansion through 17th Century world maps and pilot books; follow the battles of the American Revolution through 18th Century English atlases; and (as in this project) track changes to New York's urban landscape through maps commissioned by 19th Century insurance companies.</p>
+  </div>
+  <div class="grouper">
+    <h4 class="numeral">1</h4>
+    <h3>Scan</h3>
+    <div id="capture-graphic" class="left graphic">
+      <div class="camera"></div>
+      <div class="flash"></div>
+    </div>
+    <div class="right"><p>First we create a high-resolution digital image of the original paper map. We make copies of the image and store them for safekeeping in our digital repository. The maps are then formatted for deep zooming and are presented to the public via our <a href="http://digitalcollections.nypl.org">Digital Collections</a> and <a href="http://maps.nypl.org">Map Warper</a> websites, where they can be downloaded in high resolution and queued up for further transformation.</p></div>
+  </div>
+  <div class="grouper">
+    <h4 class="numeral">2</h4>
+    <h3>Rectify</h3>
+    <div id="rectify-graphic" class="right graphic">
+      <div class="sheet"></div>
+    </div>
+    <div class="left"><p>While images of old maps are nice, what our users really want is to compare maps from different periods. The trouble is, mapmakers rarely laid things out in ways that allow us to conveniently overlay the images. Locations appear in different parts of the page from year to year. To make matters worse, cartographers used different scales, pagination schemas, and (gasp!) sometimes didn't even put north at the top of the page. So we modified open source software and built the <a href="http://maps.nypl.org">Map Warper</a>, a tool suite for library staff and public volunteers to align maps to precise latitude-longitude points on the planet Earth. This normalizes all of our map images to the same digital base map, making comparisons easy.</p></div>
+  </div>
+  <div class="grouper">
+    <h4 class="numeral">3</h4>
+    <h3>Vectorize</h3>
+    <div id="vectorize-graphic" class="left graphic"><%= image_tag "home/vectorize.gif", :class => "animated" %></div>
+    <div class="right"><p>Next up is identifying specific features from the maps. This involves identifying shapes (most commonly, building footprints) and converting them into geospatial vector data. This is fancy talk for a different way of handling images on computers. It treats them not as grids of pixels (called <a href="http://en.wikipedia.org/wiki/Raster_graphics">raster graphics</a>), but as geometry (points and lines). Vector data is lighter weight and therefore faster to manipulate on a computer (think scaling up and down). Staff and volunteers have been working to trace building shapes by hand but the work is time-consuming (and, frankly, pretty dull). So to get through these mountains of data, we're training computers to do a first pass on the maps, 'automagically' recognizing building footprints and other features. It works pretty darn well, but as with most image processing techniques, it's not perfect. 
+</p></div>
+  </div>
+  <div class="grouper">
+    <h4 class="numeral">4</h4>
+    <h3>Inspect!</h3>
+    <p class="centered">You take it from here! The rest is up to you. With the help of your fellow Inspectors, you’ll be unlocking the future of New York City’s past!</p>
+
+    <p class = "centered">When all these tasks come together, it produces incredibly important geospatial data about New York City’s historical buildings. You can learn more about the data and how to access it on our <a href=”/general/data”>Data page</a>. All inspection data produced by this project is released under a <a href=”https://creativecommons.org/publicdomain/zero/1.0/”>Creative Commons-0 Designation</a>, meaning you can use it however you like.</p>
+
+  </div>
+</div>
+
+
+
+
+                <h3>How is my work reviewed?</h3>
+
+<p>Every time you inspect a building, you’re essentially casting a vote alongside your fellow several other Inspectors. We show the same footprint and task to several people and tally up those votes to decide whether there’s agreement among inspectors.</p>
+
+<p>While each task has a different means to come to consensus, it’s useful to see an example. For Footprint Inspection, it’s coming to consensus on whether the computer-detected footprint is a Yes, No, or a Fix. We show the same footprint to at least 3 different people, and every 10 minutes we tally up the votes. If 75% or more agree, that footprint has reached “consensus” and the system removes it from the inspection queue. If the jury's still out, we keep the footprint in circulation until consensus is reached, focusing our collective efforts on the buildings most in need.</p>
+
+<p>The main takeaway here is: relax! Your fellow Inspectors have got your back. <em>It's no big deal if make a mistake once in a while, or make your best guess on an ambiguous case.</em> The community will double, triple, and quadruple check you, and you them. Go Team!</p>
 
     <h4>More background on the project</h4>
 
@@ -45,10 +108,10 @@
     <p>
     <strong>NYPL Labs</strong><br />
     Lead Developer/Designer - Mauricio Giraldo<br />
-    Development Support - Brian Foo<br />
     Manager, NYPL Labs - Ben Vershbow<br />
     Product Manager - David Riordan<br />
-                Additional Development Support - Paul Beaudoin and Matt Miller
+    Historical Geospatial Fellow - Connor Gaudet<br />
+    Additional Development Support - Paul Beaudoin, Brian Foo, and Matt Miller
     </p>
 
     <p>
@@ -56,15 +119,17 @@
     Tony Marx - President & CEO, NYPL<br />
     Mary Lee Kennedy - Chief Library Officer, NYPL<br />
     Ann Thornton - Mellon Director, NYPL<br />
+    Theresa Myrhol - Director, Library Services, Stephen A. Schwarzman Building, NYPL<br />
     Victoria Steele - Brooke Russell Astor Director of Collections Strategy, NYPL<br />
-                Jane Aboyoun - Chief Technology Officer, NYPL<br />
+    Amy Geduldig - Manager, Media Relations, NYPL<br />
+    Nora Lyons - Press Representative, NYPL<br />
+    Jane Aboyoun - Chief Technology Officer, NYPL<br />
     Jeff Roth - Vice President of Strategy, NYPL<br />
     Micah May - Director of Strategic Planning, NYPL<br />
     Jennifer Anderson - UX Designer, NYPL<br />
     Topomancy, LLC<br />
     Mike Resig
     </p>
-    <div id="waypoint-dest"></div>
   </div>
 </div>
 
