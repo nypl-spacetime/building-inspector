@@ -8,6 +8,8 @@ class UsersController < ApplicationController
   def index
     @users = User.order(sort_column + " " + sort_direction).paginate(:per_page => 100, :page => params[:page])
 
+    @total = User.count
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @users }
