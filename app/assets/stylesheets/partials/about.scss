@@ -31,3 +31,13 @@
     display: block;
   }
 }
+
+#intro h3.major.inspector {
+  background: #0F0D0D asset-url("home/inspector.jpg", image) no-repeat;
+  background-attachment: fixed;
+  background-position: 0px 0px;
+  margin-top: 60px;
+  height: 300px;
+  line-height: 300px;
+  color: $grayLightest;
+}

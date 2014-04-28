@@ -52,6 +52,8 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     text-transform: none;
     color: $grayLighter;
     margin-top: 5px;
+    background-color: rgba(0, 0, 0, 0.2);
+    @include border-radius;
 
     @media screen and (max-width: $desktopwidth) {
     }

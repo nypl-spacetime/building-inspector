@@ -43,9 +43,9 @@ class Home
     # console.log "size:", w
     return if !(w > 0 && w < maxWidth)
     offset = (maxWidth - w) / 2
-    svgs = document.getElementsByClassName("intro-path");
+    svgs = document.getElementsByClassName("intro-path")
     for svg in svgs
-      svg.setAttribute("viewBox", "#{offset} 0 #{w} #{maxHeight}");
+      svg.setAttribute("viewBox", "#{offset} 0 #{w} #{maxHeight}")
 
   activateSlideshow: () ->
     $("#home-slideshow").swipeshow(

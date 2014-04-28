@@ -2,6 +2,13 @@ class About
 
   constructor: () ->
     h = @
+
+    $(window).on('resize', () ->
+      h.resize()
+    )
+
+    @resize()
+
   #   @setWaypoints()
 
   # setWaypoints: () ->
@@ -18,6 +25,21 @@ class About
   #       )
   #     )
   #   )
+
+  resize: () ->
+    maxWidth = 960
+    maxHeight = 300
+    el = $("#intro h3.major.inspector")
+    w = el.width()
+    # console.log "size:", w, el.offset()
+    el.css("background-position", "#{el.offset().left}px 0")
+    # return if !(w > 0 && w < maxWidth)
+    # offset = (maxWidth - w) / 2
+    # svgs = document.getElementsByClassName("intro-path");
+    # for svg in svgs
+    #   svg.setAttribute("viewBox", "#{offset} 0 #{w} #{maxHeight}");
+
+
 
 $ ->
   new About()
