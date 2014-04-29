@@ -205,10 +205,10 @@ a, a:link, a:visited, a:hover {
   }
 
   a {
-    color: $blue;
+    color: $red;
 
     &:hover {
-      color: lighten($blue, 10%);
+      color: darken($red, 10%);
     }
   }
 
