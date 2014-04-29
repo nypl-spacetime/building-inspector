@@ -34,6 +34,7 @@ class General
       "#link-try"
       "#link-back"
       "#toc a"
+      "#link-random-task"
     ]
     @mobileClick id for id in overrides
 
