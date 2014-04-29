@@ -37,11 +37,11 @@ class General
     ]
     @mobileClick id for id in overrides
 
-  trimTitle: () =>
+  trimTitle: () ->
     if (window.innerWidth > 500)
-      document.title = document.title.replace("Building Inspector", "Bldg Inspector")
-    else
       document.title = document.title.replace("Bldg Inspector", "Building Inspector")
+    else
+      document.title = document.title.replace("Building Inspector", "Bldg Inspector")
 
   mobileClick: (id) ->
     elem = $(id)
