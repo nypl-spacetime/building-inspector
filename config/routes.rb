@@ -7,6 +7,9 @@ Webappmini::Application.routes.draw do
   resources :flags
   resources :polygons
 
+  # legacy urls
+  get "/building", to: "general#home"
+
   # for session checking
   get "cookie_test", :controller => :general
 
@@ -72,7 +75,7 @@ Webappmini::Application.routes.draw do
   get "api/polygons/:task/:consensus/page/:page", to: "api#polygons"
   get "api/polygons_for_ids", to: "api#polygons_for_ids"
 
-  match "/404", :to => "general#not_found"
+  match "/404", :to => "general#not_found", :status => 404
 
   # get "homenew" => "general#home"
 
