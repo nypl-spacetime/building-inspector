@@ -81,6 +81,21 @@ namespace :data_import do
     end
   end
 
+  desc "Import GeoJSON centroid data for a sheet's polygons"
+  task :ingest_centroids_for_sheet => :environment do
+    if ENV['force']==nil
+      abort "This process was not forced (required due to destructive nature)"
+    end
+
+    if ENV['id']==nil
+      abort "You need to specify a sheet id"
+    end
+
+    id = ENV['id']
+
+    update_centroids(id)
+  end
+
 end
 
 def process_file(id, bbox, layer_id)
@@ -117,10 +132,48 @@ def process_file(id, bbox, layer_id)
     polygon[:status] = "unprocessed"
     polygon[:vectorizer_json] = f.to_json
     polygon[:color] = f['properties']['Color']
-    polygon[:centroid_lat] = f['properties']['CentroidY']
-    polygon[:centroid_lon] = f['properties']['CentroidX']
+    polygon[:centroid_lat] = (f['properties']['CentroidY'] ? f['properties']['CentroidY'] : f['properties']['CentroidLat'])
+    polygon[:centroid_lon] = (f['properties']['CentroidX'] ? f['properties']['CentroidX'] : f['properties']['CentroidLon'])
     polygon[:geometry] = f['geometry']['coordinates'].to_json
     polygon[:dn] = f['properties']['DN']
+    polygon.save
+  end
+end
+
+def update_centroids(id)
+  file = "public/files/#{id}-traced.json"
+
+  if not File.exists?(file)
+    puts "Sheet ID #{id} not found."
+    return
+  end
+
+  str = IO.read(file)
+  json = JSON.parse(str)
+
+  if json["features"] == nil
+    puts "Sheet ID #{id} has no features."
+    return
+  end
+
+  #first check if sheet exists
+  sheet = Sheet.where(:map_id => id).first
+
+  if (sheet == nil)
+    puts "Sheet ID #{id} not found"
+    return
+  end
+
+  json["features"].each do |f|
+    polygons = Polygon.where({:dn => f['properties']['DN'], :sheet_id => sheet[:id]})
+    if polygons.count > 1 || polygons.count == 0
+      puts "Found #{polygons.count} polygons for DN: #{f['properties']['DN']} Sheet: #{id}"
+      next
+    end
+    polygon = polygons.first
+    puts "Updated polygon ID: #{polygon[:id]}"
+    polygon[:centroid_lat] = (f['properties']['CentroidY'] ? f['properties']['CentroidY'] : f['properties']['CentroidLat'])
+    polygon[:centroid_lon] = (f['properties']['CentroidX'] ? f['properties']['CentroidX'] : f['properties']['CentroidLon'])
     polygon.save
   end
 end

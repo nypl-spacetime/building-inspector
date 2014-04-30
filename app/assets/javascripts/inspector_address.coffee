@@ -20,17 +20,15 @@ class Address extends Inspector
     super()
     @map.on('click', @onMapClick)
 
-    inspector = @
-
-    $("body").keyup (e)->
-      # console.log "key", e.which
-      switch e.which
-        when 107, 187 then inspector.submitFlags(e)
-
   addButtonListeners: () =>
     super()
     inspector = @
     $("#submit-button").on "click", @submitFlags
+
+    $("body").keyup (e)->
+      console.log "key", e.which
+      switch e.which
+        when 83 then inspector.submitFlags(e) # s key
 
   removeButtonListeners: () =>
     super()

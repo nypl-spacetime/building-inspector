@@ -19,6 +19,16 @@ After downloading, and running the proper `rake db:migrate` you need to do a bas
 
 This assumes the presence of `public/files/config-ingest-LAYERID.json` with a list of IDs and bounding boxes to import for the layer `LAYERID`. This **erases all sheet/polygon/flag data** for those IDs in the config file.
 
+####About centroids
+
+There is an included Python script -- `ingestor_config_builder.py` -- to easily calculate centroids for the sheets to be used in the inspector. It assumes a folder full of GeoTIFF files.
+
+Usage:
+
+`python ingestor_config_builder.py /path/to/folder/with/geotiffs`
+
+It creates a config file in the application root folder with the name `config-ingest-FOLDERNAME` where `FOLDERNAME` is the name of the folder where the GeoTIFFs were found.
+
 ####Add bulk centroids
 
 The original GeoJSON files do not have centroids (they were added and processed later). To create the centroids of the polygons in the database you need to run:
@@ -32,6 +42,12 @@ The original GeoJSON files do not have centroids (they were added and processed 
 This imports polygons from a file `public/files/SOMEID-traced.json` into the database **replacing** any polygons (and its corresponding flags) that are associated to ID `SOMEID`.
 
 **NOTE:** So far only layers 859 and 860 are provided. Layer 859 has separate GeoJSON for centroids and polygons. Layer 860 sheets have a single file with both fields. Ingesting 859 requires a separate `data_import:ingest_centroid_bulk` process for centroids.
+
+####Single sheet centroid updating
+
+`rake data_import:ingest_centroids_for_sheet id=SOMEID force=true`
+
+This updates the polygon centroids for a given `sheet_id` from a file `public/files/SOMEID-traced.json` **replacing** any existing polygon centroids (not the polygons themselves).
 
 ### <a name="api"></a>API querying
 

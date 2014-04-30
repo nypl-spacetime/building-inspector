@@ -43,7 +43,6 @@ class Polygon < ActiveRecord::Base
     features = []
     f.each do |feature|
       if feature[:flag_value] == false || feature[:flag_value] == "false" || feature[:flag_value] == "NOFIX"
-        p = feature.polygon
         features.push({:type => "Feature", :properties => { :flag_value => feature[:flag_value] }, :geometry => { :type => "Point", :coordinates => [self[:centroid_lon].to_f, self[:centroid_lat].to_f] }})
       else
         features.push({:type => "Feature", :geometry => { :type => "Polygon", :coordinates => JSON.parse(feature[:flag_value]) }})
