@@ -3,10 +3,8 @@
 <table>
   <tr>
     <th><%= sortable "dn", "DN" %></th>
-    <th>Status</th>
+    <th>Geometry</th>
     <th><%= sortable "sheet", "Sheet" %></th>
-    <th><%= sortable "flag_count", "Flag count" %></th>
-    <th>Color</th>
     <th></th>
     <th></th>
     <th></th>
@@ -15,10 +13,8 @@
 <% @polygons.each do |polygon| %>
   <tr>
     <td><%= polygon.dn %></td>
-    <td><%= polygon.status %></td>
+    <td><%= polygon.geometry %></td>
     <td><%= link_to polygon.sheet_id, sheet_path(polygon.sheet_id) %></td>
-    <td><%= polygon.flag_count %></td>
-    <td><%= polygon.color %></td>
     <td><%= link_to 'Show', polygon %></td>
     <td><%= link_to 'Edit', edit_polygon_path(polygon) %></td>
     <td><%# link_to 'Destroy', polygon, method: :delete, data: { confirm: 'Are you sure?' } %></td>

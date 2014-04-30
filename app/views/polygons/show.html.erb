@@ -18,6 +18,7 @@
   yes_count = 0
   no_count = 0
   fix_count = 0
+  geometry_count = 0
   all_count = 0
   %>
   <% @polygon.flags.each do |f| %>
@@ -27,6 +28,7 @@
   <br />address: <%= link_to_unless f.flag_value == "NONE", "#{f.flag_value}", f %>
   <% elsif f.flag_type == "geometry"  %>
   <%
+  geometry_count = geometry_count + 1
   if f.flag_value == "yes"
     yes_count = yes_count + 1
   end
@@ -44,22 +46,28 @@
   all_count = all_count + 1
   %>
   <% end %>
-  <% if all_count > 0 %>
+  <% if geometry_count > 0 %>
   <br />
-  yes: <%= yes_count %> (<%= (yes_count.to_f / all_count.to_f * 100.0).round %>%)<br />
-  no: <%= no_count %> (<%= (no_count.to_f / all_count.to_f * 100.0).round %>%)<br />
-  fix: <%= fix_count %> (<%= (fix_count.to_f / all_count.to_f * 100.0).round %>%)<br />
+  yes: <%= yes_count %> (<%= (yes_count.to_f / geometry_count.to_f * 100.0).round %>%)<br />
+  no: <%= no_count %> (<%= (no_count.to_f / geometry_count.to_f * 100.0).round %>%)<br />
+  fix: <%= fix_count %> (<%= (fix_count.to_f / geometry_count.to_f * 100.0).round %>%)<br />
   <% end %>
-</p>
-
-<p>
-  <b>DN:</b>
-  <%= @polygon.dn %>
 </p>
 
 <p>
   <b>Flag count:</b>
   <%= all_count %>
+</p>
+
+<p>
+  <b>Consensus</b>
+  <br />Color: <%= @polygon.consensus_color %>
+  <br />Geometry: <%= @polygon.consensus_geometry %>
+</p>
+
+<p>
+  <b>DN:</b>
+  <%= @polygon.dn %>
 </p>
 
 <p>
