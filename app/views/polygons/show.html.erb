@@ -14,7 +14,7 @@
 
 <p>
   <b>Flags:</b>
-  <% 
+  <%
   yes_count = 0
   no_count = 0
   fix_count = 0
@@ -24,9 +24,9 @@
   <%
   if f.flag_type == "address"
   %>
-  <%= link_to_unless f.flag_value == "NONE", "##{f.flag_value}", f %> 
+  <br />address: <%= link_to_unless f.flag_value == "NONE", "##{f.flag_value}", f %>
   <% elsif f.flag_type == "geometry"  %>
-  <% 
+  <%
   if f.flag_value == "yes"
     yes_count = yes_count + 1
   end
@@ -38,7 +38,7 @@
   end
   %>
   <% elsif f.flag_type == "color"  %>
-  <br />color: <%= link_to "#{f.flag_value}", f %> 
+  <br />color: <%= link_to "#{f.flag_value}", f %>
   <% end %>
   <%
   all_count = all_count + 1
