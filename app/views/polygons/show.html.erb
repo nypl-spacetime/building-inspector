@@ -24,7 +24,7 @@
   <%
   if f.flag_type == "address"
   %>
-  <br />address: <%= link_to_unless f.flag_value == "NONE", "##{f.flag_value}", f %>
+  <br />address: <%= link_to_unless f.flag_value == "NONE", "#{f.flag_value}", f %>
   <% elsif f.flag_type == "geometry"  %>
   <%
   if f.flag_value == "yes"
