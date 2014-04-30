@@ -17,7 +17,7 @@ class Polygon < ActiveRecord::Base
      { :type => "Feature", :properties => { :consensus => self[:consensus], :id => self[:id], :dn => self[:dn], :sheet_id => self[:sheet_id] }, :geometry => { :type => "Point", :coordinates => [self[:centroid_lon], self[:centroid_lat]] } }
   end
 
-  def consensus(task)
+  def poly_consensus(task)
     c = Consensuspolygon.where({:polygon_id => self.id, :task => task})
     if c.count > 0
       c[0][:consensus]
@@ -27,11 +27,11 @@ class Polygon < ActiveRecord::Base
   end
 
   def consensus_color
-    consensus("color")
+    poly_consensus("color")
   end
 
   def consensus_geometry
-    consensus("geometry")
+    poly_consensus("geometry")
   end
 
   def as_feature
