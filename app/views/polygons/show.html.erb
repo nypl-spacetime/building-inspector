@@ -24,8 +24,8 @@
   <%
   if f.flag_type == "address"
   %>
-  <%= link_to "##{f.flag_value}", f %> 
-  <% else %>
+  <%= link_to_unless f.flag_value == "NONE", "##{f.flag_value}", f %> 
+  <% elsif f.flag_type == "geometry"  %>
   <% 
   if f.flag_value == "yes"
     yes_count = yes_count + 1
@@ -36,9 +36,13 @@
   if f.flag_value == "fix"
     fix_count = fix_count + 1
   end
+  %>
+  <% elsif f.flag_type == "color"  %>
+  <br />color: <%= link_to "#{f.flag_value}", f %> 
+  <% end %>
+  <%
   all_count = all_count + 1
   %>
-  <% end %>
   <% end %>
   <% if all_count > 0 %>
   <br />
@@ -55,7 +59,7 @@
 
 <p>
   <b>Flag count:</b>
-  <%= @polygon.flag_count %>
+  <%= all_count %>
 </p>
 
 <p>
