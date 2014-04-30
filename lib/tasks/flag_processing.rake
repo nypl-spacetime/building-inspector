@@ -31,6 +31,7 @@ namespace :db do
     SELECT _F.polygon_id, _F.flag_value, COUNT(*) AS flag_count
     FROM flags AS _F
     WHERE _F.flag_value = '#{value}'
+    AND _F.flag_type = '#{task}'
     GROUP BY _F.polygon_id, _F.flag_value
     HAVING COUNT(*) >= #{min_count}
   ) AS F
@@ -38,6 +39,7 @@ namespace :db do
   INNER JOIN (
     SELECT _F.polygon_id, COUNT(*) AS flag_count
     FROM flags AS _F
+    WHERE _F.flag_type = '#{task}'
     GROUP BY _F.polygon_id
     HAVING COUNT(*) >= #{min_count}
   ) AS FCOUNT
