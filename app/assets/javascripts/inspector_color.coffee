@@ -179,6 +179,7 @@ class Color extends Inspector
 
   submitMulticolorFlag: (e) =>
     @activateButton("save") unless @options.tutorialOn
+    @flags.sort()
     @submitFlag(e, @flags.join(","))
     @clearFlags()
 
