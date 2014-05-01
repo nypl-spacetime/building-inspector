@@ -14,6 +14,8 @@ namespace :db do
     yellow_query = Flag.connection.execute(build_consensus_query_for_task_value("color", "yellow", min_count, threshold))
     green_query = Flag.connection.execute(build_consensus_query_for_task_value("color", "green", min_count, threshold))
     gray_query = Flag.connection.execute(build_consensus_query_for_task_value("color", "gray", min_count, threshold))
+    # address
+    none_query = Flag.connection.execute(build_consensus_query_for_task_value("address", "NONE", min_count, threshold))
   end
 
   def build_consensus_query_for_task_value(task, value, min_count, threshold)

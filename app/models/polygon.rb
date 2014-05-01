@@ -34,6 +34,10 @@ class Polygon < ActiveRecord::Base
     poly_consensus("geometry")
   end
 
+  def consensus_address
+    poly_consensus("address")
+  end
+
   def as_feature
      { :type => "FeatureCollection", :features => [JSON.parse(self[:vectorizer_json])] }
   end
