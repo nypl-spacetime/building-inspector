@@ -21,7 +21,7 @@ This assumes the presence of `public/files/config-ingest-LAYERID.json` with a li
 
 ####About centroids
 
-There is an included Python script -- `ingestor_config_builder.py` -- to easily calculate centroids for the sheets to be used in the inspector. It assumes a folder full of GeoTIFF files.
+Polygon centroids are used in some tasks to determine where to put markers in case the flag value is none/blank/etc. There is an included Python script -- `ingestor_config_builder.py` -- to easily calculate centroids for the sheets to be used in the inspector. It assumes a folder full of GeoTIFF files.
 
 Usage:
 
