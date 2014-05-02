@@ -42,16 +42,19 @@ class Polygon < ActiveRecord::Base
      { :type => "FeatureCollection", :features => [JSON.parse(self[:vectorizer_json])] }
   end
 
-  def fixes_as_features
-    f = flags.where(:flag_type => "polygonfix")
+  def flags_as_features
     features = []
+
+    f = flags.where(:flag_type => "polygonfix")
     f.each do |feature|
-      if feature[:flag_value] == false || feature[:flag_value] == "false" || feature[:flag_value] == "NOFIX"
-        features.push({:type => "Feature", :properties => { :flag_value => feature[:flag_value] }, :geometry => { :type => "Point", :coordinates => [self[:centroid_lon].to_f, self[:centroid_lat].to_f] }})
-      else
-        features.push({:type => "Feature", :geometry => { :type => "Polygon", :coordinates => JSON.parse(feature[:flag_value]) }})
-      end
+      features.push(feature.as_feature)
     end
+
+    f = flags.where(:flag_type => "address")
+    f.each do |feature|
+      features.push(feature.as_feature)
+    end
+
     { :type => "FeatureCollection", :features => features }
   end
 end

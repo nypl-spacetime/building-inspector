@@ -13,7 +13,7 @@ class Polygon
     p = @
     @map.on 'load', () ->
       p.showPolygon()
-      p.showFixes()
+      p.showFlags()
 
   showPolygon: () =>
     data = $('#polydata').data("map")
@@ -41,8 +41,8 @@ class Polygon
 
     m.fitBounds(bounds)
 
-  showFixes: () =>
-    data = $('#polydata').data("fixes")
+  showFlags: () =>
+    data = $('#polydata').data("flags")
 
     return if !data or data.features.length==0
 
@@ -58,8 +58,11 @@ class Polygon
         # dashArray: '1,16'
         fill: false
       onEachFeature: (feature, layer) ->
-        console.log feature
-        layer.bindPopup(feature.properties.flag_value) if feature.properties?.flag_value
+        str = ""
+        str += "User: <a href='/users/#{feature.properties.user_id}'>" + feature.properties.user_id + "</a>" if feature.properties?.user_id
+        str += "User: " + feature.properties.session_id + "</a>" if feature.properties?.session_id
+        str += "<br />" + feature.properties.flag_value if feature.properties?.flag_value
+        layer.bindPopup(str)
     )
 
     bounds = json.getBounds()

@@ -43,12 +43,27 @@ class Flag < ActiveRecord::Base
 	end
 
 	def as_feature
+		user = Usersession.where(:session_id => self[:session_id]).first
+		r = {}
 		if self[:latitude] == nil || self[:longitude] == nil
 			p = self.polygon
 			self[:latitude] = p[:centroid_lat]
 			self[:longitude] = p[:centroid_lon]
 		end
-		{ :type => "Feature", :properties => { :flag_value => self[:flag_value] }, :geometry => { :type => "Point", :coordinates => [self[:longitude].to_f, self[:latitude].to_f] } }
+		r[:type] = "Feature"
+		r[:properties] = {}
+		if user != nil
+			r[:properties][:user_id] = user[:user_id]
+		else
+			r[:properties][:session_id] = self[:session_id]
+		end
+		if self[:flag_type] == 'polygonfix' && self[:flag_value] != "NOFIX"
+			r[:geometry] = { :type => "Polygon", :coordinates => JSON.parse(self[:flag_value]) }
+		else
+			r[:properties][:flag_value] = self[:flag_value]
+			r[:geometry] = { :type => "Point", :coordinates => [self[:longitude].to_f, self[:latitude].to_f] }
+		end
+		r
 	end
 
 end

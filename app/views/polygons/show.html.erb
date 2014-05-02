@@ -1,11 +1,11 @@
 <% content_for :dynamic_js do %>
   <style type="text/css">
     #map {
-      width: 300px;
+      width: 600px;
       height: 300px;
     }
   </style>
-  <%= javascript_include_tag "admin/polygon", {:id => "polydata", "data-map" => "#{@map.to_json}", "data-fixes" => "#{@fixes.to_json}"} %>
+  <%= javascript_include_tag "admin/polygon", {:id => "polydata", "data-map" => "#{@map.to_json}", "data-flags" => "#{@flags.to_json}"} %>
 <% end %>
 
 <p id="notice"><%= notice %></p>
