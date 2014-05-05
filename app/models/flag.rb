@@ -42,6 +42,17 @@ class Flag < ActiveRecord::Base
 		Flag.select("DISTINCT polygons.id, polygons.centroid_lat, polygons.centroid_lon, polygons.geometry, flags.*").joins(:polygon).joins(:usersession).where('usersessions.user_id = ? AND flags.flag_type = ?', user_id, type)
 	end
 
+  def self.all_as_features(type = "geometry")
+    features = []
+
+    f = Flag.where(:flag_type => type)
+    f.each do |feature|
+      features.push(feature.as_feature)
+    end
+
+    { :type => "FeatureCollection", :features => features }
+  end
+
 	def as_feature
 		user = Usersession.where(:session_id => self[:session_id]).first
 		r = {}

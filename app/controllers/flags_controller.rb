@@ -20,6 +20,19 @@ class FlagsController < ApplicationController
     end
   end
 
+  # GET /flags/all
+  # GET /flags/all.json
+  def all
+    params[:type] = "address" if !params[:type]
+    # below: disabled temporarily
+    @flags = [] # Flag.all_as_features(params[:type])
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @flags }
+    end
+  end
+
   # GET /flags/1
   # GET /flags/1.json
   def show

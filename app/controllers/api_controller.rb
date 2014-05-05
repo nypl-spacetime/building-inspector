@@ -17,6 +17,8 @@ class ApiController < ApplicationController
 
 		if consensus != nil
 			where = "CP.task = "+Polygon.sanitize(type)+" AND CP.consensus = "+Polygon.sanitize(consensus)
+		else
+			where = "CP.task = "+Polygon.sanitize(type)
 		end
 
 		count = Polygon.select("COUNT(polygons.id) as pcount").joins(join).where(where).first.pcount

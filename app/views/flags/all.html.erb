@@ -1,0 +1,10 @@
+<% content_for :dynamic_js do %>
+  <style type="text/css">
+    #map {
+      width: 900px;
+      height: 600px;
+    }
+  </style>
+  <%= javascript_include_tag "admin/flags_all", {:id => "data", "data-flags" => "#{@flags.to_json}"} %>
+<% end %>
+<div id="map"></div>

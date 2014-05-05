@@ -5,17 +5,27 @@ namespace :db do
     min_count = 3
     threshold = 0.75
     # geometry
-    yes_query = Flag.connection.execute(build_consensus_query_for_task_value("geometry", "yes", min_count, threshold))
-    no_query = Flag.connection.execute(build_consensus_query_for_task_value("geometry", "no", min_count, threshold))
-    fix_query = Flag.connection.execute(build_consensus_query_for_task_value("geometry", "fix", min_count, threshold))
+    Flag.connection.execute(build_consensus_query_for_task_value("geometry", "yes", min_count, threshold))
+    Flag.connection.execute(build_consensus_query_for_task_value("geometry", "no", min_count, threshold))
+    Flag.connection.execute(build_consensus_query_for_task_value("geometry", "fix", min_count, threshold))
     # colors
-    pink_query = Flag.connection.execute(build_consensus_query_for_task_value("color", "pink", min_count, threshold))
-    blue_query = Flag.connection.execute(build_consensus_query_for_task_value("color", "blue", min_count, threshold))
-    yellow_query = Flag.connection.execute(build_consensus_query_for_task_value("color", "yellow", min_count, threshold))
-    green_query = Flag.connection.execute(build_consensus_query_for_task_value("color", "green", min_count, threshold))
-    gray_query = Flag.connection.execute(build_consensus_query_for_task_value("color", "gray", min_count, threshold))
+    Flag.connection.execute(build_consensus_query_for_task_value("color", "pink", min_count, threshold))
+    Flag.connection.execute(build_consensus_query_for_task_value("color", "blue", min_count, threshold))
+    Flag.connection.execute(build_consensus_query_for_task_value("color", "yellow", min_count, threshold))
+    Flag.connection.execute(build_consensus_query_for_task_value("color", "green", min_count, threshold))
+    Flag.connection.execute(build_consensus_query_for_task_value("color", "gray", min_count, threshold))
+    # multicolor
+    Flag.connection.execute(build_consensus_query_for_task_value("color", "blue,green", min_count, threshold))
+    Flag.connection.execute(build_consensus_query_for_task_value("color", "green,yellow", min_count, threshold))
+    Flag.connection.execute(build_consensus_query_for_task_value("color", "blue,pink", min_count, threshold))
+    Flag.connection.execute(build_consensus_query_for_task_value("color", "blue,yellow", min_count, threshold))
+    Flag.connection.execute(build_consensus_query_for_task_value("color", "gray,pink", min_count, threshold))
+    Flag.connection.execute(build_consensus_query_for_task_value("color", "pink,yellow", min_count, threshold))
+    Flag.connection.execute(build_consensus_query_for_task_value("color", "green,pink,yellow", min_count, threshold))
+    Flag.connection.execute(build_consensus_query_for_task_value("color", "green,pink", min_count, threshold))
+    Flag.connection.execute(build_consensus_query_for_task_value("color", "blue,pink,yellow", min_count, threshold))
     # address
-    none_query = Flag.connection.execute(build_consensus_query_for_task_value("address", "NONE", min_count, threshold))
+    Flag.connection.execute(build_consensus_query_for_task_value("address", "NONE", min_count, threshold))
   end
 
   def build_consensus_query_for_task_value(task, value, min_count, threshold)

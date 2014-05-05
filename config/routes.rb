@@ -10,6 +10,11 @@ Webappmini::Application.routes.draw do
   # legacy urls
   get "/building", to: "general#home"
 
+  ### custom admin routes
+
+  # flag listing
+  get "/flags/all/:type", to: "flags#all"
+
   # for session checking
   get "cookie_test", :controller => :general
 
