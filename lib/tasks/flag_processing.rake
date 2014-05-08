@@ -26,6 +26,8 @@ namespace :db do
     Flag.connection.execute(build_consensus_query_for_task_value("color", "blue,pink,yellow", min_count, threshold))
     # address
     Flag.connection.execute(build_consensus_query_for_task_value("address", "NONE", min_count, threshold))
+    # clustered address
+    # coming soon
   end
 
   def build_consensus_query_for_task_value(task, value, min_count, threshold)

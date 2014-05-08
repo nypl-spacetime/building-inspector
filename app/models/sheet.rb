@@ -80,4 +80,57 @@ class Sheet < ActiveRecord::Base
   def flags
     Flag.find_all_by_polygon_id(self.polygons, :order => :created_at)
   end
+
+  def consensus_for_task(task, min_count, threshold)
+    cluster_records = self.clusters_for_task(task)
+    # organize clusters as a hash of arrays (one array per cluster)
+    clusters = {}
+    cluster_records.each do |c|
+      dmn = c["dmn"]
+      if clusters[dmn] == nil
+        clusters[dmn] = []
+      end
+      clusters[dmn].push(c)
+    end
+    # find consensus in cluster for those with 3 or more votes
+    address_consensus = []
+    clusters.each_pair do |elem,c|
+      if c.count < min_count
+        next
+      end
+      total_votes = c.count
+      tally = {}
+      c.each do |vote|
+        value = vote["flag_value"]
+        if tally[value] == nil
+          tally[value] = 0
+        end
+        tally[value] = tally[value] + 1
+      end
+      # sort tally by value
+      sorted = tally.sort_by { |value,vote| vote }
+      winner = sorted.last
+      # check if consensus is above threshold
+      consensus = winner[1].to_f/total_votes.to_f
+      if consensus > threshold
+        winner_mark = {}
+        winner_mark[:latitude] = c[0]["latitude"] # TODO: this should be some sort of average
+        winner_mark[:longitude] = c[0]["longitude"] # TODO: this should be some sort of average
+        winner_mark[:flag_value] = winner[0]
+        winner_mark[:votes] = winner[1]
+        winner_mark[:total_votes] = total_votes
+        address_consensus.push(winner_mark)
+      end
+    end
+    # TODO: find nearest polygon
+    address_consensus
+  end
+
+  def clusters_for_task(task, radius=2)
+    # returns flags clustered by the distance radius (in meters) as a recordset
+    sql = "SELECT * FROM cluster_sheet_flags_for_task(#{radius}, #{self.id}, '#{task}') AS g(dmn integer, id integer, polygon_id integer, flag_value text, latitude numeric, longitude numeric)"
+    r = Flag.connection.execute(sql)
+    r
+  end
+
 end
