@@ -63,6 +63,7 @@ class Flag < ActiveRecord::Base
 		end
 		r[:type] = "Feature"
 		r[:properties] = {}
+		r[:properties][:id] = self[:id]
 		if user != nil
 			r[:properties][:user_id] = user[:user_id]
 		else
