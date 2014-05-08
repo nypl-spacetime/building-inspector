@@ -128,7 +128,8 @@ class Sheet < ActiveRecord::Base
 
   def clusters_for_task(task, radius=2)
     # returns flags clustered by the distance radius (in meters) as a recordset
-    sql = "SELECT * FROM cluster_sheet_flags_for_task(#{radius}, #{self.id}, '#{task}') AS g(dmn integer, id integer, polygon_id integer, flag_value text, latitude numeric, longitude numeric)"
+    # see: /db/sql/cluster_sheet_flags_for_task.sql
+    sql = "SELECT * FROM cluster_sheet_flags_for_task(#{radius}, #{self.id}, '#{task}') AS g(dmn integer, id integer, flag_value text, latitude numeric, longitude numeric)"
     r = Flag.connection.execute(sql)
     r
   end

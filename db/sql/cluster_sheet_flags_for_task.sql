@@ -10,7 +10,7 @@ DECLARE
 BEGIN
 
     DROP TABLE IF EXISTS tmp;
-    EXECUTE format('CREATE TEMPORARY TABLE tmp AS SELECT F.id AS id, F.polygon_id AS polygon_id, F.latitude, F.longitude, F.flag_value, ST_GeometryFromText('''||Concat('POINT(''||','latitude','||'' ''||','longitude','||'')')||''') AS geom FROM flags F, polygons P WHERE F.polygon_id = P.id AND P.sheet_id = %L AND F.flag_type = %L AND F.latitude IS NOT NULL AND F.longitude IS NOT NULL ', sheet_id, task);
+    EXECUTE format('CREATE TEMPORARY TABLE tmp AS SELECT F.id AS id, F.latitude, F.longitude, F.flag_value, ST_GeometryFromText('''||Concat('POINT(''||','latitude','||'' ''||','longitude','||'')')||''') AS geom FROM flags F, polygons P WHERE F.polygon_id = P.id AND P.sheet_id = %L AND F.flag_type = %L AND F.latitude IS NOT NULL AND F.longitude IS NOT NULL ', sheet_id, task);
     ALTER TABLE tmp ADD COLUMN dmn integer;
     ALTER TABLE tmp ADD COLUMN chk boolean DEFAULT FALSE;
     EXECUTE 'UPDATE tmp SET dmn = '||dmn_number||', chk = FALSE WHERE id = (SELECT MIN(id) FROM tmp)';
@@ -39,7 +39,7 @@ BEGIN
     END LOOP;
 
     -- RETURN QUERY EXECUTE 'SELECT ST_ConvexHull(ST_Collect(geom)) FROM tmp GROUP by dmn';
-    RETURN QUERY EXECUTE 'SELECT dmn, id, polygon_id, flag_value, latitude, longitude FROM tmp ORDER BY dmn';
+    RETURN QUERY EXECUTE 'SELECT dmn, id, flag_value, latitude, longitude FROM tmp ORDER BY dmn';
 
     RETURN;
 END
@@ -47,4 +47,4 @@ $$
 LANGUAGE plpgsql;
 
 -- USAGE:
--- SELECT * FROM cluster_sheet_flags_for_task(2, 203, 'address') AS g(dmn integer, id integer, polygon_id integer, flag_value text, latitude numeric, longitude numeric);
+-- SELECT * FROM cluster_sheet_flags_for_task(2, 203, 'address') AS g(dmn integer, id integer, flag_value text, latitude numeric, longitude numeric);
