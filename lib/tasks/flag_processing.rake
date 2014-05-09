@@ -30,7 +30,7 @@ namespace :db do
 
   desc "Process clustered consensus in POLYGONS (more expensive, run nightly)"
   task :calculate_clustered_consensus => :environment do
-    Sheet.process_consensus_for_task('address')
+    Sheet.process_consensus_clusters_for_task('address')
   end
 
   def build_consensus_query_for_task_value(task, value, min_count, threshold)

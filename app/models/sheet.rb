@@ -81,17 +81,17 @@ class Sheet < ActiveRecord::Base
     Flag.find_all_by_polygon_id(self.polygons, :order => :created_at)
   end
 
-  def self.process_consensus_for_task(task)
+  def self.process_consensus_clusters_for_task(task)
     sheets = Sheet.all
     sheets.each do |s|
-      s.save_consensus_for_task(task)
+      s.save_consensus_clusters_for_task(task)
     end
   end
 
-  def save_consensus_for_task(task)
+  def save_consensus_clusters_for_task(task)
     # different name from class method to avoid mistyping
     puts "-- Finding consensus for sheet id: #{self[:id]} --"
-    consensus = self.consensus_for_task(task)
+    consensus = self.consensus_clusters_for_task(task)
     puts "Found #{consensus.count} consensus for task #{task}"
     consensus.each_pair do |elem,c|
       polygon_id = elem.to_i
@@ -103,7 +103,8 @@ class Sheet < ActiveRecord::Base
     end
   end
 
-  def consensus_for_task(task, min_count=3, threshold=0.75)
+  def consensus_clusters_for_task(task, min_count=3, threshold=0.75)
+    # NOTE: only working for task = 'address'
     cluster_records = self.clusters_for_task(task)
     # organize clusters as a hash of arrays (one array per cluster)
     clusters = {}
@@ -124,12 +125,21 @@ class Sheet < ActiveRecord::Base
       if c.count < min_count
         next
       end
-      total_votes = c.count
+      total_votes = 0
       tally = {} # saves the address popularity
       ids = {} # saves the polygon_id popularity
+      session_ids = []
       c.each do |vote|
         value = vote["flag_value"]
         id = vote["polygon_id"]
+        sid = vote["session_id"]
+        # ignore vote if session_id already exists
+        # to reduce trolling
+        if session_ids.index(sid) != nil
+          next
+        end
+        session_ids.push(sid)
+        # now tally values
         if tally[value] == nil
           tally[value] = 0
         end
@@ -138,6 +148,11 @@ class Sheet < ActiveRecord::Base
         end
         tally[value] = tally[value] + 1
         ids[id] = ids[id] + 1
+        total_votes = total_votes + 1
+      end
+      # in case there was trolling
+      if total_votes < min_count
+        next
       end
       # sort tally by value
       tally_sorted = tally.sort_by { |value,votes| votes }
@@ -175,9 +190,10 @@ class Sheet < ActiveRecord::Base
   end
 
   def clusters_for_task(task, radius=3)
+    # NOTE: only working for task = 'address'
     # returns flags clustered by the distance radius (in meters) as a recordset
     # see: /db/sql/cluster_sheet_flags_for_task.sql
-    sql = "SELECT * FROM cluster_sheet_flags_for_task(#{radius}, #{self.id}, '#{task}') AS g(dmn integer, id integer, polygon_id integer, flag_value text, latitude numeric, longitude numeric)"
+    sql = "SELECT * FROM cluster_sheet_flags_for_task(#{radius}, #{self.id}, '#{task}') AS g(dmn integer, id integer, polygon_id integer, session_id varchar, flag_value text, latitude numeric, longitude numeric)"
     r = Flag.connection.execute(sql)
     r
   end
