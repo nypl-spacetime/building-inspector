@@ -11,18 +11,21 @@ class FlagsController < ApplicationController
     @total = Flag.count
     @total_since_v2 = Flag.where("created_at > '2014-04-21'").count
 
-    # @unique_address = Flag.select("DISTINCT polygon_id").where(:flag_type => 'address').count
-    # @unique_geometry = Flag.select("DISTINCT polygon_id").where(:flag_type => 'geometry').count
-    # @unique_polygonfix = Flag.select("DISTINCT polygon_id").where(:flag_type => 'polygonfix').count
-    # @unique_color = Flag.select("DISTINCT polygon_id").where(:flag_type => 'color').count
-
-    # @total_polygons = Polygon.all.count
-    # @total_fix = Consensuspolygon.where(:consensus => 'fix').count
-    # @total_yes = Consensuspolygon.where(:consensus => 'yes').count
-
-
     respond_to do |format|
       format.html # index.html.erb
+      format.json { render json: @flags }
+    end
+  end
+
+  def progress
+    @counts = Flag.select(:polygon_id).uniq.group(:flag_type).count
+
+    @total_polygons = Polygon.all.count
+    @total_fix = Consensuspolygon.where(:consensus => 'fix').count
+    @total_yes = Consensuspolygon.where(:consensus => 'yes').count
+
+    respond_to do |format|
+      format.html # consensus.html.erb
       format.json { render json: @flags }
     end
   end
