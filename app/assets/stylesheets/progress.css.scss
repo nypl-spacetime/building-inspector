@@ -1,8 +1,4 @@
-@import "lib/css3-mixins";
-@import "lib/button-mixins";
-@import "compass/utilities/general/clearfix";
-@import "compass/css3/transform";
-@import "variables";
+@import "meta_include";
 @import "score";
 
 #link-progress-close {
