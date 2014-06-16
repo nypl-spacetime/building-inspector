@@ -1,3 +1,6 @@
+-- example clustering query/algo
+-- based on http://gis.stackexchange.com/a/11807/18778
+
 CREATE OR REPLACE FUNCTION get_domains_n(lname varchar, lat varchar, lon varchar, gid varchar, radius numeric, filtercol varchar, filterval varchar, excludecol varchar, excludeval varchar)
     RETURNS SETOF record AS
 $$
