@@ -22,6 +22,9 @@ GEM
       activesupport (= 3.2.13)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
+    activerecord-postgis-adapter (0.6.6)
+      activerecord (~> 3.0)
+      rgeo-activerecord (~> 0.5.0)
     activeresource (3.2.13)
       activemodel (= 3.2.13)
       activesupport (= 3.2.13)
@@ -153,6 +156,11 @@ GEM
       ffi (>= 0.5.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    rgeo (0.3.20)
+    rgeo-activerecord (0.5.0)
+      activerecord (>= 3.0.3)
+      arel (>= 2.0.6)
+      rgeo (>= 0.3.20)
     sass (3.3.0.rc.4)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -186,6 +194,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-postgis-adapter
   animate
   coffee-rails (~> 3.2.1)
   compass-rails
