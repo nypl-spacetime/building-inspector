@@ -72,12 +72,13 @@ class Polygon
         # dashArray: '1,16'
         fill: false
       onEachFeature: (feature, layer) ->
+        console.log layer
         str = ""
         str += "ID: <a href='/flags/#{feature.properties.id}'>" + feature.properties.id + "</a>" if feature.properties?.id
         str += "<br />" + "User: <a href='/users/#{feature.properties.user_id}'>" + feature.properties.user_id + "</a>" if feature.properties?.user_id
         str += "<br />" + "Session: " + feature.properties.session_id + "</a>" if feature.properties?.session_id
         str += "<br />" + feature.properties.flag_value if feature.properties?.flag_value
-        layer.setIcon(p.markerFlag)
+        layer.setIcon(p.markerFlag) if feature.geometry.type == "Point"
         layer.bindPopup(str,
           offset: L.point(0, -30)
         )
