@@ -56,7 +56,9 @@ As people inspect polygons according to the task (eg. "YES/NO/FIX" for the geome
 
 Each task has a different means to come to consensus. So far, consensus for `geometry`, `color` and basic `address` (value being `NONE`) are implemented. A rake task is available for this in `lib/tasks/flag_processing.rake`:
 
-`rake db:calculate_consensus`
+````
+rake db:calculate_consensus
+````
 
 This task should be scheduled to execute regularly (say, every ten minutes). New consensus generation for other tasks is being implemented.
 
