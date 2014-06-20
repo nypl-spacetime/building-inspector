@@ -3,6 +3,7 @@
 Authors: [Mauricio Giraldo Arteaga] / NYPL Labs
 
 - [Data ingest](#ingest)
+- [Consensus generation](#consensus)
 - [API querying](#api)
 
 ### <a name="ingest"></a>Data ingest
@@ -48,6 +49,16 @@ This imports polygons from a file `public/files/SOMEID-traced.json` into the dat
 `rake data_import:ingest_centroids_for_sheet id=SOMEID force=true`
 
 This updates the polygon centroids for a given `sheet_id` from a file `public/files/SOMEID-traced.json` **replacing** any existing polygon centroids (not the polygons themselves).
+
+### <a name="consensus"></a>Consensus generation
+
+As people inspect polygons according to the task (eg. "YES/NO/FIX" for the geometry task) they are essentially casting a vote alongside fellow inspectors. We show the same polygon and task to several people and tally up those votes to decide whether they agree. If they do, that polygon is removed from the pool for that given task.
+
+Each task has a different means to come to consensus. So far, consensus for `geometry`, `color` and basic `address` (value being `NONE`) are implemented. A rake task is available for this in `lib/tasks/flag_processing`:
+
+`rake db:calculate_consensus`
+
+This task should be scheduled to execute regularly (say, every ten minutes). New consensus generation for other tasks is being implemented.
 
 ### <a name="api"></a>API querying
 
