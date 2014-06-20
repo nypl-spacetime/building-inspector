@@ -54,7 +54,7 @@ This updates the polygon centroids for a given `sheet_id` from a file `public/fi
 
 As people inspect polygons according to the task (eg. "YES/NO/FIX" for the geometry task) they are essentially casting a vote alongside fellow inspectors. We show the same polygon and task to several people and tally up those votes to decide whether they agree. If they do, that polygon is removed from the pool for that given task.
 
-Each task has a different means to come to consensus. So far, consensus for `geometry`, `color` and basic `address` (value being `NONE`) are implemented. A rake task is available for this in `lib/tasks/flag_processing`:
+Each task has a different means to come to consensus. So far, consensus for `geometry`, `color` and basic `address` (value being `NONE`) are implemented. A rake task is available for this in `lib/tasks/flag_processing.rake`:
 
 `rake db:calculate_consensus`
 
