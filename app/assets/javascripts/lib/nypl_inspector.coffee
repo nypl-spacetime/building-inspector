@@ -1,8 +1,8 @@
 class @Inspector
 
   constructor: (options) ->
-    # HACK: testing for IE 10 or earlier
-    match = /Trident\/6.0/g.test(navigator.userAgent)
+    # HACK: testing for IE 9 or earlier
+    match = /Trident\/5.0/g.test(navigator.userAgent)
     if match # detect trident engine so IE
         $("#ie8").show()
 
