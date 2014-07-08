@@ -64,10 +64,13 @@ class @Inspector
       minZoom: 12
       maxZoom: 21
       dragging: @options.draggableMap
+      tileLayer: # added this because maptiles.nypl does not support retina yet
+        detectRetina: false
     )
 
     @overlay2 = L.mapbox.tileLayer('https://s3.amazonaws.com/maptiles.nypl.org/860/860spec.json',
       zIndex: 3
+      detectRetina: false # added this because maptiles.nypl does not support retina yet
     ).addTo(@map)
 
     L.control.zoom(

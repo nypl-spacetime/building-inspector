@@ -46,10 +46,12 @@ class @Progress
 
     @overlay = L.mapbox.tileLayer('https://s3.amazonaws.com/maptiles.nypl.org/859/859spec.json',
       zIndex: 2
+      detectRetina: false # added this because maptiles.nypl does not support retina yet
     ).addTo(@map)
 
     @overlay2 = L.mapbox.tileLayer('https://s3.amazonaws.com/maptiles.nypl.org/860/860spec.json',
       zIndex: 3
+      detectRetina: false # added this because maptiles.nypl does not support retina yet
     ).addTo(@map)
 
     @zoomControl = L.control.zoom(
