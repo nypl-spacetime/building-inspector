@@ -1,0 +1,7 @@
+<h1>Flag progress</h1>
+<p><strong>Unique polygons per task:</strong> (polygons with <em>at least one</em> flag of the given type)
+<br /><strong>Checker:</strong> <%= number_with_delimiter(@counts["geometry"]) %> (<%= (@counts["geometry"].to_f/@total_polygons.to_f * 100).to_i %>%)
+<br /><strong>Address:</strong> <%= number_with_delimiter(@counts["address"]) %> (<%= (@counts["address"].to_f/@total_yes.to_f * 100).to_i %>% of YESes)
+<br /><strong>Color:</strong> <%= number_with_delimiter(@counts["color"]) %> (<%= (@counts["color"].to_f/@total_yes.to_f * 100).to_i %>% of YESes)
+<br /><strong>Fixer:</strong> <%= number_with_delimiter(@counts["polygonfix"]) %> (<%= (@counts["polygonfix"].to_f/@total_fix.to_f * 100).to_i %>% of FIXes)
+</p>

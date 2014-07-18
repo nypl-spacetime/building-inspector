@@ -2,8 +2,9 @@
   <li><%= link_to "Home", "/" %></li>
   <li><%= link_to "Users", "/users" %></li>
 	<li><%= link_to "Sheets", "/sheets" %></li>
-	<li><%= link_to "Polygons", "/polygons" %></li>
+  <li><%= link_to "Polygons", "/polygons" %></li>
 	<li><%= link_to "Flags", "/flags" %></li>
+  <!-- <li><%= link_to "Flag progress", "/flag_progress" %></li> -->
 <% if user_signed_in? %>
 <li>
 <%= current_user.email %> •

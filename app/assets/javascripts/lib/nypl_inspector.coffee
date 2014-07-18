@@ -1,8 +1,8 @@
 class @Inspector
 
   constructor: (options) ->
-    # HACK: testing for IE 10 or earlier
-    match = /Trident\/6.0/g.test(navigator.userAgent)
+    # HACK: testing for IE 9 or earlier
+    match = /Trident\/5.0/g.test(navigator.userAgent)
     if match # detect trident engine so IE
         $("#ie8").show()
 
@@ -64,10 +64,13 @@ class @Inspector
       minZoom: 12
       maxZoom: 21
       dragging: @options.draggableMap
+      tileLayer: # added this because maptiles.nypl does not support retina yet
+        detectRetina: false
     )
 
     @overlay2 = L.mapbox.tileLayer('https://s3.amazonaws.com/maptiles.nypl.org/860/860spec.json',
       zIndex: 3
+      detectRetina: false # added this because maptiles.nypl does not support retina yet
     ).addTo(@map)
 
     L.control.zoom(

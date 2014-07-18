@@ -1,9 +1,6 @@
-@import "lib/css3-mixins";
-@import "lib/button-mixins";
-@import "variables";
+@import "meta_include";
 @import "compass";
 @import "compass/css3/transform";
-@import "compass/utilities/general/clearfix";
 @import "animate";
 @import "partials/home-explained";
 @import "partials/home-slides";
