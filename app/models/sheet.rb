@@ -90,21 +90,43 @@ class Sheet < ActiveRecord::Base
 
   def save_consensus_clusters_for_task(task)
     # different name from class method to avoid mistyping
-    puts "-- Finding consensus for sheet id: #{self[:id]} --"
-    consensus = self.consensus_clusters_for_task(task)
-    puts "Found #{consensus.count} consensus for task #{task}"
-    consensus.each_pair do |elem,c|
-      polygon_id = elem.to_i
-      cp = Consensuspolygon.find_or_initialize_by_polygon_id_and_task(:polygon_id => polygon_id, :task => task)
-      cp[:consensus] = c.to_json
-      if !cp.save
-        puts "    could not save consensus with params: #{params}"
+    puts "-- Finding #{task} consensus for sheet id: #{self[:id]} --"
+    if task == "address"
+      address_consensus = self.consensus_clusters_for_address
+      puts "Found #{address_consensus.count} consensus for task #{task}"
+      address_consensus.each_pair do |elem,c|
+        polygon_id = elem.to_i
+        cp = Consensuspolygon.find_or_initialize_by_polygon_id_and_task(:polygon_id => polygon_id, :task => task)
+        cp[:consensus] = c.to_json
+        if !cp.save
+          puts "===============  Could not save #{task} consensus with params: #{params}"
+        end
+      end
+    elsif task == "polygonfix"
+      # get all polygons that have 3 or more polygonfix flags
+      flags = Flag.flags_for_sheet_for_task(self[:id])
+      pids = flags.map {|fl| fl["polygon_id"].to_i}
+      polys = []
+      pids.each do |pid|
+        polyflags = flags.select { |fl| fl["polygon_id"] = pid }
+        features = polyflags.map { |item| { :type => "Feature", :properties => { :id => pid }, :geometry => { :type=>"Polygon", :coordinates => JSON.parse(item["flag_value"]) } } }
+        geo = { :type => "FeatureCollection", :features => features }
+        consensus = GeoJsonUtils.calculate_polygonfix_consensus(geo.to_json)
+        # save it
+        cp = Consensuspolygon.find_or_initialize_by_polygon_id_and_task(:polygon_id => pid, :task => task)
+        cp[:consensus] = consensus.to_json
+        if !cp.save
+          puts "===============  Could not save #{task} consensus with params: #{params}"
+        end
       end
     end
   end
 
-  def consensus_clusters_for_task(task, min_count=3, threshold=0.75)
-    # NOTE: only working for task = 'address'
+  def calculate_polygonfix_consensus(geo)
+  end
+
+  def consensus_clusters_for_address(min_count=3, threshold=0.75)
+    task = 'address'
     cluster_records = self.clusters_for_task(task)
     # organize clusters as a hash of arrays (one array per cluster)
     clusters = {}

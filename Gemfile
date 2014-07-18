@@ -28,6 +28,12 @@ gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'figaro'
 
+# for polygonfix shape consensus
+gem 'rgeo'
+gem 'rgeo-geojson'
+gem 'dbscan'
+# end shape consensus
+
 # gem 'introjs-rails'
 
 # Gems used only for assets and not required
