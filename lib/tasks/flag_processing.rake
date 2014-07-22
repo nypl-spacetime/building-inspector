@@ -28,9 +28,14 @@ namespace :db do
     Flag.connection.execute(build_consensus_query_for_task_value("address", "NONE", min_count, threshold))
   end
 
-  desc "Process clustered consensus in POLYGONS (more expensive, run nightly)"
-  task :calculate_clustered_consensus => :environment do
+  desc "Process clustered consensus in ADDRESSES (more expensive, run nightly)"
+  task :calculate_address_consensus => :environment do
     Sheet.process_consensus_clusters_for_task('address')
+  end
+
+  desc "Process clustered consensus in POLYGONFIX (more expensive, run nightly)"
+  task :calculate_polygonfix_consensus => :environment do
+    Sheet.process_consensus_clusters_for_task('polygonfix')
   end
 
   def build_consensus_query_for_task_value(task, value, min_count, threshold)

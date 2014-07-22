@@ -1,5 +1,34 @@
 class GeoJsonUtils
 
+  def self.calculate_polygonfix_consensus(geojson)
+    # TODO: still lacks a more robust validation/checking
+    output = []
+    geom = parse(geojson)
+    centroids = get_all_centroids(geom)
+    centroid_clusters = cluster_centroids(centroids)
+    centroid_clusters.each do |ccluster|
+      cluster = ccluster[1] # only the set of latlons
+      sub_geom = get_polys_for_centroid_cluster(cluster, centroids, geom)
+      next if sub_geom.size == 0
+      original_points = get_all_poly_points(sub_geom)
+      next if original_points == nil
+      clusters = cluster_points(original_points)
+      next if !validate_clusters(clusters, original_points)
+      mean_poly = get_mean_poly(clusters)
+      next if mean_poly == {}
+      connections = connect_clusters(clusters, original_points)
+      next if connections == nil || connections == {}
+      poly = connect_mean_poly(mean_poly, connections)
+      next if poly == nil || poly.count == 0
+      output.push(poly)
+    end
+    return output
+  end
+
+  def self.parse(json)
+    RGeo::GeoJSON.decode(json, :json_parser => :json)
+  end
+
   def self.get_centroid(poly_feature)
     return if (poly_feature.geometry.geometry_type.type_name != "Polygon")
     c = poly_feature.geometry.centroid
@@ -111,7 +140,9 @@ class GeoJsonUtils
             cluster_votes[connected_cluster] += 1
           end
         end
-        connections[cluster[0]] = cluster_votes.sort_by{|k, v| v}.reverse[0][0]
+        connections[cluster[0]] = cluster_votes.sort_by{|k, v| v}
+        next if connections[cluster[0]].size == 0
+        connections[cluster[0]] = connections[cluster[0]].reverse[0][0]
       end
     end
     return connections
@@ -141,6 +172,7 @@ class GeoJsonUtils
     connected = []
     # TODO: verify circularity eg: 0 => 1 => 2 => 3 => 4 => 0
     sorted = sort_connections(connections)
+    return nil if sorted == nil
     sorted.each do |c|
       connected.push([mean_poly[c][0], mean_poly[c][1]])
     end
@@ -148,25 +180,6 @@ class GeoJsonUtils
     first = sorted[0]
     connected.push([mean_poly[first][0], mean_poly[first][1]])
     return connected
-  end
-
-  def self.calculate_polygonfix_consensus(geojson)
-    output = []
-    geom = RGeo::GeoJSON.decode(geojson, :json_parser => :json)
-    centroids = get_all_centroids(geom)
-    centroid_clusters = cluster_centroids(centroids)
-    centroid_clusters.each do |ccluster|
-      cluster = ccluster[1] # only the set of latlons
-      sub_geom = get_polys_for_centroid_cluster(cluster, centroids, geom)
-      original_points = get_all_poly_points(sub_geom)
-      clusters = cluster_points(original_points)
-      next if !validate_clusters(clusters, original_points)
-      mean_poly = get_mean_poly(clusters)
-      connections = connect_clusters(clusters, original_points)
-      poly = connect_mean_poly(mean_poly, connections)
-      output.push(poly)
-    end
-    return output
   end
 
 end

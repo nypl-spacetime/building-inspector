@@ -48,6 +48,24 @@ class Polygon < ActiveRecord::Base
     { :type => "FeatureCollection", :features => features }.to_json
   end
 
+  def consensus_polygonfix
+    c = poly_consensus("polygonfix")
+    if c == "N/A"
+      return c
+    end
+    features = []
+    c_array = JSON.parse(c)
+    c_array.each do |feature|
+      r = {}
+      r[:type] = "Feature"
+      r[:properties] = {}
+      r[:properties][:id] = self[:id]
+      r[:geometry] = { :type => "Polygon", :coordinates => [feature] }
+      features.push(r)
+    end
+    { :type => "FeatureCollection", :features => features }.to_json
+  end
+
   def as_feature
      { :type => "FeatureCollection", :features => [JSON.parse(self[:vectorizer_json])] }
   end

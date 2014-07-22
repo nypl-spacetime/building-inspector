@@ -59,7 +59,8 @@ class Flag < ActiveRecord::Base
   end
 
 	def as_feature
-		user = Usersession.where(:session_id => self[:session_id]).first
+		# commented out the query for user to improve performance
+		# user = Usersession.where(:session_id => self[:session_id]).first
 		r = {}
 		if self[:latitude] == nil || self[:longitude] == nil
 			p = self.polygon
@@ -69,11 +70,11 @@ class Flag < ActiveRecord::Base
 		r[:type] = "Feature"
 		r[:properties] = {}
 		r[:properties][:id] = self[:id]
-		if user != nil
-			r[:properties][:user_id] = user[:user_id]
-		else
+		# if user != nil
+		# 	r[:properties][:user_id] = user[:user_id]
+		# else
 			r[:properties][:session_id] = self[:session_id]
-		end
+		# end
 		if self[:flag_type] == 'polygonfix' && self[:flag_value] != "NOFIX"
 			r[:geometry] = { :type => "Polygon", :coordinates => JSON.parse(self[:flag_value]) }
 		else

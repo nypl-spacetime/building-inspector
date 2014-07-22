@@ -2,10 +2,10 @@
   <style type="text/css">
     #map {
       width: 600px;
-      height: 300px;
+      height: 500px;
     }
   </style>
-  <%= javascript_include_tag "admin/polygon", {:id => "polydata", "data-map" => "#{@map.to_json}", "data-flags" => "#{@flags.to_json}", "data-addresses" => "#{@polygon.consensus_address}"} %>
+  <%= javascript_include_tag "admin/polygon", {:id => "polydata", "data-map" => "#{@map.to_json}", "data-flags" => "#{@flags.to_json}", "data-addresses" => "#{@polygon.consensus_address}", "data-polygonfix" => "#{@polygon.consensus_polygonfix}"} %>
 <% end %>
 
 <p id="notice"><%= notice %></p>

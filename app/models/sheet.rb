@@ -105,14 +105,16 @@ class Sheet < ActiveRecord::Base
     elsif task == "polygonfix"
       # get all polygons that have 3 or more polygonfix flags
       flags = Flag.flags_for_sheet_for_task(self[:id])
-      pids = flags.map {|fl| fl["polygon_id"].to_i}
+      pids = flags.map {|fl| fl["polygon_id"]}.uniq
       polys = []
       pids.each do |pid|
-        polyflags = flags.select { |fl| fl["polygon_id"] = pid }
+        polyflags = flags.select { |fl| fl["polygon_id"] == pid && fl["flag_value"] != "NOFIX" }
         features = polyflags.map { |item| { :type => "Feature", :properties => { :id => pid }, :geometry => { :type=>"Polygon", :coordinates => JSON.parse(item["flag_value"]) } } }
         geo = { :type => "FeatureCollection", :features => features }
         consensus = GeoJsonUtils.calculate_polygonfix_consensus(geo.to_json)
+        next if consensus.count == 0 # if not a polygon
         # save it
+        puts " /// saving consensus for polygon id: #{pid}"
         cp = Consensuspolygon.find_or_initialize_by_polygon_id_and_task(:polygon_id => pid, :task => task)
         cp[:consensus] = consensus.to_json
         if !cp.save

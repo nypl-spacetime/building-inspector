@@ -27,6 +27,7 @@ class Polygon
     @map.on 'load', () ->
       p.showPolygon()
       p.showFlags()
+      p.showShapeConsensus()
       p.showAddresses()
 
   showPolygon: () =>
@@ -41,9 +42,9 @@ class Polygon
     json = L.geoJson(data,
       style: (feature) ->
         color: '#b00'
-        weight: 5
+        weight: 2
         opacity: 1
-        dashArray: '1,16'
+        dashArray: '1,8'
         fill: false
     )
 
@@ -67,12 +68,45 @@ class Polygon
     json = L.geoJson(data,
       style: (feature) ->
         color: '#ff0'
-        weight: 1
+        weight: 2
+        opacity: .3
+        # dashArray: '1,16'
+        fill: false
+      onEachFeature: (feature, layer) ->
+        # console.log layer
+        str = ""
+        str += "ID: <a href='/flags/#{feature.properties.id}'>" + feature.properties.id + "</a>" if feature.properties?.id
+        str += "<br />" + "User: <a href='/users/#{feature.properties.user_id}'>" + feature.properties.user_id + "</a>" if feature.properties?.user_id
+        str += "<br />" + "Session: " + feature.properties.session_id + "</a>" if feature.properties?.session_id
+        str += "<br />" + feature.properties.flag_value if feature.properties?.flag_value
+        layer.setIcon(p.markerFlag) if feature.geometry.type == "Point"
+        layer.bindPopup(str,
+          offset: L.point(0, -30)
+        )
+    )
+
+    bounds = json.getBounds()
+    json.addTo(m)
+
+  showShapeConsensus: () =>
+    data = $('#polydata').data("polygonfix")
+
+    return if !data or data == "N/A" or data.features.length==0
+
+    m = @map
+
+    p = @
+    # console.log data
+
+    json = L.geoJson(data,
+      style: (feature) ->
+        color: '#f0f'
+        weight: 2
         opacity: 1
         # dashArray: '1,16'
         fill: false
       onEachFeature: (feature, layer) ->
-        console.log layer
+        # console.log layer
         str = ""
         str += "ID: <a href='/flags/#{feature.properties.id}'>" + feature.properties.id + "</a>" if feature.properties?.id
         str += "<br />" + "User: <a href='/users/#{feature.properties.user_id}'>" + feature.properties.user_id + "</a>" if feature.properties?.user_id
