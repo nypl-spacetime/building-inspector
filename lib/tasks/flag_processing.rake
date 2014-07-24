@@ -33,7 +33,7 @@ namespace :db do
     Sheet.process_consensus_clusters_for_task('address')
   end
 
-  desc "Process clustered consensus in POLYGONFIX (more expensive, run nightly)"
+  desc "Process clustered consensus in POLYGONFIX (somewhat expensive, run nightly)"
   task :calculate_polygonfix_consensus => :environment do
     Sheet.process_consensus_clusters_for_task('polygonfix')
   end

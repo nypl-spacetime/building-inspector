@@ -96,13 +96,12 @@ class Polygon
     m = @map
 
     p = @
-    # console.log data
 
     json = L.geoJson(data,
       style: (feature) ->
         color: '#f0f'
         weight: 2
-        opacity: 1
+        opacity: .75
         # dashArray: '1,16'
         fill: false
       onEachFeature: (feature, layer) ->

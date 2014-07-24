@@ -11,7 +11,7 @@ gem 'newrelic_rpm'
 
 gem 'pg'
 
-gem 'activerecord-postgis-adapter'
+# gem 'activerecord-postgis-adapter'
 
 gem 'compass-rails'
 

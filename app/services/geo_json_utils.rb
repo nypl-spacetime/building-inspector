@@ -182,6 +182,10 @@ class GeoJsonUtils
     return connected
   end
 
+  def self.to_geojson(consensus, id)
+    {:type => "FeatureCollection", :features => consensus.map { |f| {:type => "Feature", :properties => { :polygon_id => id }, :geometry => { :type => "Polygon", :coordinates =>[f] } } } }.to_json
+  end
+
 end
 
 # convenience methods for averaging

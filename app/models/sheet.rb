@@ -114,11 +114,11 @@ class Sheet < ActiveRecord::Base
         consensus = GeoJsonUtils.calculate_polygonfix_consensus(geo.to_json)
         next if consensus.count == 0 # if not a polygon
         # save it
-        puts " /// saving consensus for polygon id: #{pid}"
         cp = Consensuspolygon.find_or_initialize_by_polygon_id_and_task(:polygon_id => pid, :task => task)
-        cp[:consensus] = consensus.to_json
+        geojson = GeoJsonUtils.to_geojson(consensus, pid)
+        cp[:consensus] = geojson
         if !cp.save
-          puts "===============  Could not save #{task} consensus with params: #{params}"
+          puts "!=!=!=!=!=!=!=!=! Could not save #{task} consensus with params: #{params}"
         end
       end
     end
@@ -214,12 +214,16 @@ class Sheet < ActiveRecord::Base
   end
 
   def clusters_for_task(task, radius=3)
-    # NOTE: only working for task = 'address'
-    # returns flags clustered by the distance radius (in meters) as a recordset
-    # see: /db/sql/cluster_sheet_flags_for_task.sql
-    sql = "SELECT * FROM cluster_sheet_flags_for_task(#{radius}, #{self.id}, '#{task}') AS g(dmn integer, id integer, polygon_id integer, session_id varchar, flag_value text, latitude numeric, longitude numeric)"
-    r = Flag.connection.execute(sql)
-    r
+    return []
   end
+
+  # def clusters_for_task(task, radius=3)
+  #   # NOTE: only working for task = 'address'
+  #   # returns flags clustered by the distance radius (in meters) as a recordset
+  #   # see: /db/sql/cluster_sheet_flags_for_task.sql
+  #   sql = "SELECT * FROM cluster_sheet_flags_for_task(#{radius}, #{self.id}, '#{task}') AS g(dmn integer, id integer, polygon_id integer, session_id varchar, flag_value text, latitude numeric, longitude numeric)"
+  #   r = Flag.connection.execute(sql)
+  #   r
+  # end
 
 end
