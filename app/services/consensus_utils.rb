@@ -7,17 +7,18 @@ class ConsensusUtils
     centroids = get_all_centroids(geom)
     centroid_clusters = cluster_centroids(centroids)
     centroid_clusters.each do |ccluster|
+      next if ccluster[0] == -1
       cluster = ccluster[1] # only the set of latlons
       sub_geom = get_polys_for_centroid_cluster(cluster, centroids, geom)
       next if sub_geom.size == 0
       original_points = get_all_poly_points(sub_geom)
       next if original_points == nil
       unique_points = original_points.map{|poly| poly[1..-1]}
-      clusters = cluster_points(unique_points)
-      next if !validate_clusters(clusters, original_points)
-      mean_poly = get_mean_poly(clusters)
+      vertex_clusters = cluster_points(unique_points)
+      next if !validate_clusters(vertex_clusters, original_points)
+      mean_poly = get_mean_poly(vertex_clusters)
       next if mean_poly == {}
-      connections = connect_clusters(clusters, original_points)
+      connections = connect_clusters(vertex_clusters, original_points)
       next if connections == nil || connections == {}
       poly = connect_mean_poly(mean_poly, connections)
       next if poly == nil || poly.count == 0

@@ -107,20 +107,6 @@ class Sheet < ActiveRecord::Base
     end
   end
 
-  def calculate_address_consensus_old
-    puts "Processing ADDRESS consensus for sheet #{self[:id]}"
-    address_consensus = self.consensus_clusters_for_address
-    puts "Found #{address_consensus.count} consensus for task address"
-    address_consensus.each_pair do |elem,c|
-      polygon_id = elem.to_i
-      cp = Consensuspolygon.find_or_initialize_by_polygon_id_and_task(:polygon_id => polygon_id, :task => 'address')
-      cp[:consensus] = c.to_json
-      if !cp.save
-        puts "===============  Could not save address consensus with params: #{params}"
-      end
-    end
-  end
-
   def calculate_polygonfix_consensus
     # get all polygons that have 3 or more polygonfix flags
     puts "Processing POYGONFIX consensus for sheet #{self[:id]}"
@@ -142,104 +128,5 @@ class Sheet < ActiveRecord::Base
       end
     end
   end
-
-  def consensus_clusters_for_address(min_count=3, threshold=0.75)
-    task = 'address'
-    cluster_records = self.clusters_for_task(task)
-    # organize clusters as a hash of arrays (one array per cluster)
-    clusters = {}
-    cluster_records.each do |c|
-      dmn = c["dmn"]
-      if clusters[dmn] == nil
-        clusters[dmn] = []
-      end
-      clusters[dmn].push(c)
-    end
-    # find consensus in cluster for those with 3 or more votes
-    # NOTE:
-    # since some flags will not belong to the 'right' polygon_id
-    # we find the most popular polygon_id from the cluster
-    # so we avoid doing a BIG GIS nearest neighbor calculation
-    address_consensus = {}
-    clusters.each_pair do |elem,c|
-      if c.count < min_count
-        next
-      end
-      total_votes = 0
-      tally = {} # saves the address popularity
-      ids = {} # saves the polygon_id popularity
-      session_ids = []
-      c.each do |vote|
-        value = vote["flag_value"]
-        id = vote["polygon_id"]
-        sid = vote["session_id"]
-        # ignore vote if session_id already exists
-        # to reduce trolling
-        if session_ids.index(sid) != nil
-          next
-        end
-        session_ids.push(sid)
-        # now tally values
-        if tally[value] == nil
-          tally[value] = 0
-        end
-        if ids[id] == nil
-          ids[id] = 0
-        end
-        tally[value] = tally[value] + 1
-        ids[id] = ids[id] + 1
-        total_votes = total_votes + 1
-      end
-      # in case there was trolling
-      if total_votes < min_count
-        next
-      end
-      # sort tally by value
-      tally_sorted = tally.sort_by { |value,votes| votes }
-      # sort tally by value
-      ids_sorted = ids.sort_by { |id,count| count }
-      # and the winner is...
-      winner_address = tally_sorted.last
-      winner_id = ids_sorted.last
-
-      votes = winner_address[1].to_i
-      consensus = votes.to_f/total_votes.to_f
-      polygon_id = winner_id[0].to_i
-      flag_value = winner_address[0]
-      latitude = c[0]["latitude"] # TODO: this should be some sort of average
-      longitude = c[0]["longitude"] # TODO: this should be some sort of average
-
-      # check if consensus is above threshold
-      if consensus > threshold
-        if address_consensus[polygon_id.to_s] == nil
-          address_consensus[polygon_id.to_s] = []
-        end
-        winner_mark = {}
-        winner_mark[:latitude] = latitude
-        winner_mark[:longitude] = longitude
-        winner_mark[:flag_value] = flag_value
-        winner_mark[:votes] = votes
-        winner_mark[:total_votes] = total_votes
-        winner_mark[:polygon_id] = polygon_id
-        address_consensus[polygon_id.to_s].push(winner_mark)
-      end
-    end
-    # now we group the addresses by polygons (many addresses - 1 polygon)
-
-    address_consensus
-  end
-
-  def clusters_for_task(task, radius=3)
-    return []
-  end
-
-  # def clusters_for_task(task, radius=3)
-  #   # NOTE: only working for task = 'address'
-  #   # returns flags clustered by the distance radius (in meters) as a recordset
-  #   # see: /db/sql/cluster_sheet_flags_for_task.sql
-  #   sql = "SELECT * FROM cluster_sheet_flags_for_task(#{radius}, #{self.id}, '#{task}') AS g(dmn integer, id integer, polygon_id integer, session_id varchar, flag_value text, latitude numeric, longitude numeric)"
-  #   r = Flag.connection.execute(sql)
-  #   r
-  # end
 
 end
