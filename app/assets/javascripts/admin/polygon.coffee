@@ -128,7 +128,7 @@ class Polygon
     m = @map
 
     p = @
-    # console.log data
+    console.log data
 
     json = L.geoJson(data,
       style: (feature) ->
@@ -138,6 +138,7 @@ class Polygon
         # dashArray: '1,16'
         fill: false
       onEachFeature: (feature, layer) ->
+        console.log feature
         str = ""
         str += "<strong>" + feature.properties.flag_value + "</strong>"
         str += "<br />" + feature.properties.votes + "/" + feature.properties.total_votes

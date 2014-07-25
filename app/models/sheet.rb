@@ -84,47 +84,63 @@ class Sheet < ActiveRecord::Base
   def self.process_consensus_clusters_for_task(task)
     sheets = Sheet.all
     sheets.each do |s|
-      s.save_consensus_clusters_for_task(task)
-    end
-  end
-
-  def save_consensus_clusters_for_task(task)
-    # different name from class method to avoid mistyping
-    puts "-- Finding #{task} consensus for sheet id: #{self[:id]} --"
-    if task == "address"
-      address_consensus = self.consensus_clusters_for_address
-      puts "Found #{address_consensus.count} consensus for task #{task}"
-      address_consensus.each_pair do |elem,c|
-        polygon_id = elem.to_i
-        cp = Consensuspolygon.find_or_initialize_by_polygon_id_and_task(:polygon_id => polygon_id, :task => task)
-        cp[:consensus] = c.to_json
-        if !cp.save
-          puts "===============  Could not save #{task} consensus with params: #{params}"
-        end
-      end
-    elsif task == "polygonfix"
-      # get all polygons that have 3 or more polygonfix flags
-      flags = Flag.flags_for_sheet_for_task(self[:id])
-      pids = flags.map {|fl| fl["polygon_id"]}.uniq
-      polys = []
-      pids.each do |pid|
-        polyflags = flags.select { |fl| fl["polygon_id"] == pid && fl["flag_value"] != "NOFIX" }
-        features = polyflags.map { |item| { :type => "Feature", :properties => { :id => pid }, :geometry => { :type=>"Polygon", :coordinates => JSON.parse(item["flag_value"]) } } }
-        geo = { :type => "FeatureCollection", :features => features }
-        consensus = GeoJsonUtils.calculate_polygonfix_consensus(geo.to_json)
-        next if consensus.count == 0 # if not a polygon
-        # save it
-        cp = Consensuspolygon.find_or_initialize_by_polygon_id_and_task(:polygon_id => pid, :task => task)
-        geojson = GeoJsonUtils.to_geojson(consensus, pid)
-        cp[:consensus] = geojson
-        if !cp.save
-          puts "!=!=!=!=!=!=!=!=! Could not save #{task} consensus with params: #{params}"
-        end
+      if task == "address"
+        s.calculate_address_consensus
+      elsif task == "polygonfix"
+        s.calculate_polygonfix_consensus
       end
     end
   end
 
-  def calculate_polygonfix_consensus(geo)
+  def calculate_address_consensus
+    puts "Processing ADDRESS consensus for sheet #{self[:id]}"
+    flags = Flag.flags_for_sheet_for_task(self[:id], "address")
+    address_consensus = ConsensusUtils.calculate_address_consensus(flags)
+    puts "Found #{address_consensus.count} consensus for task address"
+    address_consensus.each_pair do |elem,c|
+      polygon_id = elem
+      cp = Consensuspolygon.find_or_initialize_by_polygon_id_and_task(:polygon_id => polygon_id, :task => 'address')
+      cp[:consensus] = c.to_json
+      if !cp.save
+        puts "===============  Could not save address consensus with params: #{params}"
+      end
+    end
+  end
+
+  def calculate_address_consensus_old
+    puts "Processing ADDRESS consensus for sheet #{self[:id]}"
+    address_consensus = self.consensus_clusters_for_address
+    puts "Found #{address_consensus.count} consensus for task address"
+    address_consensus.each_pair do |elem,c|
+      polygon_id = elem.to_i
+      cp = Consensuspolygon.find_or_initialize_by_polygon_id_and_task(:polygon_id => polygon_id, :task => 'address')
+      cp[:consensus] = c.to_json
+      if !cp.save
+        puts "===============  Could not save address consensus with params: #{params}"
+      end
+    end
+  end
+
+  def calculate_polygonfix_consensus
+    # get all polygons that have 3 or more polygonfix flags
+    puts "Processing POYGONFIX consensus for sheet #{self[:id]}"
+    flags = Flag.flags_for_sheet_for_task_and_threshold(self[:id])
+    pids = flags.map {|fl| fl["polygon_id"]}.uniq
+    polys = []
+    pids.each do |pid|
+      polyflags = flags.select { |fl| fl["polygon_id"] == pid && fl["flag_value"] != "NOFIX" }
+      features = polyflags.map { |item| { :type => "Feature", :properties => { :id => pid }, :geometry => { :type=>"Polygon", :coordinates => JSON.parse(item["flag_value"]) } } }
+      geo = { :type => "FeatureCollection", :features => features }
+      consensus = ConsensusUtils.calculate_polygonfix_consensus(geo.to_json)
+      next if consensus.count == 0 # if not a polygon
+      # save it
+      cp = Consensuspolygon.find_or_initialize_by_polygon_id_and_task(:polygon_id => pid, :task => 'polygonfix')
+      geojson = ConsensusUtils.consensus_to_geojson(consensus, pid)
+      cp[:consensus] = geojson
+      if !cp.save
+        puts "!=!=!=!=!=!=!=!=! Could not save polygonfix consensus with params: #{params}"
+      end
+    end
   end
 
   def consensus_clusters_for_address(min_count=3, threshold=0.75)
