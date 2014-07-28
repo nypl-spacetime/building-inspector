@@ -15,7 +15,7 @@ class ConsensusUtils
       next if original_points == nil
       unique_points = original_points.map{|poly| poly[1..-1]}
       vertex_clusters = cluster_points(unique_points)
-      next if !validate_clusters(vertex_clusters, original_points)
+      next if !validate_clusters(vertex_clusters, unique_points)
       mean_poly = get_mean_poly(vertex_clusters)
       next if mean_poly == {}
       connections = connect_clusters(vertex_clusters, original_points)
@@ -24,6 +24,7 @@ class ConsensusUtils
       next if poly == nil || poly.count == 0
       output.push(poly)
     end
+    return nil if output.count != centroid_clusters.count
     return output
   end
 
@@ -50,7 +51,7 @@ class ConsensusUtils
   def self.cluster_addresses(addresses, epsilon=1.8e-06, min_points=2)
     simple_array = addresses.map { |a| [a["longitude"].to_f, a["latitude"].to_f] }
     dbscan = DBSCAN( simple_array, :epsilon => epsilon, :min_points => min_points, :distance => :euclidean_distance )
-    return dbscan.results
+    return dbscan.results.select{|k,v| k != -1} # omit the non-cluster
   end
 
   def self.address_cluster_consensus(cluster, flags, min_count = 3, threshold = 0.75)
@@ -148,7 +149,7 @@ class ConsensusUtils
 
   def self.cluster_centroids(centroids, epsilon=1.8e-06, min_points=2)
     dbscan = DBSCAN( centroids.map{|c| c[1]}, :epsilon => epsilon, :min_points => min_points, :distance => :euclidean_distance )
-    return dbscan.results
+    return dbscan.results.select{|k,v| k != -1} # omit the non-cluster
   end
 
   # given a list of centroids (lon,lat), find their poly's index in the centroid list (index => lon,lat)
@@ -184,11 +185,10 @@ class ConsensusUtils
   def self.cluster_points(points, epsilon=6e-06, min_points=2)
     #dbscan = DBSCAN( unique_points.flatten(1), :epsilon => 3.5e-6, :min_points => 1, :distance => :haversine_distance2 )
     dbscan = DBSCAN( points.flatten(1), :epsilon => epsilon, :min_points => min_points, :distance => :euclidean_distance )
-    return dbscan.results
+    return dbscan.results.select{|k,v| k != -1} # omit the non-cluster
   end
 
-  def self.validate_clusters(clusters, original_points)
-    unique_points = original_points.map{|poly| poly[1..-1]}
+  def self.validate_clusters(clusters, unique_points)
     average = (unique_points.flatten.count.to_f / (unique_points.size * 2).to_f).round
     return clusters.select{|k,v| k!=-1}.size >= average
   end
@@ -196,11 +196,10 @@ class ConsensusUtils
   def self.get_mean_poly(clusters)
     means = {}
     clusters.each do |cluster|
-      if cluster[0] != -1 # ignore cluster -1 because not enough points
-        lon = cluster[1].map {|c| c[0]}.mean
-        lat = cluster[1].map {|c| c[1]}.mean
-        means[cluster[0]] = [lon,lat]
-      end
+      next if cluster[0] == -1 # ignore cluster -1 because not enough points
+      lon = cluster[1].map {|c| c[0]}.mean
+      lat = cluster[1].map {|c| c[1]}.mean
+      means[cluster[0]] = [lon,lat]
     end
     return means
   end

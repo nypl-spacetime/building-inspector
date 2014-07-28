@@ -118,7 +118,7 @@ class Sheet < ActiveRecord::Base
       features = polyflags.map { |item| { :type => "Feature", :properties => { :id => pid }, :geometry => { :type=>"Polygon", :coordinates => JSON.parse(item["flag_value"]) } } }
       geo = { :type => "FeatureCollection", :features => features }
       consensus = ConsensusUtils.calculate_polygonfix_consensus(geo.to_json)
-      next if consensus.count == 0 # if not a polygon
+      next if consensus == nil || consensus.count == 0 # if not a polygon
       # save it
       cp = Consensuspolygon.find_or_initialize_by_polygon_id_and_task(:polygon_id => pid, :task => 'polygonfix')
       geojson = ConsensusUtils.consensus_to_geojson(consensus, pid)
