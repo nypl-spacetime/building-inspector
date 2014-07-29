@@ -42,6 +42,40 @@ class ApiController < ApplicationController
 		render json: output
 	end
 
+	def consolidated
+		per_page = 500
+		page = 1
+		if params[:page] != nil && params[:page] != ''
+			page = params[:page].to_i
+		end
+		offset = per_page * (page-1)
+		# returns all the polygons with their consensus value
+		count = 0
+
+		count = Polygon.select("COUNT(polygons.id) AS pcount").joins(:consensuspolygons).where("consensuspolygons.task=? AND consensuspolygons.consensus=?","geometry","yes").first.pcount
+
+		per_page = count if params[:brett]
+
+		poly = Polygon.select("*, (SELECT consensus FROM consensuspolygons _C WHERE _C.polygon_id=polygons.id AND _C.task='color') AS color").joins(:consensuspolygons).where("consensuspolygons.task=? AND consensuspolygons.consensus=?","geometry","yes").offset(offset).limit(per_page)
+
+		msg = "List for informative purposes only. This is not a definitive list. This URL may be changed at any time without prior notice."
+
+		geojson = []
+		poly.each do |p|
+			geojson.push(p.to_geojson)
+		end
+
+		output = {}
+		output[:message] = msg
+		output[:polygon_count] = count
+		output[:page] = page
+		output[:per_page] = per_page
+		output[:total_pages] = (count.to_f / per_page.to_f).ceil
+		output[:type] = "FeatureCollection"
+		output[:features] = geojson
+		render json: output
+	end
+
 	def polygons_for_ids
 		per_page = 500
 		page = 1

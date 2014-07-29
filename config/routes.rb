@@ -80,6 +80,8 @@ Webappmini::Application.routes.draw do
   get "api/polygons/:task/:consensus", to: "api#polygons"
   get "api/polygons/:task/:consensus/page/:page", to: "api#polygons"
   get "api/polygons_for_ids", to: "api#polygons_for_ids"
+  get "api/consolidated"
+  get "api/consolidated/page/:page", to: "api#consolidated"
 
   match "/404", :to => "general#not_found", :status => 404
 
