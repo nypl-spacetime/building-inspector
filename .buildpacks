@@ -1,2 +1,3 @@
 https://github.com/Enquire/heroku-geo-buildpack.git
+https://github.com/wikyd/heroku-buildpack-recompile-gems.git
 https://github.com/heroku/heroku-buildpack-ruby.git
