@@ -1,5 +1,2 @@
-https://github.com/wikyd/heroku-buildpack-recompile-gems.git
-https://github.com/peterkeen/heroku-buildpack-vendorbinaries.git
-https://github.com/aaronrenner/heroku-buildpack-rgeo-prep.git
-https://github.com/wikyd/heroku-buildpack-recompile-gems.git
+https://github.com/cyberdelia/heroku-geo-buildpack.git
 https://github.com/heroku/heroku-buildpack-ruby.git
