@@ -24,7 +24,6 @@ class ConsensusUtils
       next if poly == nil || poly.count == 0
       output.push(poly)
     end
-    return nil if output.count != centroid_clusters.count
     return output
   end
 
