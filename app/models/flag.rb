@@ -42,6 +42,15 @@ class Flag < ActiveRecord::Base
 		Flag.select("DISTINCT polygons.id, polygons.centroid_lat, polygons.centroid_lon, polygons.geometry, flags.*").joins(:polygon).joins(:usersession).where('usersessions.user_id = ? AND flags.flag_type = ?', user_id, type)
 	end
 
+	def self.flags_for_sheet_for_task_and_threshold(sheet_id, type = "polygonfix", threshold = 3)
+		sql = Flag.send(:sanitize_sql_array,["SELECT f.polygon_id, f.id, f.flag_value FROM flags f INNER JOIN ( SELECT _f.polygon_id pid, COUNT(*) qty FROM flags _f INNER JOIN polygons _p ON _p.id = _f.polygon_id AND _f.flag_type =  ? WHERE _p.sheet_id = ? GROUP BY pid HAVING COUNT(*) >= ? ) j1 ON j1.pid = f.polygon_id WHERE f.flag_type =  ? ORDER BY f.polygon_id", type, sheet_id, threshold, type])
+		Flag.connection.execute(sql)
+	end
+
+	def self.flags_for_sheet_for_task(sheet_id, type = "address")
+		Flag.joins(:polygon).where("sheet_id = ? AND flag_type = ? AND latitude IS NOT NULL AND longitude IS NOT NULL", sheet_id, type)
+	end
+
   def self.all_as_features(type = "geometry")
     features = []
 
@@ -54,7 +63,8 @@ class Flag < ActiveRecord::Base
   end
 
 	def as_feature
-		user = Usersession.where(:session_id => self[:session_id]).first
+		# commented out the query for user to improve performance
+		# user = Usersession.where(:session_id => self[:session_id]).first
 		r = {}
 		if self[:latitude] == nil || self[:longitude] == nil
 			p = self.polygon
@@ -63,11 +73,12 @@ class Flag < ActiveRecord::Base
 		end
 		r[:type] = "Feature"
 		r[:properties] = {}
-		if user != nil
-			r[:properties][:user_id] = user[:user_id]
-		else
+		r[:properties][:id] = self[:id]
+		# if user != nil
+		# 	r[:properties][:user_id] = user[:user_id]
+		# else
 			r[:properties][:session_id] = self[:session_id]
-		end
+		# end
 		if self[:flag_type] == 'polygonfix' && self[:flag_value] != "NOFIX"
 			r[:geometry] = { :type => "Polygon", :coordinates => JSON.parse(self[:flag_value]) }
 		else

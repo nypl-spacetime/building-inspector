@@ -35,11 +35,37 @@ class Polygon < ActiveRecord::Base
   end
 
   def consensus_address
-    poly_consensus("address")
+    c = poly_consensus("address")
+    if c == "N/A"
+      return c
+    end
+    features = []
+    c_array = JSON.parse(c)
+    c_array.each do |address|
+      feature = address_as_feature(address)
+      features.push(feature)
+    end
+    { :type => "FeatureCollection", :features => features }.to_json
+  end
+
+  def consensus_polygonfix
+    c = poly_consensus("polygonfix")
+    return c
   end
 
   def as_feature
      { :type => "FeatureCollection", :features => [JSON.parse(self[:vectorizer_json])] }
+  end
+
+  def address_as_feature(address)
+    r = {}
+    r[:type] = "Feature"
+    r[:properties] = {}
+    r[:properties][:votes] = address["votes"]
+    r[:properties][:total_votes] = address["total_votes"]
+    r[:properties][:flag_value] = address["flag_value"]
+    r[:geometry] = { :type => "Point", :coordinates => [address["longitude"].to_f, address["latitude"].to_f] }
+    r
   end
 
   def flags_as_features
