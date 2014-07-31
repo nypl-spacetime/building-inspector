@@ -12,23 +12,7 @@ class Home
     )
 
     @resizeSVG()
-    @setWaypoints()
     @activateSlideshow()
-
-  setWaypoints: () ->
-    h = @
-    $("#link-learn-more").waypoint( (direction)->
-      $("#link-learn-more").waypoint('destroy')
-      $.get('/general/home_explained', (data) ->
-        d = $(data)
-        $("#waypoint").append(d)
-        .hide()
-        .fadeIn(1000)
-        $("#waypoint .learn-more").click( ()->
-          h.getStarted()
-        )
-      )
-    )
 
   getStarted: () ->
     $.scrollTo("#intro",
