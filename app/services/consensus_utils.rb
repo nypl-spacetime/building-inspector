@@ -258,7 +258,7 @@ class ConsensusUtils
     from = first
     while !done do
       to = connections[from]
-      done = true if seen[to] || to == nil
+      done = true if seen[to] || to == nil || to.size == 0
       seen[to] = true
       from = to
       sorted.push(to)
