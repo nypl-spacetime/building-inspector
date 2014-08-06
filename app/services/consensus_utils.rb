@@ -182,7 +182,6 @@ class ConsensusUtils
 
   # perform point clustering EXCLUDING first item in each poly since it is same as last
   def self.cluster_points(points, epsilon=6e-06, min_points=2)
-    #dbscan = DBSCAN( unique_points.flatten(1), :epsilon => 3.5e-6, :min_points => 1, :distance => :haversine_distance2 )
     dbscan = DBSCAN( points.flatten(1), :epsilon => epsilon, :min_points => min_points, :distance => :euclidean_distance )
     return dbscan.results.select{|k,v| k != -1} # omit the non-cluster
   end

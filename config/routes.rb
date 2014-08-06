@@ -30,7 +30,6 @@ Webappmini::Application.routes.draw do
   get "general/about", :as => "about"
   get "general/help", :as => "help"
   get "general/data", :as => "data"
-  get "general/home_explained", :as => "home_explained"
   get "general/win", :as => "win"
 
   # footprints

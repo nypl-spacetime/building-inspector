@@ -123,7 +123,7 @@ class Polygon
   showAddresses: () =>
     data = $('#polydata').data("addresses")
 
-    return if !data or data == "N/A" or data.features?.length==0
+    return if !data or data == "N/A" or data == "NONE" or data.features?.length==0
 
     m = @map
 

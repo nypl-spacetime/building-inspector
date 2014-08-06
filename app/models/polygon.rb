@@ -36,7 +36,7 @@ class Polygon < ActiveRecord::Base
 
   def consensus_address
     c = poly_consensus("address")
-    if c == "N/A"
+    if c == "N/A" || c == "NONE"
       return c
     end
     features = []

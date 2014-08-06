@@ -6,8 +6,12 @@ class PolygonsController < ApplicationController
   # GET /polygons
   # GET /polygons.json
   def index
-    @polygons = Polygon.order(sort_column + " " + sort_direction).paginate(:page => params[:page])
-    @total = Polygon.count
+    join = ""
+    if params[:c] != nil
+      join = " INNER JOIN consensuspolygons AS CP ON CP.polygon_id = polygons.id AND CP.task = " + Polygon.sanitize(params[:c])
+    end
+    @polygons = Polygon.joins(join).order(sort_column + " " + sort_direction).paginate(:page => params[:page])
+    @total = @polygons.count
 
     respond_to do |format|
       format.html # index.html.erb
