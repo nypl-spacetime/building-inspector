@@ -47,7 +47,7 @@ class ConsensusUtils
     return grouped_list
   end
 
-  def self.cluster_addresses(addresses, epsilon=1.8e-06, min_points=2)
+  def self.cluster_addresses(addresses, epsilon=1.425e-05, min_points=2)
     simple_array = addresses.map { |a| [a["longitude"].to_f, a["latitude"].to_f] }
     dbscan = DBSCAN( simple_array, :epsilon => epsilon, :min_points => min_points, :distance => :euclidean_distance )
     return dbscan.results.select{|k,v| k != -1} # omit the non-cluster

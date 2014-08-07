@@ -1,10 +1,11 @@
 <h1>Listing <%= number_with_delimiter(@total) %> polygons</h1>
 Filter by consensus:
 <%= link_to_if params[:c]!=nil, "None", "/polygons" %>
-<%= link_to_if params[:c]!="geometry", "Check", "/polygons?c=geometry" %>
-<%= link_to_if params[:c]!="polygonfix", "Fix", "/polygons?c=polygonfix" %>
-<%= link_to_if params[:c]!="address", "Address", "/polygons?c=address" %>
-<%= link_to_if params[:c]!="color", "Color", "/polygons?c=color" %>
+| <%= link_to_if params[:c]!="geometry", "Check", "/polygons?c=geometry" %>
+| <%= link_to_if params[:c]!="polygonfix", "Fix", "/polygons?c=polygonfix" %>
+| <%= link_to_if params[:c]!="addressnone", "Address NONE", "/polygons?c=addressnone" %>
+| <%= link_to_if params[:c]!="addressnumber", "Address #", "/polygons?c=addressnumber" %>
+| <%= link_to_if params[:c]!="color", "Color", "/polygons?c=color" %>
 <table>
   <tr>
     <th><%= sortable "dn", "DN" %></th>

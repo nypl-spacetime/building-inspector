@@ -10,6 +10,13 @@ class PolygonsController < ApplicationController
     if params[:c] != nil
       join = " INNER JOIN consensuspolygons AS CP ON CP.polygon_id = polygons.id AND CP.task = " + Polygon.sanitize(params[:c])
     end
+    if params[:c].include? "address"
+      if params[:c] == "addressnone"
+        join = " INNER JOIN consensuspolygons AS CP ON CP.polygon_id = polygons.id AND CP.task = 'address' AND CP.consensus = 'NONE'"
+      else
+        join = " INNER JOIN consensuspolygons AS CP ON CP.polygon_id = polygons.id AND CP.task = 'address' AND CP.consensus != 'NONE'"
+      end
+    end
     @polygons = Polygon.joins(join).order(sort_column + " " + sort_direction).paginate(:page => params[:page])
     @total = @polygons.count
 
