@@ -8,7 +8,7 @@ Webappmini::Application.routes.draw do
   resources :polygons
 
   # embeddable widgets!
-  get "/widgets/sheet/:id", to: "widgets#sheet"
+  get "/widgets/map/:map_id", to: "widgets#map"
 
   # legacy urls
   get "/building", to: "general#home"

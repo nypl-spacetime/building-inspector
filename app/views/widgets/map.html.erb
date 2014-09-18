@@ -21,12 +21,12 @@
       text-decoration: none;
     }
   </style>
-  <%= javascript_include_tag "widgets/sheet", {:id => "sheetdata", "data-layer" => "#{@sheet.layer_id}", "data-map" => "#{@map.to_json}"} %>
+  <%= javascript_include_tag "widgets/map", {:id => "sheetdata", "data-layer" => "#{@sheet ? @sheet.layer_id : 'null' }", "data-map" => "#{@map.to_json}"} %>
 <% end %>
 
 <div id="map"></div>
 <div id="stats">
   <p>
-    <a href="http://buildingispector.nypl.org" title="click to visit NYPL Building Inspector">NYPL Building Inspector</a><br />
+    <a href="http://buildinginspector.nypl.org" title="click to visit NYPL Building Inspector">NYPL Building Inspector</a><br />
   </p>
 </div>

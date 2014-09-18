@@ -1,4 +1,4 @@
-class Sheet
+class Map
   constructor: () ->
     layer_id = $('#sheetdata').data("layer")
     @map = L.mapbox.map('map', "https://s3.amazonaws.com/maptiles.nypl.org/#{layer_id}/#{layer_id}spec.json",
@@ -84,4 +84,4 @@ class Sheet
     m.fitBounds(bounds)
 
 $ ->
-  window._s = new Sheet
+  window._s = new Map
