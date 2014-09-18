@@ -9,10 +9,14 @@ class Sheet
       attributionControl: true
       minZoom: 12
       maxZoom: 21
-      dragging: false
+      dragging: true
       tileLayer: # added this because maptiles.nypl does not support retina yet
         detectRetina: false
     )
+
+    L.control.zoom(
+      position: 'bottomleft'
+    ).addTo(@map)
 
     sheet = @
     @map.on 'load', () ->
