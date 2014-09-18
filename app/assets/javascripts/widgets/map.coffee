@@ -1,18 +1,23 @@
 class Map
   constructor: () ->
-    layer_id = $('#sheetdata').data("layer")
-    @map = L.mapbox.map('map', "https://s3.amazonaws.com/maptiles.nypl.org/#{layer_id}/#{layer_id}spec.json",
+    @map = L.mapbox.map('map', 'nypllabs.g6ei9mm0',
       zoomControl: false
       scrollWheelZoom: false
       touchZoom: false
-      animate: false
-      attributionControl: true
+      animate: true
+      attributionControl: false
       minZoom: 12
       maxZoom: 21
       dragging: true
       tileLayer: # added this because maptiles.nypl does not support retina yet
         detectRetina: false
     )
+
+    layer_id = $('#sheetdata').data("layer")
+    @overlay = L.mapbox.tileLayer("https://s3.amazonaws.com/maptiles.nypl.org/#{layer_id}/#{layer_id}spec.json",
+      zIndex: 2
+      detectRetina: false # added this because maptiles.nypl does not support retina yet
+    ).addTo(@map)
 
     L.control.zoom(
       position: 'bottomleft'
