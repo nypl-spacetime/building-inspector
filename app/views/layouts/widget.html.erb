@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%= yield :page_title %></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+
+	<meta name="viewport" content="minimum-scale=1.0, width=device-width, maximum-scale=1, user-scalable=no ,initial-scale=1.0" />
+
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<link rel="apple-touch-icon" href="/apple-touch-icon-iphone.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-ipad.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-iphone4.png">
+
+	<%= stylesheet_link_tag    "widget", :media => "all" %>
+	<%= javascript_include_tag "widget" %>
+
+	<%= csrf_meta_tags %>
+
+	<%= yield :dynamic_js %>
+
+</head>
+<body>
+
+<div id="container">
+<%= yield %>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<% content_for :dynamic_js do %>
+  <style type="text/css">
+    #container, #map {
+      width: 100%;
+      height: 100%;
+    }
+    #stats {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      background: rgba(1,1,1,0.5);
+    }
+    #stats p {
+      font-family: Helvetica, Arial, sans-serif !important;
+      font-size: 12px;
+    }
+    #stats a {
+      color: white !important;
+      text-decoration: none;
+    }
+  </style>
+  <%= javascript_include_tag "widgets/sheet", {:id => "sheetdata", "data-layer" => "#{@sheet.layer_id}", "data-map" => "#{@map.to_json}"} %>
+<% end %>
+
+<div id="map"></div>
+<div id="stats">
+  <p>
+    <a href="http://buildingispector.nypl.org" title="click to visit NYPL Building Inspector">Building Inspector</a><br />
+  </p>
+</div>
