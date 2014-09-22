@@ -1,6 +1,8 @@
 class WidgetsController < ApplicationController
   layout "widget"
 
+  caches_page :map, :expires_in => 60.minutes
+
   # GET /map
   # GET /map.json
   def map
