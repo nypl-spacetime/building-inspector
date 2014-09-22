@@ -21,7 +21,7 @@
       text-decoration: none;
     }
   </style>
-  <%= javascript_include_tag "widgets/map", {:id => "sheetdata", "data-layer" => "#{@sheet ? @sheet.layer_id : 'null' }", "data-map" => "#{@map.to_json}"} %>
+  <%= javascript_include_tag "widgets/map", {:id => "data", "data-layer" => "#{@sheet ? @sheet.layer_id : 'null' }", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}/widgets/map/#{@sheet[:map_id]}.json")} %>
 <% end %>
 
 <div id="map"></div>

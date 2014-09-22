@@ -1,4 +1,4 @@
-class Map
+class MapWidget
   constructor: () ->
     @map = L.mapbox.map('map', 'nypllabs.g6ei9mm0',
       zoomControl: false
@@ -13,7 +13,7 @@ class Map
         detectRetina: false
     )
 
-    layer_id = $('#sheetdata').data("layer")
+    layer_id = $('#data').data("layer")
     @overlay = L.mapbox.tileLayer("https://s3.amazonaws.com/maptiles.nypl.org/#{layer_id}/#{layer_id}spec.json",
       zIndex: 2
       detectRetina: false # added this because maptiles.nypl does not support retina yet
@@ -23,49 +23,85 @@ class Map
       position: 'bottomleft'
     ).addTo(@map)
 
-    sheet = @
-    @map.on 'load', () ->
-      sheet.getPolygons()
+    t = @
+    @map.on('load', @loadData)
 
-  getPolygons: () =>
-    data = $('#sheetdata').data("map")
+
+  loadData: () =>
+    el = $("#stats")
+
+    opts =
+      length: 10 # The length of each line
+      width: 8 # The line thickness
+      radius: 14, # The radius of the inner circle
+      top: '100px', # Top position relative to parent in px
+      left: '50%' # Left position relative to parent in px
+
+    el.append(Utils.spinner(opts).el)
+
+    url = decodeURIComponent($('#data').data("server"))
+
+    # console.log "url: #{url}"
+
+    t = @
+
+    @map.setView( [ 40.752995172027674, -73.9825451374054 ], 18 )
+
+    $.getJSON(url, (data) ->
+      el.find('.spinner').remove()
+      console.log data
+      t.processData(data)
+    )
+
+  processData: (data) =>
+    # console.log "processing data"
 
     no_color = '#AF2228'
     yes_color = '#609846'
     fix_color = '#FFB92D'
     nil_color = '#AAAAAA'
 
-    return if data.nil_poly.features.length==0 && data.fix_poly.features.length==0 && data.no_poly.features.length==0 && data.yes_poly.features.length==0
+    return unless data?.nil_poly?.features? && data?.fix_poly?.features? && data?.no_poly?.features? && data?.yes_poly?.features?
+
+    # console.log "processing started"
 
     m = @map
 
     yes_json = L.geoJson(data.yes_poly,
       style: (feature) ->
-        fillColor: yes_color
-        opacity: 0
-        fillOpacity: 0.7
-        stroke: false
+        color: yes_color
+        opacity: 0.7
+        weight: 2
+        dashArray: [6,6]
+        fillOpacity: 0
+        stroke: true
     )
     no_json = L.geoJson(data.no_poly,
       style: (feature) ->
-        fillColor: no_color
-        opacity: 0
-        fillOpacity: 0.7
-        stroke: false
+        color: no_color
+        opacity: 0.7
+        weight: 2
+        dashArray: [6,6]
+        fillOpacity: 0
+        stroke: true
     )
     fix_json = L.geoJson(data.fix_poly,
       style: (feature) ->
-        fillColor: fix_color
-        opacity: 0
-        fillOpacity: 0.7
-        stroke: false
+        color: fix_color
+        opacity: 0.7
+        weight: 2
+        dashArray: [6,6]
+        fillOpacity: 0
+        stroke: true
     )
     nil_json = L.geoJson(data.nil_poly,
       style: (feature) ->
-        fillColor: nil_color
-        opacity: 0
-        fillOpacity: 0.7
-        stroke: false
+        color: nil_color
+        opacity: 0.7
+        weight: 2
+        dashArray: [6,6]
+        fillOpacity: 0
+        stroke: true
     )
 
     bounds = new L.LatLngBounds()
@@ -86,7 +122,7 @@ class Map
       nil_json.addTo(m)
       bounds.extend(nil_json.getBounds())
 
-    m.fitBounds(bounds)
+    m.panTo(bounds.getCenter())
 
 $ ->
-  window._s = new Map
+  window._s = new MapWidget
