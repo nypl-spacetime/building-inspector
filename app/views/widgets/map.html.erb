@@ -1,5 +1,9 @@
 <% content_for :dynamic_js do %>
   <style type="text/css">
+    .spinner {
+      left: 50%;
+      top: 100px;
+    }
     #container, #map {
       width: 100%;
       height: 100%;
@@ -13,20 +17,22 @@
       background: rgba(1,1,1,0.5);
     }
     #stats p {
-      font-family: Helvetica, Arial, sans-serif !important;
-      font-size: 12px;
+      font-family: Kievit, Lato, Helvetica, Arial, sans-serif;
+      font-size: 18px;
+      color: rgb( 220, 220, 220 ) !important;
     }
     #stats a {
       color: white !important;
       text-decoration: none;
     }
   </style>
-  <%= javascript_include_tag "widgets/map", {:id => "data", "data-layer" => "#{@sheet ? @sheet.layer_id : 'null' }", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}/widgets/map/#{@sheet[:map_id]}.json")} %>
+  <%= javascript_include_tag "widgets/map", {:id => "data", "data-map" => "#{@data[:sheet].to_json}"} %>
 <% end %>
 
 <div id="map"></div>
 <div id="stats">
   <p>
-    <a href="http://buildinginspector.nypl.org" title="click to visit NYPL Building Inspector">NYPL Building Inspector</a><br />
+    <a href="http://buildinginspector.nypl.org" title="click to visit NYPL Building Inspector">NYPL Building Inspector</a>
   </p>
+  <p>Buildings in sheet so far: <%= @data[:polygons] %></p>
 </div>
