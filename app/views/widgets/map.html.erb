@@ -14,12 +14,12 @@
       left: 0;
       right: 0;
       padding: 10px;
-      background: rgba(1,1,1,0.5);
+      background: rgba(1,1,1,0.75);
     }
     #stats p {
       font-family: Kievit, Lato, Helvetica, Arial, sans-serif;
-      font-size: 18px;
-      color: rgb( 220, 220, 220 ) !important;
+      font-size: 16px;
+      color: rgb( 170, 170, 170 ) !important;
     }
     #stats a {
       color: white !important;
@@ -29,10 +29,13 @@
   <%= javascript_include_tag "widgets/map", {:id => "data", "data-map" => "#{@data[:sheet].to_json}"} %>
 <% end %>
 
+<% server = "#{request.protocol}#{request.host_with_port}" %>
+
 <div id="map"></div>
 <div id="stats">
   <p>
-    <a href="http://buildinginspector.nypl.org" title="click to visit NYPL Building Inspector">NYPL Building Inspector</a>
+    <strong><a href="<%= server %>" title="click to visit NYPL Building Inspector" target="_top">NYPL Building Inspector</a></strong>
   </p>
-  <p>Buildings in sheet so far: <%= @data[:polygons] %></p>
+  <p>Progress in sheet: <%= @data[:polygons] %> buildings <a href="<%= server %>/footprint" target="_top">inspected</a>, <%= @data[:addresses] %> <a href="<%= server %>/address" target="_top">addressed</a>, <%= @data[:colors] %> <a href="<%= server %>/color" target="_top">colored</a>, <%= @data[:fixes] %> <a href="<%= server %>/fix" target="_top">fixed</a>.
+</p>
 </div>

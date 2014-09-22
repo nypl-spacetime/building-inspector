@@ -12,7 +12,11 @@ class WidgetsController < ApplicationController
 
     if sheet != nil
       @data[:sheet] = sheet
-      @data[:polygons] = Sheet.polygons_for_task(sheet.id, nil, "address").count
+      polys = sheet.polygons
+      @data[:polygons] = polys.count
+      @data[:addresses] = Consensuspolygon.find_all_by_polygon_id_and_task(polys, "address").count
+      @data[:colors] = Consensuspolygon.find_all_by_polygon_id_and_task(polys, "color").count
+      @data[:fixes] = Consensuspolygon.find_all_by_polygon_id_and_task(polys, "polygonfix").count
     end
 
     respond_to do |format|
