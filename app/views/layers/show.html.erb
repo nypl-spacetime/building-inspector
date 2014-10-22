@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @layer.name %>
+</p>
+
+<p>
+  <b>Tilejson:</b>
+  <%= @layer.tilejson %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @layer.description %>
+</p>
+
+<p>
+  <b>Year:</b>
+  <%= @layer.year %>
+</p>
+
+
+<%= link_to 'Edit', edit_layer_path(@layer) %> |
+<%= link_to 'Back', layers_path %>

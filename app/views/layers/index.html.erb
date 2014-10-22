@@ -1,0 +1,29 @@
+<h1>Listing layers</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Tilejson</th>
+    <th>Description</th>
+    <th>Year</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @layers.each do |layer| %>
+  <tr>
+    <td><%= layer.name %></td>
+    <td><%= layer.tilejson %></td>
+    <td><%= layer.description %></td>
+    <td><%= layer.year %></td>
+    <td><%= link_to 'Show', layer %></td>
+    <td><%= link_to 'Edit', edit_layer_path(layer) %></td>
+    <td><%= link_to 'Destroy', layer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Layer', new_layer_path %>

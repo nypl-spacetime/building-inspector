@@ -1,6 +1,7 @@
 class Sheet < ActiveRecord::Base
   has_many :polygons, :dependent => :destroy
-  attr_accessible :bbox, :map_id, :map_url, :status, :layer_id, :consensus, :consensus_address
+  belongs_to :layer
+  attr_accessible :bbox, :map_id, :map_url, :status, :layer_id
 
   def polygons_for_task(session_id = nil, type="geometry")
     Sheet.polygons_for_task(self[:id], session_id, type)
