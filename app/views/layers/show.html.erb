@@ -1,3 +1,34 @@
+<% content_for :dynamic_js do %>
+  <style type="text/css">
+    .wrapper {
+      position: relative;
+      width: 800px;
+      height: 600px;
+    }
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+    #info {
+      position: absolute;
+      top: 0;
+      right: 0;
+      /*width: 100px;*/
+      /*height: 100px;*/
+      padding: 10px;
+      background: white;
+      z-index: 10;
+      text-align: right;
+    }
+  </style>
+  <%= javascript_include_tag "admin/layers", {:id => "data", "data-tiles" => "#{@layer.tilejson}", "data-center" => @layer.center} %>
+<% end %>
+
+<div class="wrapper">
+  <div id="info"></div>
+  <div id="map"></div>
+</div>
+
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -13,6 +44,11 @@
 <p>
   <b>Description:</b>
   <%= @layer.description %>
+</p>
+
+<p>
+  <b>Center:</b>
+  <%= @layer.center %>
 </p>
 
 <p>

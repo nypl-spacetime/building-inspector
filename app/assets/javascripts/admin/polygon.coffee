@@ -1,13 +1,16 @@
 class Polygon
   constructor: () ->
-    @map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859/859spec.json',
+    @map = L.mapbox.map('map', 'nypllabs.g6ei9mm0',
       animate: true
       minZoom: 16
       maxZoom: 21
+      attributionControl: false
     )
 
-    @overlay2 = L.mapbox.tileLayer('https://s3.amazonaws.com/maptiles.nypl.org/860/860spec.json',
-      zIndex: 3
+    tileset = $("#polydata").data("tiles")
+
+    @overlay = L.mapbox.tileLayer(tileset,
+      zIndex: 2
     ).addTo(@map)
 
 

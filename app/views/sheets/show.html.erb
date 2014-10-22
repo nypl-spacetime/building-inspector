@@ -5,7 +5,7 @@
 			height: 600px;
 		}
 	</style>
-	<%= javascript_include_tag "admin/sheet", {:id => "sheetdata", "data-map" => "#{@map.to_json}"} %>
+	<%= javascript_include_tag "admin/sheet", {:id => "sheetdata", "data-map" => "#{@map.to_json}", "data-tiles" => "#{@tileset}"} %>
 <% end %>
 
 <p id="notice"><%= notice %></p>
@@ -35,11 +35,6 @@
 <p>
   <b>Layer:</b>
   <%= @sheet.layer_id %>
-</p>
-
-<p>
-  <b>Map url:</b>
-  <%= @sheet.map_url %>
 </p>
 
 

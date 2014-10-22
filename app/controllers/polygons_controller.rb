@@ -31,6 +31,7 @@ class PolygonsController < ApplicationController
   def show
     @polygon = Polygon.find(params[:id])
     @map = @polygon.as_feature
+    @tileset = @polygon.sheet.layer[:tilejson]
     @flags = @polygon.flags_as_features
 
     respond_to do |format|

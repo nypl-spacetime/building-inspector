@@ -1,106 +1,114 @@
 class Sheet
-	constructor: () ->
-		@map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859/859spec.json',
-			animate: true
-			minZoom: 13
-			maxZoom: 21
-		)
+  constructor: () ->
+    @map = L.mapbox.map('map', 'nypllabs.g6ei9mm0',
+      animate: true
+      minZoom: 13
+      maxZoom: 21
+      attributionControl: false
+    )
 
-		@overlay2 = L.mapbox.tileLayer('https://s3.amazonaws.com/maptiles.nypl.org/860/860spec.json',
-			zIndex: 3
-		).addTo(@map)
+    tilesets = $("#sheetdata").data("tiles")
 
-		s = @
+    zindex = 2
 
-		@map.on
-			load: () ->
-				s.getSheets()
-			moveend: () ->
-				if s.wasClick
-					s.wasClick = false
-					window.location.href = "/sheets/" + s.sheet_id
-					console.log "end move"
+    for set in tilesets
+      zindex++
+      overlay = L.mapbox.tileLayer(set,
+        zIndex: zindex
+        detectRetina: false # added this because maptiles.nypl does not support retina yet
+      ).addTo(@map)
 
-	getSheets: () ->
-		data = $('#sheetdata').data("map")
+    s = @
 
-		@geo = L.geoJson({features:[]},
-			style: (feature) ->
-				color: '#00b'
-				weight: 1
-				stroke: false
-				fillOpacity: 0.05
-			onEachFeature: @onEachFeature
-		)
+    @map.on
+      load: () ->
+        s.getSheets()
+      moveend: () ->
+        if s.wasClick
+          s.wasClick = false
+          window.location.href = "/sheets/" + s.sheet_id
+          console.log "end move"
 
-		@parse sheet for sheet in data
+  getSheets: () ->
+    data = $('#sheetdata').data("map")
+
+    @geo = L.geoJson({features:[]},
+      style: (feature) ->
+        color: '#00b'
+        weight: 1
+        stroke: false
+        fillOpacity: 0.05
+      onEachFeature: @onEachFeature
+    )
+
+    @parse sheet for sheet in data
 
 
-		_SW = new L.LatLng(40.62563874006115,-74.13093566894531)
-		_NE = new L.LatLng(40.81640757520087,-73.83087158203125)
-		bounds = new L.LatLngBounds(_SW, _NE)
-		
-		@map.fitBounds bounds
+    _SW = new L.LatLng(40.62563874006115,-74.13093566894531)
+    _NE = new L.LatLng(40.81640757520087,-73.83087158203125)
+    bounds = new L.LatLngBounds(_SW, _NE)
+    
+    @map.fitBounds bounds
 
-		@geo.addTo @map
+    @geo.addTo @map
 
-	parse: (sheet) ->
-		# define rectangle geographical bounds
-		# data comes: W, S, E, N
-		bbox = sheet["bbox"].split ","
-		
-		W = parseFloat(bbox[0])
-		S = parseFloat(bbox[1])
-		E = parseFloat(bbox[2])
-		N = parseFloat(bbox[3])
+  parse: (sheet) ->
+    # define rectangle geographical bounds
+    # data comes: W, S, E, N
+    bbox = sheet["bbox"].split ","
+    
+    W = parseFloat(bbox[0])
+    S = parseFloat(bbox[1])
+    E = parseFloat(bbox[2])
+    N = parseFloat(bbox[3])
 
-		SW = new L.LatLng(S, W)
-		NW = new L.LatLng(N, W)
-		NE = new L.LatLng(N, E)
-		SE = new L.LatLng(S, E)
+    SW = new L.LatLng(S, W)
+    NW = new L.LatLng(N, W)
+    NE = new L.LatLng(N, E)
+    SE = new L.LatLng(S, E)
 
-		bounds = new L.LatLngBounds(SW, NE)
+    bounds = new L.LatLngBounds(SW, NE)
 
-		json = 
-			type : "Feature"
-			properties:
-				id: sheet.id
-				map_id: sheet.map_id
-			geometry:
-				type: "Polygon"
-				coordinates: [[[W,S],[W,N],[E,N],[E,S]]]
-		@geo.addData json
+    json = 
+      type : "Feature"
+      properties:
+        id: sheet.id
+        map_id: sheet.map_id
+      geometry:
+        type: "Polygon"
+        coordinates: [[[W,S],[W,N],[E,N],[E,S]]]
+    @geo.addData json
 
-	onEachFeature: (f,l) =>
-		s = @
+  onEachFeature: (f,l) =>
+    s = @
 
-		l.on
-			mouseover: s.highlightFeature
-			mouseout: s.resetHighlight
-			click: s.zoomToFeature
+    l.on
+      mouseover: s.highlightFeature
+      mouseout: s.resetHighlight
+      click: s.zoomToFeature
 
-	highlightFeature: (e) =>
-		l = e.target
+  highlightFeature: (e) =>
+    l = e.target
 
-		$("#info").text("Sheet: " + l.feature.properties.map_id)
+    $("#info").text("Sheet: " + l.feature.properties.map_id)
 
-		l.setStyle
-			weight: 1
-			stroke: true
-			color: '#b00'
-			fillOpacity: 0.1
-		
-		l.bringToFront()
+    l.setStyle
+      weight: 1
+      stroke: true
+      color: '#b00'
+      fillOpacity: 0.1
+    
+    l.bringToFront()
 
-	resetHighlight: (e) =>
-		$("#info").text("")
-		@geo.resetStyle(e.target)
+  resetHighlight: (e) =>
+    $("#info").text("")
+    @geo.resetStyle(e.target)
 
-	zoomToFeature: (e) =>
-		l = e.target
-		@sheet_id = l.feature.properties.id
-		@wasClick = true
-		@map.fitBounds(l.getBounds())
+  zoomToFeature: (e) =>
+    l = e.target
+    @sheet_id = l.feature.properties.id
+    @wasClick = true
+    @map.fitBounds(l.getBounds())
 
 $ ->
-	window._s = new Sheet
+  window._s = new Sheet

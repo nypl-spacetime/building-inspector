@@ -21,7 +21,7 @@
       text-align: right;
     }
   </style>
-  <%= javascript_include_tag "admin/sheet_index", {:id => "sheetdata", "data-map" => "#{@sheets.to_json}"} %>
+  <%= javascript_include_tag "admin/sheet_index", {:id => "sheetdata", "data-map" => "#{@sheets.to_json}", "data-tiles" => "#{@tilesets.to_json}"} %>
 <% end %>
 
 <div class="wrapper">

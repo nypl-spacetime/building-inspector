@@ -20,6 +20,10 @@
     <%= f.text_field :tilejson %>
   </div>
   <div class="field">
+    <%= f.label :center %><br />
+    <%= f.text_field :center, :placeholder => '[latitude,longitude]' %>
+  </div>
+  <div class="field">
     <%= f.label :description %><br />
     <%= f.text_field :description %>
   </div>
