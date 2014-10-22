@@ -2,7 +2,7 @@ class Layer
   constructor: () ->
     @map = L.mapbox.map('map', 'nypllabs.g6ei9mm0',
       animate: true
-      minZoom: 13
+      minZoom: 1
       maxZoom: 21
       attributionControl: false
     )
