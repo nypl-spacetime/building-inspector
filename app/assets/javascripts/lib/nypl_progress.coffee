@@ -30,6 +30,8 @@ class @Progress
 
     @loadedData = $(@options.jsdataID).data("progress")
 
+    @layer_id = @loadedData.layer.id
+
     @tileset = @loadedData.layer.tilejson
 
     @initMap()
@@ -54,6 +56,8 @@ class @Progress
 
     @updateTileset()
 
+    @updateLayersControl()
+
     @addEventListeners()
 
     @resetSheet()
@@ -64,12 +68,54 @@ class @Progress
         sheet_id: 0
         bounds: []
 
+  loadProgress: () ->
+    url = "/#{@options.task}/progress_user.json"
+    url = "/#{@options.task}/progress_sheet.json" if @options.mode == "all"
+
+    url += '?id=' + sheet_id
+
   updateTileset: () ->
     @map.removeLayer(@overlay) if @overlay
     @overlay = L.mapbox.tileLayer(@tileset,
       zIndex: 3
       detectRetina: false # added this because maptiles.nypl does not support retina yet
     ).addTo(@map)
+
+  updateLayersControl: () ->
+    $("#layers_toggler").remove()
+    html = '<div id="layers_toggler">View: '
+
+    layer_array = (@createLayerToggle layer for layer in @loadedData.layers)
+
+    # console.log layer_array
+    html += layer_array.join(" | ")
+
+    html += "</div>"
+
+    $("#legend").prepend(html)
+
+    @activateLayerToggle layer.id for layer in @loadedData.layers
+
+
+  createLayerToggle: (layer) ->
+    if @tileset == layer.tilejson
+      "<strong>#{layer.name}, #{layer.year}</strong>"
+    else
+      "<a href=\"#\" id=\"layer_toggle_#{layer.id}\" data-id=\"#{layer.id}\" data-tileset=\"#{layer.tilejson}\">#{layer.name}, #{layer.year}</a>"
+
+  activateLayerToggle: (layer_id) ->
+    p = @
+    $("#layer_toggle_#{layer_id}").on("click", (e) ->
+      # console.log "click:", e.layer
+      p.toggleLayer(e)
+    )
+
+  toggleLayer: (e) ->
+    target = $(e.originalEvent.target)
+    @tileset = target.data("tileset")
+    @layer_id = target.data("id")
+    @updateTileset()
+    @updateLayersControl()
 
   addEventListeners: () ->
     p = @
@@ -132,6 +178,7 @@ class @Progress
       $(@).remove()
 
   getCounts: () =>
+    @map.removeLayer(@markers) if @markers
     $(@options.loaderID).remove()
 
     bounds = new L.LatLngBounds(@_SW, @_NE)
@@ -140,7 +187,7 @@ class @Progress
     @updateScore(@loadedData.all_polygons_session)
 
     # marker clustering layer
-    markers = new L.MarkerClusterGroup
+    @markers = new L.MarkerClusterGroup
       singleMarkerMode: true
       disableClusteringAtZoom: 19
       iconCreateFunction: (c) ->
@@ -161,20 +208,20 @@ class @Progress
 
     p = @
 
-    markers.on("click", (e) ->
+    @markers.on("click", (e) ->
       # console.log "click:", e.layer
       p.resetSheet()
       p.getMarkerData(e)
     )
 
-    markers.on("clusterclick", (e) ->
+    @markers.on("clusterclick", (e) ->
       p.resetSheet()
     )
 
     counts = @loadedData.counts
-    @addMarker markers, count for count in counts
+    @addMarker @markers, count for count in counts
 
-    markers.addTo @map
+    @markers.addTo @map
     @
 
   processData: (data) ->

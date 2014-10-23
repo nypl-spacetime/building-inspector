@@ -35,6 +35,9 @@
   z-index: 1;
   text-align: left;
   font-size: 12px;
+  padding: 5px 10px;
+  background: $white;
+  @include border-radius(3px);
 
   @media screen and (max-width: $desktopwidth) {
     top: auto;
@@ -44,10 +47,8 @@
   }
 
   ul {
-    padding: 5px 10px;
-    background: $white;
+    padding: 0;
     margin: 0;
-    @include border-radius(3px);
     @include clearfix;
   }
 

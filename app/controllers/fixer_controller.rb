@@ -16,14 +16,24 @@ class FixerController < ApplicationController
 	  @current_page = "progress"
 		# returns a GeoJSON object with the flags the session has sent so far
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
-		@progress = getProgress("geometry","user").to_json
+    layer_id = params[:layer_id]
+		@progress = getProgress("geometry","user",layer_id).to_json
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @progress }
+    end
 	end
 
 	def progress_geometry_all
   	@current_page = "progress_all"
 		# returns a GeoJSON object with the flags the session has sent so far
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
-    @progress = getProgress("geometry","all").to_json
+    layer_id = params[:layer_id]
+    @progress = getProgress("geometry","all",layer_id).to_json
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @progress }
+    end
 	end
 
   # - JSON endpoints for progress
@@ -100,14 +110,24 @@ class FixerController < ApplicationController
 	  	@current_page = "progress_address"
 		# returns a GeoJSON object with the flags the session has sent so far
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
-    @progress = getProgress("address","user").to_json
+    layer_id = params[:layer_id]
+    @progress = getProgress("address","user",layer_id).to_json
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @progress }
+    end
 	end
 
 	def progress_address_all
   	@current_page = "progress_address_all"
 		# returns a GeoJSON object with the flags the session has sent so far
 		# NOTE: there might be more than one flag per polygon but this only returns each polygon once
-    @progress = getProgress("address","all").to_json
+    layer_id = params[:layer_id]
+    @progress = getProgress("address","all",layer_id).to_json
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @progress }
+    end
 	end
 
   # - JSON endpoints for progress
@@ -151,7 +171,12 @@ class FixerController < ApplicationController
     @current_page = "progress_polygonfix"
     # returns a GeoJSON object with the flags the session has sent so far
     # NOTE: there might be more than one flag per polygon but this only returns each polygon once
-    @progress = getProgress("polygonfix","user").to_json
+    layer_id = params[:layer_id]
+    @progress = getProgress("polygonfix","user",layer_id).to_json
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @progress }
+    end
   end
 
   # - JSON endpoints for progress
@@ -190,14 +215,24 @@ class FixerController < ApplicationController
     @current_page = "progress_color"
     # returns a GeoJSON object with the flags the session has sent so far
     # NOTE: there might be more than one flag per polygon but this only returns each polygon once
-    @progress = getProgress("color","user").to_json
+    layer_id = params[:layer_id]
+    @progress = getProgress("color","user",layer_id).to_json
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @progress }
+    end
   end
 
   def progress_color_all
     @current_page = "progress_color_all"
     # returns a GeoJSON object with the flags the session has sent so far
     # NOTE: there might be more than one flag per polygon but this only returns each polygon once
-    @progress = getProgress("color","all").to_json
+    layer_id = params[:layer_id]
+    @progress = getProgress("color","all",layer_id).to_json
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @progress }
+    end
   end
 
   # - JSON endpoints for progress
