@@ -28,6 +28,10 @@ class @Progress
         stroke: false
     @options = $.extend defaults, options
 
+    @loadedData = $(@options.jsdataID).data("progress")
+
+    @tileset = @loadedData.layer.tilejson
+
     @initMap()
 
   initMap: () ->
@@ -44,19 +48,11 @@ class @Progress
 
     t = @
 
-    @overlay = L.mapbox.tileLayer('https://s3.amazonaws.com/maptiles.nypl.org/859/859spec.json',
-      zIndex: 2
-      detectRetina: false # added this because maptiles.nypl does not support retina yet
-    ).addTo(@map)
-
-    @overlay2 = L.mapbox.tileLayer('https://s3.amazonaws.com/maptiles.nypl.org/860/860spec.json',
-      zIndex: 3
-      detectRetina: false # added this because maptiles.nypl does not support retina yet
-    ).addTo(@map)
-
     @zoomControl = L.control.zoom(
       position: 'topright'
     ).addTo(@map)
+
+    @updateTileset()
 
     @addEventListeners()
 
@@ -67,6 +63,13 @@ class @Progress
         total: 0
         sheet_id: 0
         bounds: []
+
+  updateTileset: () ->
+    @map.removeLayer(@overlay) if @overlay
+    @overlay = L.mapbox.tileLayer(@tileset,
+      zIndex: 3
+      detectRetina: false # added this because maptiles.nypl does not support retina yet
+    ).addTo(@map)
 
   addEventListeners: () ->
     p = @
@@ -130,12 +133,11 @@ class @Progress
 
   getCounts: () =>
     $(@options.loaderID).remove()
-    data = $(@options.jsdataID).data("progress")
 
     bounds = new L.LatLngBounds(@_SW, @_NE)
     @map.fitBounds bounds
 
-    @updateScore(data.all_polygons_session)
+    @updateScore(@loadedData.all_polygons_session)
 
     # marker clustering layer
     markers = new L.MarkerClusterGroup
@@ -169,7 +171,7 @@ class @Progress
       p.resetSheet()
     )
 
-    counts = data.counts
+    counts = @loadedData.counts
     @addMarker markers, count for count in counts
 
     markers.addTo @map

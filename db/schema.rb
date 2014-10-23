@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141022152416) do
+ActiveRecord::Schema.define(:version => 20141023152626) do
 
   create_table "consensuspolygons", :force => true do |t|
     t.string   "task"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(:version => 20141022152416) do
     t.integer  "year"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.string   "center"
+    t.string   "bbox"
   end
 
   create_table "polygons", :force => true do |t|

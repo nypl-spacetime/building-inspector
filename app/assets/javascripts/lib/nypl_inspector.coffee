@@ -52,10 +52,12 @@ class @Inspector
 
     # @geo = {}
 
+    @mapdata = $(@options.jsdataID).data("map")
+
     @initMap()
 
   initMap: () ->
-    @map = L.mapbox.map('map', 'https://s3.amazonaws.com/maptiles.nypl.org/859/859spec.json',
+    @map = L.mapbox.map('map', 'nypllabs.g6ei9mm0',
       zoomControl: false
       scrollWheelZoom: @options.scrollWheelZoom
       touchZoom: @options.touchZoom
@@ -68,10 +70,9 @@ class @Inspector
         detectRetina: false
     )
 
-    @overlay2 = L.mapbox.tileLayer('https://s3.amazonaws.com/maptiles.nypl.org/860/860spec.json',
-      zIndex: 3
-      detectRetina: false # added this because maptiles.nypl does not support retina yet
-    ).addTo(@map)
+    @tileset = @mapdata.tileset.tilejson
+
+    @updateTileset()
 
     L.control.zoom(
       position: 'topright'
@@ -84,6 +85,13 @@ class @Inspector
     # history.replaceState({},"",@options.task)
 
     @options.tutorialOn = $(@options.jsdataID).data("session")
+
+  updateTileset: () ->
+    @map.removeLayer(@overlay) if @overlay
+    @overlay = L.mapbox.tileLayer(@tileset,
+      zIndex: 3
+      detectRetina: false # added this because maptiles.nypl does not support retina yet
+    ).addTo(@map)
 
   clearScreen: () ->
     # rest should be implemented in the inspector instance
@@ -212,8 +220,7 @@ class @Inspector
   showInspectingMessage: () ->
     return if @layer_id == @loadedData.map.layer_id or @options.tutorialOn
     @layer_id = @loadedData.map.layer_id
-    msg = "Now inspecting:<br/><strong>Brooklyn, 1855</strong>"
-    msg = "Now inspecting:<br/><strong>Manhattan, 1857-62</strong>" if @layer_id == 859 # hack // eventually add to sheet table
+    msg = "Now inspecting:<br/><strong>#{@loadedData.tileset.name}, #{@loadedData.tileset.year}</strong>"
     @showMessage(msg, true)
 
   invokeTutorial: () =>
@@ -318,8 +325,7 @@ class @Inspector
     if @firstLoad
       # using embedded map data
       @firstLoad = false
-      mapdata = $(@options.jsdataID).data("map")
-      @processPolygons(mapdata)
+      @processPolygons(@mapdata)
     else
       $.getJSON("/fixer/map.json?type=#{@options.task}", (data) ->
         # console.log(d);
@@ -331,6 +337,9 @@ class @Inspector
     @loadedData = data
     @polyData = data.poly
     @updateScore()
+    if @loadedData.tileset.tilejson != @tileset
+      @tileset = @loadedData.tileset.tilejson
+      @updateTileset()
     if @polyData?.length > 0
       data.poly = Utils.shuffle(data.poly)
       @showInspectingMessage()

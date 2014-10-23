@@ -278,15 +278,23 @@ class FixerController < ApplicationController
 
   # OTHER
 
-  def getProgress(task, mode)
+  def getProgress(task, mode, layer_id=nil)
+    if !layer_id
+      layer = Layer.first
+      layer_id = layer[:id]
+    else
+      layer = Layer.find(layer_id)
+    end
     session = getSession()
     progress = {}
-    progress[:counts] = Polygon.grouped_by_sheet unless mode == "user"
+    progress[:layers] = Layer.all
+    progress[:layer] = layer
+    progress[:counts] = Polygon.grouped_by_sheet(layer_id) unless mode == "user"
     if user_signed_in?
-      progress[:counts] = Flag.grouped_flags_for_user(current_user.id, task) unless mode == "all"
+      progress[:counts] = Flag.grouped_flags_for_user(current_user.id, layer_id, task) unless mode == "all"
       progress[:all_polygons_session] = Flag.flags_for_user(current_user.id, task)
     else
-      progress[:counts] = Flag.grouped_flags_for_session(session, task) unless mode == "all"
+      progress[:counts] = Flag.grouped_flags_for_session(session, layer_id, task) unless mode == "all"
       progress[:all_polygons_session] = Flag.flags_for_session(session, task)
     end
     return progress
@@ -321,6 +329,7 @@ class FixerController < ApplicationController
       return map
     end
 
+    map[:tileset] = map[:map].layer
 		map[:poly] = map[:map].polygons_for_task(session, type)
 		map[:status][:map_polygons] = map[:map].polygons.count
 		map[:status][:map_polygons_session] = map[:poly].count

@@ -9,13 +9,11 @@ class Layer
 
     tileset = $("#data").data("tiles")
 
-    console.log "hi", tileset, @map
-
     @overlay = L.mapbox.tileLayer(tileset,
       zIndex: 2
     ).addTo(@map)
 
-    @map.setView($("#data").data("center"), 13)
+    @map.fitBounds([[$("#data").data("bbox")[0],$("#data").data("bbox")[1]],[$("#data").data("bbox")[2],$("#data").data("bbox")[3]]])
 
 $ ->
   window._l = new Layer

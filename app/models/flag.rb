@@ -16,14 +16,14 @@ class Flag < ActiveRecord::Base
 		Flag.select('DISTINCT flags.polygon_id, flags.latitude, flags.longitude, flags.flag_value, polygons.geometry, polygons.sheet_id, polygons.dn').joins([polygon: :sheet]).joins(:usersession).where('sheets.id = ? AND usersessions.user_id = ? AND flags.flag_type = ?', sheet_id, user_id, type)
 	end
 
-	def self.grouped_flags_for_session(session_id, type = "geometry")
+	def self.grouped_flags_for_session(session_id, layer_id, type = "geometry")
 		# just need the count per sheet
-		Flag.select('COUNT(DISTINCT flags.polygon_id) as total, sheets.id, sheets.bbox').joins([polygon: :sheet]).where('flags.session_id = ? AND flags.flag_type = ?', session_id, type).group("sheets.id")
+		Flag.select('COUNT(DISTINCT flags.polygon_id) as total, sheets.id, sheets.bbox').joins([polygon: :sheet]).where('flags.session_id = ? AND flags.flag_type = ? AND sheets.layer_id = ?', session_id, type, layer_id).group("sheets.id")
 	end
 
-	def self.grouped_flags_for_user(user_id, type = "geometry")
+	def self.grouped_flags_for_user(user_id, layer_id, type = "geometry")
 		# just need the count per sheet
-		Flag.select('COUNT(DISTINCT flags.polygon_id) as total, sheets.id, sheets.bbox').joins([polygon: :sheet]).joins(:usersession).where('usersessions.user_id = ? AND flags.flag_type = ?', user_id, type).group("sheets.id")
+		Flag.select('COUNT(DISTINCT flags.polygon_id) as total, sheets.id, sheets.bbox').joins([polygon: :sheet]).joins(:usersession).where('usersessions.user_id = ? AND flags.flag_type = ? AND sheets.layer_id = ?', user_id, type, layer_id).group("sheets.id")
 	end
 
 	def self.flags_for_session(session_id, type = "geometry")

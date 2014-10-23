@@ -21,7 +21,7 @@
       text-align: right;
     }
   </style>
-  <%= javascript_include_tag "admin/layers", {:id => "data", "data-tiles" => "#{@layer.tilejson}", "data-center" => @layer.center} %>
+  <%= javascript_include_tag "admin/layers", {:id => "data", "data-tiles" => "#{@layer.tilejson}", "data-bbox" => @layer.bbox} %>
 <% end %>
 
 <div class="wrapper">
@@ -47,8 +47,8 @@
 </p>
 
 <p>
-  <b>Center:</b>
-  <%= @layer.center %>
+  <b>Bbox:</b>
+  <%= @layer.bbox %>
 </p>
 
 <p>
