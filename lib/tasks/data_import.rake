@@ -46,8 +46,12 @@ namespace :data_import do
       abort "Config #{file} has no sheets."
     end
 
+    # TODO: make it work
+    layer = Layer.new(:description => "N/A", :name => "N/A", :year => 0, :bbox => "", :external_id => id)
+    layer.save
+
     json.each do |f|
-      process_file(f["id"].to_i, f["bbox"].join(","), id)
+      process_file(f["id"].to_i, f["bbox"].join(","), layer.id)
     end
   end
 
