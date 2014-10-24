@@ -34,7 +34,7 @@ class @Progress
 
     @tileset = @loadedData.layer.tilejson
 
-    @bbox = JSON.parse(@loadedData.layer.bbox)
+    @bbox = @loadedData.layer.bbox.split(",")
 
     @initMap()
 
@@ -44,7 +44,7 @@ class @Progress
       animate: true
       scrollWheelZoom: true
       attributionControl: false
-      minZoom: 12
+      minZoom: 7
       maxZoom: 21
       dragging: true
       # maxBounds: new L.LatLngBounds(@_SW, @_NE).pad(1)
@@ -127,7 +127,7 @@ class @Progress
 
     @tileset = target.data("tileset")
     @layer_id = target.data("id")
-    @bbox = target.data("bbox")
+    @bbox = target.data("bbox").split(",")
 
     @updateTileset()
     @updateLayersControl()

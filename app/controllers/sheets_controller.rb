@@ -6,7 +6,7 @@ class SheetsController < ApplicationController
   def index
     # @sheets = Sheet.paginate(:page => params[:page])
     @sheets = Sheet.all
-    @tilesets = Layer.all.collect { |i| i[:tilejson] }
+    @tilesets = Layer.all(:order => :id).collect { |i| i[:tilejson] }
 
     respond_to do |format|
       format.html # index.html.erb

@@ -4,7 +4,7 @@ class LayersController < ApplicationController
   # GET /layers
   # GET /layers.json
   def index
-    @layers = Layer.all
+    @layers = Layer.all(:order => :id)
 
     respond_to do |format|
       format.html # index.html.erb

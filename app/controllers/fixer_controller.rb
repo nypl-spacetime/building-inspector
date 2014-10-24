@@ -322,7 +322,7 @@ class FixerController < ApplicationController
     end
     session = getSession()
     progress = {}
-    progress[:layers] = Layer.all
+    progress[:layers] = Layer.all(:order => :id)
     progress[:layer] = layer
     progress[:counts] = Polygon.grouped_by_sheet(layer_id) unless mode == "user"
     if user_signed_in?

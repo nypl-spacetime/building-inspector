@@ -2,7 +2,7 @@ class Sheet
   constructor: () ->
     @map = L.mapbox.map('map', 'nypllabs.g6ei9mm0',
       animate: true
-      minZoom: 13
+      minZoom: 7
       maxZoom: 21
       attributionControl: false
     )
@@ -41,22 +41,19 @@ class Sheet
       onEachFeature: @onEachFeature
     )
 
-    @parse sheet for sheet in data
+    bounds = new L.LatLngBounds()
 
+    @parse sheet, bounds for sheet in data
 
-    _SW = new L.LatLng(40.62563874006115,-74.13093566894531)
-    _NE = new L.LatLng(40.81640757520087,-73.83087158203125)
-    bounds = new L.LatLngBounds(_SW, _NE)
-    
     @map.fitBounds bounds
 
     @geo.addTo @map
 
-  parse: (sheet) ->
+  parse: (sheet, bounds) ->
     # define rectangle geographical bounds
     # data comes: W, S, E, N
     bbox = sheet["bbox"].split ","
-    
+
     W = parseFloat(bbox[0])
     S = parseFloat(bbox[1])
     E = parseFloat(bbox[2])
@@ -67,9 +64,11 @@ class Sheet
     NE = new L.LatLng(N, E)
     SE = new L.LatLng(S, E)
 
-    bounds = new L.LatLngBounds(SW, NE)
+    sheet_bounds = new L.LatLngBounds(SW, NE)
 
-    json = 
+    bounds.extend(sheet_bounds)
+
+    json =
       type : "Feature"
       properties:
         id: sheet.id
@@ -97,7 +96,7 @@ class Sheet
       stroke: true
       color: '#b00'
       fillOpacity: 0.1
-    
+
     l.bringToFront()
 
   resetHighlight: (e) =>

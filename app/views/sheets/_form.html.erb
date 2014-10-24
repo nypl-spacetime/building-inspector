@@ -16,8 +16,8 @@
     <%= f.text_field :status %>
   </div>
   <div class="field">
-    <%= f.label :bbox %><br />
-    <%= f.text_field :bbox %>
+    <%= f.label :bbox %>W,S,E,N<br />
+    <%= f.text_field :bbox, :placeholder => 'W,S,E,N' %>
   </div>
   <div class="field">
     <%= f.label :map_id %><br />
