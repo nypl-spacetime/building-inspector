@@ -47,6 +47,19 @@ namespace :data_import do
     end
 
     # TODO: make it work
+
+    #first check if sheet exists
+    layer = Layer.where(:external_id => id)
+
+    if (layer.count != 0)
+      #find sheets for this layer
+      sheet = Sheet.where(:layer_id => id)
+      if (sheet.count != 0)
+        sheet.destroy_all
+      end
+      layer.destroy_all
+    end
+
     layer = Layer.new(:description => json.description, :name => json.name, :year => json.year, :bbox => json.bbox, :external_id => id)
     layer.save
 
