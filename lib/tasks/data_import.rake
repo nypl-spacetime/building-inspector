@@ -42,7 +42,7 @@ namespace :data_import do
     str = IO.read(file)
     json = JSON.parse(str)
 
-    if json.sheets.count == 0
+    if json["sheets"].count == 0
       abort "Config #{file} has no sheets."
     end
 
