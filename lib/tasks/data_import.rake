@@ -60,10 +60,10 @@ namespace :data_import do
       layer.destroy_all
     end
 
-    layer = Layer.new(:description => json.description, :name => json.name, :year => json.year, :bbox => json.bbox, :external_id => id)
+    layer = Layer.new(:description => json["description"], :name => json["name"], :year => json["year"], :bbox => json["bbox"], :external_id => id)
     layer.save
 
-    json.sheets.each do |f|
+    json["sheets"].each do |f|
       process_file(f["id"].to_i, f["bbox"].join(","), layer.id)
     end
   end
