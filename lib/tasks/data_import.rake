@@ -42,15 +42,15 @@ namespace :data_import do
     str = IO.read(file)
     json = JSON.parse(str)
 
-    if json.count == 0
+    if json.sheets.count == 0
       abort "Config #{file} has no sheets."
     end
 
     # TODO: make it work
-    layer = Layer.new(:description => "N/A", :name => "N/A", :year => 0, :bbox => "", :external_id => id)
+    layer = Layer.new(:description => json.description, :name => json.name, :year => json.year, :bbox => json.bbox, :external_id => id)
     layer.save
 
-    json.each do |f|
+    json.sheets.each do |f|
       process_file(f["id"].to_i, f["bbox"].join(","), layer.id)
     end
   end
