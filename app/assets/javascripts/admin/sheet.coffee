@@ -16,17 +16,32 @@ class Sheet
 
     sheet = @
     @map.on 'load', () ->
+      sheetdata = $("#sheetdata").data("sheet")
+      bbox = sheetdata.bbox.split(",")
+
+      W = parseFloat(bbox[0])
+      S = parseFloat(bbox[1])
+      E = parseFloat(bbox[2])
+      N = parseFloat(bbox[3])
+
+      SW = new L.LatLng(S, W)
+      NW = new L.LatLng(N, W)
+      NE = new L.LatLng(N, E)
+      SE = new L.LatLng(S, E)
+
+      sheet_bounds = new L.LatLngBounds(SW, NE)
+
+      sheet.map.fitBounds(sheet_bounds)
       sheet.getPolygons()
 
   getPolygons: () =>
     data = $('#sheetdata').data("map")
 
+
     no_color = '#AF2228'
     yes_color = '#609846'
     fix_color = '#FFB92D'
     nil_color = '#AAAAAA'
-
-    console.log data
 
     return if data.nil_poly.features.length==0 && data.fix_poly.features.length==0 && data.no_poly.features.length==0 && data.yes_poly.features.length==0
 
@@ -89,25 +104,23 @@ class Sheet
           m.fitBounds(@.getBounds())
     )
 
-    bounds = new L.LatLngBounds()
+    # bounds = new L.LatLngBounds()
 
     if data.yes_poly.features.length>0
       yes_json.addTo(m)
-      bounds.extend(yes_json.getBounds())
+      # bounds.extend(yes_json.getBounds())
 
     if data.no_poly.features.length>0
       no_json.addTo(m)
-      bounds.extend(no_json.getBounds())
+      # bounds.extend(no_json.getBounds())
 
     if data.fix_poly.features.length>0
       fix_json.addTo(m)
-      bounds.extend(fix_json.getBounds())
+      # bounds.extend(fix_json.getBounds())
 
     if data.nil_poly.features.length>0
       nil_json.addTo(m)
-      bounds.extend(nil_json.getBounds())
-
-    m.fitBounds(bounds)
+      # bounds.extend(nil_json.getBounds())
 
 $ ->
   window._s = new Sheet
