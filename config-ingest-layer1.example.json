@@ -3,7 +3,6 @@
     "name":"Manhattan",
     "year":1859,
     "bbox":"W,S,E,N (floats)",
-    "external_id":123,
     "tilejson":"https://example.com/path/to.json",
     "sheets":[
         {
