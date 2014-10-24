@@ -51,20 +51,26 @@ class GeometryProgress extends Progress
     bounds = new L.LatLngBounds()
 
     if data.yes_poly.features.length>0
+      console.log "yes"
       yes_json.addTo(m)
       bounds.extend(yes_json.getBounds())
 
     if data.no_poly.features.length>0
+      console.log "no"
       no_json.addTo(m)
       bounds.extend(no_json.getBounds())
 
     if data.fix_poly.features.length>0
+      console.log "fix"
       fix_json.addTo(m)
       bounds.extend(fix_json.getBounds())
 
     if data.nil_poly?.features.length>0
+      console.log "nil", nil_json.getBounds()
       nil_json.addTo(m)
       bounds.extend(nil_json.getBounds())
+
+    console.log bounds, data
 
     p.map.fitBounds(bounds)
 

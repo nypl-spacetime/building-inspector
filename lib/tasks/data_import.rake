@@ -53,7 +53,7 @@ namespace :data_import do
 
     if (layer.count != 0)
       #find sheets for this layer
-      sheet = Sheet.where(:layer_id => id)
+      sheet = Sheet.where(:layer_id => layer.first[:id])
       if (sheet.count != 0)
         sheet.destroy_all
       end
@@ -144,6 +144,7 @@ def process_file(id, bbox, layer_id)
   sheet.save
 
   json["features"].each do |f|
+    next if f['geometry']['type'] != 'Polygon'
     polygon = Polygon.new()
     polygon[:sheet_id] = sheet.id
     polygon[:status] = "unprocessed"
