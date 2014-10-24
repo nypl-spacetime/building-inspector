@@ -9,8 +9,8 @@ class @Progress
     window.nypl_progress = @ # to make it accessible from console
 
     @ids = [] # for timed animations (highlights)
-    @_SW = new L.LatLng(40.62563874006115,-74.13093566894531)
-    @_NE = new L.LatLng(40.81640757520087,-73.83087158203125)
+    # @_SW = new L.LatLng(40.62563874006115,-74.13093566894531)
+    # @_NE = new L.LatLng(40.81640757520087,-73.83087158203125)
 
     defaults =
       task: '' # geometry, address, polygonfix
@@ -34,6 +34,8 @@ class @Progress
 
     @tileset = @loadedData.layer.tilejson
 
+    @bbox = JSON.parse(@loadedData.layer.bbox)
+
     @initMap()
 
   initMap: () ->
@@ -45,7 +47,7 @@ class @Progress
       minZoom: 12
       maxZoom: 21
       dragging: true
-      maxBounds: new L.LatLngBounds(@_SW, @_NE).pad(1)
+      # maxBounds: new L.LatLngBounds(@_SW, @_NE).pad(1)
     )
 
     t = @
@@ -69,10 +71,18 @@ class @Progress
         bounds: []
 
   loadProgress: () ->
-    url = "/#{@options.task}/progress_user.json"
-    url = "/#{@options.task}/progress_sheet.json" if @options.mode == "all"
+    url = "/#{@options.task}/progress.json"
+    url = "/#{@options.task}/progress_all.json" if @options.mode == "all"
 
-    url += '?id=' + sheet_id
+    url += '?layer_id=' + @layer_id
+
+    p = @
+
+    $.getJSON(url, (data) ->
+      p.loadedData = data
+      p.getCounts()
+    )
+
 
   updateTileset: () ->
     @map.removeLayer(@overlay) if @overlay
@@ -101,21 +111,27 @@ class @Progress
     if @tileset == layer.tilejson
       "<strong>#{layer.name}, #{layer.year}</strong>"
     else
-      "<a href=\"#\" id=\"layer_toggle_#{layer.id}\" data-id=\"#{layer.id}\" data-tileset=\"#{layer.tilejson}\">#{layer.name}, #{layer.year}</a>"
+      "<a id=\"layer_toggle_#{layer.id}\" data-id=\"#{layer.id}\" data-bbox=\"#{layer.bbox}\" data-tileset=\"#{layer.tilejson}\">#{layer.name}, #{layer.year}</a>"
 
   activateLayerToggle: (layer_id) ->
     p = @
     $("#layer_toggle_#{layer_id}").on("click", (e) ->
       # console.log "click:", e.layer
+      e.preventDefault()
       p.toggleLayer(e)
     )
 
   toggleLayer: (e) ->
+    @map.removeLayer(@markers) if @markers
     target = $(e.originalEvent.target)
+
     @tileset = target.data("tileset")
     @layer_id = target.data("id")
+    @bbox = target.data("bbox")
+
     @updateTileset()
     @updateLayersControl()
+    @loadProgress()
 
   addEventListeners: () ->
     p = @
@@ -181,8 +197,7 @@ class @Progress
     @map.removeLayer(@markers) if @markers
     $(@options.loaderID).remove()
 
-    bounds = new L.LatLngBounds(@_SW, @_NE)
-    @map.fitBounds bounds
+    @map.fitBounds([[@bbox[0],@bbox[1]],[@bbox[2],@bbox[3]]])
 
     @updateScore(@loadedData.all_polygons_session)
 

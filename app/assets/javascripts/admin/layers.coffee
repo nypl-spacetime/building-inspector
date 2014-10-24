@@ -13,7 +13,9 @@ class Layer
       zIndex: 2
     ).addTo(@map)
 
-    @map.fitBounds([[$("#data").data("bbox")[0],$("#data").data("bbox")[1]],[$("#data").data("bbox")[2],$("#data").data("bbox")[3]]])
+    bbox = $("#data").data("bbox")
+
+    @map.fitBounds([[bbox[0],bbox[1]],[bbox[2],bbox[3]]])
 
 $ ->
   window._l = new Layer

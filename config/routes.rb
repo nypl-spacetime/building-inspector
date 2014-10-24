@@ -43,6 +43,9 @@ Webappmini::Application.routes.draw do
   get "footprint", to: "fixer#geometry", :as => "geometry"
   get "footprint/progress", to: "fixer#progress_geometry", :as => "geometry_progress"
   get "footprint/progress_all", to: "fixer#progress_geometry_all", :as => "geometry_progress_all"
+  # - these for task-named routes for geometry progress since user-friendly alias for geometry is "footprint"
+  get "geometry/progress", to: "fixer#progress_geometry", :as => "geometry_progress_"
+  get "geometry/progress_all", to: "fixer#progress_geometry_all", :as => "geometry_progress_all_"
 
   # footprints progress json endpoints
   get "geometry/progress_user", to: "fixer#session_progress_geometry_for_sheet"
@@ -61,6 +64,8 @@ Webappmini::Application.routes.draw do
   # this uses a different route as the task name for user friendliness purposes
   get "fix", to: "fixer#polygonfix", :as => "polygonfix"
   get "fix/progress", to: "fixer#progress_polygonfix", :as => "polygonfix_progress"
+  # - these for task-named routes for geometry progress since user-friendly alias for polygonfix is "fix"
+  get "polygonfix/progress", to: "fixer#progress_polygonfix", :as => "polygonfix_progress_"
 
   # polygonfix progress json endpoints
   get "polygonfix/progress_user", to: "fixer#session_progress_polygonfix_for_sheet"
@@ -70,6 +75,7 @@ Webappmini::Application.routes.draw do
   get "color", to: "fixer#color", :as => "color"
   get "color/progress", to: "fixer#progress_color", :as => "color_progress"
   get "color/progress_all", to: "fixer#progress_color_all", :as => "color_progress_all"
+  # - these for task-named routes for progress (non user-friendly)
 
   # colors progress json endpoints
   get "color/progress_user", to: "fixer#session_progress_color_for_sheet"
