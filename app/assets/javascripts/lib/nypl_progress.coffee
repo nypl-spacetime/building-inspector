@@ -113,17 +113,8 @@ class @Progress
     )
 
   createLayerToggle: (layer) ->
-    console.log @layer_id, layer.id
     selected = if (@layer_id==layer.id) then 'selected=\"selected\"' else ''
     "<option id=\"layer_toggle_#{layer.id}\" #{selected} value=\"#{layer.id}\" data-bbox=\"#{layer.bbox}\" data-tileset=\"#{layer.tilejson}\">#{layer.name}, #{layer.year}</option>"
-
-  activateLayerToggle: (layer_id) ->
-    p = @
-    $("#layer_toggle_#{layer_id}").on("click", (e) ->
-      # console.log "click:", e.layer
-      e.preventDefault()
-      p.toggleLayer(e)
-    )
 
   toggleLayer: (id) ->
     @map.removeLayer(@markers) if @markers
