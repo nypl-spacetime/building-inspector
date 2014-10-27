@@ -112,16 +112,17 @@ class @Inspector
     # rest should be implemented in the inspector instance
 
   onMapChange: (e) =>
-    return if !@options.constrainMapToPolygon
-    # check if current polygon is somewhat visible in view
-    # so user does not get lost
-    if @geo?.getBounds? and not @map.getBounds().intersects(@geo.getBounds())
-      @map.fitBounds( @geo.getBounds() )
+    # move flags
     for flag, contents of @flags
       latlng = contents.circle.getLatLng()
       xy = @map.latLngToContainerPoint(latlng)
       contents.elem.css("left",xy.x)
       contents.elem.css("top",xy.y)
+    # check if current polygon is somewhat visible in view
+    # so user does not get lost
+    return if !@options.constrainMapToPolygon
+    if @geo?.getBounds? and not @map.getBounds().intersects(@geo.getBounds())
+      @map.fitBounds( @geo.getBounds() )
 
   onTutorialClick: (e) =>
     # should be implemented in the inspector instance
@@ -178,12 +179,14 @@ class @Inspector
 
     inspector = @
 
+    # console.log "prepareFlagSubmission:", @currentPolygon.id, type, data
+
     $(@options.buttonsID).fadeOut 200 , () ->
       $.ajax(
         type: "POST"
         url: url
         data:
-          i: inspector.currentPolygon.id
+          i: inspector.currentPolygon.id || -1
           t: type
           f: data
         success: () ->
@@ -418,9 +421,9 @@ class @Inspector
   showPolygon: (e) =>
     inspector = @
     # console.log "showPolygon"
-    @geo.setStyle (feature) ->
+    @geo?.setStyle (feature) ->
       inspector.options.polygonStyle
 
   hidePolygon: (e) =>
-    @geo.setStyle (feature) ->
+    @geo?.setStyle (feature) ->
       opacity: 0

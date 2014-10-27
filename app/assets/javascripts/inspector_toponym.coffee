@@ -5,12 +5,44 @@ class Toponym extends Inspector
 
     options =
       draggableMap: true
+      constrainMapToPolygon: false
       tutorialType:"video"
       tutorialURL: "//player.vimeo.com/video/92360461?autoplay=1&title=0&amp;byline=0&amp;portrait=0"
       jsdataID: '#toponymjs'
       tweetString: "_score_ toponyms found! Data mining old maps with Building Inspector from @NYPLMaps @nypl_labs"
       task: 'toponym'
+    @updateButton()
     super(options)
+
+  showNextPolygon: () ->
+    # OVERRIDES ORIGINAL TO NOT SHOW POLYGONS
+    @clearScreen()
+    @resetButtons()
+    @updateButton()
+
+    $(@options.buttonsID).show()
+
+    # does not show polygon / gets random point from sheet bounds
+    return if @options.tutorialOn
+
+    @getPolygons()
+
+  processPolygons: (data) ->
+    # overrides original since we want to avoid redundant call to showNextPolygon()
+    @allPolygonsSession = 0
+    $(@options.loaderID).remove()
+    @loadedData = data
+    if @loadedData.tileset.tilejson != @tileset
+      @tileset = @loadedData.tileset.tilejson
+      @updateTileset()
+    @updateScore()
+    @showInspectingMessage()
+    bbox = @loadedData.map.bbox.split(",")
+    delta_lon = Math.abs(Number(bbox[2]) - Number(bbox[0]))
+    delta_lat = Math.abs(Number(bbox[3]) - Number(bbox[1]))
+    random_lon = Math.random()*delta_lon+Number(bbox[0])
+    random_lat = Math.random()*delta_lat+Number(bbox[1])
+    @map.setView([random_lat, random_lon], 20) # TODO: support variable zoom
 
   clearScreen: () =>
     @hideSubmit()
@@ -32,12 +64,12 @@ class Toponym extends Inspector
     inspector = @
     $("#submit-button").on "click", @submitFlags
 
-    $("body").keyup (e)->
-      # console.log "key", e.which
-      charCode = if e.which then e.which else e.keyCode
-      switch charCode
-        # when 83 then inspector.submitFlags(e) # s key
-        when 13 then inspector.showSubmit() if inspector.flags.length > 0 # ENTER key
+    # $("body").keyup (e)->
+    #   # console.log "key", e.which
+    #   charCode = if e.which then e.which else e.keyCode
+    #   switch charCode
+    #     # when 83 then inspector.submitFlags(e) # s key
+    #     when 13 then inspector.updateButton() # ENTER key
 
   removeButtonListeners: () =>
     super()
@@ -73,7 +105,7 @@ class Toponym extends Inspector
     r
 
   onTutorialClick: (e) =>
-    console.log "tutclick", e
+    # console.log "tutclick", e
     e.stopPropagation?()
     e.preventDefault?()
 
@@ -103,10 +135,17 @@ class Toponym extends Inspector
     elem.find(".input").focus()
     @updateButton()
 
+  updateScore: () ->
+    for e, contents of @flags
+      @allPolygonsSession++ if contents.value != ""
+    super()
+
   updateButton: () ->
+    @hideSubmit()
     $("#submit-button").text("SKIP")
     for e, contents of @flags
       $("#submit-button").text("SAVE")
+      @showSubmit()
       break
 
   createFlag: (x, y, latlng, fake) ->
@@ -203,7 +242,7 @@ class Toponym extends Inspector
 
     max = 256 # maximum for varchar fields
     elem = $(item)
-    txt = elem.val()
+    txt = $.trim(elem.val())
 
     elem.blur() if charCode == 13 # ENTER
 

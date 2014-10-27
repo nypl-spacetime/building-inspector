@@ -3,7 +3,7 @@ class Flag < ActiveRecord::Base
 	has_one :usersession, :foreign_key => :session_id, :primary_key => :session_id
 	attr_accessible :flag_value, :is_primary, :polygon_id, :session_id, :flag_type, :latitude, :longitude
 	validates :flag_value, presence: true
-	validates :polygon_id, presence: true
+	# validates :polygon_id, presence: true
 	validates :flag_type, presence: true
 
 	def self.flags_for_sheet_for_session(sheet_id, session_id, type = "geometry")
