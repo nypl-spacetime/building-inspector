@@ -27,6 +27,18 @@
   font-size: 20px;
 }
 
+.help-text {
+    text-align: center;
+    text-transform: none;
+    color: $white;
+    margin: 5px;
+    background-color: rgba(0, 0, 0, 0.2);
+    font-weight: normal;
+    padding: 2px 0 3px;
+    @include border-radius;
+    @include text-shadow($grayDarker -2px 1px);
+}
+
 .toponym-flag {
   position: absolute;
   z-index: 1111;

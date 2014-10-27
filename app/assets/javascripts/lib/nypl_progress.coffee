@@ -95,23 +95,23 @@ class @Progress
     $("#layers_toggler").remove()
 
     if @loadedData.layers.length > 1
-      html = '<select id="layers_toggler">'
+      html = '<div id="layers_toggler">View: <select id="layers_select">'
 
       layer_array = (@createLayerToggle layer for layer in @loadedData.layers)
 
       # console.log layer_array
       html += layer_array.join("")
 
-      html += "</select>"
+      html += "</select></div>"
     else
-      layer = loadedData.layers[0]
+      layer = @loadedData.layers[0]
       html = "<strong>#{layer.name}, #{layer.year}</strong>"
 
     $("#legend").prepend(html)
 
     p = @
 
-    $("#layers_toggler").on("change", () ->
+    $("#layers_select").on("change", () ->
       # console.log "click:", e.layer
       id = $(this).val()
       p.toggleLayer(Number(id)) unless id == ""

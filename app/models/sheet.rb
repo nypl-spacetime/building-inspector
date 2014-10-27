@@ -71,6 +71,9 @@ class Sheet < ActiveRecord::Base
     when "polygonfix"
       # sheet has not been totally processed for geometry
       join = "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.polygon_id AND CPG.task = 'geometry' AND CPG.consensus = 'fix'"
+    else
+      # any sheet without consensus
+      join = " "
     end
     join += " LEFT JOIN consensuspolygons AS CP ON CP.polygon_id = polygons.id AND CP.task = " + Sheet.sanitize(type)
     bunch = Polygon.select(:sheet_id).joins(join).where("CP.id IS NULL").uniq.limit(200)

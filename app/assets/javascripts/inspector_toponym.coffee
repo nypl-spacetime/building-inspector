@@ -13,8 +13,15 @@ class Toponym extends Inspector
     super(options)
 
   clearScreen: () =>
+    @hideSubmit()
     @cleanFlags()
     super()
+
+  hideSubmit: () ->
+    $("#submit-button").hide()
+
+  showSubmit: () ->
+    $("#submit-button").show()
 
   addEventListeners: () =>
     super()
@@ -25,11 +32,12 @@ class Toponym extends Inspector
     inspector = @
     $("#submit-button").on "click", @submitFlags
 
-    # $("body").keyup (e)->
+    $("body").keyup (e)->
       # console.log "key", e.which
-      # switch e.which
+      charCode = if e.which then e.which else e.keyCode
+      switch charCode
         # when 83 then inspector.submitFlags(e) # s key
-        # when 13 then inspector.submitFlags(e) # ENTER key
+        when 13 then inspector.showSubmit() if inspector.flags.length > 0 # ENTER key
 
   removeButtonListeners: () =>
     super()
@@ -111,7 +119,7 @@ class Toponym extends Inspector
       weight: 4
     ).addTo @map
 
-    e = @buildNumberElement(x,y)
+    e = @buildTextElement(x,y)
     @flags["x-#{x}-y-#{y}"] =
       elem: e
       circle: circle
@@ -119,7 +127,7 @@ class Toponym extends Inspector
       fake: fake
     e
 
-  buildNumberElement: (x,y) =>
+  buildTextElement: (x,y) =>
     inspector = @
     html = "<div id=\"num-x-#{x}-y-#{y}\" class=\"toponym-flag\"><div class=\"cont\"><input class=\"input\" placeholder=\"name of place\" /><a href=\"javascript:;\" class=\"num-close\">x</a></div></div>"
     el = $(html)
