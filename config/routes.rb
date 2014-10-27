@@ -75,11 +75,19 @@ Webappmini::Application.routes.draw do
   get "color", to: "fixer#color", :as => "color"
   get "color/progress", to: "fixer#progress_color", :as => "color_progress"
   get "color/progress_all", to: "fixer#progress_color_all", :as => "color_progress_all"
-  # - these for task-named routes for progress (non user-friendly)
 
   # colors progress json endpoints
   get "color/progress_user", to: "fixer#session_progress_color_for_sheet"
   get "color/progress_sheet", to: "fixer#progress_sheet_color"
+
+  # toponym main routes
+  get "toponym", to: "fixer#toponym", :as => "toponym"
+  get "toponym/progress", to: "fixer#progress_toponym", :as => "toponym_progress"
+  get "toponym/progress_all", to: "fixer#progress_toponym_all", :as => "toponym_progress_all"
+
+  # toponym progress json endpoints
+  get "toponym/progress_user", to: "fixer#session_progress_toponym_for_sheet"
+  get "toponym/progress_sheet", to: "fixer#progress_sheet_toponym"
 
   # json flagging
   post "fixer/flag", to: "fixer#apply_flags_to_polygon"

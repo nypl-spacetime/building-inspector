@@ -24,6 +24,11 @@
         <%= link_to "ALL INSPECTIONS", color_progress_all_path, :class => (@current_page=="progress_color_all" ? "popup-link active" : "popup-link") %>
         <%= link_to "← KEEP INSPECTING", color_path, :class => "popup-link" unless @current_page == "color" %>
 
+      <% elsif @current_page=="progress_toponym" || @current_page=="progress_toponym_all" || @current_page=="toponym" %>
+        <%= link_to "MY INSPECTIONS", toponym_progress_path, :class => (@current_page=="progress_toponym" ? "popup-link active" : "popup-link") %>
+        <%# link_to "ALL INSPECTIONS", toponym_progress_path, :class => "popup-link" %>
+        <%= link_to "← KEEP INSPECTING", toponym_path, :class => "popup-link" unless @current_page == "toponym" %>
+
       <% else %>
 
       <% end %>

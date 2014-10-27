@@ -128,6 +128,7 @@ class @Progress
     @layer_id = id
     @bbox = target.data("bbox").split(",")
 
+    @resetSheet()
     @updateTileset()
     @updateLayersControl()
     @loadProgress()

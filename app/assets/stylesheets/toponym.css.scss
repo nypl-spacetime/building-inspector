@@ -27,7 +27,7 @@
   font-size: 20px;
 }
 
-.number-flag {
+.toponym-flag {
   position: absolute;
   z-index: 1111;
   text-align: center;
@@ -37,7 +37,6 @@
     position: relative;
     margin-top: 0;
     margin-left: -35px;
-    width: 60px;
     padding: 5px;
     background: rgba(232, 228, 226, 0.75);
     @include box-shadow(#999 0 0 15px);
@@ -61,7 +60,7 @@
   }
 
   .input {
-    width: 60px;
+    width: 200px;
     height: 25px;
     border: none;
     background: transparent;

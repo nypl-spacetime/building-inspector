@@ -2,9 +2,9 @@
 
 <% content_for :dynamic_js do %>
   <%= stylesheet_link_tag    "fixer", :media => "all" %>
-  <%= stylesheet_link_tag    "address", :media => "all" %>
+  <%= stylesheet_link_tag    "toponym", :media => "all" %>
 
-  <%= javascript_include_tag "inspector_address", {:id => "addressjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}"), "data-session" => "#{@isNew}", "data-map" => "#{@map}"} %>
+  <%= javascript_include_tag "inspector_toponym", {:id => "toponymjs", "data-server" => CGI.escape("#{request.protocol}#{request.host_with_port}"), "data-session" => "#{@isNew}", "data-map" => "#{@map}"} %>
 <% end %>
 
 <%= render :partial => "partials/nav" %>
@@ -12,7 +12,7 @@
 <div id="controls">
   <div id="buttons">
     <div class="wrapper">
-      <a href="javascript:;" id="submit-button" title="Keyboard shortcut: S" rel="nofollow">SKIP</a>
+      <a href="javascript:;" id="submit-button" rel="nofollow">SKIP</a>
     </div>
   </div>
 </div>

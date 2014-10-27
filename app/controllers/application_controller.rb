@@ -21,6 +21,7 @@ class ApplicationController < ActionController::Base
     @global_tasks.unshift(@global_tasks.slice!(1,1)[0]) if @current_page=="polygonfix"
     @global_tasks.unshift(@global_tasks.slice!(2,1)[0]) if @current_page=="address"
     @global_tasks.unshift(@global_tasks.slice!(3,1)[0]) if @current_page=="color"
+    @global_tasks.unshift(@global_tasks.slice!(4,1)[0]) if @current_page=="toponym"
   end
 
   private
@@ -48,6 +49,7 @@ class ApplicationController < ActionController::Base
     @global_tasks.push({:score => 0, :name => "Fix footprints", :path => polygonfix_path, :page => "polygonfix"})
     @global_tasks.push({:score => 0, :name => "Enter Addresses", :path => address_path, :page => "address"})
     @global_tasks.push({:score => 0, :name => "Classify Colors", :path => color_path, :page => "color"})
+    @global_tasks.push({:score => 0, :name => "Find Placenames", :path => toponym_path, :page => "toponym"})
   end
 
   # SESSION STUFF
