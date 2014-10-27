@@ -93,14 +93,18 @@ class @Progress
 
   updateLayersControl: () ->
     $("#layers_toggler").remove()
-    html = '<select id="layers_toggler">'
 
-    layer_array = (@createLayerToggle layer for layer in @loadedData.layers)
+    if @loadedData.layers.length > 1
+      html = '<select id="layers_toggler">'
 
-    # console.log layer_array
-    html += layer_array.join("")
+      layer_array = (@createLayerToggle layer for layer in @loadedData.layers)
 
-    html += "</select>"
+      # console.log layer_array
+      html += layer_array.join("")
+
+      html += "</select>"
+    else
+      html = "<strong>#{layer.name}, #{layer.year}</strong>"
 
     $("#legend").prepend(html)
 
