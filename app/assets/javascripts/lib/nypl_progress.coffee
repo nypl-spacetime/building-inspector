@@ -104,6 +104,7 @@ class @Progress
 
       html += "</select>"
     else
+      layer = loadedData.layers[0]
       html = "<strong>#{layer.name}, #{layer.year}</strong>"
 
     $("#legend").prepend(html)
