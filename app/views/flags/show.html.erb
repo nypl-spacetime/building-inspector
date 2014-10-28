@@ -1,13 +1,18 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Type:</b>
+  <b>Task:</b>
   <%= @flag.flag_type %>
 </p>
 
 <p>
-  <b>Polygon:</b>
-  <%= link_to @flag.polygon_id, @flag.polygon %>
+  <b>Type:</b>
+  <%= @flag.flaggable_type %>
+</p>
+
+<p>
+  <b>Polygon/Sheet:</b>
+  <%= link_to @flag.flaggable_id, @flag.flaggable %>
 </p>
 
 <p>

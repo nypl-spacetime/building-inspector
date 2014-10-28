@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141024164935) do
+ActiveRecord::Schema.define(:version => 20141028135449) do
 
   create_table "consensuspolygons", :force => true do |t|
     t.string   "task"
@@ -27,18 +27,19 @@ ActiveRecord::Schema.define(:version => 20141024164935) do
 
   create_table "flags", :force => true do |t|
     t.string   "flag_type"
-    t.integer  "polygon_id"
+    t.integer  "flaggable_id"
     t.string   "session_id"
     t.text     "flag_value"
     t.boolean  "is_primary"
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
-    t.decimal  "latitude",   :precision => 15, :scale => 12
-    t.decimal  "longitude",  :precision => 15, :scale => 12
+    t.datetime "created_at",                                                            :null => false
+    t.datetime "updated_at",                                                            :null => false
+    t.decimal  "latitude",       :precision => 15, :scale => 12
+    t.decimal  "longitude",      :precision => 15, :scale => 12
+    t.string   "flaggable_type",                                 :default => "polygon"
   end
 
-  add_index "flags", ["polygon_id"], :name => "polygon_index"
-  add_index "flags", ["session_id", "flag_type", "polygon_id", "flag_value", "latitude", "longitude"], :name => "index_flags_on_session_id", :unique => true
+  add_index "flags", ["flaggable_id"], :name => "polygon_index"
+  add_index "flags", ["session_id", "flag_type", "flaggable_id", "flag_value", "latitude", "longitude"], :name => "index_flags_on_session_id", :unique => true
 
   create_table "layers", :force => true do |t|
     t.string   "name"

@@ -4,6 +4,7 @@ class Toponym extends Inspector
     @flags = {}
 
     options =
+      flaggableType: 'Sheet'
       draggableMap: true
       constrainMapToPolygon: false
       tutorialType:"video"
@@ -133,9 +134,11 @@ class Toponym extends Inspector
     elem.css("left", x)
     $("#map-container").append(elem)
     elem.find(".input").focus()
+    @updateScore()
     @updateButton()
 
   updateScore: () ->
+    @allPolygonsSession = @loadedData.status.all_polygons_session
     for e, contents of @flags
       @allPolygonsSession++ if contents.value != ""
     super()
@@ -256,6 +259,7 @@ class Toponym extends Inspector
 
     # console.log elem, x, y, txt
     @updateFlag x, y, txt
+    @updateScore()
 
 $ ->
   new Toponym()

@@ -10,6 +10,7 @@ class @Inspector
     @desktopWidth = 600
 
     defaults =
+      flaggableType: 'Polygon'
       editablePolygon: false
       draggableMap: false
       constrainMapToPolygon: true
@@ -172,6 +173,7 @@ class @Inspector
 
     @showSpinner()
     type = @options.task
+    flaggable_type = @options.flaggableType
 
     _gaq.push(['_trackEvent', 'Flag', type])
     @allPolygonsSession++
@@ -186,7 +188,8 @@ class @Inspector
         type: "POST"
         url: url
         data:
-          i: inspector.currentPolygon.id || -1
+          i: inspector.currentPolygon.id || inspector.loadedData.map.id
+          ft: flaggable_type
           t: type
           f: data
         success: () ->

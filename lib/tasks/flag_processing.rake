@@ -50,22 +50,23 @@ namespace :db do
   ON C.polygon_id = P.id
   AND C.task = '#{task}'
   INNER JOIN (
-    SELECT _F.polygon_id, _F.flag_value, COUNT(*) AS flag_count
+    SELECT _F.flaggable_id, _F.flag_value, COUNT(*) AS flag_count
     FROM flags AS _F
     WHERE _F.flag_value = '#{value}'
     AND _F.flag_type = '#{task}'
-    GROUP BY _F.polygon_id, _F.flag_value
+    AND _F.flaggable_type = 'Polygon'
+    GROUP BY _F.flaggable_id, _F.flag_value
     HAVING COUNT(*) >= #{min_count}
   ) AS F
-  ON F.polygon_id = P.id
+  ON F.flaggable_id = P.id
   INNER JOIN (
-    SELECT _F.polygon_id, COUNT(*) AS flag_count
+    SELECT _F.flaggable_id, COUNT(*) AS flag_count
     FROM flags AS _F
     WHERE _F.flag_type = '#{task}'
-    GROUP BY _F.polygon_id
+    GROUP BY _F.flaggable_id
     HAVING COUNT(*) >= #{min_count}
   ) AS FCOUNT
-  ON FCOUNT.polygon_id = P.id
+  ON FCOUNT.flaggable_id = P.id
   WHERE
     C.id IS NULL AND
     F.flag_count::float / FCOUNT.flag_count::float >= #{threshold}"

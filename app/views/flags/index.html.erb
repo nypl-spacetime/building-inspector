@@ -3,7 +3,7 @@
 <table>
   <tr>
     <th><%= sortable "flag_type", "Type" %></th>
-    <th>Polygon</th>
+    <th>Polygon/Sheet</th>
     <th><%= sortable "session_id", "Session" %></th>
     <th>Flag value</th>
     <th>Is primary</th>
@@ -15,7 +15,7 @@
 <% @flags.each do |flag| %>
   <tr>
     <td><%= flag.flag_type %></td>
-    <td><%= link_to flag.polygon_id, polygon_path(flag.polygon_id) %></td>
+    <td><%= link_to "#{flag.flaggable_type}:#{flag.flaggable_id}", flag.flaggable %></td>
     <td><%= flag.session_id %></td>
     <td><%= flag.flag_value %></td>
     <td><%= flag.is_primary %></td>

@@ -315,10 +315,16 @@ class FixerController < ApplicationController
     progress[:layer] = layer
     progress[:counts] = Polygon.grouped_by_sheet(layer_id) unless mode == "user"
     if user_signed_in?
-      progress[:counts] = Flag.grouped_flags_for_user(current_user.id, layer_id, task) unless mode == "all"
+      if mode != "all"
+        progress[:counts] = Flag.grouped_flags_for_user(current_user.id, layer_id, task) if task == "toponym"
+        progress[:counts] = Flag.grouped_flags_for_user(current_user.id, layer_id, task) if task != "toponym"
+      end
       progress[:all_polygons_session] = Flag.flags_for_user(current_user.id, task)
     else
-      progress[:counts] = Flag.grouped_flags_for_session(session, layer_id, task) unless mode == "all"
+      if mode != "all"
+        progress[:counts] = Flag.grouped_flags_for_session(session, layer_id, task) if task == "toponym"
+        progress[:counts] = Flag.grouped_flags_for_session(session, layer_id, task) if task != "toponym"
+      end
       progress[:all_polygons_session] = Flag.flags_for_session(session, task)
     end
     return progress
@@ -379,9 +385,10 @@ class FixerController < ApplicationController
     # id: poly_id
     # flags: "value=lat=lng|value=lat=lng|value=lat=lng|..."
     flags = params[:f].split("|")
-    poly_id = params[:i]
+    flaggable_id = params[:i]
+    flaggable_type = params[:ft]
     type = params[:t]
-    if poly_id == nil || flags == nil
+    if flaggable_id == nil || flags == nil
         render :text => "empty_poly"
         return
     end
@@ -395,7 +402,8 @@ class FixerController < ApplicationController
         end
         flag = Flag.new
         flag[:is_primary] = true
-        flag[:polygon_id] = poly_id
+        flag[:flaggable_id] = flaggable_id
+        flag[:flaggable_type] = flaggable_type
         flag[:flag_value] = contents[0]
         if contents[1] != ""
         	flag[:latitude] = contents[1]

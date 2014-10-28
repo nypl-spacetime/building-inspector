@@ -37,11 +37,11 @@ class ConsensusUtils
       consensus = address_cluster_consensus(c[1], flags)
       consensus_list.push(consensus) if consensus != nil
     end
-    # group by polygon_id
-    ids = consensus_list.map {|f| f[:polygon_id]}.uniq
+    # group by flaggable_id
+    ids = consensus_list.map {|f| f[:flaggable_id]}.uniq
     grouped_list = {}
     ids.each do |id|
-      items = consensus_list.select {|x| x[:polygon_id] == id}
+      items = consensus_list.select {|x| x[:flaggable_id] == id}
       grouped_list[id] = items
     end
     return grouped_list
@@ -58,11 +58,11 @@ class ConsensusUtils
     flags = get_address_flags_for_cluster(cluster, flags)
     total_votes = 0
     address_tally = {} # saves the address popularity
-    id_tally = {} # saves the polygon_id popularity
+    id_tally = {} # saves the flaggable_id popularity
     session_ids = []
     flags.each do |vote|
       value = vote["flag_value"]
-      id = vote["polygon_id"]
+      id = vote["flaggable_id"]
       sid = vote["session_id"]
       # ignore vote if session_id already exists
       # to reduce trolling
@@ -92,7 +92,7 @@ class ConsensusUtils
     winner_id = id_tally_sorted.last
     votes = winner_address[1].to_i
     consensus = votes.to_f / total_votes.to_f
-    polygon_id = winner_id[0].to_i
+    flaggable_id = winner_id[0].to_i
     flag_value = winner_address[0]
     # lat/lon is average of points
     latitude = cluster.map {|c| c[1]}.mean
@@ -105,7 +105,7 @@ class ConsensusUtils
     winner_mark[:flag_value] = flag_value
     winner_mark[:votes] = votes
     winner_mark[:total_votes] = total_votes
-    winner_mark[:polygon_id] = polygon_id
+    winner_mark[:flaggable_id] = flaggable_id
     return winner_mark
   end
 
@@ -281,7 +281,7 @@ class ConsensusUtils
   end
 
   def self.consensus_to_geojson(consensus, id)
-    {:type => "FeatureCollection", :features => consensus.map { |f| {:type => "Feature", :properties => { :polygon_id => id }, :geometry => { :type => "Polygon", :coordinates =>[f] } } } }.to_json
+    {:type => "FeatureCollection", :features => consensus.map { |f| {:type => "Feature", :properties => { :flaggable_id => id }, :geometry => { :type => "Polygon", :coordinates =>[f] } } } }.to_json
   end
 
 end

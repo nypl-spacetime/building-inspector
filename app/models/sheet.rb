@@ -1,5 +1,6 @@
 class Sheet < ActiveRecord::Base
   has_many :polygons, :dependent => :destroy
+  has_many :flags, as: :flaggable
   belongs_to :layer
   attr_accessible :bbox, :map_id, :map_url, :status, :layer_id
 
@@ -8,12 +9,13 @@ class Sheet < ActiveRecord::Base
   end
 
   def self.polygons_for_task(sheet_id, session_id = nil, type="geometry")
+    return [] if type == "toponym"
     # only the necessary data of a sheet's polygons
     sheet_id = Sheet.sanitize(sheet_id)
     session_id = Sheet.sanitize(session_id)
     if session_id != nil
       # find all the sessions associated to this session_id via its user_id if any
-      join = "LEFT JOIN flags AS F ON polygons.id = F.polygon_id
+      join = "LEFT JOIN flags AS F ON polygons.id = F.flaggable_id
               AND F.session_id IN (
                 SELECT #{session_id}
                 UNION
@@ -40,7 +42,6 @@ class Sheet < ActiveRecord::Base
     when "polygonfix"
       join += "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.polygon_id AND CPG.task = 'geometry' AND CPG.consensus = 'fix' LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.polygon_id AND CP.task = " + Sheet.sanitize(type)
     else
-      # in a non-polygon-based case we need to at least have this CP join for the query to work (currently equal to geometry task)
       join += "LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.polygon_id AND CP.task = "+ Sheet.sanitize(type)
     end
 
@@ -52,7 +53,7 @@ class Sheet < ActiveRecord::Base
     type = Sheet.sanitize(type)
 
     columns = "polygons.id, geometry, sheet_id, CP.consensus, dn, centroid_lat, centroid_lon"
-    join = "LEFT JOIN flags AS F ON polygons.id = F.polygon_id LEFT JOIN consensuspolygons AS CP ON CP.polygon_id = polygons.id AND CP.task = #{type}"
+    join = "LEFT JOIN flags AS F ON polygons.id = F.flaggable_id LEFT JOIN consensuspolygons AS CP ON CP.polygon_id = polygons.id AND CP.task = #{type}"
     where = " sheet_id = #{sheet_id} "
 
     poly = Polygon.select(columns).joins(join).where(where)
