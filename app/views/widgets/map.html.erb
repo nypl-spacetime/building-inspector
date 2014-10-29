@@ -26,7 +26,7 @@
       text-decoration: none;
     }
   </style>
-  <%= javascript_include_tag "widgets/map", {:id => "data", "data-map" => "#{@data[:sheet].to_json}"} %>
+  <%= javascript_include_tag "widgets/map", {:id => "data", "data-map" => "#{@data[:sheet].to_json}", "data-layer" => "#{@data[:layer].to_json}"} %>
 <% end %>
 
 <% server = "#{request.protocol}#{request.host_with_port}" %>

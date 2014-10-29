@@ -8,10 +8,18 @@ class Sheet
     )
 
     tileset = $("#sheetdata").data("tiles")
+    tiletype = $("#sheetdata").data("type")
 
-    @overlay = L.mapbox.tileLayer(tileset,
-      zIndex: 2
-    ).addTo(@map)
+    if (tiletype!="wmts")
+      @overlay = L.mapbox.tileLayer(tileset,
+        zIndex: 2
+        detectRetina: false # added this because maptiles.nypl does not support retina yet
+      ).addTo(@map)
+    else
+      @overlay = new L.TileLayer.WMTS(tileset ,
+        zIndex: 2
+        detectRetina: false # added this because maptiles.nypl does not support retina yet
+      ).addTo(@map)
 
 
     sheet = @

@@ -5,7 +5,7 @@
 			height: 600px;
 		}
 	</style>
-	<%= javascript_include_tag "admin/sheet", {:id => "sheetdata", "data-map" => "#{@map.to_json}", "data-tiles" => "#{@tileset}", "data-sheet" => "#{@sheet.to_json}"} %>
+	<%= javascript_include_tag "admin/sheet", {:id => "sheetdata", "data-map" => "#{@map.to_json}", "data-tiles" => "#{@tileset}", "data-sheet" => "#{@sheet.to_json}", "data-type" => "#{@tiletype}"} %>
 <% end %>
 
 <p id="notice"><%= notice %></p>

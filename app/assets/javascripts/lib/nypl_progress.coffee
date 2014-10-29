@@ -33,6 +33,7 @@ class @Progress
     @layer_id = @loadedData.layer.id
 
     @tileset = @loadedData.layer.tilejson
+    @tiletype = @loadedData.layer.tileset_type
 
     @bbox = @loadedData.layer.bbox.split(",")
 
@@ -86,10 +87,17 @@ class @Progress
 
   updateTileset: () ->
     @map.removeLayer(@overlay) if @overlay
-    @overlay = L.mapbox.tileLayer(@tileset,
-      zIndex: 3
-      detectRetina: false # added this because maptiles.nypl does not support retina yet
-    ).addTo(@map)
+
+    if (@tiletype!="wmts")
+      @overlay = L.mapbox.tileLayer(@tileset,
+        zIndex: 3
+        detectRetina: false # added this because maptiles.nypl does not support retina yet
+      ).addTo(@map)
+    else
+      @overlay = new L.TileLayer.WMTS( @tileset ,
+        zIndex: 3
+        detectRetina: false # added this because maptiles.nypl does not support retina yet
+      ).addTo(@map)
 
   updateLayersControl: () ->
     $("#layers_toggler").remove()
@@ -119,13 +127,14 @@ class @Progress
 
   createLayerToggle: (layer) ->
     selected = if (@layer_id==layer.id) then 'selected=\"selected\"' else ''
-    "<option id=\"layer_toggle_#{layer.id}\" #{selected} value=\"#{layer.id}\" data-bbox=\"#{layer.bbox}\" data-tileset=\"#{layer.tilejson}\">#{layer.name}, #{layer.year}</option>"
+    "<option id=\"layer_toggle_#{layer.id}\" #{selected} value=\"#{layer.id}\" data-bbox=\"#{layer.bbox}\" data-tileset=\"#{layer.tilejson}\" data-type=\"#{layer.tileset_type}\">#{layer.name}, #{layer.year}</option>"
 
   toggleLayer: (id) ->
     @map.removeLayer(@markers) if @markers
     target = $("#layer_toggle_#{id}")
 
     @tileset = target.data("tileset")
+    @tiletype = target.data("type")
     @layer_id = id
     @bbox = target.data("bbox").split(",")
 

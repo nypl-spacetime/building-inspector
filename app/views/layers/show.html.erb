@@ -21,7 +21,7 @@
       text-align: right;
     }
   </style>
-  <%= javascript_include_tag "admin/layers", {:id => "data", "data-tiles" => "#{@layer.tilejson}", "data-bbox" => @layer.bbox} %>
+  <%= javascript_include_tag "admin/layers", {:id => "data", "data-tiles" => "#{@layer.tilejson}", "data-type" => @layer.tileset_type, "data-bbox" => @layer.bbox} %>
 <% end %>
 
 <div class="wrapper">
@@ -39,6 +39,11 @@
 <p>
   <b>Tilejson:</b>
   <%= @layer.tilejson %>
+</p>
+
+<p>
+  <b>Tileset type (tms, wmts):</b>
+  <%= @layer.tileset_type %>
 </p>
 
 <p>

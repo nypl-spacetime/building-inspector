@@ -6,7 +6,7 @@ class SheetsController < ApplicationController
   def index
     # @sheets = Sheet.paginate(:page => params[:page])
     @sheets = Sheet.all
-    @tilesets = Layer.all(:order => :id).collect { |i| i[:tilejson] }
+    @tilesets = Layer.all(:order => :id)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -20,6 +20,7 @@ class SheetsController < ApplicationController
     @sheet = Sheet.find(params[:id])
 
     @tileset = @sheet.layer[:tilejson]
+    @tiletype = @sheet.layer[:tileset_type]
 
     # TODO: allow for admin review of progress in all tasks
     if params[:type] == nil # ALWAYS nil FOR NOW
