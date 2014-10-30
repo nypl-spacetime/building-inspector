@@ -126,11 +126,6 @@ def process_file(id, bbox, layer_id)
   str = IO.read(file)
   json = JSON.parse(str)
 
-  if json["features"] == nil
-    puts "Sheet ID #{id} has no features."
-    return unless ENV['force']!=nil
-  end
-
   # now we can create the sheet and polygons
 
   #first check if sheet exists
@@ -142,6 +137,11 @@ def process_file(id, bbox, layer_id)
 
   sheet = Sheet.new(:map_id => id.to_s, :bbox => bbox, :status => "unprocessed", :layer_id => layer_id)
   sheet.save
+
+  if json["features"] == nil
+    puts "Sheet ID #{id} has no features."
+    return
+  end
 
   json["features"].each do |f|
     next if f['geometry']['type'] != 'Polygon'
