@@ -3,6 +3,7 @@
 <table>
   <tr>
     <th>Name</th>
+    <th>Bbox</th>
     <th>Tile URL</th>
     <th>Description</th>
     <th>Year</th>
@@ -13,7 +14,8 @@
 
 <% @layers.each do |layer| %>
   <tr>
-    <td><%= layer.name %></td>
+    <td><%= link_to layer.name, layer %></td>
+    <td><%= layer.bbox %></td>
     <td><%= layer.tilejson %></td>
     <td><%= layer.description %></td>
     <td><%= layer.year %></td>

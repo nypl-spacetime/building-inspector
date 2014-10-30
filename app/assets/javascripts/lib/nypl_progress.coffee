@@ -35,7 +35,7 @@ class @Progress
     @tileset = @loadedData.layer.tilejson
     @tiletype = @loadedData.layer.tileset_type
 
-    @bbox = @loadedData.layer.bbox.split(",")
+    @bbox = Utils.parseBbox(@loadedData.layer.bbox)
 
     @initMap()
 
@@ -136,7 +136,7 @@ class @Progress
     @tileset = target.data("tileset")
     @tiletype = target.data("type")
     @layer_id = id
-    @bbox = target.data("bbox").split(",")
+    @bbox = Utils.parseBbox(target.data("bbox"))
 
     @resetSheet()
     @updateTileset()
@@ -207,7 +207,7 @@ class @Progress
     @map.removeLayer(@markers) if @markers
     $(@options.loaderID).remove()
 
-    @map.fitBounds([[@bbox[0],@bbox[1]],[@bbox[2],@bbox[3]]])
+    @map.fitBounds(Utils.bboxToBounds(@bbox))
 
     @updateScore(@loadedData.all_polygons_session)
 
@@ -266,19 +266,10 @@ class @Progress
   addMarker: (markers, data) ->
     # console.log data
 
-    bbox = data.bbox.split ","
+    bbox = Utils.parseBbox(data.bbox)
 
-    W = parseFloat(bbox[0])
-    S = parseFloat(bbox[1])
-    E = parseFloat(bbox[2])
-    N = parseFloat(bbox[3])
+    bounds = Utils.bboxToBounds(bbox)
 
-    SW = new L.LatLng(S, W)
-    NW = new L.LatLng(N, W)
-    NE = new L.LatLng(N, E)
-    SE = new L.LatLng(S, E)
-
-    bounds = new L.LatLngBounds(SW, NE)
     latlng = bounds.getCenter()
 
     markers.addLayer new L.InspectorMarker latlng,

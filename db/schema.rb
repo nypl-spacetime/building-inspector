@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141029142740) do
+ActiveRecord::Schema.define(:version => 20141030141230) do
 
   create_table "consensuspolygons", :force => true do |t|
     t.string   "task"
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(:version => 20141029142740) do
   create_table "sheets", :force => true do |t|
     t.string   "status"
     t.string   "bbox"
-    t.integer  "map_id"
+    t.string   "map_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "layer_id"

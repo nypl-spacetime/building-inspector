@@ -40,6 +40,22 @@ class root.Utils
     # Return the shuffled array.
     a
 
+  @parseBbox: (bbox) ->
+    (parseFloat(n) for n in bbox.split(","))
+
+  @bboxToBounds: (bbox) ->
+    W = parseFloat(bbox[0])
+    S = parseFloat(bbox[1])
+    E = parseFloat(bbox[2])
+    N = parseFloat(bbox[3])
+
+    SW = new L.LatLng(S, W)
+    NW = new L.LatLng(N, W)
+    NE = new L.LatLng(N, E)
+    SE = new L.LatLng(S, E)
+
+    new L.LatLngBounds(SW, NE)
+
   @spinner: (opts) ->
     default_opts =
       lines: 11 # The number of lines to draw

@@ -41,22 +41,9 @@ class MapWidget
   loadData: () =>
     el = $("#stats")
 
+    bbox = Utils.parseBbox(@data.bbox)
 
-    bbox = @data.bbox.split(",")
-
-    console.log @data.bbox, bbox
-
-    W = parseFloat(bbox[0])
-    S = parseFloat(bbox[1])
-    E = parseFloat(bbox[2])
-    N = parseFloat(bbox[3])
-
-    SW = new L.LatLng(S, W)
-    NW = new L.LatLng(N, W)
-    NE = new L.LatLng(N, E)
-    SE = new L.LatLng(S, E)
-
-    bounds = new L.LatLngBounds(SW, NE)
+    bounds = Utils.bboxToBounds(bbox)
 
     @map.fitBounds( bounds )
 

@@ -63,6 +63,7 @@ namespace :db do
     SELECT _F.flaggable_id, COUNT(*) AS flag_count
     FROM flags AS _F
     WHERE _F.flag_type = '#{task}'
+    AND _F.flaggable_type = 'Polygon'
     GROUP BY _F.flaggable_id
     HAVING COUNT(*) >= #{min_count}
   ) AS FCOUNT

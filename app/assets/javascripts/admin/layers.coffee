@@ -21,7 +21,7 @@ class Layer
 
     bbox = $("#data").data("bbox").split(",")
 
-    @map.fitBounds([[bbox[0],bbox[1]],[bbox[2],bbox[3]]])
+    @map.fitBounds([[bbox[1],bbox[0]],[bbox[3],bbox[2]]])
 
 $ ->
   window._l = new Layer

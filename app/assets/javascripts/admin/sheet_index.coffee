@@ -64,21 +64,16 @@ class Sheet
   parse: (sheet, bounds) ->
     # define rectangle geographical bounds
     # data comes: W, S, E, N
-    bbox = sheet["bbox"].split ","
+    bbox = Utils.parseBbox(sheet["bbox"])
 
-    W = parseFloat(bbox[0])
-    S = parseFloat(bbox[1])
-    E = parseFloat(bbox[2])
-    N = parseFloat(bbox[3])
+    sbounds = Utils.bboxToBounds(bbox)
 
-    SW = new L.LatLng(S, W)
-    NW = new L.LatLng(N, W)
-    NE = new L.LatLng(N, E)
-    SE = new L.LatLng(S, E)
+    N = sbounds.getNorth()
+    S = sbounds.getSouth()
+    E = sbounds.getEast()
+    W = sbounds.getWest()
 
-    sheet_bounds = new L.LatLngBounds(SW, NE)
-
-    bounds.extend(sheet_bounds)
+    bounds.extend(sbounds)
 
     json =
       type : "Feature"

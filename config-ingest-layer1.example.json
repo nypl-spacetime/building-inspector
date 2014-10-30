@@ -4,6 +4,7 @@
     "year":1859,
     "bbox":"W,S,E,N (floats)",
     "tilejson":"https://example.com/path/to.json",
+    "tileset_type":"wmts",
     "sheets":[
         {
             "id": "101", 

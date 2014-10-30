@@ -60,7 +60,7 @@ namespace :data_import do
       layer.destroy_all
     end
 
-    layer = Layer.new(:description => json["description"], :name => json["name"], :year => json["year"], :tilejson => json["tilejson"], :bbox => json["bbox"], :external_id => id)
+    layer = Layer.new(:description => json["description"], :name => json["name"], :year => json["year"], :tilejson => json["tilejson"], :tileset_type => json["tileset_type"], :bbox => json["bbox"], :external_id => id)
     layer.save
 
     json["sheets"].each do |f|

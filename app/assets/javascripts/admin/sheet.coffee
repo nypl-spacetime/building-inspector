@@ -25,21 +25,12 @@ class Sheet
     sheet = @
     @map.on 'load', () ->
       sheetdata = $("#sheetdata").data("sheet")
-      bbox = sheetdata.bbox.split(",")
 
-      W = parseFloat(bbox[0])
-      S = parseFloat(bbox[1])
-      E = parseFloat(bbox[2])
-      N = parseFloat(bbox[3])
+      bbox = Utils.parseBbox(sheetdata.bbox)
 
-      SW = new L.LatLng(S, W)
-      NW = new L.LatLng(N, W)
-      NE = new L.LatLng(N, E)
-      SE = new L.LatLng(S, E)
+      bounds = Utils.bboxToBounds(bbox)
 
-      sheet_bounds = new L.LatLngBounds(SW, NE)
-
-      sheet.map.fitBounds(sheet_bounds)
+      sheet.map.fitBounds(bounds)
       sheet.getPolygons()
 
   getPolygons: () =>
