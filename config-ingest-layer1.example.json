@@ -2,7 +2,10 @@
     "description":"some text here",
     "name":"Manhattan",
     "year":1859,
-    "bbox":"W,S,E,N (floats)",
+    "bbox":[-74.0045051, 
+                40.7558605, 
+                -73.994675, 
+                40.7627951],
     "tilejson":"https://example.com/path/to.json",
     "tileset_type":"wmts",
     "sheets":[

@@ -60,7 +60,7 @@ namespace :data_import do
       layer.destroy_all
     end
 
-    layer = Layer.new(:description => json["description"], :name => json["name"], :year => json["year"], :tilejson => json["tilejson"], :tileset_type => json["tileset_type"], :bbox => json["bbox"], :external_id => id)
+    layer = Layer.new(:description => json["description"], :name => json["name"], :year => json["year"], :tilejson => json["tilejson"], :tileset_type => json["tileset_type"], :bbox => json["bbox"].join(","), :external_id => id)
     layer.save
 
     json["sheets"].each do |f|
@@ -134,13 +134,13 @@ def process_file(id, bbox, layer_id)
   # now we can create the sheet and polygons
 
   #first check if sheet exists
-  sheet = Sheet.where(:map_id => id)
+  sheet = Sheet.where(:map_id => id.to_s)
 
   if (sheet.count != 0)
     sheet.destroy_all
   end
 
-  sheet = Sheet.new(:map_id => id, :bbox => bbox, :status => "unprocessed", :layer_id => layer_id)
+  sheet = Sheet.new(:map_id => id.to_s, :bbox => bbox, :status => "unprocessed", :layer_id => layer_id)
   sheet.save
 
   json["features"].each do |f|
