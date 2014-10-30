@@ -128,7 +128,7 @@ def process_file(id, bbox, layer_id)
 
   if json["features"] == nil
     puts "Sheet ID #{id} has no features."
-    return
+    return unless ENV['force']!=nil
   end
 
   # now we can create the sheet and polygons
