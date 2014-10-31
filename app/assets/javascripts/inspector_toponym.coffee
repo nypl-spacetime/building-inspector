@@ -39,11 +39,14 @@ class Toponym extends Inspector
     @updateScore()
     @showInspectingMessage()
     bbox = @loadedData.map.bbox.split(",")
-    delta_lon = Math.abs(Number(bbox[2]) - Number(bbox[0]))
-    delta_lat = Math.abs(Number(bbox[3]) - Number(bbox[1]))
-    random_lon = Math.random()*delta_lon+Number(bbox[0])
-    random_lat = Math.random()*delta_lat+Number(bbox[1])
+    delta_lon = Math.abs(parseFloat(bbox[2]) - parseFloat(bbox[0]))
+    delta_lat = Math.abs(parseFloat(bbox[3]) - parseFloat(bbox[1]))
+    random_lon = Math.random()*delta_lon+parseFloat(bbox[0])
+    random_lat = Math.random()*delta_lat+parseFloat(bbox[1])
     @map.setView([random_lat, random_lon], 20) # TODO: support variable zoom
+    # constrain the map to the current sheet
+    bounds = Utils.bboxToBounds(bbox)
+    @map.setMaxBounds(bounds)
 
   clearScreen: () =>
     @hideSubmit()

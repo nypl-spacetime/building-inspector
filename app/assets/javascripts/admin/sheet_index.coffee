@@ -64,9 +64,7 @@ class Sheet
   parse: (sheet, bounds) ->
     # define rectangle geographical bounds
     # data comes: W, S, E, N
-    bbox = Utils.parseBbox(sheet["bbox"])
-
-    sbounds = Utils.bboxToBounds(bbox)
+    bounds = Utils.parseBbox(sheet["bbox"])
 
     N = sbounds.getNorth()
     S = sbounds.getSouth()

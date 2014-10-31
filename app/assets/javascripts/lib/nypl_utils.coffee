@@ -40,8 +40,9 @@ class root.Utils
     # Return the shuffled array.
     a
 
-  @parseBbox: (bbox) ->
-    (parseFloat(n) for n in bbox.split(","))
+  @parseBbox: (bbox_str) ->
+    bbox = (parseFloat(n) for n in bbox_str.split(","))
+    @bboxToBounds(bbox)
 
   @bboxToBounds: (bbox) ->
     W = parseFloat(bbox[0])

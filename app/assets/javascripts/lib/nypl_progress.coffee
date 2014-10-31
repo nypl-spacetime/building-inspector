@@ -35,7 +35,7 @@ class @Progress
     @tileset = @loadedData.layer.tilejson
     @tiletype = @loadedData.layer.tileset_type
 
-    @bbox = Utils.parseBbox(@loadedData.layer.bbox)
+    @bbox = @loadedData.layer.bbox
 
     @initMap()
 
@@ -136,7 +136,7 @@ class @Progress
     @tileset = target.data("tileset")
     @tiletype = target.data("type")
     @layer_id = id
-    @bbox = Utils.parseBbox(target.data("bbox"))
+    @bbox = target.data("bbox")
 
     @resetSheet()
     @updateTileset()
@@ -207,7 +207,7 @@ class @Progress
     @map.removeLayer(@markers) if @markers
     $(@options.loaderID).remove()
 
-    @map.fitBounds(Utils.bboxToBounds(@bbox))
+    @map.fitBounds(Utils.parseBbox(@bbox))
 
     @updateScore(@loadedData.all_polygons_session)
 
@@ -266,9 +266,7 @@ class @Progress
   addMarker: (markers, data) ->
     # console.log data
 
-    bbox = Utils.parseBbox(data.bbox)
-
-    bounds = Utils.bboxToBounds(bbox)
+    bounds = Utils.parseBbox(data.bbox)
 
     latlng = bounds.getCenter()
 

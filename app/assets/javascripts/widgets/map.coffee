@@ -41,9 +41,7 @@ class MapWidget
   loadData: () =>
     el = $("#stats")
 
-    bbox = Utils.parseBbox(@data.bbox)
-
-    bounds = Utils.bboxToBounds(bbox)
+    bounds = Utils.parseBbox(@data.bbox)
 
     @map.fitBounds( bounds )
 
