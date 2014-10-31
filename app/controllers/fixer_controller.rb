@@ -351,6 +351,7 @@ class FixerController < ApplicationController
 
     if map[:map] == nil
       # no map was found, send empty stuff
+      map[:tileset] = Layer.first
       map[:poly] = []
       map[:status][:map_polygons] = 0
       map[:status][:map_polygons_session] = 0
