@@ -156,18 +156,33 @@ class Toponym extends Inspector
 
   createFlag: (x, y, latlng, fake) ->
     @cleanEmptyFlags()
-    circle = L.circleMarker(latlng,
-      color: '#d75b25'
-      fill: false
-      opacity: 0.5
-      radius: 28
-      weight: 4
-    ).addTo @map
+
+    flagIcon = L.icon(
+      iconUrl: '/assets/toponym/toponymmarker.png'
+      iconSize: [26, 80]
+      iconAnchor: [0, 80]
+    )
+
+    flag = L.marker(latlng,
+      icon: flagIcon
+      # color: '#d75b25'
+      # fill: false
+      # opacity: 0.5
+      # radius: 28
+      # weight: 4
+    )
+
+    m = @map
+
+    flag.on 'add', ()->
+      m.panTo(latlng, m.getZoom())
+
+    flag.addTo @map
 
     e = @buildTextElement(x,y)
     @flags["x-#{x}-y-#{y}"] =
       elem: e
-      circle: circle
+      circle: flag
       value: ""
       fake: fake
     e
