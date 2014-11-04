@@ -159,8 +159,8 @@ class Toponym extends Inspector
 
     flagIcon = L.icon(
       iconUrl: '/assets/toponym/toponymmarker.png'
-      iconSize: [26, 80]
-      iconAnchor: [0, 80]
+      iconSize: [30, 84]
+      iconAnchor: [8, 77]
     )
 
     flag = L.marker(latlng,
