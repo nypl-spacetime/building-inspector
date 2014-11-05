@@ -28,6 +28,20 @@ class root.Utils
 
     newInstance
 
+  @addOverlay: (map, tileset, tiletype, zIndex = 2) ->
+    if (tiletype!="wmts")
+      overlay = L.mapbox.tileLayer(tileset,
+        zIndex: zIndex
+        detectRetina: false # added this because maptiles.nypl does not support retina yet
+      ).addTo(map)
+    else
+      overlay = new L.TileLayer.WMTS(tileset ,
+        zIndex: zIndex
+        detectRetina: false # added this because maptiles.nypl does not support retina yet
+      ).addTo(map)
+    overlay
+
+
   @shuffle: (a) ->
     return a if a.length < 2
     # from: http://coffeescriptcookbook.com/chapters/arrays/shuffling-array-elements
@@ -45,10 +59,10 @@ class root.Utils
     @bboxToBounds(bbox)
 
   @bboxToBounds: (bbox) ->
-    W = parseFloat(bbox[0])
-    S = parseFloat(bbox[1])
-    E = parseFloat(bbox[2])
-    N = parseFloat(bbox[3])
+    W = bbox[0]
+    S = bbox[1]
+    E = bbox[2]
+    N = bbox[3]
 
     SW = new L.LatLng(S, W)
     NW = new L.LatLng(N, W)

@@ -14,21 +14,7 @@ class Sheet
     for set in tilesets
       zindex++
 
-      if (set.tileset_type!="wmts")
-        @overlay = L.mapbox.tileLayer(set.tilejson,
-          zIndex: 3
-          detectRetina: false # added this because maptiles.nypl does not support retina yet
-        ).addTo(@map)
-      else
-        @overlay = new L.TileLayer.WMTS(set.tilejson,
-          zIndex: 3
-          detectRetina: false # added this because maptiles.nypl does not support retina yet
-        ).addTo(@map)
-
-      overlay = L.mapbox.tileLayer(set,
-        zIndex: zindex
-        detectRetina: false # added this because maptiles.nypl does not support retina yet
-      ).addTo(@map)
+      Utils.addOverlay(@map, set.tilejson, set.tileset_type, zindex)
 
     s = @
 

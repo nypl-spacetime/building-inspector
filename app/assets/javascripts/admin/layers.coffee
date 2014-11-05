@@ -10,14 +10,7 @@ class Layer
     tileset = $("#data").data("tiles")
     tiletype = $("#data").data("type")
 
-    if (tiletype!="wmts")
-      @overlay = L.mapbox.tileLayer(tileset,
-        zIndex: 2
-      ).addTo(@map)
-    else
-      @overlay = new L.TileLayer.WMTS( tileset ,
-        zIndex: 2
-      ).addTo(@map)
+    @overlay = Utils.addOverlay(@map, tileset, tiletype)
 
     bbox = $("#data").data("bbox").split(",")
 

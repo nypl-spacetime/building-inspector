@@ -91,16 +91,7 @@ class @Inspector
   updateTileset: () ->
     @map.removeLayer(@overlay) if @overlay
 
-    if (@tiletype!="wmts")
-      @overlay = L.mapbox.tileLayer(@tileset,
-        zIndex: 3
-        detectRetina: false # added this because maptiles.nypl does not support retina yet
-      ).addTo(@map)
-    else
-      @overlay = new L.TileLayer.WMTS(@tileset ,
-        zIndex: 3
-        detectRetina: false # added this because maptiles.nypl does not support retina yet
-      ).addTo(@map)
+    @overlay = Utils.addOverlay(@map, @tileset, @tiletype, 3)
 
   clearScreen: () ->
     # rest should be implemented in the inspector instance

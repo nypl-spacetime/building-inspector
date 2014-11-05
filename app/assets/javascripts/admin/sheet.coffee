@@ -10,25 +10,15 @@ class Sheet
     tileset = $("#sheetdata").data("tiles")
     tiletype = $("#sheetdata").data("type")
 
-    if (tiletype!="wmts")
-      @overlay = L.mapbox.tileLayer(tileset,
-        zIndex: 2
-        detectRetina: false # added this because maptiles.nypl does not support retina yet
-      ).addTo(@map)
-    else
-      @overlay = new L.TileLayer.WMTS(tileset ,
-        zIndex: 2
-        detectRetina: false # added this because maptiles.nypl does not support retina yet
-      ).addTo(@map)
-
+    @overlay = Utils.addOverlay(@map, tileset, tiletype, 2)
 
     sheet = @
     @map.on 'load', () ->
       sheetdata = $("#sheetdata").data("sheet")
 
-      bbox = Utils.parseBbox(sheetdata.bbox)
+      console.log sheetdata.bbox
 
-      bounds = Utils.bboxToBounds(bbox)
+      bounds = Utils.parseBbox(sheetdata.bbox)
 
       sheet.map.fitBounds(bounds)
       sheet.getPolygons()

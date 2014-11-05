@@ -19,16 +19,7 @@ class MapWidget
     tileset = layer_data.tilejson
     tiletype = layer_data.tileset_type
 
-    if (tiletype!="wmts")
-      @overlay = L.mapbox.tileLayer(tileset,
-        zIndex: 2
-        detectRetina: false # added this because maptiles.nypl does not support retina yet
-      ).addTo(@map)
-    else
-      @overlay = new L.TileLayer.WMTS(tileset ,
-        zIndex: 2
-        detectRetina: false # added this because maptiles.nypl does not support retina yet
-      ).addTo(@map)
+    @overlay = Utils.addOverlay(@map, tileset, tiletype)
 
     L.control.zoom(
       position: 'bottomleft'
