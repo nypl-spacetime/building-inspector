@@ -12,6 +12,7 @@
   }
 }
 
+
 .polygon-highlight {
   border: 2px solid $orange;
   width: 10px;
@@ -32,6 +33,7 @@
   position: absolute;
   left: 10px;
   top: 10px;
+  width: 200px;
   z-index: 1;
   text-align: left;
   font-size: 12px;
@@ -44,11 +46,6 @@
     bottom: 10px;
     left: 50px;
     right: 50px;
-  }
-
-  #layers_select {
-    width: auto;
-    margin: 0;
   }
 
   ul {
@@ -106,6 +103,33 @@
     &.gray {
       background: $gray;
     }
+  }
+}
+
+#layers_toggler {
+  position: relative;
+
+  #layers_select {
+    width: 100%;
+    margin: 0;
+    font-family: $mainfont;
+    padding: 1px 20px 0px 3px;
+    @include border-radius(0);
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  &:after {
+    position: absolute;
+    content: attr(data-icon);
+    font-family:$iconfont;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "V";
+    right: 10px;
+    top: 2px;
+    pointer-events: none;
   }
 }
 

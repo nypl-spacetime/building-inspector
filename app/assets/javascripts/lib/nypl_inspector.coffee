@@ -8,6 +8,7 @@ class @Inspector
 
     window.nypl_inspector = @ # to make it accessible from console
     @desktopWidth = 600
+    @retries = 3
 
     defaults =
       flaggableType: 'Polygon'
@@ -64,7 +65,7 @@ class @Inspector
       touchZoom: @options.touchZoom
       animate: true
       attributionControl: false
-      minZoom: 12
+      minZoom: 19
       maxZoom: 21
       dragging: @options.draggableMap
       tileLayer: # added this because maptiles.nypl does not support retina yet
@@ -314,14 +315,18 @@ class @Inspector
       @currentPolygon = {}
       @allPolygonsSession = 0
       if @polyData.length == 0
-        # no map found, die
-        @endGame()
+        if @retries-- > 0
+          console.log "retrying..."
+          @getPolygons()
+        else
+          # no map found, die
+          @endGame()
       else
         @getPolygons()
 
   endGame:() ->
     # no map found, die
-    msg = "<strong>No unprocessed polygons found for this task</strong><br />Good news! This seems to be complete. Maybe try another task?"
+    msg = "<strong>No unprocessed data found for this task</strong><br />Good news! This seems to be complete. Maybe try another task?"
     @showMessage(msg, false)
     $(@options.buttonsID).hide()
 

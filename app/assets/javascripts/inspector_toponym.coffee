@@ -8,7 +8,7 @@ class Toponym extends Inspector
       draggableMap: true
       constrainMapToPolygon: false
       tutorialType:"video"
-      tutorialURL: "//player.vimeo.com/video/92360461?autoplay=1&title=0&amp;byline=0&amp;portrait=0"
+      tutorialURL: "//player.vimeo.com/video/123878608?autoplay=1&title=0&amp;byline=0&amp;portrait=0"
       jsdataID: '#toponymjs'
       tweetString: "_score_ toponyms found! Data mining old maps with Building Inspector from @NYPLMaps @nypl_labs"
       task: 'toponym'
@@ -38,15 +38,52 @@ class Toponym extends Inspector
       @updateTileset()
     @updateScore()
     @showInspectingMessage()
-    bbox = @loadedData.map.bbox.split(",")
-    delta_lon = Math.abs(parseFloat(bbox[2]) - parseFloat(bbox[0]))
-    delta_lat = Math.abs(parseFloat(bbox[3]) - parseFloat(bbox[1]))
-    random_lon = Math.random()*delta_lon+parseFloat(bbox[0])
-    random_lat = Math.random()*delta_lat+parseFloat(bbox[1])
+    bbox = (parseFloat(c) for c in @loadedData.map.bbox.split(","))
+    delta_lon = Math.abs(bbox[2] - bbox[0])
+    delta_lat = Math.abs(bbox[3] - bbox[1])
+    random_lon = Math.random()*delta_lon+bbox[0]
+    random_lat = Math.random()*delta_lat+bbox[1]
     @map.setView([random_lat, random_lon], 20) # TODO: support variable zoom
     # constrain the map to the current sheet
     bounds = Utils.bboxToBounds(bbox)
     @map.setMaxBounds(bounds)
+    @fogOfWar()
+    @showCurrentToponyms()
+
+  fogOfWar: () ->
+    # SHOW "FOG OF WAR": (black area with map bbox hole to see thru)
+    @map.removeLayer(@fog) if @fog
+    bbox = (parseFloat(c) for c in @loadedData.map.bbox.split(","))
+    planet = [[-180,90],[180,90],[180,-90],[-180,-90]]
+    hole = [[bbox[1],bbox[0]],[bbox[3],bbox[0]],[bbox[3],bbox[2]],[bbox[1],bbox[2]]]
+    @fog = L.polygon([planet,hole],
+      stroke: false
+      fillColor: '#000'
+      fillOpacity: 0.8
+    )
+    @fog.addTo @map
+
+  showCurrentToponyms: () ->
+    @map.removeLayer(@my_topos) if @my_topos
+    console.log @loadedData.toponyms.features.length
+    return if @loadedData.toponyms.features.length == 0
+    @my_topos = L.geoJson(@loadedData.toponyms,
+      pointToLayer: (f,latlng)->
+        L.circle(latlng, 3,
+          color: '#d75b25'
+          fillOpacity: 0.1
+          opacity: 0.5
+          # radius: 16
+          weight: 4
+        )
+      style: (feature) ->
+        feature.properties
+      onEachFeature: (f, l) ->
+        l.bindPopup(f.properties.flag_value,
+          className: 'toponym-popup'
+        )
+    )
+    @my_topos.addTo(@map)
 
   clearScreen: () =>
     @hideSubmit()
@@ -151,8 +188,8 @@ class Toponym extends Inspector
     $("#submit-button").text("SKIP")
     for e, contents of @flags
       $("#submit-button").text("SAVE")
-      @showSubmit()
       break
+    @showSubmit()
 
   createFlag: (x, y, latlng, fake) ->
     @cleanEmptyFlags()

@@ -1,8 +1,12 @@
 <%
+# TODO: this link building has to improve
 help_link = "#{geometry_path}?tutorial=true"
-help_link = "#{address_path}?tutorial=true" if @current_page=="progress_address" || @current_page=="progress_address_all"
-help_link = "#{polygonfix_path}?tutorial=true" if @current_page=="progress_polygonfix" || @current_page=="progress_polygonfix_all"
-help_link = "javascript:;" if @current_page=="geometry" || @current_page=="address" || @current_page=="polygonfix" || @current_page=="color"
+help_link = "#{address_path}?tutorial=true" if @current_page.include?"address"
+help_link = "#{color_path}?tutorial=true" if @current_page.include?"color"
+help_link = "#{polygonfix_path}?tutorial=true" if @current_page.include?"polygonfix"
+help_link = "#{toponym_path}?tutorial=true" if @current_page.include?"toponym"
+#the default
+help_link = "javascript:;" if @current_page=="geometry" || @current_page=="address" || @current_page=="polygonfix" || @current_page=="color" || @current_page=="toponym"
 
 
 %>

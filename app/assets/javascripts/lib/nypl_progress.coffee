@@ -94,7 +94,7 @@ class @Progress
     $("#layers_toggler").remove()
 
     if @loadedData.layers.length > 1
-      html = '<div id="layers_toggler">View: <select id="layers_select">'
+      html = '<div id="layers_toggler"><select id="layers_select">'
 
       layer_array = (@createLayerToggle layer for layer in @loadedData.layers)
 
@@ -104,7 +104,7 @@ class @Progress
       html += "</select></div>"
     else
       layer = @loadedData.layers[0]
-      html = "<strong>#{layer.name}, #{layer.year}</strong>"
+      html = "<strong>Map: #{layer.name}, #{layer.year}</strong>"
 
     $("#legend").prepend(html)
 
@@ -118,7 +118,7 @@ class @Progress
 
   createLayerToggle: (layer) ->
     selected = if (@layer_id==layer.id) then 'selected=\"selected\"' else ''
-    "<option id=\"layer_toggle_#{layer.id}\" #{selected} value=\"#{layer.id}\" data-bbox=\"#{layer.bbox}\" data-tileset=\"#{layer.tilejson}\" data-type=\"#{layer.tileset_type}\">#{layer.name}, #{layer.year}</option>"
+    "<option id=\"layer_toggle_#{layer.id}\" #{selected} value=\"#{layer.id}\" data-bbox=\"#{layer.bbox}\" data-tileset=\"#{layer.tilejson}\" data-type=\"#{layer.tileset_type}\">Map: #{layer.name}, #{layer.year}</option>"
 
   toggleLayer: (id) ->
     @map.removeLayer(@markers) if @markers

@@ -35,7 +35,7 @@ class AddressProgress extends Progress
         p.highlights.push(l)
         # html = "<div class=\"number-flag\"><div class=\"cont\">#{f.properties.flag_value}</div></div>"
         l.bindPopup(f.properties.flag_value,
-          # closeButton: false
+          className: 'toponym-popup'
         )
         l.on "click", (e) ->
           p.map.setView(e.target.getLatLng(), 20)

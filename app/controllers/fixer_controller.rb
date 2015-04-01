@@ -6,7 +6,12 @@ class FixerController < ApplicationController
   # GEOMETRY
 
 	def geometry
-    getTask("geometry")
+    task = "geometry"
+    @current_page = task
+    sort_tasks()
+    @isNew = checkNewness(task)
+    map_obj = getMap(task)
+    @map = map_obj.to_json
 	end
 
 	def progress_geometry
@@ -80,7 +85,12 @@ class FixerController < ApplicationController
   # ADDRESS
 
 	def address
-    getTask("address")
+    task = "address"
+    @current_page = task
+    sort_tasks()
+    @isNew = checkNewness(task)
+    map_obj = getMap(task)
+    @map = map_obj.to_json
 	end
 
 	def progress_address
@@ -121,7 +131,16 @@ class FixerController < ApplicationController
   # TOPONYM
 
   def toponym
-    getTask("toponym")
+    task = "toponym"
+    @current_page = task
+    sort_tasks()
+    @isNew = checkNewness(task)
+    map_obj = getMap(task)
+
+    topo_features = toponyms_for_map(map_obj[:map][:id])
+
+    map_obj[:toponyms] = topo_features
+    @map = map_obj.to_json
   end
 
   def progress_toponym
@@ -130,6 +149,18 @@ class FixerController < ApplicationController
 
   def progress_toponym_all
     getProgress("toponym","all","progress_toponym_all")
+  end
+
+  def toponyms_for_map(id)
+    # so the user sees what s/he's done so far in this sheet
+    session = getSession()
+
+    if user_signed_in?
+      topo_features = toponyms_as_features(id, current_user.id, "user")
+    else
+      topo_features = toponyms_as_features(id, session, "session")
+    end
+
   end
 
   # - JSON endpoints for progress
@@ -144,9 +175,21 @@ class FixerController < ApplicationController
     end
 
     if user_signed_in?
-      all_flags = Flag.flags_for_sheet_for_user(params[:id], current_user.id, "toponym")
+      topo_features = toponyms_as_features(params[:id], current_user.id, "user")
     else
-      all_flags = Flag.flags_for_sheet_for_session(params[:id], session, "toponym")
+      topo_features = toponyms_as_features(params[:id], session, "session")
+    end
+
+    @progress = {}
+    @progress[:poly] = topo_features
+    respond_with( @progress )
+  end
+
+  def toponyms_as_features(sheet_id, user_or_session, type)
+    if type == "user"
+      all_flags = Flag.flags_for_sheet_for_user(sheet_id, user_or_session, "toponym")
+    else
+      all_flags = Flag.flags_for_sheet_for_session(sheet_id, user_or_session, "toponym")
     end
 
     poly = []
@@ -154,15 +197,19 @@ class FixerController < ApplicationController
     all_flags.each do |f|
       poly.push(f.as_feature)
     end
-    @progress = {}
-    @progress[:poly] = { :type => "FeatureCollection", :features => poly }
-    respond_with( @progress )
+
+    { :type => "FeatureCollection", :features => poly }
   end
 
   # POLYGONFIX
 
   def polygonfix
-    getTask("polygonfix")
+    task = "polygonfix"
+    @current_page = task
+    sort_tasks()
+    @isNew = checkNewness(task)
+    map_obj = getMap(task)
+    @map = map_obj.to_json
   end
 
   def progress_polygonfix
@@ -194,7 +241,12 @@ class FixerController < ApplicationController
   # COLOR
 
   def color
-    getTask("color")
+    task = "color"
+    @current_page = task
+    sort_tasks()
+    @isNew = checkNewness(task)
+    map_obj = getMap(task)
+    @map = map_obj.to_json
   end
 
   def progress_color
@@ -283,11 +335,10 @@ class FixerController < ApplicationController
 
   # generic methods
 
-  def getTask(type)
-    @current_page = type
-    @isNew = (cookies["#{type}_first_visit"]!="no" || params[:tutorial]=="true") ? true : false
-    cookies["#{type}_first_visit"] = { :value => "no", :expires => 15.days.from_now }
-    @map = getMap(type).to_json
+  def checkNewness(task)
+    isNew = (cookies["#{task}_first_visit"]!="no" || params[:tutorial]=="true") ? true : false
+    cookies["#{task}_first_visit"] = { :value => "no", :expires => 15.days.from_now }
+    return isNew
   end
 
   def getProgress(type, scope, pagename)
@@ -369,14 +420,22 @@ class FixerController < ApplicationController
 		return map
 	end
 
-	def randomMap(type="geometry")
+  # invoked from inspectors for 2..n map
+  def randomMap(type="geometry")
     if params[:type] != nil
       type = params[:type]
     end
 
-		@map = getMap(type)
-		respond_with( @map )
-	end
+    @map = getMap(type)
+
+    if type=="toponym"
+      topo_features = toponyms_for_map(@map[:map][:id])
+
+      @map[:toponyms] = topo_features
+    end
+
+    respond_with( @map )
+  end
 
   # FLAGGING
 
