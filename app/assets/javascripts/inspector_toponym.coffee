@@ -65,7 +65,6 @@ class Toponym extends Inspector
 
   showCurrentToponyms: () ->
     @map.removeLayer(@my_topos) if @my_topos
-    console.log @loadedData.toponyms.features.length
     return if @loadedData.toponyms.features.length == 0
     @my_topos = L.geoJson(@loadedData.toponyms,
       pointToLayer: (f,latlng)->
