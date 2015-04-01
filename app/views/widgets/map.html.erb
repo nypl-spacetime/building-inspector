@@ -36,6 +36,6 @@
   <p>
     <strong><a href="<%= server %>" title="click to visit NYPL Building Inspector" target="_top">NYPL Building Inspector</a></strong>
   </p>
-  <p>Progress in sheet: <%= @data[:polygons] %> buildings <a href="<%= server %>/footprint" target="_top">inspected</a>, <%= @data[:addresses] %> <a href="<%= server %>/address" target="_top">addressed</a>, <%= @data[:colors] %> <a href="<%= server %>/color" target="_top">colored</a>, <%= @data[:fixes] %> <a href="<%= server %>/fix" target="_top">fixed</a>.
+  <p>Progress in this <a href="<%= server %>/widgets/map/<%= @data[:sheet][:map_id] %>" title="click to visit NYPL Building Inspector" target="_top">sheet</a>: <%= @data[:polygons] %> buildings <a href="<%= server %>/footprint" target="_top">inspected</a>, <%= @data[:addresses] %> <a href="<%= server %>/address" target="_top">addressed</a>, <%= @data[:colors] %> <a href="<%= server %>/color" target="_top">colored</a>, <%= @data[:fixes] %> <a href="<%= server %>/fix" target="_top">fixed</a>.
 </p>
 </div>
