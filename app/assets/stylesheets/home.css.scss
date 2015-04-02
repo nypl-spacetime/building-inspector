@@ -206,10 +206,11 @@ $welcomecolor: #23190D;
 
   li {
     float: left;
-    width: 25%;
+    width: 33%;
     text-align: center;
     font-size: 1.25em;
     line-height: 1.25em;
+    margin-bottom: 1em;
 
     @media screen and (max-width: $desktopwidth) {
       width: 49%;

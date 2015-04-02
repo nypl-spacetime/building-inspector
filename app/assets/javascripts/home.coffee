@@ -45,6 +45,7 @@ class Home
         $("#link-polygonfix").addClass("active") if index==1
         $("#link-address").addClass("active") if index==2
         $("#link-color").addClass("active") if index==3
+        $("#link-toponym").addClass("active") if index==4
     )
     $("#link-geometry").on("mouseover", ()->
       $("#home-slideshow").swipeshow().goTo(0)
@@ -58,8 +59,9 @@ class Home
     $("#link-color").on("mouseover", ()->
       $("#home-slideshow").swipeshow().goTo(3)
     )
-    # $("#link-address").addClass("active")
-    # $("#link-polygonfix").addClass("active")
+    $("#link-toponym").on("mouseover", ()->
+      $("#home-slideshow").swipeshow().goTo(4)
+    )
 
 $ ->
   new Home()

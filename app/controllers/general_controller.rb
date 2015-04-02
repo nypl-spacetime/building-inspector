@@ -9,19 +9,22 @@ class GeneralController < ApplicationController
     @score_address = 0
     @score_polygonfix = 0
     @score_color = 0
+    @score_toponym = 0
     if user_signed_in?
       @score_geometry = Flag.flags_for_user(current_user.id, "geometry")
       @score_address = Flag.flags_for_user(current_user.id, "address")
       @score_polygonfix = Flag.flags_for_user(current_user.id, "polygonfix")
       @score_color = Flag.flags_for_user(current_user.id, "color")
+      @score_toponym = Flag.flags_for_user(current_user.id, "toponym")
     else
       @score_geometry = Flag.flags_for_session(session, "geometry")
       @score_address = Flag.flags_for_session(session, "address")
       @score_polygonfix = Flag.flags_for_session(session, "polygonfix")
       @score_color = Flag.flags_for_session(session, "color")
+      @score_toponym = Flag.flags_for_session(session, "toponym")
     end
     @has_score = false
-    @has_score = true if @score_geometry > 0 || @score_address > 0 || @score_polygonfix > 0
+    @has_score = true if @score_geometry > 0 || @score_toponym > 0 || @score_address > 0 || @score_polygonfix > 0
   end
 
   def soon

@@ -65,7 +65,7 @@ class @Inspector
       touchZoom: @options.touchZoom
       animate: true
       attributionControl: false
-      minZoom: 19
+      minZoom: 18
       maxZoom: 21
       dragging: @options.draggableMap
       tileLayer: # added this because maptiles.nypl does not support retina yet
@@ -230,7 +230,9 @@ class @Inspector
     @showMessage(msg, true)
 
   invokeTutorial: () =>
+    # console.log "tutorial?"
     if window.innerWidth >= @desktopWidth
+      # this never happens (all tutorials are "video" now)
       if @options.tutorialType == "intro"
         @_polyData = Utils.clone(@polyData)
         @polyData = Utils.clone(@options.tutorialData.poly.poly)

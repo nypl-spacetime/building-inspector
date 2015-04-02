@@ -48,7 +48,7 @@ namespace :data_import do
 
     # TODO: make it work
 
-    #first check if sheet exists
+    #first check if layer exists
     layer = Layer.where(:external_id => id)
 
     if (layer.count != 0)

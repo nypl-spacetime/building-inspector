@@ -67,7 +67,7 @@
           </svg>
         </li>
         <li id="slide4" class="slide">
-          <%= link_to "", color_path, {:id => "slide-address"} %>
+          <%= link_to "", color_path, {:id => "slide-color"} %>
           <div class="wrap">
             <div id="slide4-a" class="control color pink">PINK</div>
             <div id="slide4-b" class="control color pink">PINK</div>
@@ -82,12 +82,17 @@
             <polygon class="poly-d" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="352.5,110.6 377.6,97.2 389.8,113.1 364.2,126.7 "/>
           </svg>
         </li>
+        <li id="slide5" class="slide">
+          <%= link_to "", toponym_path, {:id => "slide-toponym"} %>
+          <h4>FIND<br />PLACENAMES</h4>
+        </li>
       </ul>
       <div id="slide-buttons">
         <%= link_to "CHECK FOOTPRINTS", geometry_path, {:id => "link-geometry", :class => "home-link"} %>
         <%= link_to "FIX FOOTPRINTS", polygonfix_path, {:id => "link-polygonfix", :class => "home-link"} %>
         <%= link_to "ENTER ADDRESSES", address_path, {:id => "link-address", :class => "home-link"} %>
         <%= link_to "CLASSIFY COLORS", color_path, {:id => "link-color", :class => "home-link"} %>
+        <%= link_to "FIND PLACENAMES", toponym_path, {:id => "link-toponym", :class => "home-link"} %>
       </div>
     </div>
     <div>
@@ -107,6 +112,9 @@
             <br /><%= link_to("Inspect more!", address_path, :class=>"link-task") %></li>
           <li><%= link_to(image_tag("icon-color.svg", :class=>"task-icon"), color_path, :class=>"link-task") %> <strong><%= @score_color %></strong> color <%= "ID".pluralize(@score_color) %>
             <br /><%= link_to("Inspect more!", color_path, :class=>"link-task") %></li>
+          <li>&nbsp;</li>
+          <li><%= link_to(image_tag("icon-toponym.svg", :class=>"task-icon"), toponym_path, :class=>"link-task") %> <strong><%= @score_toponym %></strong> <%= "placename".pluralize(@score_toponym) %>
+            <br /><%= link_to("Inspect more!", toponym_path, :class=>"link-task") %></li>
         </ul>
     </div>
     <% end %>

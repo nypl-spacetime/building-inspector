@@ -86,7 +86,7 @@ class Toponym extends Inspector
 
   clearScreen: () =>
     @hideSubmit()
-    @cleanFlags()
+    @cleanFlags() unless @options.tutorialOn
     super()
 
   hideSubmit: () ->

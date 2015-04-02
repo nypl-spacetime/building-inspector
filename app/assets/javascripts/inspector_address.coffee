@@ -13,7 +13,7 @@ class Address extends Inspector
     super(options)
 
   clearScreen: () =>
-    @cleanFlags()
+    @cleanFlags() unless @options.tutorialOn
     super()
 
   addEventListeners: () =>
@@ -26,7 +26,7 @@ class Address extends Inspector
     $("#submit-button").on "click", @submitFlags
 
     $("body").keyup (e)->
-      console.log "key", e.which
+      # console.log "key", e.which
       switch e.which
         when 83 then inspector.submitFlags(e) # s key
 
@@ -64,7 +64,7 @@ class Address extends Inspector
     r
 
   onTutorialClick: (e) =>
-    console.log "tutclick", e
+    # console.log "tutclick", e
     e.stopPropagation?()
     e.preventDefault?()
 
