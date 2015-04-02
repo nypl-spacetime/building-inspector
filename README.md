@@ -10,7 +10,7 @@ Authors: [Mauricio Giraldo Arteaga] / NYPL Labs
 
 #### Heroku buildpacks
 
-This projects makes use of several environment variables and buildpacks to work. The RGeo gem in Heroku does not get built properly so some tasks do not work. These are the environment variables you need to add in order for it to work:
+This project makes use of several environment variables and buildpacks to work. The RGeo gem in Heroku does not get built properly so some tasks do not work. These are the environment variables you need to add in order for it to work:
 
 - `BUILDPACK_URL`: https://github.com/heroku/heroku-buildpack-multi.git
 
