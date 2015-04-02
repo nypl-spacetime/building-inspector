@@ -12,7 +12,7 @@ Authors: [Mauricio Giraldo Arteaga] / NYPL Labs
 
 This projects makes use of several environment variables and buildpacks to work. The RGeo gem in Heroku does not get built properly so some tasks do not work. These are the environment variables you need to add in order for it to work:
 
-- BUILDPACK_URL: https://github.com/heroku/heroku-buildpack-multi.git
+- `BUILDPACK_URL`: https://github.com/heroku/heroku-buildpack-multi.git
 
 This is related to the [`.buildpacks` file](.buildpacks) which contains the list of additional gem packs to install when deploying the application. This should happen automatically. In order to verify that the right gems are installed, enter the Rails console in the application and type:
 
@@ -22,14 +22,14 @@ This should return `=> true`. If this is not the case you may want to visit the 
 
 #### Social media login integration
 
-This application makes use of [OmniAuth](https://github.com/intridea/omniauth) which requires that you set up the necessary API keys for [Google](https://developers.google.com/+/api/oauth#apikey), [Twitter](https://dev.twitter.com/oauth) and [Facebook](https://developers.facebook.com/docs/facebook-login/v2.3) (links take you to the applicable area for each platform). Once procured, you need to set the following environment variables:
+This application makes use of [OmniAuth](https://github.com/intridea/omniauth) which requires that you set up the necessary API keys for [Google](https://developers.google.com/+/api/oauth#apikey), [Twitter](https://dev.twitter.com/oauth) and [Facebook](https://developers.facebook.com/docs/facebook-login/v2.3) (links take you to the applicable area for each platform). Once procured, you need to set the following environment variables to their proper values:
 
-- FACEBOOK_KEY
-- FACEBOOK_SECRET
-- GOOGLE_KEY
-- GOOGLE_SECRET
-- TWITTER_KEY
-- TWITTER_SECRET
+- `FACEBOOK_KEY`
+- `FACEBOOK_SECRET`
+- `GOOGLE_KEY`
+- `GOOGLE_SECRET`
+- `TWITTER_KEY`
+- `TWITTER_SECRET`
 
 ### <a name="ingest"></a>Data ingest
 
