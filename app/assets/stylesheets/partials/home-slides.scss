@@ -48,7 +48,7 @@
   left: 50%;
 }
 
-.control, .number, .marker {
+.falls {
   position: absolute;
   display: inline-block;
   z-index: 1;
@@ -157,7 +157,7 @@ polygon {
   font-size: 18px;
   font-weight: bold;
   line-height: 40px;
-  color: grayDarkest;
+  color: $grayDarkest;
   background: rgba(255,255,255,.75);
   @include border-radius(25px);
 }
@@ -399,7 +399,51 @@ polygon {
   }
 }
 
+.toponym {
+  width: 120px;
+  height: 35px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 35px;
+  color: $grayDarkest;
+  background: rgba(255,255,255,.85);
+  @include border-radius(10px);
+}
 
+#slide5 {
+  .wrap {
+    margin-top: -300px;
+  }
+  #slide5-a {
+    top: -54px;
+    left: -150px;
+    @include transition-delay(1.5s);
+  }
+  #slide5-b {
+    top: -88px;
+    left: 10px;
+    @include transition-delay(2.5s);
+  }
+  #slide5-c {
+    top: -130px;
+    left: 157px;
+    @include transition-delay(3.5s);
+  }
+  &.active {
+    .wrap {
+      margin-top: auto;
+    }
+    #slide5-a {
+      top: 166px;
+    }
+    #slide5-b {
+      top: 52px;
+    }
+    #slide5-c {
+      top: 40px;
+    }
+  }
+}
 
 #slide-buttons {
   position: absolute;

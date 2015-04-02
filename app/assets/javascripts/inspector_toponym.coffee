@@ -43,7 +43,7 @@ class Toponym extends Inspector
     delta_lat = Math.abs(bbox[3] - bbox[1])
     random_lon = Math.random()*delta_lon+bbox[0]
     random_lat = Math.random()*delta_lat+bbox[1]
-    @map.setView([random_lat, random_lon], 20) # TODO: support variable zoom
+    @map.setView([random_lat, random_lon], 19) # TODO: support variable zoom
     # constrain the map to the current sheet
     bounds = Utils.bboxToBounds(bbox)
     @map.setMaxBounds(bounds)
@@ -130,11 +130,11 @@ class Toponym extends Inspector
 
     if flag_data.length > 0
       flag_str = flag_data.join("|")
+      @submitFlag(e, flag_str)
     else
       # console.log "skipped"
-      flag_str = "NONE=="
+      @skipFlag()
 
-    @submitFlag(e, flag_str)
 
   prepareData: () =>
     r = []

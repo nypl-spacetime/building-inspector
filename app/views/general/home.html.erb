@@ -25,9 +25,9 @@
         <li id="slide1" class="slide">
           <%= link_to "", geometry_path, {:id => "slide-geometry"} %>
           <div class="wrap">
-            <div id="slide1-yes" class="control green">YES</div>
-            <div id="slide1-no" class="control red">NO</div>
-            <div id="slide1-fix" class="control yellow">FIX</div>
+            <div id="slide1-yes" class="falls control green">YES</div>
+            <div id="slide1-no" class="falls control red">NO</div>
+            <div id="slide1-fix" class="falls control yellow">FIX</div>
           </div>
           <h4>CHECK<br />FOOTPRINTS</h4>
           <svg version="1.1" class="intro-path" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 960 300" enable-background="new 0 0 960 300" xml:space="preserve">
@@ -39,10 +39,10 @@
         <li id="slide3" class="slide">
           <%= link_to "", polygonfix_path, {:id => "slide-polygonfix"} %>
           <div class="wrap">
-            <div id="slide3-a" class="marker"></div>
-            <div id="slide3-b" class="marker"></div>
-            <div id="slide3-c" class="marker"></div>
-            <div id="slide3-d" class="marker"></div>
+            <div id="slide3-a" class="falls marker"></div>
+            <div id="slide3-b" class="falls marker"></div>
+            <div id="slide3-c" class="falls marker"></div>
+            <div id="slide3-d" class="falls marker"></div>
           </div>
           <h4>FIX<br />FOOTPRINTS</h4>
           <svg version="1.1" class="intro-path" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 960 300" enable-background="new 0 0 960 300" xml:space="preserve">
@@ -54,10 +54,10 @@
         <li id="slide2" class="slide">
           <%= link_to "", address_path, {:id => "slide-address"} %>
           <div class="wrap">
-            <div id="slide2-a" class="number">123</div>
-            <div id="slide2-b" class="number">117</div>
-            <div id="slide2-c" class="number">111</div>
-            <div id="slide2-d" class="number">113</div>
+            <div id="slide2-a" class="falls number">123</div>
+            <div id="slide2-b" class="falls number">117</div>
+            <div id="slide2-c" class="falls number">111</div>
+            <div id="slide2-d" class="falls number">113</div>
           </div>
           <h4>ENTER<br />ADDRESSES</h4>
           <svg version="1.1" class="intro-path" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 960 300" enable-background="new 0 0 960 300" xml:space="preserve">
@@ -69,10 +69,10 @@
         <li id="slide4" class="slide">
           <%= link_to "", color_path, {:id => "slide-color"} %>
           <div class="wrap">
-            <div id="slide4-a" class="control color pink">PINK</div>
-            <div id="slide4-b" class="control color pink">PINK</div>
-            <div id="slide4-c" class="control color green">GREEN</div>
-            <div id="slide4-d" class="control color black">GRAY</div>
+            <div id="slide4-a" class="falls control color pink">PINK</div>
+            <div id="slide4-b" class="falls control color pink">PINK</div>
+            <div id="slide4-c" class="falls control color green">GREEN</div>
+            <div id="slide4-d" class="falls control color black">GRAY</div>
           </div>
           <h4>CLASSIFY<br />COLORS</h4>
           <svg version="1.1" class="intro-path" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 960 300" enable-background="new 0 0 960 300" xml:space="preserve">
@@ -84,6 +84,11 @@
         </li>
         <li id="slide5" class="slide">
           <%= link_to "", toponym_path, {:id => "slide-toponym"} %>
+          <div class="wrap">
+            <div id="slide5-a" class="falls toponym">Druggist</div>
+            <div id="slide5-b" class="falls toponym">Coal House</div>
+            <div id="slide5-c" class="falls toponym">Stable</div>
+          </div>
           <h4>FIND<br />PLACENAMES</h4>
         </li>
       </ul>

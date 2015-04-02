@@ -163,6 +163,12 @@ class @Inspector
     event.preventDefault()
     @prepareFlagSubmission(data, "/fixer/flag")
 
+  skipFlag: () ->
+    @removeButtonListeners()
+    event.preventDefault()
+    @showNextPolygon()
+    @hideSpinner()
+
   prepareFlagSubmission: (data, url) ->
     @clearScreen()
 
