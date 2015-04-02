@@ -315,7 +315,6 @@ class @Inspector
       @currentPolygon = {}
       @allPolygonsSession = 0
       if @polyData.length == 0
-        console.log "retrying..."
         if @retries-- > 0
           @getPolygons()
         else
@@ -355,8 +354,11 @@ class @Inspector
       @showInspectingMessage()
       @showNextPolygon()
     else
-      #this only happens when no map was found with polygons
-      @endGame()
+      if @retries-- > 0
+        @getPolygons()
+      else
+        # no map found, die
+        @endGame()
 
   makePolygon: (poly) ->
     inspector = @
