@@ -315,8 +315,8 @@ class @Inspector
       @currentPolygon = {}
       @allPolygonsSession = 0
       if @polyData.length == 0
+        console.log "retrying..."
         if @retries-- > 0
-          console.log "retrying..."
           @getPolygons()
         else
           # no map found, die
