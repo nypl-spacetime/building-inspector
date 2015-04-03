@@ -45,8 +45,8 @@ class Toponym extends Inspector
     random_lat = Math.random()*delta_lat+bbox[1]
     @map.setView([random_lat, random_lon], 19) # TODO: support variable zoom
     # constrain the map to the current sheet
-    bounds = Utils.bboxToBounds(bbox)
-    @map.setMaxBounds(bounds)
+    @bounds = Utils.bboxToBounds(bbox)
+    @map.setMaxBounds(@bounds)
     @fogOfWar()
     @showCurrentToponyms()
 
@@ -168,6 +168,8 @@ class Toponym extends Inspector
     x = e.containerPoint.x
     y = e.containerPoint.y
 
+    return if !@bounds.contains(latlng)
+
     elem = @createFlag(x, y, latlng)
     elem.css("top", y)
     elem.css("left", x)
@@ -185,9 +187,10 @@ class Toponym extends Inspector
   updateButton: () ->
     @hideSubmit()
     $("#submit-button").text("SKIP")
+    count = 0
     for e, contents of @flags
-      $("#submit-button").text("SAVE")
-      break
+      count++
+    $("#submit-button").text("SAVE (" + count + ")") if count > 0
     @showSubmit()
 
   createFlag: (x, y, latlng, fake) ->

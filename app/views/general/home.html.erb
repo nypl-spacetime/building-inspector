@@ -89,7 +89,7 @@
             <div id="slide5-b" class="falls toponym">Coal House</div>
             <div id="slide5-c" class="falls toponym">Stable</div>
           </div>
-          <h4>FIND<br />PLACENAMES</h4>
+          <h4>FIND<br />PLACE NAMES</h4>
         </li>
       </ul>
       <div id="slide-buttons">
@@ -118,7 +118,7 @@
           <li><%= link_to(image_tag("icon-color.svg", :class=>"task-icon"), color_path, :class=>"link-task") %> <strong><%= @score_color %></strong> color <%= "ID".pluralize(@score_color) %>
             <br /><%= link_to("Inspect more!", color_path, :class=>"link-task") %></li>
           <li>&nbsp;</li>
-          <li><%= link_to(image_tag("icon-toponym.svg", :class=>"task-icon"), toponym_path, :class=>"link-task") %> <strong><%= @score_toponym %></strong> <%= "placename".pluralize(@score_toponym) %>
+          <li><%= link_to(image_tag("icon-toponym.svg", :class=>"task-icon"), toponym_path, :class=>"link-task") %> <strong><%= @score_toponym %></strong> place <%= "name".pluralize(@score_toponym) %>
             <br /><%= link_to("Inspect more!", toponym_path, :class=>"link-task") %></li>
         </ul>
     </div>

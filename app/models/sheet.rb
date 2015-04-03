@@ -120,7 +120,6 @@ class Sheet < ActiveRecord::Base
     puts "Processing POYGONFIX consensus for sheet #{self[:id]}"
     flags = Flag.flags_for_sheet_for_task_and_threshold(self[:id])
     pids = flags.map {|fl| fl["flaggable_id"]}.uniq
-    polys = []
     pids.each do |pid|
       polyflags = flags.select { |fl| fl["flaggable_id"] == pid && fl["flag_value"] != "NOFIX" }
       features = polyflags.map { |item| { :type => "Feature", :properties => { :id => pid }, :geometry => { :type=>"Polygon", :coordinates => JSON.parse(item["flag_value"]) } } }
