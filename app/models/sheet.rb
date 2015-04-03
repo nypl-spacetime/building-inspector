@@ -119,10 +119,10 @@ class Sheet < ActiveRecord::Base
     # get all polygons that have 3 or more polygonfix flags
     puts "Processing POYGONFIX consensus for sheet #{self[:id]}"
     flags = Flag.flags_for_sheet_for_task_and_threshold(self[:id])
-    pids = flags.map {|fl| fl["polygon_id"]}.uniq
+    pids = flags.map {|fl| fl["flaggable_id"]}.uniq
     polys = []
     pids.each do |pid|
-      polyflags = flags.select { |fl| fl["polygon_id"] == pid && fl["flag_value"] != "NOFIX" }
+      polyflags = flags.select { |fl| fl["flaggable_id"] == pid && fl["flag_value"] != "NOFIX" }
       features = polyflags.map { |item| { :type => "Feature", :properties => { :id => pid }, :geometry => { :type=>"Polygon", :coordinates => JSON.parse(item["flag_value"]) } } }
       geo = { :type => "FeatureCollection", :features => features }
       consensus = ConsensusUtils.calculate_polygonfix_consensus(geo.to_json)
