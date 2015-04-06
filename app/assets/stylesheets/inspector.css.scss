@@ -445,6 +445,14 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   }
 }
 
+.tutorial .overlay {
+  padding: 20% 5%;
+  font-size: 2em;
+  line-height: 1.5em;
+  text-align: center;
+  color: $grayLightest;
+}
+
 // introjs overrides
 .tutorial {
   font-family: $mainfont;

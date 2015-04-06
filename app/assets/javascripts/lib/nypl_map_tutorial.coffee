@@ -22,6 +22,9 @@ class @NYPL_Map_Tutorial
       # always video
       @initVideo()
       @resizeTutorial()
+    else if @options.type == "simple"
+      @initOverlay()
+      @resizeTutorial()
     else if window.innerWidth >= @options.desktopWidth
       @initFancy()
     else if @options.type != "video"
@@ -34,6 +37,16 @@ class @NYPL_Map_Tutorial
     return if w >= @options.desktopWidth
     $("#tutorial-video-wrapper").width(w).height(maxheight)
     $("#tutorial-video-wrapper iframe").width(w).height(maxheight)
+
+  initOverlay: () ->
+    t = @
+    html = '<div id="tutorial-video" class="tutorial"><div id="tutorial-video-wrapper">
+      '+@options.overlayHTML+'<a href="javascript:;" class="close" id="tutorial-close"><span>CLOSE</span></a></div></div>'
+    el = $(html)
+    el.on "click", (e) ->
+      # console.log e
+      t.exit()
+    $("body").append(el)
 
   initVideo: () ->
     t = @

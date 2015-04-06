@@ -256,6 +256,7 @@ class @Inspector
       inspector: @
       desktopWidth: @desktopWidth
       type: @options.tutorialType
+      overlayHTML: @options.overlayHTML
       url: @options.tutorialURL
       tutorialID: "#map-tutorial"
       highlightID: "#map-highlight"

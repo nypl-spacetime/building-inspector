@@ -7,10 +7,11 @@ class Toponym extends Inspector
       flaggableType: 'Sheet'
       draggableMap: true
       constrainMapToPolygon: false
-      tutorialType:"video"
+      tutorialType:"simple"
       tutorialURL: "//player.vimeo.com/video/123878608?autoplay=1&title=0&amp;byline=0&amp;portrait=0"
       jsdataID: '#toponymjs'
       tweetString: "_score_ toponyms found! Data mining old maps with Building Inspector from @NYPLMaps @nypl_labs"
+      overlayHTML: '<div class="overlay">Find all the place names<br />(minus the streets)<br />in the area.<br /><strong>Zoom to begin.</strong></div>'
       task: 'toponym'
     @updateButton()
     super(options)
@@ -43,7 +44,7 @@ class Toponym extends Inspector
     delta_lat = Math.abs(bbox[3] - bbox[1])
     random_lon = Math.random()*delta_lon+bbox[0]
     random_lat = Math.random()*delta_lat+bbox[1]
-    @map.setView([random_lat, random_lon], 19) # TODO: support variable zoom
+    @map.setView([random_lat, random_lon], 16)
     # constrain the map to the current sheet
     @bounds = Utils.bboxToBounds(bbox)
     @map.setMaxBounds(@bounds)
