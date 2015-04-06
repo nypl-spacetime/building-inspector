@@ -246,7 +246,7 @@ class @Inspector
         @currentIndex = -1
         @showNextPolygon()
     else
-      if @options.tutorialType != "video"
+      if @options.tutorialType != "video" && @options.tutorialType != "simple"
         @hideOthers()
     @buildTutorial()
     @options.tutorialOn = true

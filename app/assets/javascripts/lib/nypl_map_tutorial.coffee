@@ -33,14 +33,14 @@ class @NYPL_Map_Tutorial
 
   resizeTutorial: () ->
     w = window.innerWidth
-    maxheight = 300
+    maxheight = 400
     return if w >= @options.desktopWidth
-    $("#tutorial-video-wrapper").width(w).height(maxheight)
-    $("#tutorial-video-wrapper iframe").width(w).height(maxheight)
+    $("#tutorial-overlay-wrapper").width(w).height(maxheight)
+    $("#tutorial-overlay-wrapper iframe").width(w).height(maxheight)
 
   initOverlay: () ->
     t = @
-    html = '<div id="tutorial-video" class="tutorial"><div id="tutorial-video-wrapper">
+    html = '<div id="tutorial-overlay"><div id="tutorial-overlay-wrapper">
       '+@options.overlayHTML+'<a href="javascript:;" class="close" id="tutorial-close"><span>CLOSE</span></a></div></div>'
     el = $(html)
     el.on "click", (e) ->
@@ -50,7 +50,7 @@ class @NYPL_Map_Tutorial
 
   initVideo: () ->
     t = @
-    html = '<div id="tutorial-video"><div id="tutorial-video-wrapper">
+    html = '<div id="tutorial-overlay"><div id="tutorial-overlay-wrapper">
       <div id="tutorial-header"><strong>Welcome!</strong><br />Please take a minute to watch this video and learn to use this tool</div>
       <iframe src="'+@options.url+'" width="600" height="401" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe><a href="javascript:;" class="close" id="tutorial-close"><span>CLOSE</span></a></div></div>'
     el = $(html)
@@ -121,7 +121,7 @@ class @NYPL_Map_Tutorial
     @options.ixactiveFunction?()
     @options.exitFunction?()
     @intro.exit() if @intro
-    $("#tutorial-video").remove()
+    $("#tutorial-overlay").remove()
 
   nextStep: () ->
     @intro.nextStep()

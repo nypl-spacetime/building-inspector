@@ -44,10 +44,10 @@ class Toponym extends Inspector
     delta_lat = Math.abs(bbox[3] - bbox[1])
     random_lon = Math.random()*delta_lon+bbox[0]
     random_lat = Math.random()*delta_lat+bbox[1]
-    @map.setView([random_lat, random_lon], 16)
     # constrain the map to the current sheet
     @bounds = Utils.bboxToBounds(bbox)
     @map.setMaxBounds(@bounds)
+    @map.setView([random_lat, random_lon], 16)
     @fogOfWar()
     @showCurrentToponyms()
 

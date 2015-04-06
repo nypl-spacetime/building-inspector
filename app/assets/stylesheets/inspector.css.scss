@@ -394,7 +394,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 }
 
 // TODO: tutorial stuff should be in separate file
-#tutorial-video {
+#tutorial-overlay {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -404,13 +404,13 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   background: rgba(0,0,0,.75);
 }
 
-#tutorial-video-wrapper {
+#tutorial-overlay-wrapper {
   margin: 40px auto 0;
   width: 600px;
   position: relative;
 
   @media screen and (max-width: $desktopwidth) {
-    margin-top: 40px;
+    margin-top: 10px;
   }
 
   .close {
@@ -419,7 +419,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
     @media screen and (max-width: $desktopwidth) {
       right: 5px;
-      top: -35px;
+      top: 0;
     }
 
     &:before {
@@ -436,16 +436,17 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   margin: 20px auto;
 
   @media screen and (max-width: $desktopwidth) {
-    position: absolute;
-    left: 0;
-    top: -55px;
+    // position: absolute;
+    // left: 0;
+    // top: -55px;
+    margin: 0;
     width: 85%;
     font-size: 1em;
     line-height: 1.2em;
   }
 }
 
-.tutorial .overlay {
+#tutorial-overlay .overlay {
   padding: 20% 5%;
   font-size: 2em;
   line-height: 1.5em;
