@@ -247,7 +247,7 @@ class Toponym extends Inspector
           inspector.validateInput(@, e)
       input.on "keydown", (e) ->
         switch e.which
-          when 27 then inspector.destroyFromEscape(@)
+          when 27 then # inspector.destroyFromEscape(@)
           else inspector.validateInput(@, e)
     , 50
     )

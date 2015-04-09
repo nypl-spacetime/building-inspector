@@ -116,10 +116,10 @@ class @Inspector
 
   addMinimap: () ->
     if @options.hasMiniMap
-      mini = Utils.mapOverlay(@tileset, @tiletype, 3, 15, 19)
+      zoomOffset = 5
+      mini = Utils.mapOverlay(@tileset, @tiletype, 3, @map.minZoom-zoomOffset, @map.maxZoom-zoomOffset)
       @miniMap = new L.LayerGroup([mini])
       miniMapControl = new L.Control.MiniMap(@miniMap,
-        zoomLevelFixed: 15
         toggleDisplay: true
         position: 'topleft'
         autoToggleDisplay: true
