@@ -14,6 +14,7 @@ class @Inspector
       flaggableType: 'Polygon'
       editablePolygon: false
       draggableMap: false
+      miniMap: false
       constrainMapToPolygon: true
       touchZoom: true
       scrollWheelZoom: true
@@ -100,6 +101,7 @@ class @Inspector
   addEventListeners: () ->
     inspector = @
     @map.on('load', () ->
+      inspector.addMinimap()
       inspector.getPolygons()
       if (inspector.options.tutorialOn)
         window.setTimeout(
@@ -111,6 +113,13 @@ class @Inspector
     @map.on('move', @onMapChange)
     @addButtonListeners()
     # rest should be implemented in the inspector instance
+
+  addMinimap: () ->
+    if @options.miniMap
+      minioverlay = Utils.mapOverlay(@tileset, @tiletype, 3)
+      minioverlay.minZoom = 16
+      minioverlay.maxZoom = 19
+      miniMap = new L.Control.MiniMap(minioverlay).addTo(@map)
 
   onMapChange: (e) =>
     # move flags

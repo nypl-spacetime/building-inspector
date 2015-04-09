@@ -29,16 +29,25 @@ class root.Utils
     newInstance
 
   @addOverlay: (map, tileset, tiletype, zIndex = 2) ->
+    overlay = @mapOverlay(tileset, tiletype, zIndex)
+    overlay.addTo(map)
+    overlay
+
+  @mapOverlay: (tileset, tiletype, zIndex = 2, minZoom = 0, maxZoom = 13) ->
     if (tiletype!="wmts")
       overlay = L.mapbox.tileLayer(tileset,
         zIndex: zIndex
         detectRetina: false # added this because maptiles.nypl does not support retina yet
-      ).addTo(map)
+        minZoom: minZoom
+        maxZoom: maxZoom
+      )
     else
       overlay = new L.TileLayer.WMTS(tileset ,
         zIndex: zIndex
         detectRetina: false # added this because maptiles.nypl does not support retina yet
-      ).addTo(map)
+        minZoom: minZoom
+        maxZoom: maxZoom
+      )
     overlay
 
 

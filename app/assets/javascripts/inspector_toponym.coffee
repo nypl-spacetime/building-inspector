@@ -6,6 +6,7 @@ class Toponym extends Inspector
     options =
       flaggableType: 'Sheet'
       draggableMap: true
+      miniMap: true
       constrainMapToPolygon: false
       tutorialType:"simple"
       tutorialURL: "//player.vimeo.com/video/123878608?autoplay=1&title=0&amp;byline=0&amp;portrait=0"

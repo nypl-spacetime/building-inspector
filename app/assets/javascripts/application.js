@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require lib/vendor/mapbox
 //= require lib/vendor/leaflet-tilelayer-wmts
+//= require lib/vendor/Control.MiniMap.min
 //= require lib/vendor/intro
 //= require lib/vendor/jquery.swipeshow.min
 //= require lib/vendor/spin.min
