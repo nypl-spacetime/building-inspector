@@ -6,7 +6,7 @@ class Toponym extends Inspector
     options =
       flaggableType: 'Sheet'
       draggableMap: true
-      miniMap: true
+      hasMiniMap: true
       constrainMapToPolygon: false
       tutorialType:"simple"
       tutorialURL: "//player.vimeo.com/video/123878608?autoplay=1&title=0&amp;byline=0&amp;portrait=0"
@@ -49,21 +49,8 @@ class Toponym extends Inspector
     @bounds = Utils.bboxToBounds(bbox)
     @map.setMaxBounds(@bounds)
     @map.setView([random_lat, random_lon], 16)
-    @fogOfWar()
+    @fogOfWar(bbox)
     @showCurrentToponyms()
-
-  fogOfWar: () ->
-    # SHOW "FOG OF WAR": (black area with map bbox hole to see thru)
-    @map.removeLayer(@fog) if @fog
-    bbox = (parseFloat(c) for c in @loadedData.map.bbox.split(","))
-    planet = [[-180,90],[180,90],[180,-90],[-180,-90]]
-    hole = [[bbox[1],bbox[0]],[bbox[3],bbox[0]],[bbox[3],bbox[2]],[bbox[1],bbox[2]]]
-    @fog = L.polygon([planet,hole],
-      stroke: false
-      fillColor: '#000'
-      fillOpacity: 0.8
-    )
-    @fog.addTo @map
 
   showCurrentToponyms: () ->
     @map.removeLayer(@my_topos) if @my_topos
@@ -135,7 +122,7 @@ class Toponym extends Inspector
       @submitFlag(e, flag_str)
     else
       # console.log "skipped"
-      @skipFlag()
+      @skipFlag(e)
 
 
   prepareData: () =>

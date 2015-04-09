@@ -454,6 +454,29 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   color: $grayLightest;
 }
 
+// leaflet overrides
+.toponym-popup {
+  font-family: $mainfont;
+  font-size: 1.5em;
+}
+
+.leaflet-bottom.leaflet-right {
+  // bottom: -10px;
+}
+
+.leaflet-top.leaflet-right, .leaflet-top.leaflet-left {
+  @media screen and (max-width: $desktopwidth) {
+    top: 60px;
+  }
+}
+
+.leaflet-container img {
+  cursor: move;
+}
+
+.leaflet-minimap-control {
+}
+
 // introjs overrides
 .tutorial {
   font-family: $mainfont;

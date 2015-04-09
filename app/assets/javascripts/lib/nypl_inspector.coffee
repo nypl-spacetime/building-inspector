@@ -14,7 +14,7 @@ class @Inspector
       flaggableType: 'Polygon'
       editablePolygon: false
       draggableMap: false
-      miniMap: false
+      hasMiniMap: false
       constrainMapToPolygon: true
       touchZoom: true
       scrollWheelZoom: true
@@ -66,7 +66,7 @@ class @Inspector
       touchZoom: @options.touchZoom
       animate: true
       attributionControl: false
-      minZoom: 16
+      minZoom: 17
       maxZoom: 21
       dragging: @options.draggableMap
       tileLayer: # added this because maptiles.nypl does not support retina yet
@@ -115,11 +115,38 @@ class @Inspector
     # rest should be implemented in the inspector instance
 
   addMinimap: () ->
-    if @options.miniMap
-      minioverlay = Utils.mapOverlay(@tileset, @tiletype, 3)
-      minioverlay.minZoom = 16
-      minioverlay.maxZoom = 19
-      miniMap = new L.Control.MiniMap(minioverlay).addTo(@map)
+    if @options.hasMiniMap
+      mini = Utils.mapOverlay(@tileset, @tiletype, 3, 15, 19)
+      @miniMap = new L.LayerGroup([mini])
+      miniMapControl = new L.Control.MiniMap(@miniMap,
+        zoomLevelFixed: 15
+        toggleDisplay: true
+        position: 'topleft'
+        autoToggleDisplay: true
+        aimingRectOptions:
+          stroke: true
+          color: "#000"
+          weight: 2
+          opacity: 1
+          fill: false
+      ).addTo(@map)
+
+  fogOfWar: (bbox) ->
+    # SHOW "FOG OF WAR": (black area with map bbox hole to see thru)
+    fogStyle =
+        stroke: false
+        fillColor: '#000'
+        fillOpacity: 0.8
+    @map.removeLayer(@fog) if @fog
+    planet = [[-180,90],[180,90],[180,-90],[-180,-90]]
+    hole = [[bbox[1],bbox[0]],[bbox[3],bbox[0]],[bbox[3],bbox[2]],[bbox[1],bbox[2]]]
+    @fog = L.polygon([planet,hole], fogStyle)
+    @fog.addTo @map
+
+    if @miniMap
+      @miniMap.removeLayer(@minifog) if @minifog
+      @minifog = L.polygon([planet,hole], fogStyle)
+      @miniMap.addLayer @minifog
 
   onMapChange: (e) =>
     # move flags
@@ -172,7 +199,7 @@ class @Inspector
     event.preventDefault()
     @prepareFlagSubmission(data, "/fixer/flag")
 
-  skipFlag: () ->
+  skipFlag: (event) ->
     @removeButtonListeners()
     event.preventDefault()
     @showNextPolygon()

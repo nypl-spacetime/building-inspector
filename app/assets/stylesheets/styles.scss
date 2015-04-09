@@ -283,25 +283,6 @@ a, a:link, a:visited, a:hover {
   background: $white;
 }
 
-.toponym-popup {
-  font-family: $mainfont;
-  font-size: 1.5em;
-}
-
-.leaflet-bottom.leaflet-right {
-  // bottom: -10px;
-}
-
-.leaflet-top.leaflet-right {
-  @media screen and (max-width: $desktopwidth) {
-    top: 60px;
-  }
-}
-
-.leaflet-container img {
-  cursor: move;
-}
-
 #ie8 {
   display: none;
   text-transform: uppercase;
