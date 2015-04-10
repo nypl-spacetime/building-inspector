@@ -122,11 +122,7 @@
 
   &:after {
     position: absolute;
-    content: attr(data-icon);
-    font-family:$iconfont;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    content: "V";
+    @include drr-icon("V");
     right: 10px;
     top: 2px;
     pointer-events: none;

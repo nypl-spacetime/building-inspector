@@ -442,8 +442,9 @@ class FixerController < ApplicationController
   def apply_flags_to_polygon
     session = getSession()
     # assuming json like so:
-    # id: poly_id
-    # flags: "value=lat=lng|value=lat=lng|value=lat=lng|..."
+    # i: item_id
+    # ft: flaggable_type
+    # f: "value=lat=lng|value=lat=lng|value=lat=lng|..."
     flags = params[:f].split("|")
     flaggable_id = params[:i]
     flaggable_type = params[:ft]
@@ -482,6 +483,27 @@ class FixerController < ApplicationController
 	      end
     end
     render :json => { :flags => uniques }
+  end
+
+  def delete_flags_for_session
+    session = getSession()
+    # assuming json like so:
+    # f: "id|id|id..."
+    flag_ids = params[:f].split("|")
+    flags = Flag.flags_by_id_for_session(flag_ids, session)
+
+    flags.each do |f|
+      if f[:flaggable_type] == "Polygon"
+        # remove consensus for that polygon task
+        # TODO: consensus is still poly-based so change this in the future to support sheet/any
+        Consensuspolygon.remove_from_flaggable_id_and_type(f[:polygon_id], "Polygon", f[:flag_type])
+      elsif f[:flaggable_type] == "Sheet"
+        # TODO: consensus is still poly-based so change this in the future to support sheet/any
+      end
+      f.destroy
+    end
+
+    render :json => true
   end
 
 end

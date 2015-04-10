@@ -39,6 +39,12 @@
     @include text-shadow($grayDarker -2px 1px);
 }
 
+// toponym specific
+.toponym-popup {
+  font-family: $mainfont;
+  font-size: 1.5em;
+}
+
 .toponym-flag {
   position: absolute;
   z-index: 1111;
@@ -81,23 +87,13 @@
     text-align: center;
     font-size: 14px;
     font-family: $mainfont;
-
-    &::-webkit-inner-spin-button,
-    &::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
   }
 
   .num-close {
     position: absolute;
     right: -5px;
     top: -10px;
-    content: attr(data-icon);
-    font-family:$iconfont;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    display: inline-block;
+    @include drr-icon();
     font-size: 20px;
     padding: 0;
     color: $orange;
@@ -111,44 +107,13 @@
     &:hover {
       text-decoration: none;
     }
-  }
-}
 
-.flags {
-  position: absolute;
-  text-align: center;
-  top: -30px;
-  height: 30px;
-  width: 100%;
+    &.saving {
+      color: $grayLighter;
+    }
 
-  // @include transition-property(left,top);
-  // @include transition-duration(.2s);
-  // @include transition-timing-function(ease-out);
-
-  span {
-    display: inline-block;
-    background: $grayLightest;
-    border: 1px solid $grayLight;
-    border-radius: 10px;
-    padding: 0 5px;
-
-    a {
-      color: $grayDarker;
-
-      &:hover {
-        text-decoration: none;
-      }
-
-      &:after {
-        content: attr(data-icon);
-        font-family:$iconfont;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        content: 'x';
-        display: inline-block;
-        font-size: 15px;
-        padding-left: 2px;
-      }
+    &.saved {
+      color: $green;
     }
   }
 }

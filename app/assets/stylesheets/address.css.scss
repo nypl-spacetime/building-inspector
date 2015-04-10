@@ -70,6 +70,7 @@
     text-align: center;
     font-size: 18px;
     font-family: $mainfont;
+    -moz-appearance:textfield;
 
     &::-webkit-inner-spin-button,
     &::-webkit-outer-spin-button {
@@ -82,11 +83,7 @@
     position: absolute;
     right: -5px;
     top: -10px;
-    content: attr(data-icon);
-    font-family:$iconfont;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    display: inline-block;
+    @include drr-icon();
     font-size: 20px;
     padding: 0;
     color: $orange;
@@ -99,45 +96,6 @@
 
     &:hover {
       text-decoration: none;
-    }
-  }
-}
-
-.flags {
-  position: absolute;
-  text-align: center;
-  top: -30px;
-  height: 30px;
-  width: 100%;
-
-  // @include transition-property(left,top);
-  // @include transition-duration(.2s);
-  // @include transition-timing-function(ease-out);
-
-  span {
-    display: inline-block;
-    background: $grayLightest;
-    border: 1px solid $grayLight;
-    border-radius: 10px;
-    padding: 0 5px;
-
-    a {
-      color: $grayDarker;
-
-      &:hover {
-        text-decoration: none;
-      }
-
-      &:after {
-        content: attr(data-icon);
-        font-family:$iconfont;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        content: 'x';
-        display: inline-block;
-        font-size: 15px;
-        padding-left: 2px;
-      }
     }
   }
 }

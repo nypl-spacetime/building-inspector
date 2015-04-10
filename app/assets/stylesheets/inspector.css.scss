@@ -454,10 +454,9 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   color: $grayLightest;
 }
 
-// leaflet overrides
-.toponym-popup {
-  font-family: $mainfont;
-  font-size: 1.5em;
+.spinner-mini {
+  left: 10px;
+  top: 10px;
 }
 
 .leaflet-bottom.leaflet-right {

@@ -279,6 +279,7 @@
 // Icon
 // -------------------------
 @mixin drr-icon($content: "none") {
+  content: attr(data-icon);
   @if ( $content != "none") {
     content: "#{$content}";
   }
@@ -293,7 +294,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-transform: none;
-  line-height: 1;
+  // line-height: 1;
   font-weight: normal;
   font-variant: normal;
 }

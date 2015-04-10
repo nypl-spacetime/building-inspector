@@ -23,7 +23,7 @@
   font-weight: bold;
   height: 10px;
   @media screen and (max-width: $desktopwidth) {
-    line-height: 16px;
+    // line-height: 16px;
   }
 }
 
@@ -39,11 +39,7 @@
 }
 
 #link-exit {
-  content: attr(data-icon);
-  content: ' x';
-  font-family:$iconfont;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  @include drr-icon(" x");
   text-transform: none;
   font-size: 11px;
 

@@ -194,19 +194,31 @@ class @Inspector
     @addButtonListeners() unless @options.tutorialOn
     # rest should be implemented in the inspector instance
 
-  submitFlag: (event, data) ->
-    @removeButtonListeners()
-    event.preventDefault()
-    @prepareFlagSubmission(data, "/fixer/flag")
+  submitFlag: (event, data, callback = null, callee = null) ->
+    @removeButtonListeners() if !callback
+    event.preventDefault() if event
+    @prepareFlagSubmission(data, "/fixer/flag", callback, callee)
 
-  skipFlag: (event) ->
+  skipFlag: (event) =>
     @removeButtonListeners()
-    event.preventDefault()
+    event.preventDefault() if event
     @showNextPolygon()
     @hideSpinner()
 
-  prepareFlagSubmission: (data, url) ->
-    @clearScreen()
+  deleteFlag: (event, data, callback = null, callee = null) ->
+    event.preventDefault() if event
+    url = "/fixer/delete"
+    $.ajax(
+        type: "POST"
+        url: url
+        data:
+          f: data
+        success: (data) ->
+          callback(data, callee) if callback
+      )
+
+  prepareFlagSubmission: (data, url, callback = null, callee = null) ->
+    @clearScreen() if !callback
 
     if @options.tutorialOn
       # do not submit the data
@@ -225,19 +237,25 @@ class @Inspector
 
     # console.log "prepareFlagSubmission:", @currentPolygon.id, type, data
 
-    $(@options.buttonsID).fadeOut 200 , () ->
+    ajaxSubmit = () ->
       $.ajax(
-        type: "POST"
-        url: url
-        data:
-          i: inspector.currentPolygon.id || inspector.loadedData.map.id
-          ft: flaggable_type
-          t: type
-          f: data
-        success: () ->
-          inspector.showNextPolygon()
-          inspector.hideSpinner()
-      )
+          type: "POST"
+          url: url
+          data:
+            i: inspector.currentPolygon.id || inspector.loadedData.map.id
+            ft: flaggable_type
+            t: type
+            f: data
+          success: (data) ->
+            inspector.hideSpinner()
+            inspector.showNextPolygon() if !callback
+            callback(data, callee) if callback
+        )
+
+    if !callback
+      $(@options.buttonsID).fadeOut(200, ajaxSubmit)
+    else
+      ajaxSubmit()
 
   showSpinner: () ->
     @hideSpinner()

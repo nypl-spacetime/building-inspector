@@ -50,7 +50,6 @@ class Address extends Inspector
     if flag_data.length > 0
       flag_str = flag_data.join("|")
     else
-      # console.log "skipped"
       flag_str = "NONE=="
 
     @submitFlag(e, flag_str)

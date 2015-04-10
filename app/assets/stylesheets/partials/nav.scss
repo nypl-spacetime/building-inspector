@@ -229,11 +229,7 @@
 
     @media screen and (min-width: $desktopwidth) {
       &:after {
-        content: attr(data-icon);
-        font-family:$iconfont;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        content: "V";
+        @include drr-icon("V");
         position: absolute;
         right: 10px;
         top: 10px;
@@ -292,14 +288,10 @@
 }
 
 a#tweet {
-  display: inline-block;
   color: $grayLightest;
   width: 25px;
   height: 15px;
-  content: attr(data-icon);
-  font-family:$iconfont;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  @include drr-icon();
   font-size: 20px;
 }
 
@@ -451,15 +443,11 @@ a#tweet {
     font-weight: bold;
 
     &:before {
-      content: attr(data-icon);
-      font-family:$iconfont;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      @include drr-icon("M");
       font-size: 16px;
       display: block;
       width: 40px;
       height: 16px;
-      content: "M";
     }
   }
 }

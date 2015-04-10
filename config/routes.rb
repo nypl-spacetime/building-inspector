@@ -91,6 +91,7 @@ Webappmini::Application.routes.draw do
 
   # json flagging
   post "fixer/flag", to: "fixer#apply_flags_to_polygon"
+  post "fixer/delete", to: "fixer#delete_flags_for_session"
 
   # api endpoints
   get "api/polygons"
