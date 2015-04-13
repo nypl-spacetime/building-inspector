@@ -48,7 +48,7 @@ class Toponym extends Inspector
     # constrain the map to the current sheet
     @bounds = Utils.bboxToBounds(bbox)
     @map.setMaxBounds(@bounds)
-    @map.setView([random_lat, random_lon], 16)
+    @map.setView([random_lat, random_lon], 19)
     @fogOfWar(bbox)
     @showCurrentToponyms()
 
@@ -339,7 +339,6 @@ class Toponym extends Inspector
     @hideFlagSpinner(item)
     close = obj.elem.find(".num-close")
     close.addClass("saving")
-    close.text("y")
     close.prepend(Utils.spinner(spinnerOpts).el)
 
   hideFlagSpinner: (item, saved = true) ->
@@ -350,7 +349,6 @@ class Toponym extends Inspector
       close.addClass("saved")
     else
       close.removeClass("saved")
-      close.text("x")
     close.find(".spinner-mini").remove()
 
   cleanEmptyFlags: () =>
