@@ -12,7 +12,8 @@ class Toponym extends Inspector
       tutorialURL: "//player.vimeo.com/video/123878608?autoplay=1&title=0&amp;byline=0&amp;portrait=0"
       jsdataID: '#toponymjs'
       tweetString: "_score_ toponyms found! Data mining old maps with Building Inspector from @NYPLMaps @nypl_labs"
-      overlayHTML: '<div class="overlay">Find all the place names<br />(minus the streets)<br />in the area.<br /><strong>Zoom to begin.</strong></div>'
+      overlayHTML: '<div class="overlay">
+        <strong>Drag</strong> around the map and identify<br /><strong>named places</strong> (e.g. &ldquo;Carriage Factory&rdquo;).<br />Ignore street names and addresses.</div>'
       task: 'toponym'
     @updateButton()
     super(options)
@@ -48,7 +49,7 @@ class Toponym extends Inspector
     # constrain the map to the current sheet
     @bounds = Utils.bboxToBounds(bbox)
     @map.setMaxBounds(@bounds)
-    @map.setView([random_lat, random_lon], 19)
+    @map.setView([random_lat, random_lon], 20)
     @fogOfWar(bbox)
     @showCurrentToponyms()
 
@@ -271,6 +272,7 @@ class Toponym extends Inspector
       input.on "keyup", (e) ->
         inspector.validateInput(@, e)
       input.on "change", (e) ->
+        inspector.validateInput(@, e)
         inspector.setFlagChanged(@, e)
     , 50)
     return el
