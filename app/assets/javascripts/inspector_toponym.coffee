@@ -243,7 +243,7 @@ class Toponym extends Inspector
 
   buildTextElement: (x,y) =>
     inspector = @
-    html = "<div id=\"num-x-#{x}-y-#{y}\" class=\"toponym-flag\"><div class=\"cont\"><input class=\"input\" placeholder=\"name of place\" /><a href=\"javascript:;\" class=\"num-close\">x</a></div></div>"
+    html = "<div id=\"num-x-#{x}-y-#{y}\" class=\"toponym-flag\"><div class=\"cont\"><input class=\"input\" placeholder=\"name of place\" /><a href=\"javascript:;\" class=\"num-close\" tabindex=\"-1\">x</a></div></div>"
     el = $(html)
 
     # console.log "num-x-#{x}-y-#{y}"
