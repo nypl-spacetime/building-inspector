@@ -10,18 +10,18 @@ class Flag < ActiveRecord::Base
     def self.flags_for_sheet_for_session(sheet_id, session_id, type = "geometry")
         # just need the count
         if type != "toponym"
-            Flag.select('DISTINCT flags.flaggable_id, flags.latitude, flags.longitude, flags.flag_value, polygons.geometry, polygons.sheet_id, polygons.dn').joins("INNER JOIN polygons ON polygons.id = flags.flaggable_id INNER JOIN sheets ON sheets.id = polygons.sheet_id").where('sheets.id = ? AND flags.session_id = ? AND flags.flag_type = ?', sheet_id, session_id, type)
+            Flag.select('DISTINCT flags.flaggable_id, flags.flaggable_type, flags.latitude, flags.longitude, flags.flag_value, polygons.geometry, polygons.sheet_id, polygons.dn').joins("INNER JOIN polygons ON polygons.id = flags.flaggable_id INNER JOIN sheets ON sheets.id = polygons.sheet_id").where('sheets.id = ? AND flags.session_id = ? AND flags.flag_type = ?', sheet_id, session_id, type)
         else
-            Flag.select('DISTINCT flags.flaggable_id, flags.latitude, flags.longitude, flags.flag_value').joins("INNER JOIN sheets ON sheets.id = flags.flaggable_id").where('sheets.id = ? AND flags.session_id = ? AND flags.flag_type = ?', sheet_id, session_id, type)
+            Flag.select('DISTINCT flags.flaggable_id, flags.flaggable_type, flags.latitude, flags.longitude, flags.flag_value').joins("INNER JOIN sheets ON sheets.id = flags.flaggable_id").where('sheets.id = ? AND flags.session_id = ? AND flags.flag_type = ?', sheet_id, session_id, type)
         end
     end
 
     def self.flags_for_sheet_for_user(sheet_id, user_id, type = "geometry")
         # just need the count
         if type != "toponym"
-            Flag.select('DISTINCT flags.flaggable_id, flags.latitude, flags.longitude, flags.flag_value, polygons.geometry, polygons.sheet_id, polygons.dn').joins("INNER JOIN polygons ON polygons.id = flags.flaggable_id INNER JOIN sheets ON sheets.id = polygons.sheet_id").joins(:usersession).where('sheets.id = ? AND usersessions.user_id = ? AND flags.flag_type = ?', sheet_id, user_id, type)
+            Flag.select('DISTINCT flags.flaggable_id, flags.flaggable_type, flags.latitude, flags.longitude, flags.flag_value, polygons.geometry, polygons.sheet_id, polygons.dn').joins("INNER JOIN polygons ON polygons.id = flags.flaggable_id INNER JOIN sheets ON sheets.id = polygons.sheet_id").joins(:usersession).where('sheets.id = ? AND usersessions.user_id = ? AND flags.flag_type = ?', sheet_id, user_id, type)
         else
-            Flag.select('DISTINCT flags.flaggable_id, flags.latitude, flags.longitude, flags.flag_value').joins("INNER JOIN sheets ON sheets.id = flags.flaggable_id").joins(:usersession).where('sheets.id = ? AND usersessions.user_id = ? AND flags.flag_type = ?', sheet_id, user_id, type)
+            Flag.select('DISTINCT flags.flaggable_id, flags.flaggable_type, flags.latitude, flags.longitude, flags.flag_value').joins("INNER JOIN sheets ON sheets.id = flags.flaggable_id").joins(:usersession).where('sheets.id = ? AND usersessions.user_id = ? AND flags.flag_type = ?', sheet_id, user_id, type)
         end
     end
 
@@ -45,7 +45,7 @@ class Flag < ActiveRecord::Base
 
     def self.flags_for_session(session_id, type = "geometry")
         if type != "toponym"
-            Flag.select("DISTINCT flaggable_id").where("session_id = ? AND flag_type = ?", session_id, type).count
+            Flag.select("DISTINCT flaggable_id, flaggable_type").where("session_id = ? AND flag_type = ?", session_id, type).count
         else
             Flag.select("DISTINCT flags.id").where("session_id = ? AND flag_type = ?", session_id, type).count
         end
@@ -53,12 +53,13 @@ class Flag < ActiveRecord::Base
 
     def self.flags_for_user(user_id, type = "geometry")
         if type != "toponym"
-            Flag.select("DISTINCT flaggable_id").joins(:usersession).where('usersessions.user_id = ? AND flags.flag_type = ?', user_id, type).count
+            Flag.select("DISTINCT flaggable_id, flaggable_type").joins(:usersession).where('usersessions.user_id = ? AND flags.flag_type = ?', user_id, type).count
         else
             Flag.select("DISTINCT flags.id").joins(:usersession).where('usersessions.user_id = ? AND flags.flag_type = ?', user_id, type).count
         end
     end
 
+    # TODO: might not be necessary (not used right now)
     def self.progress_for_session(session_id, type = "geometry")
         if type != "toponym"
             Flag.select("DISTINCT polygons.id, polygons.centroid_lat, polygons.centroid_lon, polygons.geometry, flags.*").joins(:polygon).where("flags.session_id = ? AND flags.flag_type = ?", session_id, type)
@@ -67,6 +68,7 @@ class Flag < ActiveRecord::Base
         end
     end
 
+    # TODO: might not be necessary (not used right now)
     def self.progress_for_user(user_id, type = "geometry")
         if type != "toponym"
             Flag.select("DISTINCT polygons.id, polygons.centroid_lat, polygons.centroid_lon, polygons.geometry, flags.*").joins(:polygon).joins(:usersession).where('usersessions.user_id = ? AND flags.flag_type = ?', user_id, type)
@@ -76,7 +78,7 @@ class Flag < ActiveRecord::Base
     end
 
     def self.flags_for_sheet_for_task_and_threshold(sheet_id, type = "polygonfix", threshold = 3)
-        sql = Flag.send(:sanitize_sql_array,["SELECT f.flaggable_id, f.id, f.flag_value FROM flags f INNER JOIN ( SELECT _f.flaggable_id pid, COUNT(*) qty FROM flags _f INNER JOIN polygons _p ON _p.id = _f.flaggable_id AND _f.flag_type =  ? WHERE _p.sheet_id = ? GROUP BY pid HAVING COUNT(*) >= ? ) j1 ON j1.pid = f.flaggable_id WHERE f.flag_type =  ? ORDER BY f.flaggable_id", type, sheet_id, threshold, type])
+        sql = Flag.send(:sanitize_sql_array,["SELECT f.flaggable_id, f.flaggable_type, f.id, f.flag_value FROM flags f INNER JOIN ( SELECT _f.flaggable_id pid, COUNT(*) qty FROM flags _f INNER JOIN polygons _p ON _p.id = _f.flaggable_id AND _f.flag_type =  ? WHERE _p.sheet_id = ? GROUP BY pid HAVING COUNT(*) >= ? ) j1 ON j1.pid = f.flaggable_id WHERE f.flag_type =  ? ORDER BY f.flaggable_id", type, sheet_id, threshold, type])
         Flag.connection.execute(sql)
     end
 
