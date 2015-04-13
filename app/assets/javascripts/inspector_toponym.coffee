@@ -122,12 +122,24 @@ class Toponym extends Inspector
     @submitFlag(null, data, @onFlagSaved, item)
 
   onFlagSaved: (data, item) =>
-    @updateFlagObject item,
-      changed: false
-      saved: true
-      isSaving: false
-      flag_id: data.flags[0].id
-    @hideFlagSpinner(item)
+    saved = false
+    if data.flags
+      saved = true
+      newstatus = {
+        changed: false
+        saved: saved
+        isSaving: false
+        flag_id: data.flags[0].id
+      }
+    else
+      newstatus = {
+        changed: false
+        saved: saved
+        isSaving: false
+        flag_id: 0
+      }
+    @updateFlagObject item, newstatus
+    @hideFlagSpinner(item, saved)
 
   prepareData: () =>
     r = []
@@ -330,11 +342,15 @@ class Toponym extends Inspector
     close.text("y")
     close.prepend(Utils.spinner(spinnerOpts).el)
 
-  hideFlagSpinner: (item) ->
+  hideFlagSpinner: (item, saved = true) ->
     obj = @flagObjectFromItem(item)
     close = obj.elem.find(".num-close")
     close.removeClass("saving")
-    close.addClass("saved")
+    if saved
+      close.addClass("saved")
+    else
+      close.removeClass("saved")
+      close.text("x")
     close.find(".spinner-mini").remove()
 
   cleanEmptyFlags: () =>

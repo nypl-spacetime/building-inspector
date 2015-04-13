@@ -250,6 +250,9 @@ class @Inspector
             inspector.hideSpinner()
             inspector.showNextPolygon() if !callback
             callback(data, callee) if callback
+          error: (data) ->
+            inspector.hideSpinner()
+            callback(data, callee) if callback
         )
 
     if !callback
