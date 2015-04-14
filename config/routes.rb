@@ -32,11 +32,12 @@ Webappmini::Application.routes.draw do
   get "flag_progress", to: "flags#progress"
 
   # general content stuff
-  get "general/home", :as => "home"
-  get "general/about", :as => "about"
-  get "general/help", :as => "help"
-  get "general/data", :as => "data"
-  get "general/win", :as => "win"
+  get "general/about"
+  get "general/help"
+  get "general/data"
+  get "about", :to => "general#about", :as => "about"
+  get "help", :to => "general#help", :as => "help"
+  get "data", :to => "general#data", :as => "data"
 
   # footprints
   # this uses a different route as the task name for user friendliness purposes
