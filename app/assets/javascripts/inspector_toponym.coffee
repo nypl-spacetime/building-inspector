@@ -11,7 +11,7 @@ class Toponym extends Inspector
       tutorialType:"simple"
       tutorialURL: "//player.vimeo.com/video/123878608?autoplay=1&title=0&amp;byline=0&amp;portrait=0"
       jsdataID: '#toponymjs'
-      tweetString: "_score_ toponyms found! Data mining old maps with Building Inspector from @NYPLMaps @nypl_labs"
+      tweetString: "_score_ place names found! Data mining old maps with Building Inspector from @NYPLMaps @nypl_labs"
       overlayHTML: '<div class="overlay">
         <strong>Drag</strong> around the map and identify<br /><strong>named places</strong> (e.g. &ldquo;Carriage Factory&rdquo;).<br />Ignore street names and addresses.</div>'
       task: 'toponym'
