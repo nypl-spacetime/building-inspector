@@ -5,6 +5,7 @@ Authors: [Mauricio Giraldo Arteaga] / NYPL Labs
 - [Data ingest](#ingest)
 - [Consensus generation](#consensus)
 - [API querying](#api)
+- [Adding new tasks](#tasks)
 
 ### Environment variables and buildpacks
 
@@ -117,6 +118,11 @@ Accept tasks:
 - `/api/polygons/geometry/yes/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that have been marked as *correct*.
 - `/api/polygons/geometry/no/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that have been marked as *not buildings*.
 - `/api/polygons/geometry/fix/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that need to be *fixed*.
+
+### <a name="tasks"></a>Adding new tasks
+
+There is a very superficial [README document](README_NEW_TASK.md) briefly describing what changes need to be made to add new tasks to the Building Inspector.
+
 
 ### Version notes
 
