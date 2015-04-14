@@ -16,13 +16,13 @@
   <meta name="twitter:site" content="@nypl_labs">
   <meta name="twitter:title" content="Building Inspector - Kill Time. Make History.">
   <meta name="twitter:description" content="Help unlock New York City's past by identifying buildings and other details on beautiful old maps.">
-  <meta name="twitter:image:src" content="<%= request.protocol + request.host_with_port + image_path("card.jpg") %>">
+  <meta name="twitter:image:src" content="<%= @card_url %>">
   <meta name="twitter:domain" content="<%= request.protocol + request.host_with_port %>/">
 
   <!-- fb og -->
   <meta name="og:title" content="Building Inspector - Kill Time. Make History.">
   <meta name="og:type" content="website">
-  <meta name="og:image" content="<%= request.protocol + request.host_with_port + image_path("card.jpg") %>">
+  <meta name="og:image" content="<%= @card_url %>">
   <meta name="og:description" content="Help unlock New York City's past by identifying buildings and other details on beautiful old maps.">
   <meta name="og:url" content="<%= request.protocol + request.host_with_port %>/">
 

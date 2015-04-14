@@ -22,6 +22,7 @@ class ApplicationController < ActionController::Base
     @global_tasks.unshift(@global_tasks.slice!(2,1)[0]) if @current_page=="address"
     @global_tasks.unshift(@global_tasks.slice!(3,1)[0]) if @current_page=="color"
     @global_tasks.unshift(@global_tasks.slice!(4,1)[0]) if @current_page=="toponym"
+    @card_url = request.protocol + request.host_with_port + ActionController::Base.helpers.asset_path("card-#{@current_page}.jpg") if @current_page=="polygonfix" || @current_page=="address" || @current_page=="color" || @current_page=="toponym" || @current_page=="geometry"
   end
 
   private
@@ -44,6 +45,7 @@ class ApplicationController < ActionController::Base
   end
 
   def global_variables
+    @card_url = request.protocol + request.host_with_port + ActionController::Base.helpers.asset_path("card.jpg")
     @global_tasks = []
     @global_tasks.push({:score => 0, :name => "Check footprints", :path => geometry_path, :page => "geometry"})
     @global_tasks.push({:score => 0, :name => "Fix footprints", :path => polygonfix_path, :page => "polygonfix"})
