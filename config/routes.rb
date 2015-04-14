@@ -3,7 +3,7 @@ Webappmini::Application.routes.draw do
   resources :layers
 
 
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", sessions: 'users/sessions' }
 
   resources :users
   resources :sheets

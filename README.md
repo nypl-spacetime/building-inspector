@@ -33,6 +33,8 @@ This application makes use of [OmniAuth](https://github.com/intridea/omniauth) w
 
 ##### Google URIs
 
+**IMPORTANT:** Make sure under "APIs" that you have the "Contacts API" and "Google+ API" enabled for this application.
+
 In the `APIs & auth > Credentials` section of the [Google Developers Console](https://console.developers.google.com/) you need to create a **Client ID for OAuth** and set these values (replace `{APPLICATION_URL}` with the proper URL of the application):
 
 - `Redirect URIs`: `http://{APPLICATION_URL}/users/auth/google_oauth2/callback`
