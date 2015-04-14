@@ -95,6 +95,8 @@ class @Inspector
 
     @overlay = Utils.addOverlay(@map, @tileset, @tiletype, 3)
 
+    @addMinimap() if @miniMapControl
+
   clearScreen: () ->
     # rest should be implemented in the inspector instance
 
@@ -115,11 +117,13 @@ class @Inspector
     # rest should be implemented in the inspector instance
 
   addMinimap: () ->
+    @miniMapControl.removeFrom(@map) if @miniMapControl
+
     if @options.hasMiniMap
       zoomOffset = 5
       mini = Utils.mapOverlay(@tileset, @tiletype, 3, @map.minZoom-zoomOffset, @map.maxZoom-zoomOffset)
       @miniMap = new L.LayerGroup([mini])
-      miniMapControl = new L.Control.MiniMap(@miniMap,
+      @miniMapControl = new L.Control.MiniMap(@miniMap,
         toggleDisplay: true
         position: 'topleft'
         autoToggleDisplay: true
