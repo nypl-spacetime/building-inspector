@@ -117,7 +117,7 @@ class Sheet < ActiveRecord::Base
 
   def calculate_polygonfix_consensus
     # get all polygons that have 3 or more polygonfix flags
-    puts "Processing POYGONFIX consensus for sheet #{self[:id]}"
+    puts "Processing POLYGONFIX consensus for sheet #{self[:id]}"
     flags = Flag.flags_for_sheet_for_task_and_threshold(self[:id])
     pids = flags.map {|fl| fl["flaggable_id"]}.uniq
     pids.each do |pid|

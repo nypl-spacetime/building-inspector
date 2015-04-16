@@ -16,6 +16,8 @@ class ConsensusUtils
       next if original_points == nil
       unique_points = original_points.map{|poly| poly[1..-1]}
       vertex_clusters = cluster_points(unique_points)
+      # next if all_vertex_clusters.size == 0
+      # vertex_clusters = get_useful_clusters(all_vertex_clusters)
       next if !validate_clusters(vertex_clusters, unique_points)
       mean_poly = get_mean_poly(vertex_clusters)
       next if mean_poly == {}
@@ -26,6 +28,21 @@ class ConsensusUtils
       output.push(poly)
     end
     return output
+  end
+
+  def self.get_useful_clusters(clusters)
+    total_points = 0
+    # given a bunch of clusters get the average point count
+    # return those whose pooint count is greater or equal to the average
+    clusters.each do |key, val|
+      total_points = total_points + val.size
+    end
+    mean = total_points / clusters.size
+    useful = {}
+    clusters.each do |key, val|
+      useful[key] = val if val.size >= mean
+    end
+    useful
   end
 
   # given a list of centroids (lon,lat), find their poly's index in the centroid list (index => lon,lat)
