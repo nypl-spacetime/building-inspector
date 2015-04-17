@@ -6,43 +6,43 @@ class ConsensusUtils
     output = []
     geom = parse_geojson(geojson)
     centroids = get_all_centroids(geom)
-    centroid_clusters = cluster_centroids(centroids)
+    centroid_clusters = apply_dbscan(centroids.map{|c| c[1]}, 4.5e-06, 2)
     centroid_clusters.each do |ccluster|
       next if ccluster[0] == -1
+      # puts "a"
       cluster = ccluster[1] # only the set of latlons
       sub_geom = get_polys_for_centroid_cluster(cluster, centroids, geom)
       next if sub_geom.size == 0
+      # puts "b"
       original_points = get_all_poly_points(sub_geom)
       next if original_points == nil
+      # puts "c"
       unique_points = original_points.map{|poly| poly[1..-1]}
-      vertex_clusters = cluster_points(unique_points)
-      # next if all_vertex_clusters.size == 0
-      # vertex_clusters = get_useful_clusters(all_vertex_clusters)
-      next if !validate_clusters(vertex_clusters, unique_points)
+      vertex_clusters = apply_dbscan(unique_points.flatten(1), 5.0e-06, 2)
+      next if vertex_clusters.size == 0
+      # puts "d"
+      # next if !validate_clusters(vertex_clusters, unique_points)
+      # puts "e"
       mean_poly = get_mean_poly(vertex_clusters)
       next if mean_poly == {}
+      # puts "f: #{mean_poly}"
       connections = connect_clusters(vertex_clusters, original_points)
       next if connections == nil || connections == {}
+      # puts "g: #{connections}"
       poly = connect_mean_poly(mean_poly, connections)
       next if poly == nil || poly.count == 0
+      # puts "h: #{poly}"
+      next if !validate_final_poly(poly, original_points)
+      # puts "i"
       output.push(poly)
     end
     return output
   end
 
-  def self.get_useful_clusters(clusters)
-    total_points = 0
-    # given a bunch of clusters get the average point count
-    # return those whose pooint count is greater or equal to the average
-    clusters.each do |key, val|
-      total_points = total_points + val.size
-    end
-    mean = total_points / clusters.size
-    useful = {}
-    clusters.each do |key, val|
-      useful[key] = val if val.size >= mean
-    end
-    useful
+  def self.validate_final_poly(poly, original_polys)
+    point_count = original_polys.map { |c| c.size }
+    # puts "validation: #{poly.size}, #{point_count.median}, #{point_count.mean}, #{point_count.standard_deviation}"
+    poly.size >= (point_count.mean - 2*point_count.standard_deviation).to_i
   end
 
   # given a list of centroids (lon,lat), find their poly's index in the centroid list (index => lon,lat)
@@ -72,12 +72,6 @@ class ConsensusUtils
       points.push(get_points(poly))
     end
     return points
-  end
-
-  # perform point clustering EXCLUDING first item in each poly since it is same as last
-  def self.cluster_points(points, epsilon=3.5e-06, min_points=2)
-    dbscan = DBSCAN( points.flatten(1), :epsilon => epsilon, :min_points => min_points, :distance => :euclidean_distance )
-    return dbscan.results.select{|k,v| k != -1} # omit the non-cluster
   end
 
   def self.validate_clusters(clusters, unique_points)
@@ -119,23 +113,27 @@ class ConsensusUtils
     # for each cluster
     clusters.each do |cluster|
       # for each point in cluster
-      if cluster[0] != -1 # exclude invalid cluster
-        cluster_votes = {} # to weigh connection popularity (diff pts might be connected to diff clusters)
-        cluster[1].each do |point|
-          # find original point connected to it
-          connection = find_connected_point(point, original_points)
-          connected_cluster = find_cluster_for_point(connection, clusters)
-          # if original point belongs to another cluster
-          if connected_cluster != nil && connected_cluster != cluster[0]
-            # vote for the cluster
-            cluster_votes[connected_cluster] = 0 if cluster_votes[connected_cluster] == nil
-            cluster_votes[connected_cluster] += 1
-          end
+      next if cluster[0] == -1 # exclude invalid cluster
+      cluster_votes = {} # to weigh connection popularity (diff pts might be connected to diff clusters)
+      cluster[1].each do |point|
+        # find original point connected to it
+        connection = find_connected_point(point, original_points)
+        connected_cluster = find_cluster_for_point(connection, clusters)
+        # if original point belongs to another cluster
+        if connected_cluster != nil && connected_cluster != cluster[0]
+          # vote for the cluster
+          cluster_votes[connected_cluster] = 0 if cluster_votes[connected_cluster] == nil
+          cluster_votes[connected_cluster] += 1
         end
-        connections[cluster[0]] = cluster_votes.sort_by{|k, v| v}
-        next if connections[cluster[0]].size == 0
-        connections[cluster[0]] = connections[cluster[0]].reverse[0][0]
       end
+      tally = cluster_votes.sort_by{|k, v| v}
+      next if tally.size == 0
+      connections[cluster[0]] = tally.reverse[0][0]
+    end
+    # check openness (an orphan vertex)
+    vertices = connections.map { |k,v| [k,v]}.flatten.uniq
+    vertices.each do |v|
+      return nil if connections[v] == nil
     end
     return connections
   end
@@ -144,19 +142,19 @@ class ConsensusUtils
     # does some simple check for non-circularity
     sorted = []
     seen = {}
-    as_list = connections.select{|k,v| k}
+    as_list = connections.map{|k,v| k}
     done = false
-    first = as_list.first[0]
+    first = as_list.first
     from = first
     while !done do
       to = connections[from]
-      done = true if seen[to] || to == nil || to.size == 0
+      # TODO: there is probably a better way to do this wihtout so many if inside
+      done = true if seen[to] || to == nil
       seen[to] = true
       from = to
-      sorted.push(to)
+      sorted.push(to) if !done
       done = true if seen.size == connections.size
     end
-    return nil if seen.size != connections.size
     return sorted
   end
 
@@ -300,8 +298,9 @@ class ConsensusUtils
     RGeo::GeoJSON.decode(json, :json_parser => :json)
   end
 
-  def self.cluster_centroids(centroids, epsilon=1.8e-06, min_points=2)
-    dbscan = DBSCAN( centroids.map{|c| c[1]}, :epsilon => epsilon, :min_points => min_points, :distance => :euclidean_distance )
+  # perform point clustering EXCLUDING first item in each poly since it is same as last
+  def self.apply_dbscan(set, epsilon=5.5e-06, min_points=2)
+    dbscan = DBSCAN( set, :epsilon => epsilon, :min_points => min_points, :distance => :euclidean_distance )
     return dbscan.results.select{|k,v| k != -1} # omit the non-cluster
   end
 
@@ -309,11 +308,28 @@ end
 
 # convenience methods for averaging
 class Array
-    def sum
-      inject(0.0) { |result, el| result + el }
-    end
+  def sum
+    inject(0.0) { |result, el| result + el }
+  end
 
-    def mean
-      sum / size
-    end
+  def mean
+    sum / size
+  end
+
+  def median
+    sorted = sort
+    len = sorted.length
+    (sorted[(len - 1) / 2] + sorted[len / 2]) / 2.0
+  end
+
+  def sample_variance
+    m = self.mean
+    sum = self.inject(0){|accum, i| accum +(i-m)**2 }
+    sum/(self.length - 1).to_f
+  end
+
+  def standard_deviation
+    return Math.sqrt(self.sample_variance)
+  end
+
 end

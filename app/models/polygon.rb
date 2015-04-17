@@ -53,6 +53,29 @@ class Polygon < ActiveRecord::Base
     return c
   end
 
+  def calculate_polygonfix_consensus
+    features = []
+
+    f = flags.where("flag_type = 'polygonfix' AND flag_value != 'NOFIX'")
+
+    features = f.map { |item| { :type => "Feature", :properties => { :id => id }, :geometry => { :type=>"Polygon", :coordinates => JSON.parse(item[:flag_value]) } } }
+
+    geo = { :type => "FeatureCollection", :features => features }
+
+    consensus = ConsensusUtils.calculate_polygonfix_consensus(geo.to_json)
+    return if consensus == nil || consensus.count == 0 # if not a polygon
+    # puts "found consensus for polygon: #{id}"
+    # save it
+    cp = Consensuspolygon.find_or_initialize_by_polygon_id_and_task(:polygon_id => id, :task => 'polygonfix')
+    geojson = ConsensusUtils.consensus_to_geojson(consensus, id)
+    cp[:consensus] = geojson
+    if !cp.save
+      return nil
+      # puts "!=!=!=!=!=!=!=!=! Could not save polygonfix consensus with params: #{self}"
+    end
+    return true
+  end
+
   def as_feature
      { :type => "FeatureCollection", :features => [JSON.parse(self[:vectorizer_json])] }
   end

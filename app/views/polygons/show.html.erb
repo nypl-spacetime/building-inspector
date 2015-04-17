@@ -13,6 +13,11 @@
 <div id="map"></div>
 
 <p>
+  <b>Sheet:</b>
+  <%= link_to @polygon.sheet_id, @polygon.sheet %>
+</p>
+
+<p>
   <b>Flags:</b>
   <%
   yes_count = 0
@@ -89,11 +94,6 @@
 <p>
   <b>Vectorizer json:</b>
   <%= @polygon.vectorizer_json %>
-</p>
-
-<p>
-  <b>Sheet:</b>
-  <%= link_to @polygon.sheet_id, @polygon.sheet %>
 </p>
 
 <p>
