@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141030141230) do
+ActiveRecord::Schema.define(:version => 20150421151000) do
 
   create_table "consensuspolygons", :force => true do |t|
     t.string   "task"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(:version => 20141030141230) do
     t.datetime "updated_at",                                                            :null => false
     t.decimal  "latitude",       :precision => 15, :scale => 12
     t.decimal  "longitude",      :precision => 15, :scale => 12
-    t.string   "flaggable_type",                                 :default => "polygon"
+    t.string   "flaggable_type",                                 :default => "Polygon"
   end
 
   add_index "flags", ["flaggable_id"], :name => "polygon_index"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(:version => 20141030141230) do
     t.string   "name"
     t.string   "tilejson"
     t.string   "description"
-    t.integer  "year"
+    t.string   "year"
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
     t.string   "bbox"
