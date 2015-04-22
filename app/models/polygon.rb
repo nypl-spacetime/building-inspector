@@ -10,7 +10,7 @@ class Polygon < ActiveRecord::Base
   end
 
   def to_geojson
-     { :type => "Feature", :properties => { :consensus => self[:consensus], :id => self[:id], :color => self[:color], :dn => self[:dn], :sheet_id => self[:sheet_id] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(self[:geometry]) } }
+     { :type => "Feature", :properties => { :consensus => self[:consensus], :id => self[:id], :dn => self[:dn], :sheet_id => self[:sheet_id] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(self[:geometry]) } }
   end
 
   def to_point_geojson
