@@ -4,6 +4,19 @@ class Sheet < ActiveRecord::Base
   belongs_to :layer
   attr_accessible :bbox, :map_id, :map_url, :status, :layer_id
 
+  def to_geojson
+    { :type => "Feature", :properties => self, :geometry => { :type => "Polygon", :coordinates => bbox_to_poly } }
+  end
+
+  def bbox_to_poly
+    coords = bbox.split ","
+    west = coords[0].to_f
+    south = coords[1].to_f
+    east = coords[2].to_f
+    north = coords[3].to_f
+    [[[west,south],[west,north],[east,north],[east,south],[west,south]]]
+  end
+
   def polygons_for_task(session_id = nil, type="geometry")
     Sheet.polygons_for_task(self[:id], session_id, type)
   end

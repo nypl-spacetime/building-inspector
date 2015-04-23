@@ -104,6 +104,7 @@ Webappmini::Application.routes.draw do
   get "api/polygons_for_ids", to: "api#polygons_for_ids"
   get "api/sheets/:id/history", to: "api#sheets_history"
   get "api/sheets/:id/polygons", to: "api#sheets_polygons"
+  get "api/sheets", to: "api#sheets_all"
   get "api/consolidated"
   get "api/consolidated/page/:page", to: "api#consolidated"
 

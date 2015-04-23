@@ -10,11 +10,11 @@ class Polygon < ActiveRecord::Base
   end
 
   def to_geojson
-     { :type => "Feature", :properties => { :consensus => self[:consensus], :id => self[:id], :dn => self[:dn], :sheet_id => self[:sheet_id] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(self[:geometry]) } }
+     { :type => "Feature", :properties => { :id => self[:id], :dn => self[:dn], :sheet_id => self[:sheet_id] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(self[:geometry]) } }
   end
 
   def to_point_geojson
-     { :type => "Feature", :properties => { :consensus => self[:consensus], :id => self[:id], :dn => self[:dn], :sheet_id => self[:sheet_id] }, :geometry => { :type => "Point", :coordinates => [self[:centroid_lon], self[:centroid_lat]] } }
+     { :type => "Feature", :properties => { :id => self[:id], :dn => self[:dn], :sheet_id => self[:sheet_id] }, :geometry => { :type => "Point", :coordinates => [self[:centroid_lon], self[:centroid_lat]] } }
   end
 
   def poly_consensus(task)
@@ -95,13 +95,13 @@ class Polygon < ActiveRecord::Base
     features = []
 
     f = flags.where(:flag_type => "polygonfix")
-    f.each do |feature|
-      features.push(feature.as_feature)
+    f.each do |flag|
+      features.push(flag.as_feature)
     end
 
     f = flags.where(:flag_type => "address")
-    f.each do |feature|
-      features.push(feature.as_feature)
+    f.each do |flag|
+      features.push(flag.as_feature)
     end
 
     { :type => "FeatureCollection", :features => features }

@@ -82,6 +82,21 @@ class ApiController < ApplicationController
     end
 
 
+    # GET /api/sheets
+    def sheets_all
+        # get all sheets
+        sheets = Sheet.all
+        output = {}
+        geojson = []
+        sheets.each do |s|
+            geojson.push(s.to_geojson)
+        end
+        output = {}
+        output[:type] = "FeatureCollection"
+        output[:features] = geojson
+        render json: output
+    end
+
     # GET /api/sheets/:id/history
     def sheets_history
         # get all flags for all polygons for a sheet
@@ -90,13 +105,12 @@ class ApiController < ApplicationController
             sheet = Sheet.find params[:id]
         rescue
         end
-        output = {}
         geojson = []
         if sheet
             flags = Flag.where("flaggable_id = ? OR flaggable_id IN (?)", sheet[:id],sheet.polygons.pluck(:id)).order(:created_at)
 
             flags.each do |f|
-                geojson.push(f.as_feature)
+                geojson.push(f.to_geojson)
             end
         end
         output = {}
@@ -111,7 +125,6 @@ class ApiController < ApplicationController
             sheet = Sheet.find params[:id]
         rescue
         end
-        output = {}
         geojson = []
         if sheet
             poly = sheet.polygons

@@ -94,14 +94,14 @@ class Flag < ActiveRecord::Base
         features = []
 
         f = Flag.where(:flag_type => type)
-        f.each do |feature|
-            features.push(feature.as_feature)
+        f.each do |flag|
+            features.push(flag.to_geojson)
         end
 
         { :type => "FeatureCollection", :features => features }
     end
 
-    def as_feature
+    def to_geojson
         # commented out the query for user to improve performance
         # user = Usersession.where(:session_id => self[:session_id]).first
         r = {}
@@ -115,13 +115,18 @@ class Flag < ActiveRecord::Base
         r[:properties][:id] = self[:id]
         r[:properties][:flaggable_id] = self.flaggable[:id]
         r[:properties][:flaggable_type] = self[:flaggable_type]
+        r[:properties][:flag_type] = self[:flag_type]
         # if user != nil
         #   r[:properties][:user_id] = user[:user_id]
         # else
             r[:properties][:session_id] = self[:session_id]
         # end
         if self[:flag_type] == 'polygonfix' && self[:flag_value] != "NOFIX"
-            r[:geometry] = { :type => "Polygon", :coordinates => JSON.parse(self[:flag_value]) }
+            # NOTE: polygonfix flags are inserted with non-redundant first-last points
+            # this has to be added for geojson validation
+            geojson = JSON.parse(self[:flag_value])
+            geojson[0].push geojson[0][0]
+            r[:geometry] = { :type => "Polygon", :coordinates => geojson }
         else
             r[:properties][:flag_value] = self[:flag_value]
             r[:geometry] = { :type => "Point", :coordinates => [self[:longitude].to_f, self[:latitude].to_f] }
