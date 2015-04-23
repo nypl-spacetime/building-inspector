@@ -30,7 +30,7 @@ class PolygonsController < ApplicationController
   # GET /polygons/1.json
   def show
     @polygon = Polygon.find(params[:id])
-    @map = @polygon.as_feature
+    @map = @polygon.to_geojson #as_feature
     @tileset = @polygon.sheet.layer[:tilejson]
     @tiletype = @polygon.sheet.layer[:tileset_type]
     @flags = @polygon.flags_as_features

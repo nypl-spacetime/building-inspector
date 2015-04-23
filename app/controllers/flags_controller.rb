@@ -47,6 +47,9 @@ class FlagsController < ApplicationController
   # GET /flags/1.json
   def show
     @flag = Flag.find(params[:id])
+    @layer = @flag[:flaggable_type]=="Sheet" ? Sheet.find(@flag[:flaggable_id]).layer : Polygon.find(@flag[:flaggable_id]).sheet.layer
+    @tileset = @layer[:tilejson]
+    @tiletype = @layer[:tileset_type]
 
     respond_to do |format|
       format.html # show.html.erb

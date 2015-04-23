@@ -9,6 +9,10 @@ class Polygon < ActiveRecord::Base
     Polygon.select("COUNT(polygons.id) AS total, sheet_id, sheets.bbox").where("sheets.layer_id = ?",layer_id).joins(:sheet).group("polygons.sheet_id, sheets.bbox")
   end
 
+  # def as_feature
+  #    { :type => "FeatureCollection", :features => [JSON.parse(self[:vectorizer_json])] }
+  # end
+
   def to_geojson
      { :type => "Feature", :properties => { :id => self[:id], :dn => self[:dn], :sheet_id => self[:sheet_id] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(self[:geometry]) } }
   end
@@ -76,10 +80,6 @@ class Polygon < ActiveRecord::Base
     return true
   end
 
-  def as_feature
-     { :type => "FeatureCollection", :features => [JSON.parse(self[:vectorizer_json])] }
-  end
-
   def address_as_feature(address)
     r = {}
     r[:type] = "Feature"
@@ -96,12 +96,12 @@ class Polygon < ActiveRecord::Base
 
     f = flags.where(:flag_type => "polygonfix")
     f.each do |flag|
-      features.push(flag.as_feature)
+      features.push(flag.to_geojson)
     end
 
     f = flags.where(:flag_type => "address")
     f.each do |flag|
-      features.push(flag.as_feature)
+      features.push(flag.to_geojson)
     end
 
     { :type => "FeatureCollection", :features => features }

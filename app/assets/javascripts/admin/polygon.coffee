@@ -34,7 +34,7 @@ class Polygon
   showPolygon: () =>
     data = $('#polydata').data("map")
 
-    return if !data or data.features.length==0
+    return if !data #or data.features.length==0
 
     m = @map
 
