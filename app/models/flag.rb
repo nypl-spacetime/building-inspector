@@ -125,8 +125,13 @@ class Flag < ActiveRecord::Base
             # NOTE: polygonfix flags are inserted with non-redundant first-last points
             # this has to be added for geojson validation
             geojson = JSON.parse(self[:flag_value])
-            geojson[0].push geojson[0][0]
-            r[:geometry] = { :type => "Polygon", :coordinates => geojson }
+            if geojson[0].length >= 4
+                type = "Polygon"
+                geojson[0].push geojson[0][0]
+            else
+                type = "LineString"
+            end
+            r[:geometry] = { :type => type, :coordinates => geojson }
         else
             r[:properties][:flag_value] = self[:flag_value]
             r[:geometry] = { :type => "Point", :coordinates => [self[:longitude].to_f, self[:latitude].to_f] }
