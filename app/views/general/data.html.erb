@@ -23,6 +23,7 @@
       <li><strong><%= link_to "Geometry", "#geometry" %></strong></li>
       <li><strong><%= link_to "Color", "#color" %></strong></li>
       <li><strong><%= link_to "Address", "#address" %></strong></li>
+      <li><strong><%= link_to "Sheets", "#sheets" %></strong></li>
     </ul>
 
     <h4><a name="basics"></a>Some basics</h4>
@@ -241,6 +242,266 @@
             [-73.99760349182097, 40.75699820213328],
             [-73.9976238409442, 40.75697150401845]
           ]
+        ]
+      }
+    }
+  ]
+}        </code>
+    </pre>
+
+    <h4><a name="sheets"></a>Sheets</h4>
+    <h5>GET /api/sheets/{id}/polygons</h5>
+    <p>Returns the list of raw (before any inspection) polygons for a sheet with ID <code>{id}</code>.</p>
+    <h6>Example response</h6>
+    <pre>
+        <code class="json">
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "consensus": null,
+        "id": 115093,
+        "dn": 136023,
+        "sheet_id": 219
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -74.0071522085753,
+              40.73576686668677
+            ],
+            [
+              -74.00717989858511,
+              40.73576686668677
+            ],
+            [
+              -74.00721451109736,
+              40.73589275539532
+            ],
+            [
+              -74.00714874732408,
+              40.7359006234317
+            ],
+            [
+              -74.00714182482163,
+              40.73589275539532
+            ],
+            [
+              -74.00711413481184,
+              40.73577473473803
+            ],
+            [
+              -74.0071522085753,
+              40.73576686668677
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "consensus": null,
+        "id": 115311,
+        "dn": 358460,
+        "sheet_id": 219
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -74.00545790306707,
+              40.73489464280556
+            ],
+            [
+              -74.00547602169983,
+              40.73489199081001
+            ],
+            [
+              -74.005498157153,
+              40.73498241159547
+            ],
+            [
+              -74.00543161226139,
+              40.73499218213892
+            ],
+            [
+              -74.00542825434526,
+              40.73498853932166
+            ],
+            [
+              -74.00540923016135,
+              40.73490270720948
+            ],
+            [
+              -74.00545790306707,
+              40.73489464280556
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "consensus": null,
+        "id": 115204,
+        "dn": 247288,
+        "sheet_id": 219
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -74.00629287248056,
+              40.7353050363298
+            ],
+            [
+              -74.00630477235585,
+              40.735308159882706
+            ],
+            [
+              -74.00630001240573,
+              40.735348766057236
+            ],
+            [
+              -74.00626074281725,
+              40.735347204281744
+            ],
+            [
+              -74.00620243342827,
+              40.735336271852326
+            ],
+            [
+              -74.006210763341,
+              40.735322215869004
+            ],
+            [
+              -74.00623694306664,
+              40.73531909231675
+            ],
+            [
+              -74.0062631227923,
+              40.73530347455329
+            ],
+            [
+              -74.00629287248056,
+              40.7353050363298
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}        </code>
+    </pre>
+
+
+    <h5>GET /api/sheets/{id}/history</h5>
+    <p>Returns the all the flags associated with a sheet with ID <code>{id}</code> and its child polygons sorted by creation date.</p>
+    <h6>Example response</h6>
+    <pre>
+        <code class="json">
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5460,
+        "flaggable_id": 115148,
+        "flaggable_type": "Polygon",
+        "session_id": "461a3dfcd472454b40cb2b4e4430c24e",
+        "flag_value": "yes"
+      },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5462,
+        "flaggable_id": 115650,
+        "flaggable_type": "Polygon",
+        "session_id": "461a3dfcd472454b40cb2b4e4430c24e",
+        "flag_value": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.009614466801,
+          40.733523404832
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5463,
+        "flaggable_id": 115496,
+        "flaggable_type": "Polygon",
+        "session_id": "461a3dfcd472454b40cb2b4e4430c24e",
+        "flag_value": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.00863681135,
+          40.734292826886
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5464,
+        "flaggable_id": 115379,
+        "flaggable_type": "Polygon",
+        "session_id": "461a3dfcd472454b40cb2b4e4430c24e",
+        "flag_value": "fix"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.005486621588,
+          40.734717823179
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5465,
+        "flaggable_id": 115614,
+        "flaggable_type": "Polygon",
+        "session_id": "461a3dfcd472454b40cb2b4e4430c24e",
+        "flag_value": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.006940377767,
+          40.733805605015
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1128326,
+        "flaggable_id": 219,
+        "flaggable_type": "Sheet",
+        "session_id": "33087b9380a0e7ff73b2ce0184006bf5",
+        "flag_value": "Smelter of Metals"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.009640812874,
+          40.735820214571
         ]
       }
     }

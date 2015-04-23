@@ -95,12 +95,15 @@ Webappmini::Application.routes.draw do
   post "fixer/delete", to: "fixer#delete_flags_for_session"
 
   # api endpoints
+  get "api", to: "general#data"
   get "api/polygons"
   get "api/polygons/:task", to: "api#polygons"
   get "api/polygons/:task/page/:page", to: "api#polygons"
   get "api/polygons/:task/:consensus", to: "api#polygons"
   get "api/polygons/:task/:consensus/page/:page", to: "api#polygons"
   get "api/polygons_for_ids", to: "api#polygons_for_ids"
+  get "api/sheet/:id/history", to: "api#sheet_history"
+  get "api/sheet/:id/polygons", to: "api#sheet_polygons"
   get "api/consolidated"
   get "api/consolidated/page/:page", to: "api#consolidated"
 
