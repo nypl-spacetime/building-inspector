@@ -82,8 +82,8 @@ class ApiController < ApplicationController
     end
 
 
-    # GET /api/sheet/:id/history
-    def sheet_history
+    # GET /api/sheets/:id/history
+    def sheets_history
         # get all flags for all polygons for a sheet
         # return them as geojson in chronological order
         begin
@@ -105,8 +105,8 @@ class ApiController < ApplicationController
         render json: output
     end
 
-    # GET /api/sheet/:id/polygons
-    def sheet_polygons
+    # GET /api/sheets/:id/polygons
+    def sheets_polygons
         begin
             sheet = Sheet.find params[:id]
         rescue

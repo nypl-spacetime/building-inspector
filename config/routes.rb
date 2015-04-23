@@ -102,8 +102,8 @@ Webappmini::Application.routes.draw do
   get "api/polygons/:task/:consensus", to: "api#polygons"
   get "api/polygons/:task/:consensus/page/:page", to: "api#polygons"
   get "api/polygons_for_ids", to: "api#polygons_for_ids"
-  get "api/sheets/:id/history", to: "api#sheet_history"
-  get "api/sheets/:id/polygons", to: "api#sheet_polygons"
+  get "api/sheets/:id/history", to: "api#sheets_history"
+  get "api/sheets/:id/polygons", to: "api#sheets_polygons"
   get "api/consolidated"
   get "api/consolidated/page/:page", to: "api#consolidated"
 
