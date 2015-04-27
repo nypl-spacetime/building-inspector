@@ -270,67 +270,24 @@ class FixerController < ApplicationController
     else
       all_flags = Flag.flags_for_sheet_for_session(params[:id],session, "color")
     end
-    pink_poly = []
-    blue_poly = []
-    yellow_poly = []
-    green_poly = []
-    gray_poly = []
+    poly = []
     all_flags.each do |flag|
-      geojson = flag.to_geojson
-      if flag[:flag_value]=="yellow"
-        yellow_poly.push( geojson )#{ :type => "Feature", :properties => { :flag_value => flag[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(flag[:geometry]) } })
-      elsif flag[:flag_value]=="pink"
-        pink_poly.push( geojson )#{ :type => "Feature", :properties => { :flag_value => flag[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(flag[:geometry]) } })
-      elsif flag[:flag_value]=="blue"
-        blue_poly.push( geojson )#{ :type => "Feature", :properties => { :flag_value => flag[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(flag[:geometry]) } })
-      elsif flag[:flag_value]=="green"
-        green_poly.push( geojson )#{ :type => "Feature", :properties => { :flag_value => flag[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(flag[:geometry]) } })
-      elsif flag[:flag_value]=="gray"
-        gray_poly.push( geojson )#{ :type => "Feature", :properties => { :flag_value => flag[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(flag[:geometry]) } })
-      end
+      poly.push( { :type => "Feature", :properties => { :flag_value => flag[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(flag[:geometry]) } } )
     end
-    @progress = {}
-    @progress[:yellow_poly] = { :type => "FeatureCollection", :features => yellow_poly }
-    @progress[:blue_poly] = { :type => "FeatureCollection", :features => blue_poly }
-    @progress[:pink_poly] = { :type => "FeatureCollection", :features => pink_poly }
-    @progress[:green_poly] = { :type => "FeatureCollection", :features => green_poly }
-    @progress[:gray_poly] = { :type => "FeatureCollection", :features => gray_poly }
+    @progress = { :type => "FeatureCollection", :features => poly }
     respond_with( @progress )
   end
 
   def progress_sheet_color
     all_polygons = Sheet.progress_for_task(params[:id], "color")
 
-    yellow_poly = []
-    pink_poly = []
-    blue_poly = []
-    green_poly = []
-    gray_poly = []
-    nil_poly = []
+    poly = []
 
     all_polygons.each do |p|
-      if p[:consensus]=="yellow"
-        yellow_poly.push(p.to_geojson)
-      elsif p[:consensus]=="pink"
-        pink_poly.push(p.to_geojson)
-      elsif p[:consensus]=="blue"
-        blue_poly.push(p.to_geojson)
-      elsif p[:flag_value]=="green"
-        green_poly.push(p.to_geojson)
-      elsif p[:flag_value]=="gray"
-        gray_poly.push(p.to_geojson)
-      else
-        nil_poly.push(p.to_geojson)
-      end
+      poly.push({ :type => "Feature", :properties => { :consensus => p[:consensus] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(p[:geometry]) } })
     end
 
-    @map = {}
-    @map[:yellow_poly] = { :type => "FeatureCollection", :features => yellow_poly }
-    @map[:blue_poly] = { :type => "FeatureCollection", :features => blue_poly }
-    @map[:pink_poly] = { :type => "FeatureCollection", :features => pink_poly }
-    @map[:green_poly] = { :type => "FeatureCollection", :features => green_poly }
-    @map[:gray_poly] = { :type => "FeatureCollection", :features => gray_poly }
-    @map[:nil_poly] = { :type => "FeatureCollection", :features => nil_poly }
+    @map = { :type => "FeatureCollection", :features => poly }
     respond_with( @map )
   end
 

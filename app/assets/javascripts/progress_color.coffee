@@ -16,7 +16,7 @@ class ColorProgress extends Progress
 
     # console.log data
 
-    return if data.nil_poly?.features.length==0 && data.green_poly.features.length==0 && data.yellow_poly.features.length==0 && data.pink_poly.features.length==0 && data.blue_poly.features.length==0 && data.gray_poly.features.length==0
+    return if data?.features.length==0
 
     m = p.sheet
 
@@ -28,67 +28,41 @@ class ColorProgress extends Progress
     green_color = '#37AD80'
     gray_color = '#303030'
     nil_color = '#908b85'
+    red_color = '#A31500'
 
-    blue_json = L.geoJson(data.blue_poly,
+    json = L.geoJson(data,
       style: (feature) ->
-        $.extend p.options.polygonStyle, {fillColor: blue_color}
+        $.extend p.options.polygonStyle, {
+          stroke: true
+          color: red_color
+          weight: 2
+          opacity: 1
+          fillColor: nil_color
+          fillOpacity:0.05
+          dashArray: [4,6]
+        }
       onEachFeature: (f, l) ->
-        p.highlights.push(l)
-    )
-    pink_json = L.geoJson(data.pink_poly,
-      style: (feature) ->
-        $.extend p.options.polygonStyle, {fillColor: pink_color}
-      onEachFeature: (f, l) ->
-        p.highlights.push(l)
-    )
-    yellow_json = L.geoJson(data.yellow_poly,
-      style: (feature) ->
-        $.extend p.options.polygonStyle, {fillColor: yellow_color}
-      onEachFeature: (f, l) ->
-        p.highlights.push(l)
-    )
-    green_json = L.geoJson(data.green_poly,
-      style: (feature) ->
-        $.extend p.options.polygonStyle, {fillColor: green_color}
-      onEachFeature: (f, l) ->
-        p.highlights.push(l)
-    )
-    gray_json = L.geoJson(data.gray_poly,
-      style: (feature) ->
-        $.extend p.options.polygonStyle, {fillColor: gray_color}
-      onEachFeature: (f, l) ->
-        p.highlights.push(l)
-    )
-    nil_json = L.geoJson(data.nil_poly,
-      style: (feature) ->
-        $.extend p.options.polygonStyle, {fillColor: nil_color}
+        if p.options.mode != "all"
+          p.highlights.push(l)
+          colors = f.properties.flag_value.split(",")
+          legends = ("<span class='color #{colorstr}'></span>" for colorstr in colors)
+        else
+          if f.properties.consensus != null
+            colors = f.properties.consensus.split(",")
+            legends = ("<span class='color #{colorstr}'></span>" for colorstr in colors)
+          else
+            legends = ["<span class='color nil'></span>"]
+        str = legends.join(" ")
+        l.bindPopup(str,
+          closeButton: false
+          className: 'popup-legend'
+        )
     )
 
     bounds = new L.LatLngBounds()
 
-    if data.blue_poly.features.length>0
-      blue_json.addTo(m)
-      bounds.extend(blue_json.getBounds())
-
-    if data.pink_poly.features.length>0
-      pink_json.addTo(m)
-      bounds.extend(pink_json.getBounds())
-
-    if data.yellow_poly.features.length>0
-      yellow_json.addTo(m)
-      bounds.extend(yellow_json.getBounds())
-
-    if data.green_poly?.features.length>0
-      green_json.addTo(m)
-      bounds.extend(green_json.getBounds())
-
-    if data.gray_poly?.features.length>0
-      gray_json.addTo(m)
-      bounds.extend(gray_json.getBounds())
-
-    if data.nil_poly?.features.length>0
-      nil_json.addTo(m)
-      bounds.extend(nil_json.getBounds())
+    json.addTo(m)
+    bounds.extend(json.getBounds())
 
     p.map.fitBounds(bounds)
 

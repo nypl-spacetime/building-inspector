@@ -63,46 +63,59 @@
     cursor: pointer;
   }
 
+}
+
+.color {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+
+  &.yes {
+    background: $yescolor;
+  }
+
+  &.no {
+    background: $nocolor;
+  }
+
+  &.fix {
+    background: $fixcolor;
+  }
+
+  &.nil {
+    background: $grayLight;
+  }
+
+  &.stroked {
+    border: 1px solid $grayLight;
+    background: $white;
+  }
+
+  &.pink {
+    background: $pink;
+  }
+
+  &.blue {
+    background: $blue;
+  }
+
+  &.yellow {
+    background: $yellow;
+  }
+
+  &.green {
+    background: $green;
+  }
+
+  &.gray {
+    background: $gray;
+  }
+}
+
+.popup-legend {
   .color {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-
-    &.yes {
-      background: $yescolor;
-    }
-
-    &.no {
-      background: $nocolor;
-    }
-
-    &.fix {
-      background: $fixcolor;
-    }
-
-    &.nil {
-      background: $grayLight;
-    }
-
-    &.pink {
-      background: $pink;
-    }
-
-    &.blue {
-      background: $blue;
-    }
-
-    &.yellow {
-      background: $yellow;
-    }
-
-    &.green {
-      background: $green;
-    }
-
-    &.gray {
-      background: $gray;
-    }
+    width: 40px;
+    height: 40px;
   }
 }
 

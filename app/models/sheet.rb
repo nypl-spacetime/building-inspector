@@ -65,12 +65,11 @@ class Sheet < ActiveRecord::Base
     sheet_id = Sheet.sanitize(sheet_id)
     type = Sheet.sanitize(type)
 
-    columns = "polygons.id, geometry, sheet_id, CP.consensus, dn, centroid_lat, centroid_lon"
+    columns = "DISTINCT polygons.id, geometry, sheet_id, CP.consensus, dn, centroid_lat, centroid_lon"
     join = "LEFT JOIN flags AS F ON polygons.id = F.flaggable_id LEFT JOIN consensuspolygons AS CP ON CP.polygon_id = polygons.id AND CP.task = #{type}"
     where = " sheet_id = #{sheet_id} "
 
-    poly = Polygon.select(columns).joins(join).where(where)
-
+    Polygon.select(columns).joins(join).where(where)
   end
 
   def self.random_unprocessed(type="geometry")
