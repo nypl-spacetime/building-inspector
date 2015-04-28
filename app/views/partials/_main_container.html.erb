@@ -1,7 +1,11 @@
 <% css_class = "" if local_assigns[:css_class].nil? %>
 <% legend = false if local_assigns[:legend].nil? %>
 <%= render :partial => "partials/loading" %>
+<div id="cookies">
+    <h3>Cookies required</h3>
+    <p>Cookies are required to use the Building Inspector (we need those to keep track of your score and make sure all polygons are treated fairly). Please activate cookies and try again.</p>
+</div>
 <div id="main-container" class="<%= css_class %>">
-  <%= render :partial => "partials/legend", :locals => {type: type, mode: mode} if legend %>
-  <%= render :partial => "partials/map" %>
+    <%= render :partial => "partials/legend", :locals => {type: type, mode: mode} if legend %>
+    <%= render :partial => "partials/map" %>
 </div>

@@ -1,6 +1,6 @@
 class FixerController < ApplicationController
 
-	before_filter :cookies_required, :except => :cookie_test
+	before_filter :cookies_required
 	respond_to :json
 
   # GEOMETRY

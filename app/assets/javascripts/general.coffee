@@ -1,10 +1,12 @@
 class General
 
   constructor: () ->
-    # // scroll to top (hide bar in ios)
     h = @
 
+    # // scroll to top (hide bar in ios)
     window.scrollTo(0, 1)
+
+    @checkCookie()
 
     $(window).on('resize', () ->
       h.trimTitle()
@@ -37,6 +39,9 @@ class General
       "#link-random-task"
     ]
     @mobileClick id for id in overrides
+
+  checkCookie: () ->
+    $("#cookies").remove() if Utils.readCookie("cookie_test") != null
 
   trimTitle: () ->
     if (window.innerWidth > 500)

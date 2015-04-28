@@ -163,6 +163,27 @@ a, a:link, a:visited, a:hover {
   }
 }
 
+#cookies {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  background: $blueDark;
+  color: $grayLightest;
+
+  h3 {
+    margin-top: 20%;
+  }
+
+  h3, p {
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 #intro {
   width: 100%;
   max-width: $desktopwidth;

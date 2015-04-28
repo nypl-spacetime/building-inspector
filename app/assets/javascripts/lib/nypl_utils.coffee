@@ -28,6 +28,19 @@ class root.Utils
 
     newInstance
 
+  @readCookie: (name) ->
+    # see: http://www.quirksmode.org/js/cookies.html
+    # and: https://gist.github.com/dmix/2222990
+    nameEQ = name + "="
+    ca = document.cookie.split(";")
+    i = 0
+    while i < ca.length
+      c = ca[i]
+      c = c.substring(1, c.length)  while c.charAt(0) is " "
+      return c.substring(nameEQ.length, c.length).replace(/"/g, '')  if c.indexOf(nameEQ) is 0
+      i++
+    null
+
   @addOverlay: (map, tileset, tiletype, zIndex = 2) ->
     overlay = @mapOverlay(tileset, tiletype, zIndex)
     overlay.addTo(map)

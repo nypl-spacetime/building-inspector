@@ -65,21 +65,7 @@ class ApplicationController < ActionController::Base
     cookies[:session]
   end
 
-  # checks for presence of "cookie_test" cookie
-  # (should have been set by cookies_required before_filter)
-  # if cookie is present, continue normal operation
-  # otherwise show cookie warning at "shared/cookies_required"
   public
-
-  def cookie_test
-    if cookies["cookie_test"].blank?
-      @current_page = "homepage"
-      logger.warn("=== cookies are disabled")
-      render :template => "shared/cookies_required"
-    else
-      redirect_to(session[:return_to] ? session[:return_to] : root_path)
-    end
-  end
 
   def check_for_user_session(session)
     if session
@@ -91,15 +77,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
-protected
+  protected
 
-  # checks for presence of "cookie_test" cookie.
+  # checks for presence of :cookie_test cookie.
   # If not present, redirects to cookies_test action
   def cookies_required
-    return true unless cookies["cookie_test"].blank?
-    cookies["cookie_test"] = Time.now
-    session[:return_to] = request.original_url
-    redirect_to(cookie_test_path)
+    return true unless cookies[:cookie_test].blank?
+    cookies[:cookie_test] = Time.now
   end
 
 end
