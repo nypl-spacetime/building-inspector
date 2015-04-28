@@ -17,10 +17,6 @@ class Sheet < ActiveRecord::Base
     [[[west,south],[west,north],[east,north],[east,south],[west,south]]]
   end
 
-  def polygons_for_task(session_id = nil, type="geometry")
-    Sheet.polygons_for_task(self[:id], session_id, type)
-  end
-
   def self.polygons_for_task(sheet_id, session_id = nil, type="geometry")
     return [] if type == "toponym"
     # only the necessary data of a sheet's polygons

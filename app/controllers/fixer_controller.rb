@@ -230,11 +230,13 @@ class FixerController < ApplicationController
       all_flags = Flag.flags_for_sheet_for_session(params[:id],session, "polygonfix")
     end
     poly = []
+    fixes = []
     all_flags.each do |flag|
-      poly.push( flag.to_geojson ) #{ :type => "Feature", :properties => { :flag_value => p[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse((p[:flag_value]!="NOFIX" ? p[:flag_value] : p[:geometry])) } })
+      poly.push( flag.to_geojson ) #flag[:flag_value]!="NOFIX" ? flag.to_geojson : { :type => "Feature", :properties => { :flag_value => flag[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(flag[:geometry]) } } )
     end
     @progress = {}
     @progress[:poly] = { :type => "FeatureCollection", :features => poly }
+    @progress[:fixes] = { :type => "FeatureCollection", :features => fixes }
     respond_with( @progress )
   end
 
@@ -325,14 +327,20 @@ class FixerController < ApplicationController
     progress[:counts] = Polygon.grouped_by_sheet(layer_id) unless mode == "user"
     if user_signed_in?
       if mode != "all"
-        progress[:counts] = Flag.grouped_flags_for_user(current_user.id, layer_id, task) if task == "toponym"
-        progress[:counts] = Flag.grouped_flags_for_user(current_user.id, layer_id, task) if task != "toponym"
+        if task == "toponym"
+          progress[:counts] = Flag.grouped_flags_for_user(current_user.id, layer_id, task)
+        else
+          progress[:counts] = Flag.grouped_flags_for_user(current_user.id, layer_id, task)
+        end
       end
       progress[:all_polygons_session] = Flag.flags_for_user(current_user.id, task)
     else
       if mode != "all"
-        progress[:counts] = Flag.grouped_flags_for_session(session, layer_id, task) if task == "toponym"
-        progress[:counts] = Flag.grouped_flags_for_session(session, layer_id, task) if task != "toponym"
+        if task == "toponym"
+          progress[:counts] = Flag.grouped_flags_for_session(session, layer_id, task)
+        else
+          progress[:counts] = Flag.grouped_flags_for_session(session, layer_id, task)
+        end
       end
       progress[:all_polygons_session] = Flag.flags_for_session(session, task)
     end
@@ -370,7 +378,7 @@ class FixerController < ApplicationController
     end
 
     map[:tileset] = map[:map].layer
-		map[:poly] = map[:map].polygons_for_task(session, type)
+		map[:poly] = Sheet.polygons_for_task(map[:map][:id], session, type)
 		map[:status][:map_polygons] = map[:map].polygons.count
 		map[:status][:map_polygons_session] = map[:poly].count
 		map[:status][:all_sheets] = Sheet.count

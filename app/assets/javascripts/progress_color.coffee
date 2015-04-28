@@ -22,11 +22,11 @@ class ColorProgress extends Progress
 
     p.highlights = []
 
-    pink_color = '#F1B6BB'
-    blue_color = '#00747A'
-    yellow_color = '#FF9D00'
-    green_color = '#37AD80'
-    gray_color = '#303030'
+    # pink_color = '#F1B6BB'
+    # blue_color = '#00747A'
+    # yellow_color = '#FF9D00'
+    # green_color = '#37AD80'
+    # gray_color = '#303030'
     nil_color = '#908b85'
     red_color = '#A31500'
 
