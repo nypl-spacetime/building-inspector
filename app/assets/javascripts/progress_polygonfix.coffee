@@ -23,11 +23,29 @@ class PolygonfixProgress extends Progress
     json = L.geoJson(data.poly,
       style: (feature) ->
         p.options.polygonStyle
+        $.extend {}, p.options.polygonStyle, {
+          fillOpacity: 0
+          stroke: true
+          weight: 3
+          dashArray: [1,8]
+          lineCap: 'round'
+          color: '#fff'
+          opacity: 1
+        }
+    )
+
+    json_fix = L.geoJson(data.fixes,
+      style: (feature) ->
+        p.options.polygonStyle
       onEachFeature: (f, l) ->
         p.highlights.push(l)
     )
 
     bounds = new L.LatLngBounds()
+
+    if data.fixes.features.length>0
+      json_fix.addTo(m)
+      bounds.extend(json_fix.getBounds())
 
     if data.poly.features.length>0
       json.addTo(m)

@@ -232,7 +232,8 @@ class FixerController < ApplicationController
     poly = []
     fixes = []
     all_flags.each do |flag|
-      poly.push( flag.to_geojson ) #flag[:flag_value]!="NOFIX" ? flag.to_geojson : { :type => "Feature", :properties => { :flag_value => flag[:flag_value] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(flag[:geometry]) } } )
+      poly.push( flag.flaggable.to_geojson )
+      fixes.push( flag.to_geojson )
     end
     @progress = {}
     @progress[:poly] = { :type => "FeatureCollection", :features => poly }

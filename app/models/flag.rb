@@ -10,18 +10,18 @@ class Flag < ActiveRecord::Base
     def self.flags_for_sheet_for_session(sheet_id, session_id, type = "geometry")
         # just need the count
         if type != "toponym"
-            Flag.select('DISTINCT flags.flaggable_id, flags.id, flags.flag_type, flags.flaggable_type, flags.latitude, flags.longitude, flags.flag_value, polygons.geometry, polygons.sheet_id, polygons.dn').joins("INNER JOIN polygons ON polygons.id = flags.flaggable_id INNER JOIN sheets ON sheets.id = polygons.sheet_id").where('sheets.id = ? AND flags.session_id = ? AND flags.flag_type = ?', sheet_id, session_id, type)
+            Flag.select('DISTINCT flags.flaggable_id, flags.id, flags.session_id, flags.flag_type, flags.flaggable_type, flags.latitude, flags.longitude, flags.flag_value, polygons.geometry, polygons.sheet_id, polygons.dn').joins("INNER JOIN polygons ON polygons.id = flags.flaggable_id INNER JOIN sheets ON sheets.id = polygons.sheet_id").where('sheets.id = ? AND flags.session_id = ? AND flags.flag_type = ?', sheet_id, session_id, type)
         else
-            Flag.select('DISTINCT flags.flaggable_id, flags.id, flags.flag_type, flags.flaggable_type, flags.latitude, flags.longitude, flags.flag_value').joins("INNER JOIN sheets ON sheets.id = flags.flaggable_id").where('sheets.id = ? AND flags.session_id = ? AND flags.flag_type = ?', sheet_id, session_id, type)
+            Flag.select('DISTINCT flags.flaggable_id, flags.id, flags.session_id, flags.flag_type, flags.flaggable_type, flags.latitude, flags.longitude, flags.flag_value').joins("INNER JOIN sheets ON sheets.id = flags.flaggable_id").where('sheets.id = ? AND flags.session_id = ? AND flags.flag_type = ?', sheet_id, session_id, type)
         end
     end
 
     def self.flags_for_sheet_for_user(sheet_id, user_id, type = "geometry")
         # just need the count
         if type != "toponym"
-            Flag.select('DISTINCT flags.flaggable_id, flags.id, flags.flag_type, flags.flaggable_type, flags.latitude, flags.longitude, flags.flag_value, polygons.geometry, polygons.sheet_id, polygons.dn').joins("INNER JOIN polygons ON polygons.id = flags.flaggable_id INNER JOIN sheets ON sheets.id = polygons.sheet_id").joins(:usersession).where('sheets.id = ? AND usersessions.user_id = ? AND flags.flag_type = ?', sheet_id, user_id, type)
+            Flag.select('DISTINCT flags.flaggable_id, flags.id, flags.session_id, flags.flag_type, flags.flaggable_type, flags.latitude, flags.longitude, flags.flag_value, polygons.geometry, polygons.sheet_id, polygons.dn').joins("INNER JOIN polygons ON polygons.id = flags.flaggable_id INNER JOIN sheets ON sheets.id = polygons.sheet_id").joins(:usersession).where('sheets.id = ? AND usersessions.user_id = ? AND flags.flag_type = ?', sheet_id, user_id, type)
         else
-            Flag.select('DISTINCT flags.flaggable_id, flags.id, flags.flag_type, flags.flaggable_type, flags.latitude, flags.longitude, flags.flag_value').joins("INNER JOIN sheets ON sheets.id = flags.flaggable_id").joins(:usersession).where('sheets.id = ? AND usersessions.user_id = ? AND flags.flag_type = ?', sheet_id, user_id, type)
+            Flag.select('DISTINCT flags.flaggable_id, flags.id, flags.session_id, flags.flag_type, flags.flaggable_type, flags.latitude, flags.longitude, flags.flag_value').joins("INNER JOIN sheets ON sheets.id = flags.flaggable_id").joins(:usersession).where('sheets.id = ? AND usersessions.user_id = ? AND flags.flag_type = ?', sheet_id, user_id, type)
         end
     end
 
