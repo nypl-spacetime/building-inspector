@@ -1,4 +1,4 @@
-# NYPL Labs Map Building Inspector
+# NYPL Labs Building Inspector
 
 > This is the code repository for the [Building Inspector](http://buildinginspector.nypl.org). More information in the [About page](http://buildinginspector.nypl.org/about).
 
