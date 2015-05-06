@@ -20,10 +20,22 @@
     <h5><a name="contents"></a>Contents</h5>
     <ul id="toc">
       <li><strong><%= link_to "Basics", "#basics" %></strong></li>
-      <li><strong><%= link_to "Geometry", "#geometry" %></strong></li>
-      <li><strong><%= link_to "Color", "#color" %></strong></li>
-      <li><strong><%= link_to "Address", "#address" %></strong></li>
-      <li><strong><%= link_to "Sheets", "#sheets" %></strong></li>
+      <li>
+        <strong><%= link_to "Polygons", "#polygons" %></strong>
+        <ul>
+          <li><strong><%= link_to "Geometry", "#geometry" %></strong></li>
+          <li><strong><%= link_to "Color", "#color" %></strong></li>
+          <li><strong><%= link_to "Address", "#address" %></strong></li>
+        </ul>
+      </li>
+      <li>
+        <strong><%= link_to "Sheets", "#sheets" %></strong>
+        <ul>
+          <li><strong><%= link_to "List", "#sheetslist" %></strong></li>
+          <li><strong><%= link_to "Polygons", "#sheetspoly" %></strong></li>
+          <li><strong><%= link_to "History", "#sheetshistory" %></strong></li>
+        </ul>
+      </li>
     </ul>
 
     <h4><a name="basics"></a>Some basics</h4>
@@ -53,6 +65,8 @@
     <p><strong>Note:</strong> Not all tasks and consensus types have been implemented. If you <em>definitely have to have</em> those polygons (and we can't blame you) contact us at <%= link_to "our Twitter account", "http://www.twitter.com/nypl_labs" %> and we'll hook you up.
     <h5>Pagination</h5>
     <p>All results are paginated by <strong>batches of 500 results</strong> (you can always get fewer). You can append <code>/page/:page</code> to any endpoint to request the specific page. If you do not request a specific page, the first one will be returned. If you attempt to access a page beyond the last page you'll be returned an empty GeoJSON result.</p>
+    <h3><a name="polygons"></a>Polygons</h3>
+    <p>This section covers endpoints for building footprints (polygons).</p>
     <h4><a name="geometry"></a>Geometry</h4>
     <h5>GET /api/polygons/geometry/{value}</h5>
     <p>Returns the list of polygons that have a consensus of <code>{value}</code> (yes, no, fix). If no value is provided, <em>all</em> polygons will be returned regardless of their consensus.</p>
@@ -249,8 +263,10 @@
 }        </code>
     </pre>
 
-    <h4><a name="sheets"></a>Sheets</h4>
+    <h3><a name="sheets"></a>Sheets</h3>
+    <p>This section covers endpoints for data related to sheets.</p>
 
+    <h4><a name="sheetslist"></a>List</h4>
     <h5>GET /api/sheets</h5>
     <p>Returns the list of sheets with their bounding box as a polygon.</p>
     <h6>Example response</h6>
@@ -312,6 +328,7 @@
     </pre>
 
 
+    <h4><a name="sheetspoly"></a>Polygons</h4>
     <h5>GET /api/sheets/{id}/polygons</h5>
     <p>Returns the list of raw (before any inspection) polygons for a sheet with ID <code>{id}</code>.</p>
     <h6>Example response</h6>
@@ -396,6 +413,7 @@
     </pre>
 
 
+    <h4><a name="sheetshistory"></a>History</h4>
     <h5>GET /api/sheets/{id}/history</h5>
     <p>Returns the all the flags associated with a sheet with ID <code>{id}</code> and its child polygons sorted by creation date.</p>
     <h6>Example response</h6>

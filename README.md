@@ -1,6 +1,8 @@
-## NYPL Labs Map Polygon fixer
+# NYPL Labs Map Building Inspector
 
-Authors: [Mauricio Giraldo Arteaga] / NYPL Labs
+> This is the code repository for the [Building Inspector](http://buildinginspector.nypl.org). More information in the [About page](http://buildinginspector.nypl.org/about).
+
+By: [Mauricio Giraldo Arteaga] / [NYPL Labs]
 
 - [Data ingest](#ingest)
 - [Consensus generation](#consensus)
@@ -99,25 +101,7 @@ This task should be scheduled to execute regularly (say, every ten minutes). New
 
 ### <a name="api"></a>API querying
 
-The following API endpoints have been added to export the inspection consensus process (paginated by groups of 500). Consensus is defined by **agreement of 75% or more of three or more votes**:
-
-#### Polygon export → /api/polygons/…
-
-Active endpoints:
-````
-/api/polygons/:task/page/:page
-/api/polygons/:task/:consensus/page/:page
-````
-
-Accept tasks:
-`geometry`, `color`, `polygonfix`, `address` with numeric paging (500 records per page).
-
-`consensus` values depend on the task and perhaps only useful in the `geometry` and `color` tasks.
-
-- `/api/polygons/geometry/page/PAGENUMBER` returns all polygons in `PAGENUMBER` regardless of their consensus value.
-- `/api/polygons/geometry/yes/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that have been marked as *correct*.
-- `/api/polygons/geometry/no/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that have been marked as *not buildings*.
-- `/api/polygons/geometry/fix/page/PAGENUMBER` returns all polygons in `PAGENUMBER` that need to be *fixed*.
+See a complete description in the [Data page](http://buildinginspector.nypl.org/data).
 
 ### <a name="tasks"></a>Adding new tasks
 
@@ -147,3 +131,4 @@ limitations under the License.
 
 [Mauricio Giraldo Arteaga]: https://twitter.com/mgiraldo
 [NYPL Map Vectorizer]: https://github.com/NYPL/map-vectorizer
+[NYPL Labs]: http://labs.nypl.org
