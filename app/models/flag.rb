@@ -77,13 +77,21 @@ class Flag < ActiveRecord::Base
         end
     end
 
-    def self.flags_for_sheet_for_task_and_threshold(sheet_id, type = "polygonfix", threshold = 3)
-        sql = Flag.send(:sanitize_sql_array,["SELECT f.flaggable_id, f.flaggable_type, f.id, f.flag_value FROM flags f INNER JOIN ( SELECT _f.flaggable_id pid, COUNT(*) qty FROM flags _f INNER JOIN polygons _p ON _p.id = _f.flaggable_id AND _f.flag_type =  ? WHERE _p.sheet_id = ? GROUP BY pid HAVING COUNT(*) >= ? ) j1 ON j1.pid = f.flaggable_id WHERE f.flag_type =  ? ORDER BY f.flaggable_id", type, sheet_id, threshold, type])
+    def self.flags_for_sheet_for_task_and_threshold(sheet_id, task = "polygonfix", threshold = 3, type = "Polygon")
+        if type == "Polygon"
+            sql = Flag.send(:sanitize_sql_array,["SELECT f.flaggable_id, f.flaggable_type, f.id, f.flag_value FROM flags f INNER JOIN ( SELECT _f.flaggable_id pid, COUNT(*) qty FROM flags _f INNER JOIN polygons _p ON _p.id = _f.flaggable_id AND _f.flag_type =  ? WHERE _p.sheet_id = ? GROUP BY pid HAVING COUNT(*) >= ? ) j1 ON j1.pid = f.flaggable_id WHERE f.flag_type =  ? AND f.flaggable_type = ? ORDER BY f.flaggable_id", task, sheet_id, threshold, task, type])
+        else
+            sql = Flag.send(:sanitize_sql_array,["SELECT f.flaggable_id, f.flaggable_type, f.id, f.flag_value FROM flags f INNER JOIN ( SELECT _f.flaggable_id sid, COUNT(*) qty FROM flags _f INNER JOIN sheets _s ON _s.id = _f.flaggable_id AND _f.flag_type =  ? WHERE _s.id = ? GROUP BY sid HAVING COUNT(*) >= ? ) j1 ON j1.sid = f.flaggable_id WHERE f.flag_type =  ? AND f.flaggable_type = ? ORDER BY f.flaggable_id", task, sheet_id, threshold, task, type])
+        end
         Flag.connection.execute(sql)
     end
 
-    def self.flags_for_sheet_for_task(sheet_id, type = "address")
-        Flag.joins("INNER JOIN polygons ON polygons.id = flags.flaggable_id").where("sheet_id = ? AND flag_type = ? AND latitude IS NOT NULL AND longitude IS NOT NULL", sheet_id, type)
+    def self.flags_for_sheet_for_task(sheet_id, task = "address", type = "Polygon")
+        if type == "Polygon"
+            Flag.joins("INNER JOIN polygons ON polygons.id = flags.flaggable_id").where("sheet_id = ? AND flag_type = ? AND latitude IS NOT NULL AND longitude IS NOT NULL AND flaggable_type = ?", sheet_id, task, type)
+        else
+            Flag.joins("INNER JOIN sheets ON sheets.id = flags.flaggable_id").where("sheets.id = ? AND flag_type = ? AND latitude IS NOT NULL AND longitude IS NOT NULL AND flaggable_type = ?", sheet_id, task, type)
+        end
     end
 
     def self.flags_by_id_for_session(ids, session_id)

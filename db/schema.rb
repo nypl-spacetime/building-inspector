@@ -11,18 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150421151000) do
+ActiveRecord::Schema.define(:version => 20150506213411) do
 
   create_table "consensuspolygons", :force => true do |t|
     t.string   "task"
-    t.integer  "polygon_id"
+    t.integer  "flaggable_id"
     t.text     "consensus"
     t.integer  "override_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+    t.string   "flaggable_type", :default => "Polygon"
   end
 
-  add_index "consensuspolygons", ["polygon_id", "task"], :name => "index_task_consensus_on_polygon_id", :unique => true
+  add_index "consensuspolygons", ["flaggable_id", "task"], :name => "index_task_consensus_on_polygon_id", :unique => true
   add_index "consensuspolygons", ["task"], :name => "index_task"
 
   create_table "flags", :force => true do |t|
@@ -55,7 +56,6 @@ ActiveRecord::Schema.define(:version => 20150421151000) do
 
   create_table "polygons", :force => true do |t|
     t.text     "geometry"
-    t.string   "status"
     t.text     "vectorizer_json"
     t.integer  "sheet_id"
     t.string   "color"
@@ -68,7 +68,6 @@ ActiveRecord::Schema.define(:version => 20150421151000) do
   end
 
   create_table "sheets", :force => true do |t|
-    t.string   "status"
     t.string   "bbox"
     t.string   "map_id"
     t.datetime "created_at", :null => false

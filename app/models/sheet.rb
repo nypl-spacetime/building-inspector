@@ -1,8 +1,9 @@
 class Sheet < ActiveRecord::Base
   has_many :polygons, :dependent => :destroy
-  has_many :flags, as: :flaggable
+  has_many :flags, as: :flaggable, :dependent => :destroy
+  has_many :consensuspolygons, as: :flaggable, :dependent => :destroy
   belongs_to :layer
-  attr_accessible :bbox, :map_id, :map_url, :status, :layer_id
+  attr_accessible :bbox, :map_id, :map_url, :layer_id
 
   def to_geojson
     { :type => "Feature", :properties => self, :geometry => { :type => "Polygon", :coordinates => bbox_to_poly } }
@@ -45,13 +46,13 @@ class Sheet < ActiveRecord::Base
 
     case type
     when "geometry"
-      join += "LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.polygon_id AND CP.task = "+ Sheet.sanitize(type)
+      join += "LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = "+ Sheet.sanitize(type)
     when "address", "color"
-      join += "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.polygon_id AND CPG.task = 'geometry' AND CPG.consensus = 'yes' LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.polygon_id AND CP.task = " + Sheet.sanitize(type)
+      join += "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.flaggable_id AND CPG.flaggable_type = 'Polygon' AND CPG.task = 'geometry' AND CPG.consensus = 'yes' LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = " + Sheet.sanitize(type)
     when "polygonfix"
-      join += "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.polygon_id AND CPG.task = 'geometry' AND CPG.consensus = 'fix' LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.polygon_id AND CP.task = " + Sheet.sanitize(type)
+      join += "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.flaggable_id AND CPG.flaggable_type = 'Polygon' AND CPG.task = 'geometry' AND CPG.consensus = 'fix' LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = " + Sheet.sanitize(type)
     else
-      join += "LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.polygon_id AND CP.task = "+ Sheet.sanitize(type)
+      join += "LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = "+ Sheet.sanitize(type)
     end
 
     Polygon.select("polygons.id, polygons.color, polygons.geometry, polygons.sheet_id, polygons.status, polygons.dn, CP.consensus").joins(join).where(where)
@@ -62,7 +63,7 @@ class Sheet < ActiveRecord::Base
     type = Sheet.sanitize(type)
 
     columns = "DISTINCT polygons.id, geometry, sheet_id, CP.consensus, dn, centroid_lat, centroid_lon"
-    join = "LEFT JOIN flags AS F ON polygons.id = F.flaggable_id LEFT JOIN consensuspolygons AS CP ON CP.polygon_id = polygons.id AND CP.task = #{type}"
+    join = "LEFT JOIN flags AS F ON polygons.id = F.flaggable_id LEFT JOIN consensuspolygons AS CP ON CP.flaggable_id = polygons.id AND CP.flaggable_type = 'Polygon' AND CP.task = #{type}"
     where = " sheet_id = #{sheet_id} "
 
     Polygon.select(columns).joins(join).where(where)
@@ -76,15 +77,15 @@ class Sheet < ActiveRecord::Base
       join = " "
     when "address", "color"
       # sheet has not been totally processed for addresses, colors
-      join = "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.polygon_id AND CPG.task = 'geometry' AND CPG.consensus = 'yes'"
+      join = "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.flaggable_id AND CPG.flaggable_type = 'Polygon' AND CPG.task = 'geometry' AND CPG.consensus = 'yes'"
     when "polygonfix"
       # sheet has not been totally processed for geometry
-      join = "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.polygon_id AND CPG.task = 'geometry' AND CPG.consensus = 'fix'"
+      join = "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.flaggable_id AND CPG.flaggable_type = 'Polygon' AND CPG.task = 'geometry' AND CPG.consensus = 'fix'"
     else
       # any sheet without consensus
       join = " "
     end
-    join += " LEFT JOIN consensuspolygons AS CP ON CP.polygon_id = polygons.id AND CP.task = " + Sheet.sanitize(type)
+    join += " LEFT JOIN consensuspolygons AS CP ON CP.flaggable_id = polygons.id AND CP.flaggable_type = 'Polygon' AND CP.task = " + Sheet.sanitize(type)
     bunch = Polygon.select(:sheet_id).joins(join).where("CP.id IS NULL").uniq.limit(200)
 
     return nil unless bunch.count > 0
@@ -94,7 +95,7 @@ class Sheet < ActiveRecord::Base
   end
 
   def flags
-    Flag.find_all_by_polygon_id(self.polygons, :order => :created_at)
+    Flag.find_all_by_flaggable_id_and_flaggable_type(self.polygons, 'Polygon', :order => :created_at)
   end
 
   def self.process_consensus_clusters_for_task(task)
@@ -106,6 +107,8 @@ class Sheet < ActiveRecord::Base
         s.calculate_address_consensus
       elsif task == "polygonfix"
         s.calculate_polygonfix_consensus
+      elsif task == "toponym"
+        s.calculate_toponym_consensus
       end
       progress = progress + 1
       puts "processed #{progress} of #{total}"
@@ -115,11 +118,25 @@ class Sheet < ActiveRecord::Base
   def calculate_address_consensus
     puts "Processing ADDRESS consensus for sheet #{self[:id]}"
     flags = Flag.flags_for_sheet_for_task(self[:id], "address")
-    address_consensus = ConsensusUtils.calculate_address_consensus(flags)
-    puts "Found #{address_consensus.count} consensus for task address"
-    address_consensus.each_pair do |elem,c|
+    consensus = ConsensusUtils.calculate_address_consensus(flags)
+    puts "Found #{consensus.count} consensus for task address"
+    consensus.each_pair do |elem,c|
       polygon_id = elem
-      cp = Consensuspolygon.find_or_initialize_by_polygon_id_and_task(:polygon_id => polygon_id, :task => 'address')
+      cp = Consensuspolygon.find_or_initialize_by_flaggable_id_and_flaggable_type_and_task(:flaggable_id => polygon_id, :flaggable_type => "Polygon", :task => 'address')
+      cp[:consensus] = c.to_json
+      if !cp.save
+        puts "===============  Could not save address consensus with params: #{self}"
+      end
+    end
+  end
+
+  def calculate_toponym_consensus
+    puts "Processing TOPONYM consensus for sheet #{id}"
+    flags = Flag.flags_for_sheet_for_task(id, "toponym", "Sheet")
+    consensus = ConsensusUtils.calculate_toponym_consensus(flags)
+    puts "Found #{consensus.count} consensus for task toponym"
+    consensus.each_pair do |elem,c|
+      cp = Consensuspolygon.find_or_initialize_by_flaggable_id_and_flaggable_type_and_task(:flaggable_id => id, :flaggable_type => "Sheet", :task => 'toponym')
       cp[:consensus] = c.to_json
       if !cp.save
         # puts "===============  Could not save address consensus with params: #{self}"

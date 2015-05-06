@@ -1,8 +1,8 @@
 class Polygon < ActiveRecord::Base
   has_many :flags, as: :flaggable
-  has_many :consensuspolygons, :dependent => :destroy
+  has_many :consensuspolygons, as: :flaggable, :dependent => :destroy
   belongs_to :sheet
-  attr_accessible :color, :geometry, :sheet_id, :status, :vectorizer_json, :dn, :centroid_lat, :centroid_lon, :flag_count
+  attr_accessible :color, :geometry, :sheet_id, :vectorizer_json, :dn, :centroid_lat, :centroid_lon, :flag_count
 
   def self.grouped_by_sheet(layer_id)
     # returns polygon counts grouped by sheet for a given layer (used in the progress maps)
@@ -14,15 +14,15 @@ class Polygon < ActiveRecord::Base
   # end
 
   def to_geojson
-     { :type => "Feature", :properties => { :id => self[:id], :dn => self[:dn], :sheet_id => self[:sheet_id] }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(self[:geometry]) } }
+     { :type => "Feature", :properties => { :id => id, :dn => dn, :sheet_id => sheet_id }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(geometry) } }
   end
 
   def to_point_geojson
-     { :type => "Feature", :properties => { :id => self[:id], :dn => self[:dn], :sheet_id => self[:sheet_id] }, :geometry => { :type => "Point", :coordinates => [self[:centroid_lon], self[:centroid_lat]] } }
+     { :type => "Feature", :properties => { :id => id, :dn => dn, :sheet_id => sheet_id }, :geometry => { :type => "Point", :coordinates => [centroid_lon, centroid_lat] } }
   end
 
   def poly_consensus(task)
-    c = Consensuspolygon.where({:polygon_id => self.id, :task => task})
+    c = Consensuspolygon.where({:flaggable_id => id, :flaggable_type => "Polygon", :task => task})
     if c.count > 0
       c[0][:consensus]
     else
@@ -70,7 +70,7 @@ class Polygon < ActiveRecord::Base
     return if consensus == nil || consensus.count == 0 # if not a polygon
     # puts "found consensus for polygon: #{id}"
     # save it
-    cp = Consensuspolygon.find_or_initialize_by_polygon_id_and_task(:polygon_id => id, :task => 'polygonfix')
+    cp = Consensuspolygon.find_or_initialize_by_flaggable_id_and_flaggable_type_and_task(:flaggable_id => id, :flaggable_type => "Polygon", :task => 'polygonfix')
     geojson = ConsensusUtils.consensus_to_geojson(consensus, id)
     cp[:consensus] = geojson
     if !cp.save

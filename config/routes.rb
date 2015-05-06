@@ -29,7 +29,6 @@ Webappmini::Application.routes.draw do
 
   # admin specials
   get "polygon_consensus", to: "polygons#consensus"
-  get "flag_progress", to: "flags#progress"
 
   # general content stuff
   get "general/about"

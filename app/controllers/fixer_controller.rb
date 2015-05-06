@@ -460,13 +460,8 @@ class FixerController < ApplicationController
     flags = Flag.flags_by_id_for_session(flag_ids, session)
 
     flags.each do |f|
-      if f[:flaggable_type] == "Polygon"
-        # remove consensus for that polygon task
-        # TODO: consensus is still poly-based so change this in the future to support sheet/any
-        Consensuspolygon.remove_from_flaggable_id_and_type(f[:polygon_id], "Polygon", f[:flag_type])
-      elsif f[:flaggable_type] == "Sheet"
-        # TODO: consensus is still poly-based so change this in the future to support sheet/any
-      end
+      # TODO: rename Consensuspolygon to Consensusflaggable
+      Consensuspolygon.remove_from_flaggable_id_and_type(f[:flaggable_id], f[:flaggable_type], f[:flag_type])
       f.destroy
     end
 

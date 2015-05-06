@@ -17,19 +17,6 @@ class FlagsController < ApplicationController
     end
   end
 
-  def progress
-    @counts = Flag.select(:polygon_id).uniq.group(:flag_type).count
-
-    @total_polygons = Polygon.all.count
-    @total_fix = Consensuspolygon.where(:consensus => 'fix').count
-    @total_yes = Consensuspolygon.where(:consensus => 'yes').count
-
-    respond_to do |format|
-      format.html # consensus.html.erb
-      format.json { render json: @flags }
-    end
-  end
-
   # GET /flags/all
   # GET /flags/all.json
   def all

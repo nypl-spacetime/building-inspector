@@ -193,13 +193,24 @@ class ConsensusUtils
 
   # ADDRESS CONSENSUS
   def self.calculate_address_consensus(flags)
+    calculate_point_consensus(flags, 1.425e-05, 2)
+  end
+
+  # ADDRESS CONSENSUS
+  def self.calculate_toponym_consensus(flags)
+    calculate_point_consensus(flags, 1.425e-05, 2)
+  end
+
+  # GENERIC POINT CONSENSUS
+  def self.calculate_point_consensus(flags, epsilon, min_points)
     # flags are an activerecord list of 'address' type flags for a given sheet
     # cluster them flags
-    clusters = cluster_addresses(flags)
+    simple_array = flags.map { |a| [a["longitude"].to_f, a["latitude"].to_f] }
+    clusters = apply_dbscan(simple_array, epsilon, min_points)
     consensus_list = []
     clusters.each do |c|
       next if c[0] == -1
-      consensus = address_cluster_consensus(c[1], flags)
+      consensus = points_cluster_consensus(c[1], flags)
       consensus_list.push(consensus) if consensus != nil
     end
     # group by flaggable_id
@@ -212,17 +223,11 @@ class ConsensusUtils
     return grouped_list
   end
 
-  def self.cluster_addresses(addresses, epsilon=1.425e-05, min_points=2)
-    simple_array = addresses.map { |a| [a["longitude"].to_f, a["latitude"].to_f] }
-    dbscan = DBSCAN( simple_array, :epsilon => epsilon, :min_points => min_points, :distance => :euclidean_distance )
-    return dbscan.results.select{|k,v| k != -1} # omit the non-cluster
-  end
-
-  def self.address_cluster_consensus(cluster, flags, min_count = 3, threshold = 0.75)
+  def self.points_cluster_consensus(cluster, flags, min_count = 3, threshold = 0.75)
     return nil if cluster.count < min_count
-    flags = get_address_flags_for_cluster(cluster, flags)
+    flags = get_flags_for_cluster(cluster, flags)
     total_votes = 0
-    address_tally = {} # saves the address popularity
+    flag_tally = {} # saves the address popularity
     id_tally = {} # saves the flaggable_id popularity
     session_ids = []
     flags.each do |vote|
@@ -236,29 +241,29 @@ class ConsensusUtils
       end
       session_ids.push(sid)
       # now tally values
-      if address_tally[value] == nil
-        address_tally[value] = 0
+      if flag_tally[value] == nil
+        flag_tally[value] = 0
       end
       if id_tally[id] == nil
         id_tally[id] = 0
       end
-      address_tally[value] = address_tally[value] + 1
+      flag_tally[value] = flag_tally[value] + 1
       id_tally[id] = id_tally[id] + 1
       total_votes = total_votes + 1
     end
     # in case there was trolling
     return if total_votes < min_count
     # sort tally by value
-    address_tally_sorted = address_tally.sort_by { |value,votes| votes }
+    flag_tally_sorted = flag_tally.sort_by { |value,votes| votes }
     # sort tally by value
     id_tally_sorted = id_tally.sort_by { |id,count| count }
     # and the winner is...
-    winner_address = address_tally_sorted.last
+    winner_flag = flag_tally_sorted.last
     winner_id = id_tally_sorted.last
-    votes = winner_address[1].to_i
+    votes = winner_flag[1].to_i
     consensus = votes.to_f / total_votes.to_f
     flaggable_id = winner_id[0].to_i
-    flag_value = winner_address[0]
+    flag_value = winner_flag[0]
     # lat/lon is average of points
     latitude = cluster.map {|c| c[1]}.mean
     longitude = cluster.map {|c| c[0]}.mean
@@ -274,16 +279,16 @@ class ConsensusUtils
     return winner_mark
   end
 
-  def self.get_address_flags_for_cluster(cluster, flags)
+  def self.get_flags_for_cluster(cluster, flags)
     output = []
     cluster.each do |point|
-      flag = get_address_flag_for_point(point, flags)
+      flag = get_flag_for_point(point, flags)
       output.push(flag) if flag != nil
     end
     return output
   end
 
-  def self.get_address_flag_for_point(point, flags)
+  def self.get_flag_for_point(point, flags)
     flags.each do |f|
       lat = f["latitude"].to_f
       lon = f["longitude"].to_f
