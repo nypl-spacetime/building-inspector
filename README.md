@@ -115,7 +115,7 @@ There is a very superficial [README document](README_NEW_TASK.md) briefly descri
 - 1.1 Added API endpoints
 - 1.0 First release with single `geometry` task
 
-### Copyright 2013-2014 The New York Public Library
+### Copyright The New York Public Library
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
