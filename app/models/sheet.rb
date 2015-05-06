@@ -55,7 +55,7 @@ class Sheet < ActiveRecord::Base
       join += "LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = "+ Sheet.sanitize(type)
     end
 
-    Polygon.select("polygons.id, polygons.color, polygons.geometry, polygons.sheet_id, polygons.status, polygons.dn, CP.consensus").joins(join).where(where)
+    Polygon.select("polygons.id, polygons.color, polygons.geometry, polygons.sheet_id, polygons.dn, CP.consensus").joins(join).where(where)
   end
 
   def self.progress_for_task(sheet_id, type)
