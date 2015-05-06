@@ -110,6 +110,7 @@ There is a very superficial [README document](README_NEW_TASK.md) briefly descri
 
 ### Version notes
 
+- 3.0 Third release with `toponym` task. Refactored and improved code. New API endpoints.
 - 2.0 Second release with `address`, `polygonfix` and `color` tasks. Refactored and improved code. New API endpoints.
 - 1.1 Added API endpoints
 - 1.0 First release with single `geometry` task
