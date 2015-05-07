@@ -147,7 +147,7 @@ class ApiController < ApplicationController
         if sheet
             toponyms = JSON.parse(sheet.consensus("toponym"))
             toponyms.each do |p|
-                geojson.push({ :type => "Feature", :properties => { :consensus => p["flag_value"] }, :geometry => { :type => "Point", :coordinates => [p["longitude"].to_f, p["latitude"].to_f]  } })
+                geojson.push({ :type => "Feature", :properties => { :consensus => p["flag_value"], :sheet_id => sheet[:id] }, :geometry => { :type => "Point", :coordinates => [p["longitude"].to_f, p["latitude"].to_f]  } })
             end
         end
         output = {}
