@@ -46,22 +46,34 @@
     <dl>
         <dt>GeoJSON</dt>
         <dd>Everything in this API is returned as a <%= link_to "GeoJSON string", "http://geojson.org/" %>. You can easily verify/visualize the output using <%= link_to "GeoJSONLint", "http://geojsonlint.com/" %> or <%= link_to "GeoJSON.io", "http://geojson.io"%>.</dd>
+
         <dt>Polygon</dt>
         <dd>Polygons are the building blocks of the Building Inspector (har har). Polygons are possible building footprints that have been identified by the <%= link_to "NYPL Map Vectorizer", "https://github.com/NYPL/map-vectorizer" %>. The vectorizer produces some extra metadata that you can safely ignore (and may or may not be included in the API).</dd>
+
         <dt>Maps: Atlases and Sheets</dt>
         <dd>The maps in Building Inspector come from historical atlases of New York City which, rather than being one big map, are split into pages (because they're in books). Polygons come from atlas sheets which are scanned one at a time and then geo-rectified via the <%= link_to "NYPL Map Warper", "http://maps.nypl.org/warper" %>. The vectorizer goes through each map sheet and extracts buildings as best it can. And it's not good enough; that's why this site exists: to validate and improve the output of the vectorizer. Each polygon is associated to a <code>sheet_id</code>.</dd>
+
         <dt>Task</dt>
-        <dd>The type of inspection being made to a polygon. Right now there are four tasks: <code>geometry</code>, <code>polygonfix</code>, <code>address</code>, and <code>color</code>.</dd>
+        <dd>The type of inspection being made to a polygon. Right now there are five tasks: <code>geometry</code>, <code>polygonfix</code>, <code>address</code>, <code>color</code> and <code>toponym</code>.</dd>
+
         <dt>Consensus</dt>
-        <dd>In order to create reliable results, we present the same task several times to multiple users. We then run a process to make an effective decision of which value is the correct one based on an overwhelming user agreement. This is what we call &ldquo;consensus&rdquo;. The mechanism for consensus varies from task to task. <strong>This API only returns consensus values.</strong></dd>
+        <dd>In order to create reliable results, we present the same task several times to multiple users. We then run a process to make an effective decision of which value is the correct one based on an overwhelming user agreement. This is what we call &ldquo;consensus&rdquo;. The mechanism for consensus varies from task to task. <strong>Some of the endpoints in this API only return consensus values.</strong></dd>
+
         <dt>Geometry task</dt>
         <dd>This is the main/first task for any polygon. You are inspecting a polygon to find out if its shape: matches a building (value: <code>YES</code>), matches part of a building but needs fixing (value: <code>FIX</code>) or does not match a building at all (value: <code>NO</code>).</dd>
+
         <dt>Polygonfix task</dt>
         <dd>Polygons that are classified as <code>FIX</code> get sent to this task. Its purpose is to create new geometry(ies) that will better match the building(s). The resulting value is(are) GeoJSON geometry(ies).</dd>
+
         <dt>Address task</dt>
         <dd>Polygons that are classified as <code>YES</code> get sent to this task. Its purpose is to find the address numbers (if any) associated to a given polygon. The resulting value is an array of address numbers with their latitude and longitude values or <code>NONE</code>.</dd>
+
         <dt>Colors task</dt>
         <dd>Polygons that are classified as <code>YES</code> also get sent to this task. Its purpose is to find the colors present in a building. The resulting value is a comma-separated string with any of the colors. Current possible colors are <code>pink</code>, <code>blue</code>, <code>yellow</code>, <code>green</code> and <code>gray</code>.</dd>
+
+        <dt>Toponym task</dt>
+        <dd>Toponym is the fancy word for place name. Basically the text on the map. This task is applied to <strong>sheets instead of polygons</strong> since many placenames do not belong to a building (parks, cemeteries).</dd>
+
     </dl>
     <p><strong>Note:</strong> Not all tasks and consensus types have been implemented. If you <em>definitely have to have</em> those polygons (and we can't blame you) contact us at <%= link_to "our Twitter account", "http://www.twitter.com/nypl_labs" %> and we'll hook you up.
     <h5>Pagination</h5>
