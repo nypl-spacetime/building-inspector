@@ -122,7 +122,7 @@ class Sheet < ActiveRecord::Base
   end
 
   def calculate_address_consensus
-    puts "Processing ADDRESS consensus for sheet #{self[:id]}"
+    puts "\n\nProcessing ADDRESS consensus for sheet #{self[:id]}"
     flags = Flag.flags_for_sheet_for_task(self[:id], "address")
     consensus = ConsensusUtils.calculate_address_consensus(flags)
     puts "Found #{consensus.count} consensus"
@@ -137,7 +137,7 @@ class Sheet < ActiveRecord::Base
   end
 
   def calculate_toponym_consensus
-    puts "Processing TOPONYM consensus for sheet #{id}"
+    puts "\n\nProcessing TOPONYM consensus for sheet #{id}"
     flags = Flag.flags_for_sheet_for_task(id, "toponym", "Sheet")
     consensus = ConsensusUtils.calculate_toponym_consensus(flags)
     consensus.each_pair do |elem,c|
@@ -152,7 +152,7 @@ class Sheet < ActiveRecord::Base
 
   def calculate_polygonfix_consensus
     # get all polygons that have 3 or more polygonfix flags
-    puts "Processing POLYGONFIX consensus for sheet #{self[:id]}"
+    puts "\n\nProcessing POLYGONFIX consensus for sheet #{self[:id]}"
     flags = Flag.flags_for_sheet_for_task_and_threshold(self[:id])
     pids = flags.map {|fl| fl["flaggable_id"]}.uniq
     pids.each do |pid|
