@@ -18,6 +18,12 @@ class Sheet < ActiveRecord::Base
     [[[west,south],[west,north],[east,north],[east,south],[west,south]]]
   end
 
+  def consensus(task="toponym")
+    c = Consensuspolygon.where({:flaggable_id => id, :flaggable_type => "Sheet", :task => task}).first
+    return "[]" if c == nil
+    c[:consensus]
+  end
+
   def self.polygons_for_task(sheet_id, session_id = nil, type="geometry")
     return [] if type == "toponym"
     # only the necessary data of a sheet's polygons

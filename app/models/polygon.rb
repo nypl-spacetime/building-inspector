@@ -22,12 +22,9 @@ class Polygon < ActiveRecord::Base
   end
 
   def poly_consensus(task)
-    c = Consensuspolygon.where({:flaggable_id => id, :flaggable_type => "Polygon", :task => task})
-    if c.count > 0
-      c[0][:consensus]
-    else
-      "N/A"
-    end
+    c = Consensuspolygon.where({:flaggable_id => id, :flaggable_type => "Polygon", :task => task}).first
+    return "N/A" if c == nil
+    c[:consensus]
   end
 
   def consensus_color

@@ -33,6 +33,7 @@
         <ul>
           <li><strong><%= link_to "List", "#sheetslist" %></strong></li>
           <li><strong><%= link_to "Polygons", "#sheetspoly" %></strong></li>
+          <li><strong><%= link_to "Place names", "#sheetstopo" %></strong></li>
           <li><strong><%= link_to "History", "#sheetshistory" %></strong></li>
         </ul>
       </li>
@@ -405,6 +406,68 @@
             [-74.0062631227923, 40.73530347455329],
             [-74.00629287248056, 40.7353050363298]
           ]
+        ]
+      }
+    }
+  ]
+}        </code>
+    </pre>
+
+
+    <h4><a name="sheetstopo"></a>Place names</h4>
+    <h5>GET /api/sheets/{id}/toponyms</h5>
+    <p>Returns the place name consensus (so far) associated with a sheet with ID <code>{id}</code>.</p>
+    <h6>Example response</h6>
+    <pre>
+        <code class="json">
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "consensus": "Rigging Loft"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.987003415823,40.704169027369
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "consensus": "Pattern Shop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.988353908062,40.70355766475467
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "consensus": "Office"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.98514822125433,40.703639338245004
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "consensus": "Casting Shop"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.98815944790833,40.70215801635367
         ]
       }
     }

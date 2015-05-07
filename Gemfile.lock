@@ -14,6 +14,8 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
+    active_model_serializers (0.8.3)
+      activemodel (>= 3.0)
     activemodel (3.2.13)
       activesupport (= 3.2.13)
       builder (~> 3.0.0)
@@ -34,7 +36,10 @@ GEM
     arel (3.0.3)
     bcrypt (3.1.10)
     builder (3.0.4)
+    byebug (4.0.5)
+      columnize (= 0.9.0)
     chunky_png (1.3.4)
+    coderay (1.1.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -42,6 +47,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1)
+    columnize (0.9.0)
     compass (1.1.0.alpha.3)
       chunky_png (~> 1.2)
       compass-core (~> 1.1.0.alpha.3)
@@ -88,6 +94,7 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    method_source (0.8.2)
     mime-types (1.25.1)
     multi_json (1.11.0)
     multi_xml (0.5.5)
@@ -122,6 +129,10 @@ GEM
     orm_adapter (0.5.0)
     pg (0.18.1)
     polyglot (0.3.5)
+    pry (0.10.1)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -161,6 +172,7 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
+    slop (3.6.0)
     sprockets (2.2.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -188,7 +200,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_serializers (~> 0.8.1)
   animate
+  byebug
   coffee-rails (~> 3.2.1)
   compass-rails
   dbscan
@@ -200,6 +214,7 @@ DEPENDENCIES
   omniauth-google-oauth2
   omniauth-twitter
   pg
+  pry
   rails (= 3.2.13)
   rgeo
   rgeo-geojson

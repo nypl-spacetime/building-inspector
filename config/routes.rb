@@ -95,15 +95,19 @@ Webappmini::Application.routes.draw do
 
   # api endpoints
   get "api", to: "general#data"
+
   get "api/polygons"
   get "api/polygons/:task", to: "api#polygons"
   get "api/polygons/:task/page/:page", to: "api#polygons"
   get "api/polygons/:task/:consensus", to: "api#polygons"
   get "api/polygons/:task/:consensus/page/:page", to: "api#polygons"
   get "api/polygons_for_ids", to: "api#polygons_for_ids"
+
   get "api/sheets/:id/history", to: "api#sheets_history"
   get "api/sheets/:id/polygons", to: "api#sheets_polygons"
+  get "api/sheets/:id/toponyms", to: "api#sheets_toponyms"
   get "api/sheets", to: "api#sheets_all"
+
   get "api/consolidated"
   get "api/consolidated/page/:page", to: "api#consolidated"
 

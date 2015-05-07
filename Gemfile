@@ -11,6 +11,9 @@ gem 'newrelic_rpm'
 
 gem 'pg'
 
+gem 'pry'
+gem 'byebug'
+
 # gem 'activerecord-postgis-adapter'
 
 gem 'compass-rails'
@@ -46,3 +49,5 @@ group :assets do
 end
 
 gem 'jquery-rails'
+
+gem "active_model_serializers", '~> 0.8.1'

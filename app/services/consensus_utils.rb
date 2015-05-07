@@ -196,7 +196,8 @@ class ConsensusUtils
     calculate_point_consensus(flags, 1.425e-05, 2)
   end
 
-  # ADDRESS CONSENSUS
+  # TOPONYM CONSENSUS
+  # TODO: test it
   def self.calculate_toponym_consensus(flags)
     calculate_point_consensus(flags, 1.425e-05, 2)
   end
@@ -208,6 +209,7 @@ class ConsensusUtils
     simple_array = flags.map { |a| [a["longitude"].to_f, a["latitude"].to_f] }
     clusters = apply_dbscan(simple_array, epsilon, min_points)
     consensus_list = []
+    byebug if Rails.env.development?
     clusters.each do |c|
       next if c[0] == -1
       consensus = points_cluster_consensus(c[1], flags)
@@ -223,13 +225,14 @@ class ConsensusUtils
     return grouped_list
   end
 
-  def self.points_cluster_consensus(cluster, flags, min_count = 3, threshold = 0.75)
+  def self.points_cluster_consensus(cluster, rawflags, min_count = 3, threshold = 0.75)
     return nil if cluster.count < min_count
-    flags = get_flags_for_cluster(cluster, flags)
+    flags = get_flags_for_cluster(cluster, rawflags)
     total_votes = 0
     flag_tally = {} # saves the address popularity
     id_tally = {} # saves the flaggable_id popularity
     session_ids = []
+    byebug if Rails.env.development?
     flags.each do |vote|
       value = vote["flag_value"]
       id = vote["flaggable_id"]

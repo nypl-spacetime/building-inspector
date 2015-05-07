@@ -138,6 +138,25 @@ class ApiController < ApplicationController
         render json: output
     end
 
+    # GET /api/sheets/:id/toponyms
+    def sheets_toponyms
+        begin
+            sheet = Sheet.find params[:id]
+        rescue
+        end
+        geojson = []
+        if sheet
+            toponyms = JSON.parse(sheet.consensus("toponym"))
+            toponyms.each do |p|
+                geojson.push({ :type => "Feature", :properties => { :consensus => p["flag_value"] }, :geometry => { :type => "Point", :coordinates => [p["longitude"].to_f, p["latitude"].to_f]  } })
+            end
+        end
+        output = {}
+        output[:type] = "FeatureCollection"
+        output[:features] = geojson
+        render json: output
+    end
+
     def polygons_for_ids
         per_page = 500
         page = 1
