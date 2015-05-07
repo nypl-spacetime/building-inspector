@@ -18,12 +18,12 @@ class ApiController < ApplicationController
         count = 0
         columns = "polygons.id, geometry, sheet_id, CP.consensus, dn, centroid_lat, centroid_lon"
         join = " LEFT JOIN consensuspolygons AS CP ON CP.flaggable_id = polygons.id"
-        where = "1=1"
+        where = " 1=1 AND "
 
         if consensus != nil
-            where += "CP.flaggable_type = 'Polygon' AND CP.task = "+Polygon.sanitize(type)+" AND CP.consensus = "+Polygon.sanitize(consensus)
+            where += " CP.flaggable_type = 'Polygon' AND CP.task = "+Polygon.sanitize(type)+" AND CP.consensus = "+Polygon.sanitize(consensus)
         else
-            where += "CP.flaggable_type = 'Polygon' AND CP.task = "+Polygon.sanitize(type)
+            where += " CP.flaggable_type = 'Polygon' AND CP.task = "+Polygon.sanitize(type)
         end
 
         count = Polygon.select("COUNT(polygons.id) as pcount").joins(join).where(where).first.pcount
