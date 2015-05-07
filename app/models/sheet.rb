@@ -125,7 +125,7 @@ class Sheet < ActiveRecord::Base
     puts "Processing ADDRESS consensus for sheet #{self[:id]}"
     flags = Flag.flags_for_sheet_for_task(self[:id], "address")
     consensus = ConsensusUtils.calculate_address_consensus(flags)
-    puts "Found #{consensus.count} consensus for task address"
+    puts "Found #{consensus.count} consensus"
     consensus.each_pair do |elem,c|
       polygon_id = elem
       cp = Consensuspolygon.find_or_initialize_by_flaggable_id_and_flaggable_type_and_task(:flaggable_id => polygon_id, :flaggable_type => "Polygon", :task => 'address')
@@ -140,8 +140,8 @@ class Sheet < ActiveRecord::Base
     puts "Processing TOPONYM consensus for sheet #{id}"
     flags = Flag.flags_for_sheet_for_task(id, "toponym", "Sheet")
     consensus = ConsensusUtils.calculate_toponym_consensus(flags)
-    puts "Found #{consensus.count} consensus for task toponym"
     consensus.each_pair do |elem,c|
+      puts "Found #{c.count} consensus"
       cp = Consensuspolygon.find_or_initialize_by_flaggable_id_and_flaggable_type_and_task(:flaggable_id => id, :flaggable_type => "Sheet", :task => 'toponym')
       cp[:consensus] = c.to_json
       if !cp.save
