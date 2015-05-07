@@ -80,7 +80,7 @@ class Sheet
   highlightFeature: (e) =>
     l = e.target
 
-    $("#info").text("Sheet: " + l.feature.properties.map_id)
+    $("#info").text("Sheet: #{l.feature.properties.id} Map ID:#{l.feature.properties.map_id}")
 
     l.setStyle
       weight: 1
