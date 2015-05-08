@@ -1,6 +1,6 @@
 class ApiController < ApplicationController
 
-    caches_action :history, :cache_path => Proc.new { |c| "/api/sheets/#{c.params[:id]}/history" }, expires_in: 1.day
+    caches_action :sheets_history, :cache_path => Proc.new { |c| "/api/sheets/#{c.params[:id]}/history" }, expires_in: 1.day
 
     # GET /api/polygons
     # GET /api/polygons/:task
