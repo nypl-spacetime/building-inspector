@@ -199,7 +199,7 @@ class ConsensusUtils
   # TOPONYM CONSENSUS
   # TODO: test it
   def self.calculate_toponym_consensus(flags)
-    calculate_point_consensus(flags, 6e-05, 2)
+    calculate_point_consensus(flags, 5e-05, 1)
   end
 
   # GENERIC POINT CONSENSUS

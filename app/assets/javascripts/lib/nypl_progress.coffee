@@ -210,14 +210,14 @@ class @Progress
         count = 0
         for child in c.getAllChildMarkers()
           count = count + parseInt(child.options.total)
-        c = 'cluster-large'
+        cl = 'cluster-large'
         if count < 10
-          c = 'cluster-small'
+          cl = 'cluster-small'
         else if count < 100
-          c = 'cluster-medium'
+          cl = 'cluster-medium'
         new L.DivIcon
           html: Humanize.compactInteger(count)
-          className: c
+          className: cl
           iconSize: L.point(30, 30)
       polygonOptions:
         stroke: false
