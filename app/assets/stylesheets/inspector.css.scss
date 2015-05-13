@@ -317,6 +317,10 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   strong {
     color: $grayLighter;
   }
+
+  a {
+    color: $orange;
+  }
 }
 
 #map-tutorial {

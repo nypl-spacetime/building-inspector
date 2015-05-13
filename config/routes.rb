@@ -37,6 +37,7 @@ Webappmini::Application.routes.draw do
   get "about", :to => "general#about", :as => "about"
   get "help", :to => "general#help", :as => "help"
   get "data", :to => "general#data", :as => "data"
+  get "random", :to => "general#random"
 
   # footprints
   # this uses a different route as the task name for user friendliness purposes

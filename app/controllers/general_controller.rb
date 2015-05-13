@@ -27,6 +27,13 @@ class GeneralController < ApplicationController
     @has_score = true if @score_geometry > 0 || @score_toponym > 0 || @score_address > 0 || @score_polygonfix > 0
   end
 
+  def random
+    # redirects to a random task
+    list = @global_tasks
+    list = list.select { |i| i if i[:page] != params[:not] } if params[:not] != nil
+    redirect_to list.sample[:path]
+  end
+
   def soon
     @current_page = "homepage"
   end

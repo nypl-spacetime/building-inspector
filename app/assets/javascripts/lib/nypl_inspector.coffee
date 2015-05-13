@@ -395,7 +395,7 @@ class @Inspector
 
   endGame:() ->
     # no map found, die
-    msg = "<strong>No unprocessed data found for this task</strong><br />Good news! This seems to be complete. Maybe try another task?"
+    msg = "<strong>No unprocessed data found for this task</strong><br />Good news! This seems to be complete. Maybe <a href='/random?not=#{@options.task}'>try another task</a>?"
     @showMessage(msg, false)
     $(@options.buttonsID).hide()
 
