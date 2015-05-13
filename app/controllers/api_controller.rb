@@ -98,7 +98,7 @@ class ApiController < ApplicationController
         render json: output
     end
 
-    # GET /api/sheets/:id/history
+    # GET /api/sheets/:id/history/:task
     def sheets_history
         # get all flags for all polygons for a sheet
         # return them as geojson in chronological order
@@ -108,7 +108,10 @@ class ApiController < ApplicationController
         end
         geojson = []
         if sheet
-            flags = Flag.where("flaggable_id = ? OR flaggable_id IN (?)", sheet[:id],sheet.polygons.pluck(:id)).order(:created_at)
+            for_task = ""
+            task = Sheet.sanitize(params[:task])
+            for_task = " AND flag_type=#{task} " if params[:task] != nil
+            flags = Flag.where("(flaggable_type = 'Sheet' AND flaggable_id = ?) OR (flaggable_type = 'Polygon' AND flaggable_id IN (?)) #{for_task}", sheet[:id],sheet.polygons.pluck(:id)).order(:created_at)
 
             flags.each do |f|
                 geojson.push(f.to_geojson)

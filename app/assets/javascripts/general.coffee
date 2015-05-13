@@ -17,6 +17,7 @@ class General
     $("#link-view-inspections").on("click", @toggleProgressPopup)
     $("#task-container .shown").on("click", @onTaskClick)
     $("body").on("click", @onBodyClick)
+    $("code.json").on("click", @onSampleCodeClick)
 
     overrides = [
       ".link-task"
@@ -88,6 +89,17 @@ class General
     e.stopPropagation()
     $("#task-container .hidden").toggle()
     $("#task-toggle").addClass("open")
+
+  onSampleCodeClick: (e) ->
+    clicked = $(e.target)
+    console.log clicked
+    s = window.getSelection()
+    s.removeAllRanges() if (s.rangeCount > 0)
+
+    for element in clicked
+      range = document.createRange()
+      range.selectNode(element)
+      s.addRange(range)
 
 $ ->
   window._gen = new General()

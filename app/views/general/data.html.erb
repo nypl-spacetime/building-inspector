@@ -35,6 +35,7 @@
           <li><strong><%= link_to "Polygons", "#sheetspoly" %></strong></li>
           <li><strong><%= link_to "Place names", "#sheetstopo" %></strong></li>
           <li><strong><%= link_to "History", "#sheetshistory" %></strong></li>
+          <li><strong><%= link_to "History for task", "#sheetshistorytask" %></strong></li>
         </ul>
       </li>
     </ul>
@@ -611,6 +612,65 @@
   ]
 }        </code>
     </pre>
+
+    <h4><a name="sheetshistorytask"></a>History for task</h4>
+    <h5>GET /api/sheets/{id}/history/{task}</h5>
+    <p>Returns the all the flags associated with a sheet with ID <code>{id}</code> and task <code>{task}</code> and its child polygons sorted by creation date.</p>
+    <h6>Example response</h6>
+    <pre>
+        <code class="json">
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5460,
+        "flaggable_id": 115148,
+        "flaggable_type": "Polygon",
+        "flag_type": "geometry",
+        "session_id": "461a3dfcd472454b40cb2b4e4430c24e",
+        "flag_value": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-74.009614466801, 40.733523404832]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5462,
+        "flaggable_id": 115650,
+        "flaggable_type": "Polygon",
+        "flag_type": "geometry",
+        "session_id": "461a3dfcd472454b40cb2b4e4430c24e",
+        "flag_value": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-74.009614466801, 40.733523404832]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5464,
+        "flaggable_id": 115379,
+        "flaggable_type": "Polygon",
+        "flag_type": "geometry",
+        "session_id": "461a3dfcd472454b40cb2b4e4430c24e",
+        "flag_value": "fix"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-74.005486621588, 40.734717823179]
+      }
+    }
+  ]
+}        </code>
+    </pre>
+
   </div>
 
   </div>
