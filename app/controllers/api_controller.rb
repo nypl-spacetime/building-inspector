@@ -58,11 +58,11 @@ class ApiController < ApplicationController
         # returns all the polygons with their consensus value
         count = 0
 
-        count = Polygon.select("COUNT(polygons.id) AS pcount").joins(:consensuspolygons).where("consensuspolygons.flaggable_type='Polygon' AND consensuspolygons.task=? AND consensuspolygons.consensus=?","geometry","yes").first.pcount
+        count = Polygon.select("COUNT(polygons.id) AS pcount").joins(:consensuspolygons).where("consensuspolygons.flaggable_type='Polygon' AND consensuspolygons.task=? AND (consensuspolygons.consensus=? OR consensuspolygons.consensus=?)","geometry","yes","fix").first.pcount
 
         per_page = count if params[:brett]
 
-        poly = Polygon.select("*, (SELECT consensus FROM consensuspolygons _C WHERE _C.flaggable_id=polygons.id AND _C.flaggable_type='Polygon' AND _C.task='color') AS color").joins(:consensuspolygons).where("consensuspolygons.flaggable_type='Polygon' AND consensuspolygons.task=? AND consensuspolygons.consensus=?","geometry","yes").offset(offset).limit(per_page)
+        poly = Polygon.select("*, (SELECT consensus FROM consensuspolygons _C WHERE _C.flaggable_id=polygons.id AND _C.flaggable_type='Polygon' AND _C.task='color') AS color").joins(:consensuspolygons).where("consensuspolygons.flaggable_type='Polygon' AND consensuspolygons.task=? AND (consensuspolygons.consensus=? OR consensuspolygons.consensus=?)","geometry","yes","fix").offset(offset).limit(per_page)
 
         msg = "List for informative purposes only. This is not a definitive list. This URL may be changed at any time without prior notice."
 
