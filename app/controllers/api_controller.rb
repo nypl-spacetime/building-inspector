@@ -58,17 +58,27 @@ class ApiController < ApplicationController
         # returns all the polygons with their consensus value
         count = 0
 
-        count = Polygon.select("COUNT(polygons.id) AS pcount").joins(:consensuspolygons).where("consensuspolygons.flaggable_type='Polygon' AND consensuspolygons.task=? AND (consensuspolygons.consensus=? OR consensuspolygons.consensus=?)","geometry","yes","fix").first.pcount
+        count = Polygon.select("COUNT(polygons.id) AS pcount").joins(:consensuspolygons).where("consensuspolygons.flaggable_type='Polygon' AND ((consensuspolygons.task=? AND consensuspolygons.consensus=?) OR consensuspolygons.task=?)","geometry","yes","polygonfix").first.pcount
 
         per_page = count if params[:brett]
 
-        poly = Polygon.select("*, (SELECT consensus FROM consensuspolygons _C WHERE _C.flaggable_id=polygons.id AND _C.flaggable_type='Polygon' AND _C.task='color') AS color").joins(:consensuspolygons).where("consensuspolygons.flaggable_type='Polygon' AND consensuspolygons.task=? AND (consensuspolygons.consensus=? OR consensuspolygons.consensus=?)","geometry","yes","fix").offset(offset).limit(per_page)
+        poly = Polygon.select("*, (SELECT consensus FROM consensuspolygons _C WHERE _C.flaggable_id=polygons.id AND _C.flaggable_type='Polygon' AND _C.task='color') AS color").joins(:consensuspolygons).where("consensuspolygons.flaggable_type='Polygon' AND ((consensuspolygons.task=? AND consensuspolygons.consensus=?) OR consensuspolygons.task=?)","geometry","yes","polygonfix").offset(offset).limit(per_page)
 
         msg = "List for informative purposes only. This is not a definitive list. This URL may be changed at any time without prior notice."
 
         geojson = []
         poly.each do |p|
-            geojson.push(p.to_geojson)
+            if p[:consensus] == "yes"
+                as_geo = p.to_geojson
+                as_geo[:properties][:fixed] = false
+                geojson.push(as_geo)
+            else
+                temp = JSON.parse(p[:consensus])
+                as_geo = p.to_geojson
+                as_geo[:properties][:fixed] = true
+                as_geo[:geometry][:coordinates] = temp["features"][0]["geometry"]["coordinates"]
+                geojson.push(as_geo)
+            end
         end
 
         output = {}
