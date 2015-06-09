@@ -14,7 +14,12 @@ class Polygon < ActiveRecord::Base
   # end
 
   def to_geojson
-     { :type => "Feature", :properties => { :id => id, :dn => dn, :sheet_id => sheet_id, :consensus => (consensus ? (consensus != "NONE" ? JSON.parse(consensus) : consensus) : "") }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(geometry) } }
+    begin
+      c = JSON.parse(consensus)
+    rescue
+      c = consensus
+    end
+    { :type => "Feature", :properties => { :id => id, :dn => dn, :sheet_id => sheet_id, :consensus => c }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(geometry) } }
   end
 
   def to_point_geojson
