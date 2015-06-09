@@ -212,38 +212,46 @@
 }        </code>
     </pre>
     <h4><a name="address"></a>Address</h4>
-    <h5>GET /api/polygons/address/NONE</h5>
-    <p>Returns the list of polygons that were marked as "yes" in the geometry task and have a consensus of <code>NONE</code> (buildings that do not have an address associated). <strong>Numerical consensus will be added later.</strong></p>
+    <h5>GET /api/polygons/address</h5>
+    <p>Returns the list of polygons that were marked as "yes" in the geometry task and have a consensus of either <code>NONE</code> (buildings that do not have an address associated) or a JSON structure . <strong>Numerical consensus will be added later.</strong></p>
     <h6>Example response</h6>
     <pre>
         <code class="json">
 {
-  "message": "List for informative purposes only.",
-  "polygon_count": "2",
+  "message": "List for informative purposes only. This is not a definitive list. This URL may be changed at any time without prior notice.",
+  "polygon_count": "64086",
   "page": 1,
   "per_page": 500,
-  "total_pages": 1,
+  "total_pages": 129,
   "type": "FeatureCollection",
   "features": [
     {
       "type": "Feature",
       "properties": {
-        "consensus": "NONE",
-        "id": 73000,
-        "dn": 1002010,
-        "sheet_id": 138
+        "id": 93270,
+        "dn": 309909,
+        "sheet_id": 186,
+        "consensus": [
+          {
+            "latitude": 40.7276083810125,
+            "longitude": -74.0093544870615,
+            "flag_value": "117",
+            "votes": 4,
+            "total_votes": 4,
+            "flaggable_id": 93270
+          }
+        ]
       },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
           [
-            [-73.9981514825787, 40.75699146852938],
-            [-73.99820209636397, 40.757014472045185],
-            [-73.99816666671428, 40.75706431296879],
-            [-73.99809833810419, 40.757035558594346],
-            [-73.9981312370646, 40.75698955156937],
-            [-73.99813629844313, 40.75698571764918],
-            [-73.9981514825787, 40.75699146852938]
+            [-74.00933215733832, 40.72762581318789],
+            [-74.0093859620873, 40.727630105219944],
+            [-74.00936897111393, 40.727720237829026],
+            [-74.0093066708783, 40.72771379978957],
+            [-74.00932083002276, 40.72762366717176],
+            [-74.00933215733832, 40.72762581318789]
           ]
         ]
       }
@@ -251,24 +259,23 @@
     {
       "type": "Feature",
       "properties": {
-        "consensus": "NONE",
-        "id": 73001,
-        "dn": 1005025,
-        "sheet_id": 138
+        "id": 77181,
+        "dn": 376944,
+        "sheet_id": 147,
+        "consensus": "NONE"
       },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
           [
-            [-73.9976238409442, 40.75697150401845],
-            [-73.99763605041814, 40.75696082476952],
-            [-73.99764622497976, 40.75696349458192],
-            [-73.99778052919307, 40.75702223042746],
-            [-73.99778256410538, 40.75703023985692],
-            [-73.99775204042055, 40.75707028698976],
-            [-73.9976055267333, 40.75700621156564],
-            [-73.99760349182097, 40.75699820213328],
-            [-73.9976238409442, 40.75697150401845]
+            [-73.98278569092857, 40.76394745989852],
+            [-73.98282496740708, 40.76396445889229],
+            [-73.98276044176382, 40.76405157866709],
+            [-73.98275483083829, 40.76405370353822],
+            [-73.98271274889703, 40.76403670456728],
+            [-73.98271274889703, 40.76402820508019],
+            [-73.98277446907755, 40.763945335024],
+            [-73.98278569092857, 40.76394745989852]
           ]
         ]
       }
