@@ -62,17 +62,17 @@
     @include transition(all, .1s, ease-out);
 
     &.active {
-      margin-top: 20px;
+      margin-top: -50px;
     }
 
     &:before {
       content: "";
       display: block;
       position: absolute;
-      border-bottom: 10px solid rgba(232, 228, 226, 0.75);
+      border-top: 10px solid rgba(232, 228, 226, 0.75);
       border-left: 10px solid transparent;
       border-right: 10px solid transparent;
-      top: -10px;
+      bottom: -10px;
       left: 25px;
     }
   }
