@@ -226,10 +226,7 @@ class Toponym extends Inspector
 
     flag.on 'add', ()->
       # move point a few pixels down
-      xy = m.latLngToContainerPoint(latlng)
-      xy.y -= window.innerHeight * .2 # to account for keyboard in mobile device
-      latlng_offset = m.containerPointToLatLng(xy)
-      m.panTo(latlng_offset, m.getZoom())
+      m.panTo(latlng, m.getZoom())
 
     flag.addTo @map
 
