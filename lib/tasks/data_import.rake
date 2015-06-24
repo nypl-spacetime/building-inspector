@@ -64,7 +64,7 @@ namespace :data_import do
     layer.save
 
     json["sheets"].each do |f|
-      puts "Importing sheet #{f["id"]}"
+      puts "\nImporting sheet #{f["id"]}"
       process_file(f["id"], f["bbox"].join(","), layer[:id])
     end
 

@@ -118,7 +118,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
 #controls {
   position: absolute;
-  margin-left: -155px;
+  margin-left: -115px;
   left: 50%;
   height: 80px;
   bottom: 0;
@@ -130,6 +130,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   }
 
   &.compact {
+    margin-left: -155px;
     height: 110px;
 
     @include transition(height, 0.1s);
