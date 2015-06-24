@@ -55,7 +55,7 @@ After downloading, and running the proper `rake db:migrate` you need to do a bas
 
 `rake data_import:ingest_bulk id=LAYERID force=true`
 
-This assumes the presence of `public/files/config-ingest-LAYERID.json` with a list of IDs and bounding boxes to import for the layer `LAYERID`. This **erases all sheet/polygon/flag data** for those IDs in the config file. If you don't have a config file, see the next section for instruction on how to build one easily.
+This assumes the presence of `public/files/config-ingest-layerLAYERID.json` with a list of IDs and bounding boxes to import for the layer `LAYERID`. This **erases all sheet/polygon/flag data** for those IDs in the config file. If you don't have a config file, see the next section for instruction on how to build one easily.
 
 #### Layer ingest config file creator
 
@@ -65,7 +65,7 @@ Usage:
 
 `python ingestor_config_builder.py /path/to/folder/with/geotiffs`
 
-It creates a config file in the application root folder with the name `config-ingest-FOLDERNAME` where `FOLDERNAME` is the name of the folder where the GeoTIFFs were found. In NYPL, the `FOLDERNAME` is the same as the `LAYERID`.
+It creates a config file in the application root folder with the name `config-ingest-layerFOLDERNAME` where `FOLDERNAME` is the name of the folder where the GeoTIFFs were found. In NYPL, the `FOLDERNAME` is the same as the `LAYERID`.
 
 #### Single sheet data ingest
 
