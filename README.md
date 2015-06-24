@@ -67,14 +67,6 @@ Usage:
 
 It creates a config file in the application root folder with the name `config-ingest-FOLDERNAME` where `FOLDERNAME` is the name of the folder where the GeoTIFFs were found. In NYPL, the `FOLDERNAME` is the same as the `LAYERID`.
 
-#### Add bulk centroids
-
-~~The original GeoJSON files do not have centroids (they were added and processed later). To create the centroids of the polygons in the database you need to run:~~
-
-**NOTE** The vectorizer now adds centroids to the polygons vectorized. In case you have a GeoJSON file with polygons and no centroids, use this script below. Otherwise, ** you do not need this rake task**.
-
-`rake data_import:ingest_centroid_bulk id=LAYERID force=true`
-
 #### Single sheet data ingest
 
 `rake data_import:ingest_geojson id=SOMEID layer_id=SOMELAYERID bbox=SOMEBOUNDINGBOX force=true`
@@ -83,13 +75,21 @@ This imports polygons from a file `public/files/SOMEID-traced.json` into the dat
 
 **NOTE:** (this only applies if you want to use NYPL polygons) ~~So far only layers 859 and 860 are provided.~~ Layer 859 has separate GeoJSON for centroids and polygons. Layer 860 sheets have a single file with both fields. Ingesting 859 requires a separate `data_import:ingest_centroid_bulk` process for centroids. See above script.
 
-#### Single sheet centroid updating
+#### Centroids
 
-**NOTE** The vectorizer now adds centroids to the polygons vectorized. In case you have a GeoJSON file with polygons and no centroids, use this script below. Otherwise, ** you do not need this rake task**.
+**NOTE:** The vectorizer now adds centroids to the polygons vectorized. In case you have a GeoJSON file with polygons and no centroids, use this script below. Otherwise, **you do not need these rake tasks**.
+
+##### Add bulk centroids
+
+~~The original GeoJSON files do not have centroids (they were added and processed later).~~ To create the centroids of the polygons in the database you need to run:
+
+`rake data_import:ingest_centroid_bulk id=LAYERID force=true`
+
+##### Single sheet centroid updating
+
+This updates the polygon centroids for a given `sheet_id` from a file `public/files/SOMEID-traced.json` **replacing** any existing polygon centroids (not the polygons themselves):
 
 `rake data_import:ingest_centroids_for_sheet id=SOMEID force=true`
-
-This updates the polygon centroids for a given `sheet_id` from a file `public/files/SOMEID-traced.json` **replacing** any existing polygon centroids (not the polygons themselves).
 
 ### <a name="consensus"></a>Consensus generation
 
