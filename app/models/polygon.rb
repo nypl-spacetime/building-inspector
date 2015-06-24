@@ -17,7 +17,11 @@ class Polygon < ActiveRecord::Base
     begin
       c = JSON.parse(consensus)
     rescue
-      c = consensus
+      begin
+        c = consensus
+      rescue
+        c = ""
+      end
     end
     { :type => "Feature", :properties => { :id => id, :dn => dn, :sheet_id => sheet_id, :consensus => c }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(geometry) } }
   end
