@@ -45,7 +45,7 @@
   <tr>
     <td><%= sheet.bbox %></td>
     <td><%= sheet.map_id %></td>
-    <td><%= link_to sheet.layer_id, sheet.layer %></td>
+    <td><%= link_to "#{sheet.layer_id} (#{sheet.layer.external_id})", sheet.layer %></td>
     <td><%= link_to 'Show', sheet %></td>
     <td><%= link_to 'Edit', edit_sheet_path(sheet) %></td>
     <td><%# link_to 'Destroy', sheet, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -1,6 +1,6 @@
 class Sheet < ActiveRecord::Base
   has_many :polygons, :dependent => :destroy
-  has_many :flags, as: :flaggable, :dependent => :destroy
+  has_many :flags, as: :flaggable
   has_many :consensuspolygons, as: :flaggable, :dependent => :destroy
   belongs_to :layer
   attr_accessible :bbox, :map_id, :map_url, :layer_id

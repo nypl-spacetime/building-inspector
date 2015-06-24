@@ -64,8 +64,11 @@ namespace :data_import do
     layer.save
 
     json["sheets"].each do |f|
+      puts "Importing sheet #{f["id"]}"
       process_file(f["id"], f["bbox"].join(","), layer[:id])
     end
+
+    puts "\nCompleted import of layer #{id}!"
   end
 
   desc "Import GeoJSON centroid sheet files based on config file"
@@ -135,7 +138,7 @@ def process_file(id, bbox, layer_id)
     sheet.destroy_all
   end
 
-  sheet = Sheet.new(:map_id => id.to_s, :bbox => bbox, :status => "unprocessed", :layer_id => layer_id)
+  sheet = Sheet.new(:map_id => id.to_s, :bbox => bbox, :layer_id => layer_id)
   sheet.save
 
   if json["features"] == nil
@@ -156,6 +159,8 @@ def process_file(id, bbox, layer_id)
     polygon[:dn] = f['properties']['DN']
     polygon.save
   end
+
+  puts "Imported #{json["features"].count} polygons for sheet #{id}"
 end
 
 def update_centroids(id)

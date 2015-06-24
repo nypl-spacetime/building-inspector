@@ -5,7 +5,7 @@ class SheetsController < ApplicationController
   # GET /sheets.json
   def index
     # @sheets = Sheet.paginate(:page => params[:page])
-    @sheets = Sheet.all
+    @sheets = Sheet.all(:order => [:layer_id, :map_id])
     @tilesets = Layer.all(:order => :id)
 
     respond_to do |format|

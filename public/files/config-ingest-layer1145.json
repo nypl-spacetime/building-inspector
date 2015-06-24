@@ -1,12 +1,12 @@
 {
-    "description": "ADD_A_DESCRIPTION", 
-    "year": "ADD_A_YEAR(S)", 
+    "description": "Midtown Manhattan, East Side", 
+    "year": "1890", 
     "bbox": [
-        -180, 
-        90, 
-        180, 
-        90
-    ], 
+        -73.998585, 
+        40.732527, 
+        -73.956785, 
+        40.760618
+    ],
     "sheets": [
         {
             "id": "20903", 
@@ -180,7 +180,7 @@
             ]
         }
     ], 
-    "tileset_type": "tms_or_wmts", 
-    "tilejson": "URL_FOR_TILEJSON_SPEC", 
-    "name": "ADD_A_NAME"
+    "tileset_type": "tms", 
+    "tilejson": "http://maptiles.nypl.org/1145/1145spec.json", 
+    "name": "Midtown Manhattan, East Side"
 }
