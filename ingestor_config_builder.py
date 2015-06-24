@@ -76,7 +76,7 @@ def main(argv):
 	    "sheets":config_list
 	}
 	config_file = open("config-ingest-layer" + (inputfile[inputfile.rfind("/")+1:]) + ".json", "w")
-	config_file.write(json.dumps(config_list, indent=4))
+	config_file.write(json.dumps(config_data, indent=4))
 	config_file.close()
 
 if __name__ == "__main__":
