@@ -2,6 +2,8 @@
 import sys, getopt, subprocess, os, datetime, ogr, re, json
 
 def main(argv):
+	instructions = 'Usage: %s <input directory>' % sys.argv[0]
+	inputfile = ''
 	try:
 		opts, args = getopt.getopt(argv,"hi:o:",["ifile=","ofile="])
 	except getopt.GetoptError:
@@ -28,7 +30,7 @@ def main(argv):
 	print ""
 	print ""
 	print ""
-	print "NYPL Labs Map Ingest Config Creator v0.1"
+	print "NYPL Labs Map Ingest Config Creator v0.2"
 	print "========================================"
 	print "By: Mauricio Giraldo Arteaga @mgiraldo / @nypl_labs"
 	print ""
@@ -38,7 +40,7 @@ def main(argv):
 	for ff in os.listdir(inputfile):
 		if ff.endswith(".tif"):
 			base_name = ff[:ff.find(".tif")]
-			
+
 			# get geotiff data
 			geoText = subprocess.Popen(["gdalinfo", inputfile + "/" + ff], stdout=subprocess.PIPE).communicate()[0]
 			pattern = re.compile(r"Upper Left\s*\(\s*([0-9\-\.]*),\s*([0-9\-\.]*).*\n.*\n.*\nLower Right\s*\(\s*([0-9\-\.]*),\s*([0-9\-\.]*).*")
