@@ -14,6 +14,7 @@ class Polygon < ActiveRecord::Base
   # end
 
   def to_geojson
+    # NOTE: this is a hack to allow for poly[:consensus] to be used in API
     begin
       c = JSON.parse(consensus)
     rescue
@@ -23,6 +24,7 @@ class Polygon < ActiveRecord::Base
         c = ""
       end
     end
+    # NOTE: end hack
     { :type => "Feature", :properties => { :id => id, :dn => dn, :sheet_id => sheet_id, :consensus => c }, :geometry => { :type => "Polygon", :coordinates => JSON.parse(geometry) } }
   end
 

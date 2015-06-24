@@ -6,7 +6,10 @@
         40.732527, 
         -73.956785, 
         40.760618
-    ],
+    ], 
+    "tileset_type": "tms", 
+    "tilejson": "http://maptiles.nypl.org/1145/1145spec.json", 
+    "name": "Midtown Manhattan, East Side",
     "sheets": [
         {
             "id": "20903", 
@@ -179,8 +182,5 @@
                 40.7616315
             ]
         }
-    ], 
-    "tileset_type": "tms", 
-    "tilejson": "http://maptiles.nypl.org/1145/1145spec.json", 
-    "name": "Midtown Manhattan, East Side"
+    ]
 }
