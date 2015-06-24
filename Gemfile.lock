@@ -38,6 +38,7 @@ GEM
     builder (3.0.4)
     byebug (4.0.5)
       columnize (= 0.9.0)
+    certified (1.0.0)
     chunky_png (1.3.4)
     coderay (1.1.0)
     coffee-rails (3.2.2)
@@ -203,6 +204,7 @@ DEPENDENCIES
   active_model_serializers (~> 0.8.1)
   animate
   byebug
+  certified
   coffee-rails (~> 3.2.1)
   compass-rails
   dbscan

@@ -26,6 +26,10 @@ gem 'devise'
 
 gem 'will_paginate', '~> 3.0'
 
+group :development do
+	gem 'certified' # because openssl/omniauth issues in localhost
+end
+
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'

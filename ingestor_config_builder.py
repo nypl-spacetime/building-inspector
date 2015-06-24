@@ -66,6 +66,15 @@ def main(argv):
 			config_list.append(this_config)
 
 	# NOTE: assumes input of folder WITH NO TRAILING SLASHES
+	config_data = {
+	    "description":"ADD_A_DESCRIPTION",
+	    "name":"ADD_A_NAME",
+	    "year":"ADD_A_YEAR(S)",
+	    "bbox": [-180, 90, 180, 90], # [W,S,E,N]
+	    "tilejson":"URL_FOR_TILEJSON_SPEC",
+	    "tileset_type":"tms_or_wmts",
+	    "sheets":config_list
+	}
 	config_file = open("config-ingest-layer" + (inputfile[inputfile.rfind("/")+1:]) + ".json", "w")
 	config_file.write(json.dumps(config_list, indent=4))
 	config_file.close()
