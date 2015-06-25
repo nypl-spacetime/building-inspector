@@ -112,7 +112,7 @@ class @Inspector
             , 1000
         )
     )
-    @map.on('move', @onMapChange)
+    @map.on('moveend dragend resize', @onMapChange)
     @addButtonListeners()
     # rest should be implemented in the inspector instance
 
@@ -153,6 +153,7 @@ class @Inspector
       @miniMap.addLayer @minifog
 
   onMapChange: (e) =>
+    # console.log "map change"
     # move flags
     for flag, contents of @flags
       latlng = contents.circle.getLatLng()
@@ -162,7 +163,7 @@ class @Inspector
     # check if current polygon is somewhat visible in view
     # so user does not get lost
     return if !@options.constrainMapToPolygon
-    if @geo?.getBounds? and not @map.getBounds().intersects(@geo.getBounds())
+    if @geo?.getBounds? and not @map.getBounds().contains(@geo.getBounds())
       @map.fitBounds( @geo.getBounds() )
 
   onTutorialClick: (e) =>
@@ -374,7 +375,12 @@ class @Inspector
         # things are slightly different for editable polygon drawing
         @makeEditablePolygon()
       # center on the polygon
-      bounds = @geo.getBounds().pad(.1)
+      bounds = @geo.getBounds()
+      # console.log "bounds:", @map.getBounds().getSouthWest()
+      # console.log "bounds:", @map.getBounds().getNorthEast()
+      # console.log "new:", bounds.getSouthWest()
+      # console.log "new:", bounds.getNorthEast()
+      # console.log "contains:", @map.getBounds().contains(bounds)
       @map.fitBounds( bounds )
       # @map.setZoom( @map.getZoom()-1 ) if @options.tutorialOn
       @resetButtons()
