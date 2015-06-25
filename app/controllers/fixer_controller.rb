@@ -358,6 +358,12 @@ class FixerController < ApplicationController
 		# map[:map] = Sheet.random
 		map[:map] = Sheet.random_unprocessed(type)
 
+    # this to override the layer being chosen
+    if (params[:layer] != nil)
+      override = Sheet.where(:layer_id => params[:layer]).order("RANDOM()").first
+      map[:map] = override if override != nil
+    end
+
     map[:status] = {}
     map[:status][:session_id] = session
 
