@@ -14,6 +14,7 @@
       <hr />
       <p>Welcome citizen cartographers!<br />Help unlock New York City's past by identifying<br />buildings and other details on beautiful old maps.</p>
       <%= link_to "GET STARTED", "javascript:;", :id => "link-learn-more", :class => "learn-more big-button" %>
+      <%= link_to "NEW MAPS!", @sticker_url, :id => "link-sticker", :class => "home-link" unless @sticker_url == nil %>
     </div>
   </div>
   <div id="intro">

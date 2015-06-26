@@ -90,6 +90,43 @@
   }
 }
 
+@include keyframes(fall) {
+  0% {
+    bottom: 400px;
+  }
+  100% {
+    bottom: 60px;
+  }
+}
+
+#link-sticker {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  left: 50%;
+  bottom: 60px;
+  color: $white;
+  background: $orange;
+  text-align: center;
+  border-radius: 50px;
+  line-height: 100px;
+  margin-left: -170px;
+
+  @include transform(rotateZ(-20deg));
+
+  @include animation(fall .5s ease-in);
+
+  @include transition(background-color, .2s);
+
+  &:hover {
+    background: $green;
+  }
+
+  @media screen and (max-width: $desktopwidth) {
+    font-size: 1.5em;
+  }
+}
+
 $welcomecolor: #23190D;
 
 #welcome {
@@ -104,6 +141,7 @@ $welcomecolor: #23190D;
   }
 
   .wrapper {
+    position: relative;
     width: 960px;
     min-height: 400px;
     margin: 0 auto;

@@ -3,6 +3,8 @@ class GeneralController < ApplicationController
   before_filter :cookies_required, :except => :cookie_test
 
   def home
+    layer = Layer.order(:created_at).last
+    @sticker_url = "#{geometry_path}?layer=#{layer[:id]}" || nil
     @current_page = "homepage"
     session = getSession()
     @score_geometry = 0
