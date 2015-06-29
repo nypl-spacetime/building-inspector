@@ -69,9 +69,9 @@ It creates a config file in the application root folder with the name `config-in
 
 #### Single sheet data ingest
 
-`rake data_import:ingest_geojson id=SOMEID layer_id=SOMELAYERNAME bbox=SOMEBOUNDINGBOX force=true`
+`rake data_import:ingest_geojson id=SOMEID layer_id=SOMELAYERID bbox=SOMEBOUNDINGBOX force=true`
 
-This imports polygons from a file `public/files/SOMEID-traced.json` into the database **replacing** any polygons (and its corresponding flags) that are associated to ID `SOMEID`.
+This imports polygons from a file `public/files/SOMEID-traced.json` into the database **replacing** any polygons (and its corresponding flags) that are associated to a sheet with `map_id` equal to `SOMEID`. **IMPORTANT:** There has to be a `layer` whose `id` is equal to `SOMELAYERID` for the links to work! This **is not** the layer's `external_id`.
 
 **NOTE:** (this only applies if you want to use NYPL polygons) ~~So far only layers 859 and 860 are provided.~~ Layer 859 has separate GeoJSON for centroids and polygons. Layer 860 sheets have a single file with both fields. Ingesting 859 requires a separate `data_import:ingest_centroid_bulk` process for centroids. See above script.
 
