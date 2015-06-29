@@ -90,12 +90,15 @@
   }
 }
 
-@include keyframes(fall) {
+@include keyframes(popIn) {
   0% {
-    bottom: 400px;
+    @include transform(rotateZ(-200deg) scale(0));
+  }
+  90% {
+    @include transform(rotateZ(-20deg) scale(1.2));
   }
   100% {
-    bottom: 60px;
+    @include transform(rotateZ(-20deg) scale(1));
   }
 }
 
@@ -114,7 +117,7 @@
 
   @include transform(rotateZ(-20deg));
 
-  @include animation(fall .5s ease-in);
+  @include animation(popIn .35s ease-in);
 
   @include transition(background-color, .2s);
 

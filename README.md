@@ -53,9 +53,9 @@ After downloading, and running the proper `rake db:migrate` you need to do a bas
 
 #### All sheet data ingest
 
-`rake data_import:ingest_bulk id=LAYERID force=true`
+`rake data_import:ingest_bulk id=LAYERNAME force=true`
 
-This assumes the presence of `public/files/config-ingest-layerLAYERID.json` with a list of IDs and bounding boxes to import for the layer `LAYERID`. This **erases all sheet/polygon/flag data** for those IDs in the config file. If you don't have a config file, see the next section for instruction on how to build one easily.
+This assumes the presence of `public/files/config-ingest-layerLAYERNAME.json` with a list of IDs and bounding boxes to import for the layer `LAYERNAME`. It will create a `layer` whose `external_id` is the `LAYERNAME` provided. This **erases all sheet/polygon/flag data** for those IDs in the config file. If you don't have a config file, see the next section for instruction on how to build one easily.
 
 #### Layer ingest config file creator
 
@@ -65,11 +65,11 @@ Usage:
 
 `python ingestor_config_builder.py /path/to/folder/with/geotiffs`
 
-It creates a config file in the application root folder with the name `config-ingest-layerFOLDERNAME` where `FOLDERNAME` is the name of the folder where the GeoTIFFs were found. In NYPL, the `FOLDERNAME` is the same as the `LAYERID`.
+It creates a config file in the application root folder with the name `config-ingest-layerFOLDERNAME` where `FOLDERNAME` is the name of the folder where the GeoTIFFs were found. In NYPL, the `FOLDERNAME` is the same as the `LAYERNAME`.
 
 #### Single sheet data ingest
 
-`rake data_import:ingest_geojson id=SOMEID layer_id=SOMELAYERID bbox=SOMEBOUNDINGBOX force=true`
+`rake data_import:ingest_geojson id=SOMEID layer_id=SOMELAYERNAME bbox=SOMEBOUNDINGBOX force=true`
 
 This imports polygons from a file `public/files/SOMEID-traced.json` into the database **replacing** any polygons (and its corresponding flags) that are associated to ID `SOMEID`.
 
@@ -83,7 +83,7 @@ This imports polygons from a file `public/files/SOMEID-traced.json` into the dat
 
 ~~The original GeoJSON files do not have centroids (they were added and processed later).~~ To create the centroids of the polygons in the database you need to run:
 
-`rake data_import:ingest_centroid_bulk id=LAYERID force=true`
+`rake data_import:ingest_centroid_bulk id=LAYERNAME force=true`
 
 ##### Single sheet centroid updating
 
