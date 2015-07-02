@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
         name: auth.extra.raw_info.name,
         provider: auth.provider,
         uid: auth.uid,
-        email: "#{auth.info.nickname}@facebook.com", # make sure this is unique
+        email: "#{auth.uid}@facebook.com", # make sure this is unique
         password: Devise.friendly_token[0,20]
       )
     end
