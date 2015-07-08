@@ -279,9 +279,9 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
     display: block;
   }
 
-  &#yes-button:hover, &#no-button:hover, &#fix-button:hover, &#submit-button:hover, &#add-button:hover, &#save-button:hover {
-    background: $grayDarker;
-  }
+  // &#yes-button:hover, &#no-button:hover, &#fix-button:hover, &#submit-button:hover, &#add-button:hover, &#save-button:hover {
+  //   background: $grayDarker;
+  // }
 
   &.secondary {
     display: none;
