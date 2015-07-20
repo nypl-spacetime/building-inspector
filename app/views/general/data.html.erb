@@ -26,6 +26,7 @@
           <li><strong><%= link_to "Geometry", "#geometry" %></strong></li>
           <li><strong><%= link_to "Color", "#color" %></strong></li>
           <li><strong><%= link_to "Address", "#address" %></strong></li>
+          <li><strong><%= link_to "Consolidated", "#consolidated" %></strong></li>
         </ul>
       </li>
       <li>
@@ -79,8 +80,10 @@
     <p><strong>Note:</strong> Not all tasks and consensus types have been implemented. If you <em>definitely have to have</em> those polygons (and we can't blame you) contact us at <%= link_to "our Twitter account", "http://www.twitter.com/nypl_labs" %> and we'll hook you up.
     <h5>Pagination</h5>
     <p>All results are paginated by <strong>batches of 500 results</strong> (you can always get fewer). You can append <code>/page/:page</code> to any endpoint to request the specific page. If you do not request a specific page, the first one will be returned. If you attempt to access a page beyond the last page you'll be returned an empty GeoJSON result.</p>
+
     <h3><a name="polygons"></a>Polygons</h3>
     <p>This section covers endpoints for building footprints (polygons).</p>
+
     <h4><a name="geometry"></a>Geometry</h4>
     <h5>GET /api/polygons/geometry/{value}</h5>
     <p>Returns the list of polygons that have a consensus of <code>{value}</code> (yes, no, fix). If no value is provided, <em>all</em> polygons will be returned regardless of their consensus.</p>
@@ -276,6 +279,92 @@
             [-73.98271274889703, 40.76402820508019],
             [-73.98277446907755, 40.763945335024],
             [-73.98278569092857, 40.76394745989852]
+          ]
+        ]
+      }
+    }
+  ]
+}        </code>
+    </pre>
+
+    <h4><a name="consolidated"></a>Consolidated polygons</h4>
+    <h5>GET /api/consolidated/{value}</h5>
+    <p>Returns the consolidated geometry (polygon shape) list of polygons that either have consensus of <code>YES</code> (no fix required) or were classified as <code>FIX</code> and were subsequently fixed by inspectors. In the latter case, the original raw geometry is replaced with the consensus geometry (this is repeated in the <code>consensus</code> property for the polygon).</p>
+    <h6>Example response</h6>
+    <pre>
+        <code class="json">
+{
+  "message": "List for informative purposes only.",
+  "polygon_count": "3",
+  "page": 1,
+  "per_page": 500,
+  "total_pages": 1,
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "dn": 1002010,
+        "sheet_id": 138,
+        "consensus": "yes",
+        "fixed": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-73.9981514825787, 40.75699146852938],
+            [-73.99820209636397, 40.757014472045185],
+            [-73.99816666671428, 40.75706431296879],
+            [-73.99809833810419, 40.757035558594346],
+            [-73.9981312370646, 40.75698955156937],
+            [-73.99813629844313, 40.75698571764918],
+            [-73.9981514825787, 40.75699146852938]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 116164,
+        "dn": 722202,
+        "sheet_id": 184,
+        "consensus": {
+          "type": "FeatureCollection",
+          "features": [
+            {
+              "type": "Feature",
+              "properties": {
+                "flaggable_id": 92043
+              },
+              "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                  [
+                    [-74.01152618229389, 40.71780054913148],
+                    [-74.01155926287174, 40.71763774502096],
+                    [-74.01165045797825, 40.71764824852397],
+                    [-74.01162184774876, 40.717809527910624],
+                    [-74.01152618229389, 40.71780054913148]
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        "fixed": true
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-74.01152618229389, 40.71780054913148],
+            [-74.01155926287174, 40.71763774502096],
+            [-74.01165045797825, 40.71764824852397],
+            [-74.01162184774876, 40.717809527910624],
+            [-74.01152618229389, 40.71780054913148]
           ]
         ]
       }
