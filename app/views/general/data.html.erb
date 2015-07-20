@@ -216,7 +216,7 @@
     </pre>
     <h4><a name="address"></a>Address</h4>
     <h5>GET /api/polygons/address</h5>
-    <p>Returns the list of polygons that were marked as "yes" in the geometry task and have a consensus of either <code>NONE</code> (buildings that do not have an address associated) or a JSON structure . <strong>Numerical consensus will be added later.</strong></p>
+    <p>Returns the list of polygons that were marked as "yes" in the geometry task and have a consensus of either <code>NONE</code> (buildings that do not have an address associated) or a JSON structure with an array of address numbers each with: <code>latitude</code>, <code>longitude</code>, <code>flag_value</code> (the address number), <code>votes</code> (number of inspectors voting for this value), <code>total_votes</code> (total inspectors for this or other value), and <code>flaggable_id</code> (<code>polygon_id</code> in this case). Polygons can have none or many addresses.</p>
     <h6>Example response</h6>
     <pre>
         <code class="json">
