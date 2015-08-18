@@ -1,6 +1,7 @@
 <% content_for :page_title do %>Data - Building Inspector by NYPL Labs<% end %>
 <% content_for :dynamic_js do %>
   <%= stylesheet_link_tag    "home", :media => "all" %>
+  <%= stylesheet_link_tag    "partials/data", :media => "all" %>
   <%= stylesheet_link_tag    "lib/vendor/highlight.default", :media => "all" %>
   <%= javascript_include_tag "lib/vendor/highlight.pack" %>
   <script>hljs.initHighlightingOnLoad();</script>
@@ -84,6 +85,7 @@
     <h3><a name="polygons"></a>Polygons</h3>
     <p>This section covers endpoints for building footprints (polygons).</p>
 
+    <section class="endpoint">
     <h4><a name="geometry"></a>Geometry</h4>
     <h5>GET /api/polygons/geometry/{value}</h5>
     <p>Returns the list of polygons that have a consensus of <code>{value}</code> (yes, no, fix). If no value is provided, <em>all</em> polygons will be returned regardless of their consensus.</p>
@@ -149,6 +151,8 @@
   ]
 }        </code>
     </pre>
+    </section>
+    <section class="endpoint">
     <h4><a name="color"></a>Color</h4>
     <h5>GET /api/polygons/color/{value}</h5>
     <p>Returns the list of polygons that were marked as "yes" in the geometry task and have a consensus of <code>{value}</code> (pink, blue, yellow, green, gray or a <em>combination of those in alphabetical order</em>).</p>
@@ -214,6 +218,8 @@
   ]
 }        </code>
     </pre>
+    </section>
+    <section class="endpoint">
     <h4><a name="address"></a>Address</h4>
     <h5>GET /api/polygons/address</h5>
     <p>Returns the list of polygons that were marked as "yes" in the geometry task and have a consensus of either <code>NONE</code> (buildings that do not have an address associated) or a JSON structure with an array of address numbers each with: <code>latitude</code>, <code>longitude</code>, <code>flag_value</code> (the address number), <code>votes</code> (number of inspectors voting for this value), <code>total_votes</code> (total inspectors for this or other value), and <code>flaggable_id</code> (<code>polygon_id</code> in this case). Polygons can have none or many addresses.</p>
@@ -287,6 +293,8 @@
 }        </code>
     </pre>
 
+    </section>
+    <section class="endpoint">
     <h4><a name="consolidated"></a>Consolidated polygons</h4>
     <h5>GET /api/consolidated</h5>
     <p>Returns the consolidated geometry (polygon shape) list of polygons that either have consensus of <code>YES</code> (no fix required) or were classified as <code>FIX</code> and were subsequently fixed by inspectors. In the latter case, the original raw geometry is replaced with the consensus geometry (this is repeated in the <code>consensus</code> property for the polygon).</p>
@@ -372,10 +380,12 @@
   ]
 }        </code>
     </pre>
+    </section>
 
     <h3><a name="sheets"></a>Sheets</h3>
     <p>This section covers endpoints for data related to sheets.</p>
 
+    <section class="endpoint">
     <h4><a name="sheetslist"></a>List</h4>
     <h5>GET /api/sheets</h5>
     <p>Returns the list of sheets with their bounding box as a polygon.</p>
@@ -438,6 +448,8 @@
     </pre>
 
 
+    </section>
+    <section class="endpoint">
     <h4><a name="sheetspoly"></a>Polygons</h4>
     <h5>GET /api/sheets/{id}/polygons</h5>
     <p>Returns the list of raw (before any inspection) polygons for a sheet with ID <code>{id}</code>.</p>
@@ -523,6 +535,8 @@
     </pre>
 
 
+    </section>
+    <section class="endpoint">
     <h4><a name="sheetstopo"></a>Place names</h4>
     <h5>GET /api/sheets/{id}/toponyms</h5>
     <p>Returns the place name consensus (so far) associated with a sheet with ID <code>{id}</code>.</p>
@@ -585,6 +599,8 @@
     </pre>
 
 
+    </section>
+    <section class="endpoint">
     <h4><a name="sheetshistory"></a>History</h4>
     <h5>GET /api/sheets/{id}/history</h5>
     <p>Returns the all the flags associated with a sheet with ID <code>{id}</code> and its child polygons sorted by creation date.</p>
@@ -709,6 +725,8 @@
 }        </code>
     </pre>
 
+    </section>
+    <section class="endpoint">
     <h4><a name="sheetshistorytask"></a>History for task</h4>
     <h5>GET /api/sheets/{id}/history/{task}</h5>
     <p>Returns the all the flags associated with a sheet with ID <code>{id}</code> and task <code>{task}</code> and its child polygons sorted by creation date.</p>
@@ -766,6 +784,7 @@
   ]
 }        </code>
     </pre>
+    </section>
 
   </div>
 

@@ -8,17 +8,19 @@
 <div id="main-container">
   <div id="welcome">
     <div class="wrapper">
+      <div class="text">
       <h5>The New York Public Library presents</h5>
       <h3>Building Inspector</h3>
       <h4>Kill Time. Make History.</h4>
-      <hr />
       <p>Welcome citizen cartographers!<br />Help unlock New York City's past by identifying<br />buildings and other details on beautiful old maps.</p>
       <%= link_to "GET STARTED", "javascript:;", :id => "link-learn-more", :class => "learn-more big-button" %>
       <%= link_to "NEW MAPS!", @sticker_url, :id => "link-sticker", :class => "home-link" unless @sticker_url == nil %>
+      </div>
+      <div class="circular"></div>
     </div>
   </div>
   <div id="intro">
-    <h3 class="major">HOW YOU CAN HELP</h3>
+    <h3 class="major">How you can help</h3>
     <p class="subhead">The Library is training computers to recognize building shapes and other data on digitized insurance atlases. Via these easy, bite-sized tasks, you can help check the computers' work and capture other valuable information.</p>
     <div id="home-slideshow" class="swipeshow">
       <ul class="slides">
@@ -29,7 +31,7 @@
             <div id="slide1-no" class="falls control red">NO</div>
             <div id="slide1-fix" class="falls control yellow">FIX</div>
           </div>
-          <h4>CHECK<br />FOOTPRINTS</h4>
+          <h4>Check<br />footprints</h4>
           <svg version="1.1" class="intro-path" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 960 300" enable-background="new 0 0 960 300" xml:space="preserve">
             <polygon class="poly-yes" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="333,188 385.4,158.5 433.3,221.2 377.3,253.6 "/>
             <polygon class="poly-no" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="414.1,138.1 395,110.8 425.9,95.8 446.6,124.1 "/>
@@ -44,7 +46,7 @@
             <div id="slide3-c" class="falls marker"></div>
             <div id="slide3-d" class="falls marker"></div>
           </div>
-          <h4>FIX<br />FOOTPRINTS</h4>
+          <h4>Fix<br />footprints</h4>
           <svg version="1.1" class="intro-path" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 960 300" enable-background="new 0 0 960 300" xml:space="preserve">
             <polygon class="poly-a" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="562.3,163.1 483.4,73.2 565.3,51.1 648.6,135.1 "/>
             <polygon class="poly-b" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="562.3,163.1 472.4,59.2 565.3,51.1 648.6,135.1 "/>
@@ -59,7 +61,7 @@
             <div id="slide2-c" class="falls number">111</div>
             <div id="slide2-d" class="falls number">113</div>
           </div>
-          <h4>ENTER<br />ADDRESSES</h4>
+          <h4>Enter<br />addresses</h4>
           <svg version="1.1" class="intro-path" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 960 300" enable-background="new 0 0 960 300" xml:space="preserve">
             <polygon class="poly-a" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="333,188 385.4,158.5 433.3,221.2 377.3,253.6 "/>
             <polygon class="poly-b" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="498.2,188.2 530.6,175.7 477.5,110.8 446.6,124.1 "/>
@@ -74,7 +76,7 @@
             <div id="slide4-c" class="falls control color green">GREEN</div>
             <div id="slide4-d" class="falls control color black">GRAY</div>
           </div>
-          <h4>CLASSIFY<br />COLORS</h4>
+          <h4>Classify<br />colors</h4>
           <svg version="1.1" class="intro-path" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 960 300" enable-background="new 0 0 960 300" xml:space="preserve">
             <polygon class="poly-a" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="333,188 385.4,158.5 433.3,221.2 377.3,253.6 "/>
             <polygon class="poly-b" fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" points="498.2,188.2 530.6,175.7 477.5,110.8 446.6,124.1 "/>
@@ -89,7 +91,7 @@
             <div id="slide5-b" class="falls toponym">Coal House</div>
             <div id="slide5-c" class="falls toponym">Stable</div>
           </div>
-          <h4>FIND<br />PLACE NAMES</h4>
+          <h4>Find<br />place names</h4>
         </li>
       </ul>
       <div id="slide-buttons">
@@ -126,7 +128,7 @@
 
     <div id="home-explained">
       <div class="header first">
-        <h3>WHY THIS MATTERS</h3>
+        <h3>Why this matters</h3>
         <h4>Imagine if maps had a magic switch<br />that let you explore the geography of the past.</h4>
         <h4>The Library wants to do this for New York City, turning historical atlases into time machines.</h4>
       </div>

@@ -1,0 +1,41 @@
+@import "lib/css3-mixins";
+@import "lib/button-mixins";
+@import "variables";
+@import "compass";
+@import "compass/css3/transform";
+@import "compass/utilities/general/clearfix";
+@import "animate";
+
+#intro {
+  .endpoint {
+    position: relative;
+
+    h4 {
+      position: absolute;
+      font-family: $mainfont;
+      text-transform: uppercase;
+      border-top: 2px solid;
+      width: 15%;
+      text-align: right;
+      font-size: 1em;
+      position: absolute;
+      margin-top: -4px;
+      left: 20px;
+      padding: 0;
+
+      @media screen and (max-width: $desktopwidth) {
+        position: relative;
+        left: auto;
+        margin: 0;
+      }
+    }
+
+    h5, h6, p, pre {
+      margin-left: 18%;
+    }
+
+    pre {
+
+    }
+  }
+}

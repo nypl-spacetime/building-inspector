@@ -50,7 +50,7 @@
 
   h3 {
     font-size: 2em;
-    text-transform: uppercase;
+    // text-transform: uppercase;
     @media screen and (max-width: $desktopwidth) {
       margin-bottom: 0 !important;
     }
@@ -158,7 +158,7 @@
 }
 
 .graphic {
-  @include border-radius(5px);
+  @include border-radius(50%);
   @include clearfix;
   @media screen and (max-width: $desktopwidth) {
     @include border-radius(0);

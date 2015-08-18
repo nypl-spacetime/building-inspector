@@ -16,6 +16,7 @@
     width: 45%;
     height: 200px;
     margin-bottom: 20px;
+    text-transform: none;
 
     &:nth-child(even) {
       float: right;
@@ -34,10 +35,17 @@
 
 #intro h3.major.inspector {
   background: #0F0D0D asset-url("home/inspector.jpg", image) no-repeat;
+  @include transform(scaleX(-1));
   background-attachment: fixed;
   background-position: 0px 0px;
   margin-top: 60px;
   height: 300px;
   line-height: 300px;
   color: $grayLightest;
+
+  div {
+    @include transform(scaleX(-1));
+    text-align: left;
+    padding-left: 10px;
+  }
 }

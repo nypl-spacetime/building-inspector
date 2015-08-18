@@ -1,5 +1,28 @@
 @import "meta-include";
 
+// new nyplux stuff
+@font-face{
+font-family:"Milo Web";
+font-style:normal;
+font-weight:800;
+src:url("http://ux-static.nypl.org.s3-website-us-east-1.amazonaws.com/milo-web/milo-slab-pro-light/MiloSlabWebPro-Light.woff") format('woff');}
+@font-face{
+font-family:"Kievit Web";
+font-style:normal;
+font-weight:800;
+src:url("http://ux-static.nypl.org.s3-website-us-east-1.amazonaws.com/ff_kievit_web/KievitWeb-Bold.woff") format('woff');}
+@font-face{
+font-family:"Kievit Web";
+font-style:normal;
+font-weight:400;
+src:url("http://ux-static.nypl.org.s3-website-us-east-1.amazonaws.com/ff_kievit_web/KievitWeb-Light.woff") format('woff');}
+@font-face{
+font-family:"Kievit Web";
+font-style:italic;
+font-weight:400;
+src:url("http://ux-static.nypl.org.s3-website-us-east-1.amazonaws.com/ff_kievit_web/KievitWeb-LightIta.woff") format('woff');}
+// end nyplux
+
 html {
     -webkit-text-size-adjust: none;
 }
@@ -30,7 +53,7 @@ p, ul {
 
 h3 {
   // margin: 0 auto 20px;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 ::selection {
@@ -201,6 +224,7 @@ a, a:link, a:visited, a:hover {
 
   h1, h2, h3, h4, h5, h6, p {
     padding: 0 10px 0 20px;
+    clear: both;
     // max-width: $desktopwidth/2;
 
     @media screen and (max-width: $desktopwidth) {
@@ -296,7 +320,7 @@ a, a:link, a:visited, a:hover {
 
 #ie8 {
   display: none;
-  text-transform: uppercase;
+  text-transform: none;
   position: absolute;
   top: 0;
   right: 0;
