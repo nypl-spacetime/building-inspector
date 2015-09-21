@@ -209,7 +209,7 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 
   &#add-button {
     background: $fixcolor;
-    width: 120px;
+    width: 200px;
     margin-right: 0;
   }
 
@@ -282,6 +282,10 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
   // &#yes-button:hover, &#no-button:hover, &#fix-button:hover, &#submit-button:hover, &#add-button:hover, &#save-button:hover {
   //   background: $grayDarker;
   // }
+
+  &.primary {
+    width: 300px;
+  }
 
   &.secondary {
     display: none;
