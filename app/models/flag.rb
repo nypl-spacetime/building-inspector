@@ -12,7 +12,14 @@ class Flag < ActiveRecord::Base
         if type != "toponym"
             Flag.select('DISTINCT flags.flaggable_id, flags.id, flags.session_id, flags.flag_type, flags.flaggable_type, flags.latitude, flags.longitude, flags.flag_value, polygons.geometry, polygons.sheet_id, polygons.dn').joins("INNER JOIN polygons ON polygons.id = flags.flaggable_id INNER JOIN sheets ON sheets.id = polygons.sheet_id").where('sheets.id = ? AND flags.session_id = ? AND flags.flag_type = ?', sheet_id, session_id, type)
         else
-            Flag.select('DISTINCT flags.flaggable_id, flags.id, flags.session_id, flags.flag_type, flags.flaggable_type, flags.latitude, flags.longitude, flags.flag_value').joins("INNER JOIN sheets ON sheets.id = flags.flaggable_id").where('sheets.id = ? AND flags.session_id = ? AND flags.flag_type = ?', sheet_id, session_id, type)
+            # constrain flags to sheet bounding box
+            s = Sheet.find(sheet_id)
+            bbox = s[:bbox].split(",")
+            w = bbox[0]
+            s = bbox[1]
+            e = bbox[2]
+            n = bbox[3]
+            Flag.select('DISTINCT flags.flaggable_id, flags.id, flags.session_id, flags.flag_type, flags.flaggable_type, flags.latitude, flags.longitude, flags.flag_value').joins("INNER JOIN sheets ON sheets.id = flags.flaggable_id").where('(flags.flaggable_id = ? OR (flags.latitude <= ? AND flags.latitude >= ? AND flags.longitude <= ? AND flags.longitude >= ?)) AND flags.session_id = ? AND flags.flag_type = ?', sheet_id, n, s, e, w, session_id, type)
         end
     end
 
@@ -21,7 +28,14 @@ class Flag < ActiveRecord::Base
         if type != "toponym"
             Flag.select('DISTINCT flags.flaggable_id, flags.id, flags.session_id, flags.flag_type, flags.flaggable_type, flags.latitude, flags.longitude, flags.flag_value, polygons.geometry, polygons.sheet_id, polygons.dn').joins("INNER JOIN polygons ON polygons.id = flags.flaggable_id INNER JOIN sheets ON sheets.id = polygons.sheet_id").joins(:usersession).where('sheets.id = ? AND usersessions.user_id = ? AND flags.flag_type = ?', sheet_id, user_id, type)
         else
-            Flag.select('DISTINCT flags.flaggable_id, flags.id, flags.session_id, flags.flag_type, flags.flaggable_type, flags.latitude, flags.longitude, flags.flag_value').joins("INNER JOIN sheets ON sheets.id = flags.flaggable_id").joins(:usersession).where('sheets.id = ? AND usersessions.user_id = ? AND flags.flag_type = ?', sheet_id, user_id, type)
+            # constrain flags to sheet bounding box
+            s = Sheet.find(sheet_id)
+            bbox = s[:bbox].split(",")
+            w = bbox[0]
+            s = bbox[1]
+            e = bbox[2]
+            n = bbox[3]
+            Flag.select('DISTINCT flags.flaggable_id, flags.id, flags.session_id, flags.flag_type, flags.flaggable_type, flags.latitude, flags.longitude, flags.flag_value').joins("INNER JOIN sheets ON sheets.id = flags.flaggable_id").joins(:usersession).where('(flags.flaggable_id = ? OR (flags.latitude <= ? AND flags.latitude >= ? AND flags.longitude <= ? AND flags.longitude >= ?)) AND usersessions.user_id = ? AND flags.flag_type = ?', sheet_id, n, s, e, w, user_id, type)
         end
     end
 
