@@ -104,6 +104,30 @@ class FlagsController < ApplicationController
     end
   end
 
+  def stats
+    d = Date.today
+    period = 12
+    @results = []
+    (1..period).each do |m|
+        past = d - m.months
+        first_day = Date.civil(past.year, past.month,1)
+        last_day = Date.civil(past.year, past.month,-1)
+        flags = Flag.select("COUNT(id) as count, flag_type").where("created_at >= ? AND created_at <= ?", first_day, last_day).group(:flag_type)
+        temp = {}
+        temp[:period] = past
+        temp[:values] = []
+        flags.each do |r|
+            type = r[:flag_type]
+            count = r[:count].to_i
+            temp[:values].push({:name=>type,:count=>count})
+        end
+        @results.push(temp)
+    end
+    respond_to do |format|
+      format.html # stats.html.erb
+    end
+  end
+
   private
   
   def sort_column

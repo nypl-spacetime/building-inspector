@@ -20,15 +20,14 @@ Webappmini::Application.routes.draw do
 
   # flag listing
   get "/flags/all/:type", to: "flags#all"
+  # "analytics"
+  get "/stats", to: "flags#stats"
 
   # for session checking
   get "cookie_test", :controller => :general
 
   #random map provider url
   get "fixer/map", to: "fixer#randomMap"
-
-  # admin specials
-  get "polygon_consensus", to: "polygons#consensus"
 
   # general content stuff
   get "general/about"

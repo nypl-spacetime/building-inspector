@@ -292,6 +292,10 @@ a, a:link, a:visited, a:hover {
 #admin-container {
   padding: 12px;
   background: $white;
+
+  th {
+    font-weight: bold;
+  }
 }
 
 #ie8 {

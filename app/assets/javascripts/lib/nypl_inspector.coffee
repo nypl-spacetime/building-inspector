@@ -156,10 +156,11 @@ class @Inspector
     # console.log "map change"
     # move flags
     for flag, contents of @flags
-      latlng = contents.circle.getLatLng()
-      xy = @map.latLngToContainerPoint(latlng)
-      contents.elem.css("left",xy.x)
-      contents.elem.css("top",xy.y)
+        continue if !contents.circle?
+        latlng = contents.circle.getLatLng()
+        xy = @map.latLngToContainerPoint(latlng)
+        contents.elem.css("left",xy.x)
+        contents.elem.css("top",xy.y)
     # check if current polygon is somewhat visible in view
     # so user does not get lost
     return if !@options.constrainMapToPolygon
