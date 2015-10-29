@@ -1,0 +1,48 @@
+<h1>Flag stats</h1>
+
+<%
+months = @results.count-1
+rows = @results.first[:values].count-1
+total_months = []
+total_row = 0
+%>
+<table>
+
+    <tr>
+        <th>Task</th>
+<% for i in 0..months %>
+        <th><%= @results[i][:period].strftime("%b %Y") %></th>
+<% end %>
+        <th>Total</th>
+    </tr>
+
+<% for j in 0..rows %>
+    <% total_row = 0 %>
+    <tr>
+        <td><%= @results[0][:values][j][:name] %></td>
+    <% for i in 0..months %>
+<%
+    value = @results[i][:values][j] ? @results[i][:values][j][:count] : 0
+    if total_months[i] == nil
+        total_months[i] = 0
+    end
+    total_months[i] = total_months[i] + value
+    total_row = total_row + value
+%>
+        <td><%= number_with_delimiter(value) %></td>
+    <% end %>
+        <td><%= number_with_delimiter(total_row) %></td>
+    </tr>
+<% end %>
+
+    <tr>
+        <td></td>
+<% total_row = 0 %>
+<% for i in 0..months %>
+    <% total_row = total_row + total_months[i] %>
+        <td><%= number_with_delimiter(total_months[i]) %></td>
+<% end %>
+        <td><%= number_with_delimiter(total_row) %></td>
+    </tr>
+
+</table>
