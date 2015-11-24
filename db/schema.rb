@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150506213411) do
+ActiveRecord::Schema.define(:version => 20151124214735) do
 
   create_table "consensuspolygons", :force => true do |t|
     t.string   "task"
@@ -76,6 +76,16 @@ ActiveRecord::Schema.define(:version => 20150506213411) do
   end
 
   add_index "sheets", ["layer_id"], :name => "index_sheets_on_layer_id"
+
+  create_table "user_scores", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "flag_type"
+    t.integer  "score"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "user_scores", ["user_id", "flag_type"], :name => "user_task_index", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "",          :null => false

@@ -109,16 +109,21 @@
     <div id="home-scores">
         <h3>Your inspections so far:</h3>
         <ul>
-          <li><%= link_to(image_tag("icon-geometry.svg", :class=>"task-icon"), geometry_path, :class=>"link-task") %> <strong><%= @score_geometry %></strong> <%= "footprint".pluralize(@score_geometry) %> checked
+          <li><%= link_to(image_tag("icon-geometry.svg", :class=>"task-icon"), geometry_path, :class=>"link-task") %> <strong><%= number_with_delimiter @score_geometry %></strong> <%= "footprint".pluralize(@score_geometry) %> checked
+            <% if (@rank_geometry != nil) %><br />You're #<%= number_with_delimiter(@rank_geometry) %><% end %>
             <br /><%= link_to("Inspect more!", geometry_path, :class=>"link-task") %></li>
-          <li><%= link_to(image_tag("icon-polygonfix.svg", :class=>"task-icon"), polygonfix_path, :class=>"link-task") %> <strong><%= @score_polygonfix %></strong> <%= "footprint".pluralize(@score_polygonfix) %> fixed
+          <li><%= link_to(image_tag("icon-polygonfix.svg", :class=>"task-icon"), polygonfix_path, :class=>"link-task") %> <strong><%= number_with_delimiter @score_polygonfix %></strong> <%= "footprint".pluralize(@score_polygonfix) %> fixed
+            <% if (@rank_polygonfix != nil) %><br />You're #<%= number_with_delimiter(@rank_polygonfix) %><% end %>
             <br /><%= link_to("Inspect more!", polygonfix_path, :class=>"link-task") %></li>
-          <li><%= link_to(image_tag("icon-address.svg", :class=>"task-icon"), address_path, :class=>"link-task") %> <strong><%= @score_address %></strong> <%= "building".pluralize(@score_address) %> addressed
+          <li><%= link_to(image_tag("icon-address.svg", :class=>"task-icon"), address_path, :class=>"link-task") %> <strong><%= number_with_delimiter @score_address %></strong> <%= "building".pluralize(@score_address) %> addressed
+            <% if (@rank_address != nil) %><br />You're #<%= number_with_delimiter(@rank_address) %><% end %>
             <br /><%= link_to("Inspect more!", address_path, :class=>"link-task") %></li>
-          <li><%= link_to(image_tag("icon-color.svg", :class=>"task-icon"), color_path, :class=>"link-task") %> <strong><%= @score_color %></strong> color <%= "ID".pluralize(@score_color) %>
+          <li><%= link_to(image_tag("icon-color.svg", :class=>"task-icon"), color_path, :class=>"link-task") %> <strong><%= number_with_delimiter @score_color %></strong> color <%= "ID".pluralize(@score_color) %>
+            <% if (@rank_color != nil) %><br />You're #<%= number_with_delimiter(@rank_color) %><% end %>
             <br /><%= link_to("Inspect more!", color_path, :class=>"link-task") %></li>
           <li>&nbsp;</li>
-          <li><%= link_to(image_tag("icon-toponym.svg", :class=>"task-icon"), toponym_path, :class=>"link-task") %> <strong><%= @score_toponym %></strong> place <%= "name".pluralize(@score_toponym) %>
+          <li><%= link_to(image_tag("icon-toponym.svg", :class=>"task-icon"), toponym_path, :class=>"link-task") %> <strong><%= number_with_delimiter @score_toponym %></strong> place <%= "name".pluralize(@score_toponym) %>
+            <% if (@rank_toponym != nil) %><br />You're #<%= number_with_delimiter(@rank_toponym) %><% end %>
             <br /><%= link_to("Inspect more!", toponym_path, :class=>"link-task") %></li>
         </ul>
     </div>

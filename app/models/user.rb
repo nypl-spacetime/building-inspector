@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
          :omniauthable, :omniauth_providers => [:google_oauth2, :facebook, :twitter]
 
   has_many :usersessions
+  has_many :user_scores
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :provider, :uid, :role
