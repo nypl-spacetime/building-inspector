@@ -103,6 +103,16 @@ rake db:calculate_consensus
 
 This task should be scheduled to execute regularly (say, every ten minutes). New consensus generation for other tasks is being implemented.
 
+### <a name="rankings"></a>Calculating user rankings
+
+The homepage of the site shows, for users who authenticate via Facebook, Google, or Twitter, their ranking in terms of amount of inspections. This is performed by the tasks in `lib/tasks/user.rake`:
+
+````
+rake user:calculate_scores
+````
+
+This task should be scheduled to execute regularly (every hour or so).
+
 ### <a name="api"></a>API querying
 
 See a complete description in the [Data page](http://buildinginspector.nypl.org/data).
