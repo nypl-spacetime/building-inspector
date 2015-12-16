@@ -8,7 +8,7 @@ class @Inspector
 
     window.nypl_inspector = @ # to make it accessible from console
     @desktopWidth = 600
-    @retries = 3
+    @retries = 5
 
     defaults =
       flaggableType: 'Polygon'
