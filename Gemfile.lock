@@ -98,7 +98,6 @@ GEM
     multi_json (1.11.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    newrelic_rpm (3.13.0.299)
     oauth (0.4.7)
     oauth2 (1.0.0)
       faraday (>= 0.8, < 0.10)
@@ -207,7 +206,6 @@ DEPENDENCIES
   devise
   figaro
   jquery-rails
-  newrelic_rpm
   omniauth-facebook
   omniauth-google-oauth2
   omniauth-twitter
@@ -220,3 +218,6 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   unicorn
   will_paginate (~> 3.0)
+
+BUNDLED WITH
+   1.11.2
