@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.2.4'
+
 gem 'rails', '3.2.13'
 
 gem 'newrelic_rpm'
