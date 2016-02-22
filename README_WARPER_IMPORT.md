@@ -14,7 +14,7 @@
 
      `cp 1148/*/*.json /path/to/app/public/files`
 
- 6. Run the `ingestor_config_builder.py` ingest configuration file creator on the sheets:
+ 6. Run the `ingestor_config_builder.py` ingest configuration file creator on the sheets. **IMPORTANT:** Sometimes the original TIFFs contain weird bounding boxes that mess up the admin/progress views so make sure to test those and manually fix if necessary:
 
     `./ingestor_config_builder.py 1148`
 
