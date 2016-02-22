@@ -37,6 +37,8 @@ def main(argv):
 
 	config_list = []
 
+	layer_bbox = []
+
 	for ff in os.listdir(inputfile):
 		if ff.endswith(".tif"):
 			base_name = ff[:ff.find(".tif")]
@@ -55,25 +57,39 @@ def main(argv):
 			print "S", geoMatch[0][3]
 			print "\n"
 
-			W = geoMatch[0][0]
-			N = geoMatch[0][1]
-			E = geoMatch[0][2]
-			S = geoMatch[0][3]
+			W = float(geoMatch[0][0])
+			N = float(geoMatch[0][1])
+			E = float(geoMatch[0][2])
+			S = float(geoMatch[0][3])
+
+			bbox = [W, S, E, N]
+
+			if layer_bbox == []:
+				layer_bbox = bbox
+			else:
+				if W < layer_bbox[0]:
+					layer_bbox[0] = W
+				if S < layer_bbox[1]:
+					layer_bbox[1] = S
+				if E > layer_bbox[2]:
+					layer_bbox[2] = E
+				if N > layer_bbox[3]:
+					layer_bbox[3] = N
 
 			this_config = {}
 			this_config['id'] = base_name
-			this_config['bbox'] = [float(W), float(S), float(E), float(N)]
+			this_config['bbox'] = bbox
 			config_list.append(this_config)
 
 	# NOTE: assumes input of folder WITH NO TRAILING SLASHES
 	config_data = {
-	    "description":"ADD_A_DESCRIPTION",
-	    "name":"ADD_A_NAME",
-	    "year":"ADD_A_YEAR(S)",
-	    "bbox": [-180, 90, 180, 90], # [W,S,E,N]
-	    "tilejson":"URL_FOR_TILEJSON_SPEC",
-	    "tileset_type":"tms_or_wmts",
-	    "sheets":config_list
+		"description":"ADD_A_DESCRIPTION",
+		"name":"ADD_A_NAME",
+		"year":"ADD_A_YEAR(S)",
+		"bbox": layer_bbox, # [W,S,E,N]
+		"tilejson":"URL_FOR_TILEJSON_SPEC",
+		"tileset_type":"tms_or_wmts",
+		"sheets":config_list
 	}
 	config_file = open("config-ingest-layer" + (inputfile[inputfile.rfind("/")+1:]) + ".json", "w")
 	config_file.write(json.dumps(config_data, indent=4))

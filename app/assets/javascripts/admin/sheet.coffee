@@ -16,9 +16,9 @@ class Sheet
     @map.on 'load', () ->
       sheetdata = $("#sheetdata").data("sheet")
 
-      console.log sheetdata.bbox
-
       bounds = Utils.parseBbox(sheetdata.bbox)
+
+      console.log sheetdata.bbox, bounds
 
       sheet.map.fitBounds(bounds)
       sheet.getPolygons()
