@@ -20,7 +20,7 @@
 
  7. Add `year(s)`, `description`, `tileset_type`, `tilejson`, and `name` to the ingest configuration file
 
- 8. Test the ingest process locally:
+ 8. Test the ingest process locally (`force=true` omitted from example to avoid copy/paste snafus):
 
     `rake data_import:ingest_bulk id=1148`
 
@@ -29,5 +29,9 @@
  9. Push the code to the staging server and run the ingest script (note `-a bistage` which specifies the staging instance):
 
      `heroku run rake data_import:ingest_bulk id=1148 -a bistage`
+
+ 10. Test that everything works fine
+
+ 11. Push the code to the production server and run the scripts
 
  10. Profit!
