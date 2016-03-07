@@ -2,8 +2,14 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :global_variables
-
   before_filter :store_location
+
+  after_filter :set_access_control_headers
+
+  def set_access_control_headers
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Request-Method'] = '*'
+  end
 
   def store_location
     # store last url - this is needed for post-login redirect to whatever the user last visited.
