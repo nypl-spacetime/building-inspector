@@ -289,7 +289,7 @@
 
     <h4><a name="consolidated"></a>Consolidated polygons</h4>
     <h5>GET /api/consolidated</h5>
-    <p>Returns the consolidated geometry (polygon shape) list of polygons that either have consensus of <code>YES</code> (no fix required) or were classified as <code>FIX</code> and were subsequently fixed by inspectors. In the latter case, the original raw geometry is replaced with the consensus geometry (this is repeated in the <code>consensus</code> property for the polygon). It also includes the address consensus for that polygon, if any: the `geometry` type for these polygons is returned as `GeometryCollection` with each address `Point` being sent with the polygon's `Polygon` geometry and the address `Properties` being returned as an array in the `consensus_address` property of the polygon.</p>
+    <p>Returns the consolidated geometry (polygon shape) list of polygons that either have consensus of <code>YES</code> (no fix required) or were classified as <code>FIX</code> and were subsequently fixed by inspectors. In the latter case, the original raw geometry is replaced with the consensus geometry (this is repeated in the <code>consensus</code> property for the polygon). It also includes the address consensus for that polygon, if any: the <code>geometry</code> type for these polygons is returned as <code>GeometryCollection</code> with each address <code>Point</code> being sent with the polygon's <code>Polygon</code> geometry and the address <code>Properties</code> being returned as an array in the <code>consensus_address</code> property of the polygon.</p>
     <h6>Example response</h6>
     <pre>
         <code class="json">
