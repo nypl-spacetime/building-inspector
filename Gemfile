@@ -32,6 +32,8 @@ group :development do
 	gem 'certified' # because openssl/omniauth issues in localhost
 end
 
+gem 'test-unit', '~> 3.0'
+
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'

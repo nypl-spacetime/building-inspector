@@ -289,26 +289,29 @@
 
     <h4><a name="consolidated"></a>Consolidated polygons</h4>
     <h5>GET /api/consolidated</h5>
-    <p>Returns the consolidated geometry (polygon shape) list of polygons that either have consensus of <code>YES</code> (no fix required) or were classified as <code>FIX</code> and were subsequently fixed by inspectors. In the latter case, the original raw geometry is replaced with the consensus geometry (this is repeated in the <code>consensus</code> property for the polygon).</p>
+    <p>Returns the consolidated geometry (polygon shape) list of polygons that either have consensus of <code>YES</code> (no fix required) or were classified as <code>FIX</code> and were subsequently fixed by inspectors. In the latter case, the original raw geometry is replaced with the consensus geometry (this is repeated in the <code>consensus</code> property for the polygon). It also includes the address consensus for that polygon, if any: the `geometry` type for these polygons is returned as `GeometryCollection` with each address `Point` being sent with the polygon's `Polygon` geometry and the address `Properties` being returned as an array in the `consensus_address` property of the polygon.</p>
     <h6>Example response</h6>
     <pre>
         <code class="json">
 {
-  "message": "List for informative purposes only.",
-  "polygon_count": "3",
+  "message": "List for informative purposes only. This is not a definitive list. This URL may be changed at any time without prior notice.",
+  "polygon_count": "72689",
   "page": 1,
   "per_page": 500,
-  "total_pages": 1,
+  "total_pages": 146,
   "type": "FeatureCollection",
   "features": [
     {
       "type": "Feature",
       "properties": {
-        "id": 1,
+        "id": 73000,
         "dn": 1002010,
         "sheet_id": 138,
         "consensus": "yes",
-        "fixed": false
+        "fixed": false,
+        "map_id": "7099",
+        "consensus_color": "yellow",
+        "consensus_address": "NONE"
       },
       "geometry": {
         "type": "Polygon",
@@ -328,44 +331,44 @@
     {
       "type": "Feature",
       "properties": {
-        "id": 116164,
-        "dn": 722202,
-        "sheet_id": 184,
-        "consensus": {
-          "type": "FeatureCollection",
-          "features": [
-            {
-              "type": "Feature",
-              "properties": {
-                "flaggable_id": 92043
-              },
-              "geometry": {
-                "type": "Polygon",
-                "coordinates": [
-                  [
-                    [-74.01152618229389, 40.71780054913148],
-                    [-74.01155926287174, 40.71763774502096],
-                    [-74.01165045797825, 40.71764824852397],
-                    [-74.01162184774876, 40.717809527910624],
-                    [-74.01152618229389, 40.71780054913148]
-                  ]
-                ]
-              }
-            }
-          ]
-        },
-        "fixed": true
+        "id": 73001,
+        "dn": 1005025,
+        "sheet_id": 138,
+        "consensus": "yes",
+        "fixed": false,
+        "map_id": "7099",
+        "consensus_color": "pink",
+        "consensus_address": [
+          {
+            "votes": 3,
+            "total_votes": 3,
+            "flag_value": "445"
+          }
+        ]
       },
       "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [-74.01152618229389, 40.71780054913148],
-            [-74.01155926287174, 40.71763774502096],
-            [-74.01165045797825, 40.71764824852397],
-            [-74.01162184774876, 40.717809527910624],
-            [-74.01152618229389, 40.71780054913148]
-          ]
+        "type": "GeometryCollection",
+        "geometries": [
+          {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [-73.9976238409442, 40.75697150401845],
+                [-73.99763605041814, 40.75696082476952],
+                [-73.99764622497976, 40.75696349458192],
+                [-73.99778052919307, 40.75702223042746],
+                [-73.99778256410538, 40.75703023985692],
+                [-73.99775204042055, 40.75707028698976],
+                [-73.9976055267333, 40.75700621156564],
+                [-73.99760349182097, 40.75699820213328],
+                [-73.9976238409442, 40.75697150401845]
+              ]
+            ]
+          },
+          {
+            "type": "Point",
+            "coordinates": [-73.99760551750667, 40.756970718269]
+          }
         ]
       }
     }
