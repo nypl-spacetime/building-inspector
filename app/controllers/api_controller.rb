@@ -84,6 +84,12 @@ class ApiController < ApplicationController
             as_geo[:properties][:consensus_color] = p.color
             consensus_address = p.consensus_address
             as_geo[:properties][:consensus_address] = consensus_address
+
+            # put the poly geometry and address points in a new geometry
+            new_geo = {}
+            new_geo[:type] = "GeometryCollection"
+            new_geo[:geometries] = []
+
             if consensus_address != nil && consensus_address != "N/A" && consensus_address != "NONE"
                 # address points and poly geometry live together
                 addresses = JSON.parse(consensus_address)
@@ -91,15 +97,13 @@ class ApiController < ApplicationController
                 # put address properties in an array in the poly properties
                 as_geo[:properties][:consensus_address] = addresses["features"].each_with_index.map {|f,i| f["properties"]}
 
-                # put the poly geometry and address points in a new geometry
-                new_geo = {}
-                new_geo[:type] = "GeometryCollection"
                 new_geo[:geometries] = addresses["features"].map { |f|  f["geometry"]}
-                new_geo[:geometries].unshift(as_geo[:geometry])
-
-                # replace the poly geometry with the new one
-                as_geo[:geometry] = new_geo
             end
+            new_geo[:geometries].unshift(as_geo[:geometry])
+
+            # replace the poly geometry with the new one
+            as_geo[:geometry] = new_geo
+
             geojson.push(as_geo)
         end
 

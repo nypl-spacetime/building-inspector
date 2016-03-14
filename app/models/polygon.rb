@@ -49,7 +49,7 @@ class Polygon < ActiveRecord::Base
   def consensus_address
     c = poly_consensus("address")
     if c == "N/A" || c == "NONE"
-      return c
+      return "NONE"
     end
     features = []
     c_array = JSON.parse(c)
