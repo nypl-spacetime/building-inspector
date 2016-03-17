@@ -76,7 +76,6 @@ class ConsensusUtils
         edge = (p2[0] - p1[0]) * (p2[1] + p1[1])
         edge_sum = edge_sum + edge
       end
-      puts points
       if (edge_sum < 0)
         points = points.reverse
       end
