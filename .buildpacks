@@ -1,2 +1,3 @@
-https://github.com/woahdae/heroku-geo-buildpack.git#1.3
-https://github.com/heroku/heroku-buildpack-ruby.git#v145
+https://github.com/peterkeen/heroku-buildpack-vendorbinaries.git
+https://github.com/diowa/heroku-buildpack-rgeo-prep.git
+https://github.com/heroku/heroku-buildpack-ruby.git
