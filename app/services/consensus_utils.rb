@@ -66,21 +66,21 @@ class ConsensusUtils
     return pts
   end
 
-    def self.make_clockwise(geom)
-      points = get_points(geom)
-      edge_sum = 0
-      points.each_with_index do |p1,index|
-        i = index + 1
-        i = 0 if i >= points.count
-        p2 = points[i]
-        edge = (p2[0] - p1[0]) * (p2[1] + p1[1])
-        edge_sum = edge_sum + edge
-      end
-      if (edge_sum < 0)
-        points = points.reverse
-      end
-      return points
+  def self.make_clockwise(geom)
+    points = get_points(geom)
+    edge_sum = 0
+    points.each_with_index do |p1,index|
+      i = index + 1
+      i = 0 if i >= points.count
+      p2 = points[i]
+      edge = (p2[0] - p1[0]) * (p2[1] + p1[1])
+      edge_sum = edge_sum + edge
     end
+    if (edge_sum < 0)
+      points = points.reverse
+    end
+    return points
+  end
 
   def self.get_all_poly_points(polys)
     points = []
