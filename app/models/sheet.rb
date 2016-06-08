@@ -69,7 +69,7 @@ class Sheet < ActiveRecord::Base
     type = Sheet.sanitize(type)
 
     columns = "DISTINCT polygons.id, geometry, sheet_id, CP.consensus, dn, centroid_lat, centroid_lon"
-    join = "LEFT JOIN flags AS F ON polygons.id = F.flaggable_id LEFT JOIN consensuspolygons AS CP ON CP.flaggable_id = polygons.id AND CP.flaggable_type = 'Polygon' AND CP.task = #{type}"
+    join = "INNER JOIN flags AS F ON polygons.id = F.flaggable_id INNER JOIN consensuspolygons AS CP ON CP.flaggable_id = polygons.id AND CP.flaggable_type = 'Polygon' AND CP.task = #{type}"
     where = " sheet_id = #{sheet_id} "
 
     Polygon.select(columns).joins(join).where(where)

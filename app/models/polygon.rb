@@ -4,9 +4,9 @@ class Polygon < ActiveRecord::Base
   belongs_to :sheet
   attr_accessible :color, :geometry, :sheet_id, :vectorizer_json, :dn, :centroid_lat, :centroid_lon, :flag_count
 
-  def self.grouped_by_sheet(layer_id)
+  def self.grouped_by_sheet(layer_id, with_consensus_on_task)
     # returns polygon counts grouped by sheet for a given layer (used in the progress maps)
-    Polygon.select("COUNT(polygons.id) AS total, sheet_id, sheets.bbox").where("sheets.layer_id = ?",layer_id).joins(:sheet).group("polygons.sheet_id, sheets.bbox")
+    Polygon.select("COUNT(polygons.id) AS total, sheet_id, sheets.bbox").where("sheets.layer_id = ? AND CP.task = ?",layer_id, with_consensus_on_task).joins(:sheet).joins("INNER JOIN consensuspolygons AS CP ON CP.flaggable_id = polygons.id").group("polygons.sheet_id, sheets.bbox")
   end
 
   # def as_feature

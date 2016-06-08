@@ -325,25 +325,16 @@ class FixerController < ApplicationController
     progress = {}
     progress[:layers] = Layer.all(:order => :id)
     progress[:layer] = layer
-    progress[:counts] = Polygon.grouped_by_sheet(layer_id) unless mode == "user"
-    if user_signed_in?
-      if mode != "all"
-        if task == "toponym"
-          progress[:counts] = Flag.grouped_flags_for_user(current_user.id, layer_id, task)
-        else
-          progress[:counts] = Flag.grouped_flags_for_user(current_user.id, layer_id, task)
-        end
+    if mode == "user"
+      if user_signed_in?
+        progress[:counts] = Flag.grouped_flags_for_user(current_user.id, layer_id, task)
+        progress[:all_polygons_session] = Flag.flags_for_user(current_user.id, task)
+      else
+        progress[:counts] = Flag.grouped_flags_for_session(session, layer_id, task)
+        progress[:all_polygons_session] = Flag.flags_for_session(session, task)
       end
-      progress[:all_polygons_session] = Flag.flags_for_user(current_user.id, task)
     else
-      if mode != "all"
-        if task == "toponym"
-          progress[:counts] = Flag.grouped_flags_for_session(session, layer_id, task)
-        else
-          progress[:counts] = Flag.grouped_flags_for_session(session, layer_id, task)
-        end
-      end
-      progress[:all_polygons_session] = Flag.flags_for_session(session, task)
+      progress[:counts] = Polygon.grouped_by_sheet(layer_id, task)
     end
     return progress
   end
