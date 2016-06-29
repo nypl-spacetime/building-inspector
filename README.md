@@ -11,15 +11,23 @@ By: [Mauricio Giraldo Arteaga] / [NYPL Labs]
 
 ### Environment variables and buildpacks
 
-#### Heroku buildpacks
+#### Deploying in Heroku
 
-This project makes use of several environment variables and buildpacks to work. The RGeo gem in Heroku does not get built properly so some tasks do not work. These are the environment variables you need to add in order for it to work:
+**UPDATE (2016/06/29):** Heroku now properly [handles multiple buildpacks natively](https://devcenter.heroku.com/articles/using-multiple-buildpacks-for-an-app).
 
-- `BUILDPACK_URL`: https://github.com/heroku/heroku-buildpack-multi.git
+This project makes use of several environment variables and buildpacks to work on Heroku. The RGeo gem in Heroku does not get built properly so some tasks do not work. You need to include these two buildpacks:
 
-This is related to the [`.buildpacks` file](.buildpacks) which contains the list of additional gem packs to install when deploying the application. This should happen automatically. In order to verify that the right gems are installed, enter the Rails console in the application and type:
+- https://github.com/peterkeen/heroku-buildpack-vendorbinaries.git
+- https://github.com/diowa/heroku-buildpack-rgeo-prep.git
 
-`RGeo::Geos.supported?`
+You can do so by executing:
+
+    heroku buildpacks:add https://github.com/peterkeen/heroku-buildpack-vendorbinaries.git
+    heroku buildpacks:add https://github.com/diowa/heroku-buildpack-rgeo-prep.git
+
+In order to verify that everything is working fine, enter the Heroku Rails console in the application and type:
+
+    RGeo::Geos.supported?
 
 This should return `=> true`. If this is not the case you may want to visit the [issues list for `heroku-geo-buildpack`](https://github.com/cyberdelia/heroku-geo-buildpack/issues).
 
