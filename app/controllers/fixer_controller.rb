@@ -138,8 +138,10 @@ class FixerController < ApplicationController
     map_obj = getMap(task)
 
     topo_features = toponyms_for_map(map_obj[:map][:id])
+    consensus_features = toponym_consensus_as_features(map_obj[:map][:id])
 
     map_obj[:toponyms] = topo_features
+    map_obj[:consensus] = consensus_features
     @map = map_obj.to_json
   end
 
@@ -188,17 +190,43 @@ class FixerController < ApplicationController
   def toponyms_as_features(sheet_id, user_or_session, type)
     if type == "user"
       all_flags = Flag.flags_for_sheet_for_user(sheet_id, user_or_session, "toponym")
-    else
+    elsif type == "session"
       all_flags = Flag.flags_for_sheet_for_session(sheet_id, user_or_session, "toponym")
     end
 
-    poly = []
+    points = []
 
     all_flags.each do |f|
-      poly.push(f.to_geojson)
+      points.push(f.to_geojson)
     end
 
-    { :type => "FeatureCollection", :features => poly }
+    { :type => "FeatureCollection", :features => points }
+  end
+
+  def toponym_consensus_as_features(sheet_id)
+    raw_consensus = Consensuspolygon.where(:task => "toponym", :flaggable_id => sheet_id, :flaggable_type => "Sheet").first
+
+    if raw_consensus == nil
+      return { :type => "FeatureCollection", :features => [] }
+    end
+
+    consensus = JSON.parse(raw_consensus[:consensus])
+
+    points = []
+
+    consensus.each do |point|
+      r = {}
+      next if point["latitude"] == nil || point["longitude"] == nil
+      r["type"] = "Feature"
+      r["properties"] = {}
+      r["properties"]["flaggable_id"] = point["flaggable_id"]
+      r["properties"]["flag_value"] = point["flag_value"]
+      r["geometry"] = { :type => "Point", :coordinates => [point["longitude"].to_f, point["latitude"].to_f] }
+
+      points.push(r)
+    end
+
+    { :type => "FeatureCollection", :features => points }
   end
 
   # POLYGONFIX
@@ -400,6 +428,10 @@ class FixerController < ApplicationController
       topo_features = toponyms_for_map(@map[:map][:id])
 
       @map[:toponyms] = topo_features
+
+      consensus_features = toponym_consensus_as_features(@map[:map][:id])
+
+      @map[:consensus] = consensus_features
     end
 
     respond_with( @map )

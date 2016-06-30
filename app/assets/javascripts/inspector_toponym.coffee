@@ -55,24 +55,44 @@ class Toponym extends Inspector
 
   showCurrentToponyms: () ->
     @map.removeLayer(@my_topos) if @my_topos
-    return if @loadedData.toponyms.features.length == 0
-    @my_topos = L.geoJson(@loadedData.toponyms,
-      pointToLayer: (f,latlng)->
-        L.circle(latlng, 3,
-          color: '#d75b25'
-          fillOpacity: 0.1
-          opacity: 0.5
-          # radius: 16
-          weight: 4
-        )
-      style: (feature) ->
-        feature.properties
-      onEachFeature: (f, l) ->
-        l.bindPopup(f.properties.flag_value,
-          className: 'toponym-popup'
-        )
-    )
-    @my_topos.addTo(@map)
+    if @loadedData.toponyms.features.length != 0
+      @my_topos = L.geoJson(@loadedData.toponyms,
+        pointToLayer: (f,latlng)->
+          L.circle(latlng, 3,
+            color: '#d75b25'
+            fillOpacity: 0.1
+            opacity: 0.5
+            # radius: 16
+            weight: 4
+          )
+        style: (feature) ->
+          feature.properties
+        onEachFeature: (f, l) ->
+          l.bindPopup(f.properties.flag_value,
+            className: 'toponym-popup'
+          )
+      )
+      @my_topos.addTo(@map)
+
+    @map.removeLayer(@consensus_topos) if @consensus_topos
+    if @loadedData.consensus.features.length != 0
+      @consensus_topos = L.geoJson(@loadedData.consensus,
+        pointToLayer: (f,latlng)->
+          L.circle(latlng, 3,
+            color: '#3EBBA7'
+            fillOpacity: 0.1
+            opacity: 0.5
+            # radius: 16
+            weight: 4
+          )
+        style: (feature) ->
+          feature.properties
+        onEachFeature: (f, l) ->
+          l.bindPopup("<strong>Consensus:</strong><br />" + f.properties.flag_value,
+            className: 'toponym-popup'
+          )
+      )
+      @consensus_topos.addTo(@map)
 
   clearScreen: () =>
     @cleanFlags() unless @options.tutorialOn
