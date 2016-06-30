@@ -68,7 +68,7 @@ class Toponym extends Inspector
         style: (feature) ->
           feature.properties
         onEachFeature: (f, l) ->
-          l.bindPopup(f.properties.flag_value,
+          l.bindPopup("<strong>You typed:</strong><br />" + f.properties.flag_value,
             className: 'toponym-popup'
           )
       )
