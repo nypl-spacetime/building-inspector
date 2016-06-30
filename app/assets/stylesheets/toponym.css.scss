@@ -43,6 +43,10 @@
 .toponym-popup {
   font-family: $mainfont;
   font-size: 1.5em;
+
+  strong {
+    font-size: 0.7em;
+  }
 }
 
 .toponym-flag {
