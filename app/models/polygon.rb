@@ -6,7 +6,13 @@ class Polygon < ActiveRecord::Base
 
   def self.grouped_by_sheet(layer_id, with_consensus_on_task)
     # returns polygon counts grouped by sheet for a given layer (used in the progress maps)
-    Polygon.select("COUNT(polygons.id) AS total, sheet_id, sheets.bbox").where("sheets.layer_id = ? AND consensuspolygons.task = ?",layer_id, with_consensus_on_task).joins(:sheet).joins(:consensuspolygons).group("polygons.sheet_id, sheets.bbox")
+    if with_consensus_on_task == "geometry"
+      # show EVERY POLYGON!!!1!
+      Polygon.select("COUNT(polygons.id) AS total, sheet_id, sheets.bbox").where("sheets.layer_id = ?",layer_id).joins(:sheet).group("polygons.sheet_id, sheets.bbox")
+    else
+      # just show the ones with the right consensus
+      Polygon.select("COUNT(polygons.id) AS total, sheet_id, sheets.bbox").where("sheets.layer_id = ? AND consensuspolygons.task = ?",layer_id, with_consensus_on_task).joins(:sheet).joins(:consensuspolygons).group("polygons.sheet_id, sheets.bbox")
+    end
   end
 
   # def as_feature

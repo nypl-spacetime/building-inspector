@@ -68,8 +68,18 @@ class Sheet < ActiveRecord::Base
     sheet_id = Sheet.sanitize(sheet_id)
     type = Sheet.sanitize(type)
 
+    puts type
+
+    if type == "'geometry'"
+      # show EVERY POLYGON!!!1!
+      join_type = "LEFT"
+    else
+      # just show the ones with the right consensus
+      join_type = "INNER"
+    end
+
     columns = "DISTINCT polygons.id, geometry, sheet_id, CP.consensus, dn, centroid_lat, centroid_lon"
-    join = "INNER JOIN flags AS F ON polygons.id = F.flaggable_id INNER JOIN consensuspolygons AS CP ON CP.flaggable_id = polygons.id AND CP.flaggable_type = 'Polygon' AND CP.task = #{type}"
+    join = "#{join_type} JOIN flags AS F ON polygons.id = F.flaggable_id #{join_type} JOIN consensuspolygons AS CP ON CP.flaggable_id = polygons.id AND CP.flaggable_type = 'Polygon' AND CP.task = #{type}"
     where = " sheet_id = #{sheet_id} "
 
     Polygon.select(columns).joins(join).where(where)
