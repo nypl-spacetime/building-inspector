@@ -16,16 +16,28 @@
     <p>That's where the Building Inspector (and you) come in. This app is the latest in a series of public-facing tools designed by The New York Public Library Labs to extract, correct and analyze data from historical maps. We're training computers to do the heavy lifting, and then distributing the remaining quality control tasks to smart, conscientious citizens like you. The goal? To produce a comprehensive directory of old New York (or, as we like to think of it, a time machine).</p>
 
     <p>With that information organized and searchable, we can ask new kinds of questions about history. It will allow our interfaces to drop pins accurately on digital maps when you search for a forgotten place. It will allow you to explore a city's past on foot with your mobile device, 'checking in' to ghostly establishments. And it will allow us to link other historical documents to those places: archival records, old newspapers, business directories, photographs, restaurant menus, theater playbills etc., opening up new ways to research, learn, and discover the past.</p>
-    
+
     <p><strong>UPDATE!</strong> With recent support from the <a href="http://www.knightfoundation.org/blogs/knightblog/2015/1/30/22-projects-win-knight-news-challenge-libraries/">Knight Foundation</a>, we're now beginning to build this urban time machine. <a href="http://spacetime.nypl.org/">Learn more about the NYC Space/Time Directory project</a>.</p>
 
     <p>Building Inspector was made by <a href="http://www.nypl.org/labs">NYPL Labs</a> in collaboration with the <a href="http://www.nypl.org/locations/schwarzman/map-division"> Lionel Pincus and Princess Firyal Map Division</a> at The New York Public Library. It uses data produced computationally by NYPL Labs' <a href="https://github.com/NYPL/map-vectorizer/">Map Vectorizer</a> tool.</p>
 
     <p>Questions? Comments? Want to stay in touch as the project develops? Contact us at <a href="mailto:buildinginspector@nypl.org">buildinginspector@nypl.org</a> or reach out to us on <a href="https://twitter.com/nypl_labs">Twitter</a>.</p>
-     <h3 class="major">How Your Contributions Help</h3>
-     <p>Currently, there are four different types of inspections you can perform. Each is designed to extract a particular type of data from the maps. Here's what the different inspections tell us:</p>
 
-     <ul id="about-task-list">
+    <h3 class="major">What maps are here?</h3>
+    <p>All maps in the Building Inspector come from the <%= link_to "NYPL Map Warper", "http://maps.nypl.org/warper" %>. Individual map sheets (most of which come from atlases) are scanned and georectified (see below). The sheets are then organized into “layers” which group them thematically, geographically or temporally (for example Manhattan 1857 or Brooklyn 1855). These layers conform the “maps” you inspect since there is no one map of Manhattan in 1857 but <%= link_to "a collection of sheets that come from several atlases", "http://digitalcollections.nypl.org/items/06fd4630-c603-012f-17f8-58d385a7bc34" %>. So far we have these <%= @layer_count %> layers:</p>
+
+    <ul>
+    <% @layer_list.each do |layer| %>
+      <li><%= link_to "#{layer[:name]}, #{layer[:year]}", "http://maps.nypl.org/warper/layers/#{layer[:external_id]}" %></li>
+    <% end %>
+    </ul>
+
+    <p>We are adding new layers every few months as they are scanned and rectified so keep visiting!</p>
+
+    <h3 class="major">How Your Contributions Help</h3>
+    <p>Currently, there are four different types of inspections you can perform. Each is designed to extract a particular type of data from the maps. Here's what the different inspections tell us:</p>
+
+    <ul id="about-task-list">
           <li><%= link_to(image_tag("icon-geometry.svg", :class=>"task-icon"), geometry_path, :class=>"link-task") %> <strong>Check Footprints</strong> - This establishes a baseline (literally!). We show you the buildings the computer identified, one outline at a time. You tell us whether it is right, wrong, or close but in need of fixing.</li>
           <li><%= link_to(image_tag("icon-polygonfix.svg", :class=>"task-icon"), polygonfix_path, :class=>"link-task") %> <strong>Fix Footprints</strong> - Take those slightly imperfect footprints identified by your fellow inspectors and get 'em into shape to be recorded for history.<br /></li>
           <li><%= link_to(image_tag("icon-address.svg", :class=>"task-icon"), address_path, :class=>"link-task") %> <strong>Enter Addresses</strong> -  Getting those original street numbers will help us to reference specific buildings in their historical context (and, eventually, to see who lived/worked there).<br /></li>

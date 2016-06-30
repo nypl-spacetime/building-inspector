@@ -60,6 +60,8 @@ class GeneralController < ApplicationController
 
   def about
     @current_page = "homepage"
+    @layer_count = Layer.all.count
+    @layer_list = Layer.all
   end
 
   def data
