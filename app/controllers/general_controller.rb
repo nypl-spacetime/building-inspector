@@ -4,7 +4,7 @@ class GeneralController < ApplicationController
 
   def home
     layer = Layer.order(:created_at).last
-    @sticker_url = "#{geometry_path}?layer=#{layer[:id]}" || nil
+    @sticker_url = latest_path || nil
     @current_page = "homepage"
     session = getSession()
     @score_geometry = 0
