@@ -21,6 +21,68 @@ namespace :data_import do
     process_file(id, bbox, layer_id)
   end
 
+  desc "Update sheet info based on config file"
+  task :update_bulk => :environment do
+    if ENV['id']==nil
+      abort "You need to specify a layer id"
+    end
+
+    id = ENV['id']
+
+    file = "public/files/config-ingest-layer#{id}.json"
+
+    if not File.exists?(file)
+      abort "Config file #{file} not found."
+    end
+
+    str = IO.read(file)
+    json = JSON.parse(str)
+
+    if json["sheets"].count == 0
+      abort "Config #{file} has no sheets."
+    end
+
+    #first check if layer exists
+    layers = Layer.where(:external_id => id)
+
+    if (layers.count == 0)
+      abort "Layer does not exist"
+    end
+
+    if (layers.count > 1)
+      abort "Multiple layers!!"
+    end
+
+    layer = layers.first
+
+    #find sheets for this layer
+    sheet = Sheet.where(:layer_id => layer[:id])
+
+    if (sheet.count == 0)
+      abort "Layer has no sheets"
+    end
+
+    Layer.update(layer[:id], :description => json["description"], :name => json["name"], :year => json["year"], :tilejson => json["tilejson"], :tileset_type => json["tileset_type"], :bbox => json["bbox"].join(","), :external_id => id)
+
+    sheets = {}
+
+    json["sheets"].each do |f|
+      sid = Sheet.where(:map_id => f["id"].to_s, :layer_id => layer[:id])
+      if sid.count == 0
+        puts "  Sheet #{f["id"]} not found"
+      elsif sid.count > 1
+        puts "  More than one sheet for #{f["id"]} layer #{layer[:id]}"
+      else
+        sid.first[:bbox] = f["bbox"].join(",")
+        sid.first.save
+        puts "  Updated #{sid.first[:id]}"
+      end
+    end
+
+
+    puts "\nCompleted update of layer #{id}!"
+  end
+
   desc "Import GeoJSON sheet files based on config file"
   task :ingest_bulk => :environment do
     if ENV['force']==nil
@@ -45,8 +107,6 @@ namespace :data_import do
     if json["sheets"].count == 0
       abort "Config #{file} has no sheets."
     end
-
-    # TODO: make it work
 
     #first check if layer exists
     layer = Layer.where(:external_id => id)

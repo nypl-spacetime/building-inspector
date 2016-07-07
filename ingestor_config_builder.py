@@ -37,7 +37,7 @@ def main(argv):
 
 	config_list = []
 
-	layer_bbox = []
+	layer_bbox = [180,180,-180,-180]
 
 	for ff in os.listdir(inputfile):
 		if ff.endswith(".tif"):
@@ -49,7 +49,7 @@ def main(argv):
 			geoMatch = pattern.findall(geoText)
 			# print pattern
 			print "\n"
-			print "Geodata obtained:"
+			print "Geodata obtained for : ", ff
 			print "-----------------"
 			print "W", geoMatch[0][0]
 			print "N", geoMatch[0][1]
@@ -64,22 +64,20 @@ def main(argv):
 
 			bbox = [W, S, E, N]
 
-			if layer_bbox == []:
-				layer_bbox = bbox
-			else:
-				if W < layer_bbox[0]:
-					layer_bbox[0] = W
-				if S < layer_bbox[1]:
-					layer_bbox[1] = S
-				if E > layer_bbox[2]:
-					layer_bbox[2] = E
-				if N > layer_bbox[3]:
-					layer_bbox[3] = N
-
 			this_config = {}
 			this_config['id'] = base_name
 			this_config['bbox'] = bbox
 			config_list.append(this_config)
+
+			if W < layer_bbox[0]:
+				layer_bbox[0] = W
+			if S < layer_bbox[1]:
+				layer_bbox[1] = S
+			if E > layer_bbox[2]:
+				layer_bbox[2] = E
+			if N > layer_bbox[3]:
+				layer_bbox[3] = N
+
 
 	# NOTE: assumes input of folder WITH NO TRAILING SLASHES
 	config_data = {
