@@ -5,6 +5,11 @@ class FixerController < ApplicationController
 
   # GEOMETRY
 
+  def latest
+    layer = Layer.order(:created_at).last[:id]
+    redirect_to geometry_path(layer: layer)
+  end
+
 	def geometry
     task = "geometry"
     @current_page = task
@@ -326,7 +331,7 @@ class FixerController < ApplicationController
 
   def checkNewness(task)
     isNew = (cookies["#{task}_first_visit"]!="no" || params[:tutorial]=="true") ? true : false
-    cookies["#{task}_first_visit"] = { :value => "no", :expires => 15.days.from_now }
+    cookies["#{task}_first_visit"] = { :value => "no", :expires => 180.days.from_now }
     return isNew
   end
 

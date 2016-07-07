@@ -41,6 +41,7 @@ Webappmini::Application.routes.draw do
   # footprints
   # this uses a different route as the task name for user friendliness purposes
   get "footprint", to: "fixer#geometry", :as => "geometry"
+  get "footprint/latest", to: "fixer#latest", :as => "latest"
   get "footprint/progress", to: "fixer#progress_geometry", :as => "geometry_progress"
   get "footprint/progress_all", to: "fixer#progress_geometry_all", :as => "geometry_progress_all"
   # - these for task-named routes for geometry progress since user-friendly alias for geometry is "footprint"
