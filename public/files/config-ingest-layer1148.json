@@ -1,5 +1,5 @@
 {
-    "description": "Midtown Manhattan, West Side", 
+    "description": "Manhattan, Midtown West Side", 
     "year": "1890", 
     "bbox": [
         -74.0151918, 
@@ -182,5 +182,5 @@
     ], 
     "tileset_type": "tms", 
     "tilejson": "http://maptiles.nypl.org/1148/1148spec.json", 
-    "name": "Midtown Manhattan, West Side"
+    "name": "Manhattan, Midtown West Side"
 }

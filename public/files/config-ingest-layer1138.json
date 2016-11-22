@@ -1,5 +1,5 @@
 {
-    "description": "Downtown Manhattan", 
+    "description": "Manhattan, Downtown", 
     "year": "1894", 
     "bbox": [
         -74.0229721, 
@@ -668,5 +668,5 @@
     ], 
     "tileset_type": "tms", 
     "tilejson": "http://maptiles.nypl.org/1138/1138spec.json", 
-    "name": "Downtown Manhattan"
+    "name": "Manhattan, Downtown"
 }

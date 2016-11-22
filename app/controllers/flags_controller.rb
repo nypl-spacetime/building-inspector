@@ -9,7 +9,7 @@ class FlagsController < ApplicationController
     @flags = Flag.order(sort_column + " " + sort_direction).paginate(:per_page => 100, :page => params[:page])
 
     @total = Flag.count
-    @total_since_v2 = Flag.where("created_at > '2014-04-21'").count
+    # @total_since_v2 = Flag.where("created_at > '2014-04-21'").count
 
     respond_to do |format|
       format.html # index.html.erb

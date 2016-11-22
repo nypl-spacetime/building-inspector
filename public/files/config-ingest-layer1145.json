@@ -1,5 +1,5 @@
 {
-    "description": "Midtown Manhattan, East Side", 
+    "description": "Manhattan, Midtown East Side", 
     "year": "1890", 
     "bbox": [
         -73.998585, 
@@ -9,7 +9,7 @@
     ], 
     "tileset_type": "tms", 
     "tilejson": "http://maptiles.nypl.org/1145/1145spec.json", 
-    "name": "Midtown Manhattan, East Side",
+    "name": "Manhattan, Midtown East Side",
     "sheets": [
         {
             "id": "20903", 
