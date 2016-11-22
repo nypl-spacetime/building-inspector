@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "DN": 33003, "Color": 4, "DotCount": 1, "DotType": 0, "CrossCount": 0, "CrossData": "{}", "CentroidY": 40.782664877253467, "CentroidX": -73.910785240737297 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -73.911021413316021, 40.782507974665528 ], [ -73.910762873754919, 40.78272122870527 ], [ -73.910531976788391, 40.782565553323728 ], [ -73.910745800387673, 40.78270736721349 ], [ -73.910775069017234, 40.78270736721349 ], [ -73.911021413316021, 40.782507974665528 ] ] ] } }
+]
+}
