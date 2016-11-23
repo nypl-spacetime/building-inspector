@@ -1,5 +1,5 @@
 {
-    "description": "Brooklyn", 
+    "description": "Brooklyn, East New York", 
     "year": "1887", 
     "bbox": [
         -73.915424, 
@@ -263,5 +263,5 @@
     ], 
     "tileset_type": "tms", 
     "tilejson": "http://maptiles.nypl.org/1130/1130spec.json", 
-    "name": "Brooklyn"
+    "name": "Brooklyn, East New York"
 }
