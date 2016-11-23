@@ -1,5 +1,5 @@
 {
-    "description": "Queens", 
+    "description": "Queens, Astoria", 
     "year": "1915", 
     "bbox": [
         -73.9427486, 
@@ -821,5 +821,5 @@
     ], 
     "tileset_type": "tms", 
     "tilejson": "http://maptiles.nypl.org/1162/1162spec.json", 
-    "name": "Queens"
+    "name": "Queens, Astoria"
 }
