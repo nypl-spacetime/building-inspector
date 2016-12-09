@@ -6,7 +6,9 @@ class Sheet < ActiveRecord::Base
   attr_accessible :bbox, :map_id, :map_url, :layer_id
 
   def to_geojson
-    { :type => "Feature", :properties => self, :geometry => { :type => "Polygon", :coordinates => bbox_to_poly } }
+    properties = self
+    properties[:layer] = self.layer
+    { :type => "Feature", :properties => properties, :geometry => { :type => "Polygon", :coordinates => bbox_to_poly } }
   end
 
   def bbox_to_poly

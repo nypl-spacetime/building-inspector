@@ -48,6 +48,34 @@ class ApiController < ApplicationController
         render json: output
     end
 
+    # GET /api/toponyms
+    def toponyms
+      sheetconsensus = Consensuspolygon.where(:flaggable_type => "Sheet", :task => "toponym")
+      geojson = []
+      if sheetconsensus
+        sheetconsensus.each do |sheet|
+          toponyms = JSON.parse(sheet[:consensus])
+          toponyms.each do |p|
+              geojson.push({
+                :type => "Feature",
+                :properties => {
+                  :consensus => p["flag_value"],
+                  :sheet_id => sheet[:flaggable_id]
+                },
+                :geometry => {
+                  :type => "Point",
+                  :coordinates => [p["longitude"].to_f, p["latitude"].to_f]
+                }
+              })
+          end
+        end
+      end
+      output = {}
+      output[:type] = "FeatureCollection"
+      output[:features] = geojson
+      render json: output
+    end
+
     def consolidated
         per_page = 500
         page = 1

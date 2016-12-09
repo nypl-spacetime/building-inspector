@@ -113,6 +113,8 @@ Webappmini::Application.routes.draw do
   get "api/consolidated"
   get "api/consolidated/page/:page", to: "api#consolidated"
 
+  get "api/toponyms"
+
   match "/404", :to => "general#not_found", :status => 404
 
   # get "homenew" => "general#home"

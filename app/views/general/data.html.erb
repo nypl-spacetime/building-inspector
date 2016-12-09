@@ -39,6 +39,9 @@
           <li><strong><%= link_to "History for task", "#sheetshistorytask" %></strong></li>
         </ul>
       </li>
+      <li>
+        <strong><%= link_to "Place names (toponyms)", "#toponyms" %></strong>
+      </li>
     </ul>
 
     <h4><a name="basics"></a>Some basics</h4>
@@ -386,7 +389,7 @@
 
     <h4><a name="sheetslist"></a>List</h4>
     <h5>GET /api/sheets</h5>
-    <p>Returns the list of sheets with their bounding box as a polygon.</p>
+    <p>Returns the list of sheets with their bounding box as a polygon and its parent layer information.</p>
     <h6>Example response</h6>
     <pre>
         <code class="json">
@@ -399,6 +402,19 @@
         "bbox": "-74.005129,40.6844534,-73.9962649,40.6921512",
         "created_at": "2013-11-19T21:50:44Z",
         "id": 268,
+        "layer": {
+            "bbox": "-74.03,40.63,-73.94,40.71",
+            "created_at": "2015-04-13T18:48:48Z",
+            "description": "Maps of the city of Brooklyn",
+            "external_id": 860,
+            "id": 860,
+            "name": "Brooklyn",
+            "tilejson": "https://s3.amazonaws.com/maptiles.nypl.org/860/860spec.json",
+            "tileset_type": "tms",
+            "updated_at": "2015-04-13T18:48:48Z",
+            "year": "1855"
+
+        },
         "layer_id": 860,
         "map_id": "7240",
         "status": "done",
@@ -423,6 +439,18 @@
         "bbox": "-73.9910573,40.7729807,-73.9808465,40.781313",
         "created_at": "2013-10-18T15:27:46Z",
         "id": 161,
+        "layer": {
+            "bbox": "-74.04,40.69,-73.93,40.77",
+            "created_at": "2015-04-13T18:48:43Z",
+            "description": "Maps of the city of New York",
+            "external_id": 859,
+            "id": 859,
+            "name": "Manhattan",
+            "tilejson": "https://s3.amazonaws.com/maptiles.nypl.org/859/859spec.json",
+            "tileset_type": "tms",
+            "updated_at": "2015-04-13T18:48:43Z",
+            "year": "1857"
+        },
         "layer_id": 859,
         "map_id": "7122",
         "status": "done",
@@ -773,6 +801,43 @@
     }
   ]
 }        </code>
+    </pre>
+
+    <h3><a name="toponyms"></a>Place names (toponyms)</h3>
+
+    <h5>GET /api/toponyms</h5>
+    <p>Returns the all place names with consensus (will take a few seconds to retrieve).</p>
+    <h6>Example response</h6>
+    <pre>
+        <code class="json">
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type":"Feature",
+      "properties": {
+          "consensus":"Bonded Warehouse",
+          "sheet_id":170
+      },
+    "geometry": {
+        "type":"Point",
+        "coordinates":[-74.01512817911767,40.7068985672498]
+      }
+    },
+    {
+      "type":"Feature",
+      "properties": {
+          "consensus":"Potash Inspection",
+          "sheet_id":170
+      },
+      "geometry": {
+        "type":"Point",
+        "coordinates":[-74.01503990803452,40.707777540425006]
+      }
+    }
+  ]
+}
+        </code>
     </pre>
 
   </div>
