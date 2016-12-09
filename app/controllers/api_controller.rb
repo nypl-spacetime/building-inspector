@@ -70,7 +70,10 @@ class ApiController < ApplicationController
           end
         end
       end
+      msg = "List for informative purposes only. This is not a definitive list. This URL may be changed at any time without prior notice."
       output = {}
+      output[:message] = msg
+      output[:toponym_count] = geojson.count
       output[:type] = "FeatureCollection"
       output[:features] = geojson
       render json: output

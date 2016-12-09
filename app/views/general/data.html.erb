@@ -806,11 +806,13 @@
     <h3><a name="toponyms"></a>Place names (toponyms)</h3>
 
     <h5>GET /api/toponyms</h5>
-    <p>Returns the all place names with consensus (will take a few seconds to retrieve).</p>
+    <p>Returns the all place names with consensus. Will take a few seconds to retrieve.</p>
     <h6>Example response</h6>
     <pre>
         <code class="json">
 {
+  "message": "List for informative purposes only.",
+  "toponym_count": "2",
   "type": "FeatureCollection",
   "features": [
     {
