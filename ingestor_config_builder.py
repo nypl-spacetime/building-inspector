@@ -1,6 +1,37 @@
 #!/usr/bin/python
 import sys, getopt, subprocess, os, datetime, ogr, re, json
 
+def getDescription():
+	print "Enter Layer Description (ENTER for none):"
+	description = str(raw_input())
+	return description
+
+def getName():
+	print "Enter Layer Name (ENTER for none):"
+	name = str(raw_input())
+	return name
+
+def getYear():
+	print "Enter Layer Year (ENTER for none):"
+	year = str(raw_input())
+	return year
+
+def getTileset():
+	print "Enter Layer Tileset Type (tms or wmts):"
+	tileset = str(raw_input())
+	if tileset == "tms" or tileset == "wmts":
+		return tileset
+	else:
+		return getTileset()
+
+def getTileJSON():
+	print "Enter Layer TileJSON URL:"
+	tilejson = str(raw_input())
+	if tilejson != "":
+		return tilejson
+	else:
+		return getTileJSON()
+
 def main(argv):
 	instructions = 'Usage: %s <input directory>' % sys.argv[0]
 	inputfile = ''
@@ -38,6 +69,12 @@ def main(argv):
 	config_list = []
 
 	layer_bbox = [180,180,-180,-180]
+
+	description = getDescription()
+	name = getName()
+	year = getYear()
+	tileset = getTileset()
+	tilejson = getTileJSON()
 
 	for ff in os.listdir(inputfile):
 		if ff.endswith(".tif"):
@@ -81,12 +118,12 @@ def main(argv):
 
 	# NOTE: assumes input of folder WITH NO TRAILING SLASHES
 	config_data = {
-		"description":"ADD_A_DESCRIPTION",
-		"name":"ADD_A_NAME",
-		"year":"ADD_A_YEAR(S)",
+		"description":description,
+		"name":name,
+		"year":year,
 		"bbox": layer_bbox, # [W,S,E,N]
-		"tilejson":"URL_FOR_TILEJSON_SPEC",
-		"tileset_type":"tms_or_wmts",
+		"tilejson":tilejson,
+		"tileset_type":tileset,
 		"sheets":config_list
 	}
 	config_file = open("config-ingest-layer" + (inputfile[inputfile.rfind("/")+1:]) + ".json", "w")
