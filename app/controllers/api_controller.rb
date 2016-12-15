@@ -181,7 +181,9 @@ class ApiController < ApplicationController
             flags = Flag.where("(flaggable_type = 'Sheet' AND flaggable_id = ?) OR (flaggable_type = 'Polygon' AND flaggable_id IN (?)) #{for_task}", sheet[:id],sheet.polygons.pluck(:id)).order(:created_at)
 
             flags.each do |f|
-                geojson.push(f.to_geojson)
+                anon_f = f.to_geojson
+                anon_f[:properties][:session_id] = Digest::SHA512.hexdigest(f[:session_id]).truncate(10, :omission => "").to_i(16)
+                geojson.push(anon_f)
             end
         end
         output = {}
