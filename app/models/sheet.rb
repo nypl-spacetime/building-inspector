@@ -26,11 +26,12 @@ class Sheet < ActiveRecord::Base
     c[:consensus]
   end
 
-  def self.polygons_for_task(sheet_id, session_id = nil, type="geometry")
+  def self.polygons_for_task(sheet_id, session_id = nil, type="geometry", force = false)
     return [] if type == "toponym"
     # only the necessary data of a sheet's polygons
     sheet_id = Sheet.sanitize(sheet_id)
     session_id = Sheet.sanitize(session_id)
+    type = Sheet.sanitize(type)
     if session_id != nil
       # find all the sessions associated to this session_id via its user_id if any
       join = "LEFT JOIN flags AS F ON polygons.id = F.flaggable_id
@@ -46,21 +47,29 @@ class Sheet < ActiveRecord::Base
                   INNER JOIN usersessions _S
                   ON _S.user_id = S.user_id
               )"
-      where = "sheet_id = #{sheet_id} AND F.session_id IS NULL AND CP.id IS NULL"
+      if !force
+        where = "sheet_id = #{sheet_id} AND F.session_id IS NULL AND CP.id IS NULL"
+      else
+        where = "sheet_id = #{sheet_id} AND F.session_id IS NULL"
+      end
     else
       join = " "
       where = "sheet_id = #{sheet_id} AND CP.id IS NULL"
     end
 
-    case type
-    when "geometry"
-      join += "LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = "+ Sheet.sanitize(type)
-    when "address", "color"
-      join += "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.flaggable_id AND CPG.flaggable_type = 'Polygon' AND CPG.task = 'geometry' AND CPG.consensus = 'yes' LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = " + Sheet.sanitize(type)
-    when "polygonfix"
-      join += "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.flaggable_id AND CPG.flaggable_type = 'Polygon' AND CPG.task = 'geometry' AND CPG.consensus = 'fix' LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = " + Sheet.sanitize(type)
+    if !force
+      case type
+      when "geometry"
+        join += "LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = #{type}"
+      when "address", "color"
+        join += "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.flaggable_id AND CPG.flaggable_type = 'Polygon' AND CPG.task = 'geometry' AND CPG.consensus = 'yes' LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = #{type}"
+      when "polygonfix"
+        join += "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.flaggable_id AND CPG.flaggable_type = 'Polygon' AND CPG.task = 'geometry' AND CPG.consensus = 'fix' LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = #{type}"
+      else
+        join += "LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = #{type}"
+      end
     else
-      join += "LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = "+ Sheet.sanitize(type)
+      join += " LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = #{type} "
     end
 
     Polygon.select("polygons.id, polygons.color, polygons.geometry, polygons.sheet_id, polygons.dn, CP.consensus").joins(join).where(where)

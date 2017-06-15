@@ -381,15 +381,25 @@ class FixerController < ApplicationController
 	end
 
 	def getMap(type="geometry")
-		session = getSession()
-		map = {}
-		# map[:map] = Sheet.random
-		map[:map] = Sheet.random_unprocessed(type)
+    session = getSession()
+    force = false
+    map = {}
+    # map[:map] = Sheet.random
+    map[:map] = Sheet.random_unprocessed(type)
 
     # this to override the layer being chosen
     if (params[:layer] != nil)
       override = Sheet.where(:layer_id => params[:layer]).order("RANDOM()").first
       map[:map] = override if override != nil
+    end
+
+    # this to override the sheet being chosen
+    if (params[:sheet] != nil) && user_signed_in? && current_user.role == "admin"
+      override = Sheet.find(params[:sheet])
+      if override != nil
+        map[:map] = override
+        force = true
+      end
     end
 
     map[:status] = {}
@@ -413,7 +423,7 @@ class FixerController < ApplicationController
     end
 
     map[:tileset] = map[:map].layer
-		map[:poly] = Sheet.polygons_for_task(map[:map][:id], session, type)
+		map[:poly] = Sheet.polygons_for_task(map[:map][:id], session, type, force)
 		map[:status][:map_polygons] = map[:map].polygons.count
 		map[:status][:map_polygons_session] = map[:poly].count
 		map[:status][:all_sheets] = Sheet.count
