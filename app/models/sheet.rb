@@ -143,8 +143,8 @@ class Sheet < ActiveRecord::Base
   end
 
   def calculate_address_consensus
-    puts "\n\nProcessing ADDRESS consensus for sheet #{self[:id]}"
-    flags = Flag.flags_for_sheet_for_task(self[:id], "address")
+    puts "\n\nProcessing ADDRESS consensus for sheet #{id}"
+    flags = Flag.flags_for_sheet_for_task(id, "address")
     consensus = ConsensusUtils.calculate_address_consensus(flags)
     puts "Found #{consensus.count} consensus"
     consensus.each_pair do |elem,c|

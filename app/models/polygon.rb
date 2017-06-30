@@ -108,7 +108,7 @@ class Polygon < ActiveRecord::Base
   def flags_as_features
     features = []
 
-    f = flags.where(:flag_type => "polygonfix")
+    f = flags.where(:flag_type => "polygonfix").order(:flag_type)
     f.each do |flag|
       features.push(flag.to_geojson)
     end

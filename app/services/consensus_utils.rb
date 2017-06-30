@@ -1,5 +1,13 @@
 class ConsensusUtils
 
+  def self.admin_vote
+    4
+  end
+
+  def self.weighted_vote(vote)
+    (vote[:role] == "admin" ? admin_vote : 1)
+  end
+
   # POLYGONFIX CONSENSUS
   def self.calculate_polygonfix_consensus(geojson)
     # TODO: still lacks a more robust validation/checking
@@ -136,6 +144,7 @@ class ConsensusUtils
         connection = find_connected_point(point, original_points)
         connected_cluster = find_cluster_for_point(connection, clusters)
         # if original point belongs to another cluster
+        byebug if Rails.env.development?
         if connected_cluster != nil && connected_cluster != cluster[0]
           # vote for the cluster
           cluster_votes[connected_cluster] = 0 if cluster_votes[connected_cluster] == nil
@@ -250,9 +259,9 @@ class ConsensusUtils
     session_ids = []
     # byebug if Rails.env.development?
     flags.each do |vote|
-      value = vote["flag_value"]
-      id = vote["flaggable_id"]
-      sid = vote["session_id"]
+      value = vote[:flag_value]
+      id = vote[:flaggable_id]
+      sid = vote[:session_id]
       # ignore vote if session_id already exists
       # to reduce trolling
       if session_ids.index(sid) != nil
@@ -266,9 +275,9 @@ class ConsensusUtils
       if id_tally[id] == nil
         id_tally[id] = 0
       end
-      flag_tally[value] = flag_tally[value] + 1
-      id_tally[id] = id_tally[id] + 1
-      total_votes = total_votes + 1
+      flag_tally[value] = flag_tally[value] + weighted_vote(vote)
+      id_tally[id] = id_tally[id] + weighted_vote(vote)
+      total_votes = total_votes + weighted_vote(vote)
     end
     # in case there was trolling
     return if total_votes < min_count
@@ -309,8 +318,8 @@ class ConsensusUtils
 
   def self.get_flag_for_point(point, flags)
     flags.each do |f|
-      lat = f["latitude"].to_f
-      lon = f["longitude"].to_f
+      lat = f[:latitude].to_f
+      lon = f[:longitude].to_f
       return f if point[0] == lon and point[1] == lat
     end
     return nil
