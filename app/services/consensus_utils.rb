@@ -144,7 +144,7 @@ class ConsensusUtils
         connection = find_connected_point(point, original_points)
         connected_cluster = find_cluster_for_point(connection, clusters)
         # if original point belongs to another cluster
-        byebug if Rails.env.development?
+        # byebug if Rails.env.development?
         if connected_cluster != nil && connected_cluster != cluster[0]
           # vote for the cluster
           cluster_votes[connected_cluster] = 0 if cluster_votes[connected_cluster] == nil
@@ -230,11 +230,22 @@ class ConsensusUtils
   # GENERIC POINT CONSENSUS
   def self.calculate_point_consensus(flags, epsilon, min_points)
     # flags are an activerecord list of 'address' type flags for a given sheet
+    # or 'toponym' type flags for all polygons in a sheet
+    # gonna do some admin trickery so that admin-voted flags count admin_vote times
+    admin_flags = []
+    flags.each do |f|
+      if f[:role] == "admin"
+        admin_vote.times do
+          admin_flags << f
+        end
+      end
+    end
+    byebug if Rails.env.development?
+    flags.concat(admin_flags) if admin_flags.count > 0
     # cluster them flags
-    simple_array = flags.map { |a| [a["longitude"].to_f, a["latitude"].to_f] }
+    simple_array = flags.map { |a| [a[:longitude].to_f, a[:latitude].to_f] }
     clusters = apply_dbscan(simple_array, epsilon, min_points)
     consensus_list = []
-    # byebug if Rails.env.development?
     clusters.each do |c|
       next if c[0] == -1
       consensus = points_cluster_consensus(c[1], flags)
@@ -259,6 +270,7 @@ class ConsensusUtils
     session_ids = []
     # byebug if Rails.env.development?
     flags.each do |vote|
+      role = vote[:role]
       value = vote[:flag_value]
       id = vote[:flaggable_id]
       sid = vote[:session_id]
@@ -275,9 +287,9 @@ class ConsensusUtils
       if id_tally[id] == nil
         id_tally[id] = 0
       end
-      flag_tally[value] = flag_tally[value] + weighted_vote(vote)
-      id_tally[id] = id_tally[id] + weighted_vote(vote)
-      total_votes = total_votes + weighted_vote(vote)
+      flag_tally[value] = flag_tally[value] + 1
+      id_tally[id] = id_tally[id] + 1
+      total_votes = total_votes + 1
     end
     # in case there was trolling
     return if total_votes < min_count

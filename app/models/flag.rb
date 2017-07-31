@@ -110,7 +110,7 @@ class Flag < ActiveRecord::Base
             flaggable_joins = "INNER JOIN sheets ON sheets.id = flags.flaggable_id"
             flaggable_where = "sheets.id = #{sheet_id}"
         end
-        Flag.select("flags.*, users.role").joins(flaggable_joins).joins("LEFT JOIN usersessions ON usersessions.session_id = flags.session_id").joins("LEFT JOIN users ON users.id = usersessions.user_id").where(flaggable_where).where("flag_type = ? AND latitude IS NOT NULL AND longitude IS NOT NULL AND flaggable_type = ?", task, type)
+        Flag.select("flags.*, users.role").joins(flaggable_joins).joins("LEFT JOIN usersessions ON usersessions.session_id = flags.session_id").joins("LEFT JOIN users ON users.id = usersessions.user_id").where(flaggable_where).where("flag_type = ? AND latitude IS NOT NULL AND longitude IS NOT NULL AND flaggable_type = ?", task, type).order("flags.id")
     end
 
     def self.flags_by_id_for_session(ids, session_id)
