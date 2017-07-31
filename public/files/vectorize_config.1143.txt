@@ -1,0 +1,6 @@
+-70,115,175,255, brightness-contrast-thresholdblack-thresholdwhite
+235,231,209,paper
+206,185,172,pink
+197,188,144,brown
+207,201,119,yellow
+163,175,185,blue

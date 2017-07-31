@@ -1,0 +1,15 @@
+-70,115,175,255, brightness-contrast-thresholdblack-thresholdwhite
+205,200,186,paper
+199,179,173,pink
+179,155,157,dark red
+206,193,189,mo red
+199,195,163,light yellow
+207,204,179,light yellow
+195,189,154,yellow
+209,203,181,yellow
+255,225,40,bright yellow
+194,198,192,light blue
+161,175,190,"navy" blue
+137,174,163,greenish blue
+166,176,172,dark blue/green
+149,156,141,green

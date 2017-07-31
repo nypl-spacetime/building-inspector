@@ -1,0 +1,19 @@
+{
+    "description":"some layer description",
+    "name":"CassiniParis",
+    "year":1740,
+    "bbox": [2.18, 48.77, 2.52, 48.94],
+    "tilejson":"http://wxs.ign.fr/sxhdnnw6vxogclh102062ujq/geoportail/wmts?tilematrixSet=PM&style=normal&layer=GEOGRAPHICALGRIDSYSTEMS.ETATMAJOR40&image%2Fjpeg",
+    "tileset_type":"wmts",
+    "sheets":[
+        {
+            "id": "1", 
+            "bbox": [
+                2.18, 
+                48.77, 
+                2.52,
+                48.94
+            ]
+        }
+    ]
+}
