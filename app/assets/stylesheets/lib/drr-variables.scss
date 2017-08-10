@@ -49,8 +49,8 @@ $textColorInverse:      $grayLightest;
 
 // Typography
 // -------------------------
-$mainFontFamily:        "Avenir Next W01", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-$heavyFontFamily:       "Avenir Next W01", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$mainFontFamily:        "Avenir Next W01", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+$heavyFontFamily:       "Avenir Next W01", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 $iconFontFamily:        "Icomoon";
 $baseFontFamily:        $mainFontFamily;
 $headingsFontFamily:    $heavyFontFamily;
