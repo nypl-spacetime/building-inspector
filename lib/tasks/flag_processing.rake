@@ -22,6 +22,8 @@ namespace :db do
     Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "green,pink,yellow"))
     Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "green,pink"))
     Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "blue,pink,yellow"))
+    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "gray,green,yellow"))
+    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "gray,pink,yellow"))
     # address
     Flag.connection.execute(build_polygon_consensus_query_for_task_value("address", "NONE"))
   end

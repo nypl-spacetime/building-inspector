@@ -398,7 +398,6 @@ class FixerController < ApplicationController
       override = Sheet.find(params[:sheet])
       if override != nil
         map[:map] = override
-        force = true
       end
     end
 
@@ -423,7 +422,7 @@ class FixerController < ApplicationController
     end
 
     map[:tileset] = map[:map].layer
-		map[:poly] = Sheet.polygons_for_task(map[:map][:id], session, type, force)
+		map[:poly] = Sheet.polygons_for_task(map[:map][:id], session, type)
 		map[:status][:map_polygons] = map[:map].polygons.count
 		map[:status][:map_polygons_session] = map[:poly].count
 		map[:status][:all_sheets] = Sheet.count

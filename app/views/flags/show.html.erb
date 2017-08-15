@@ -30,6 +30,9 @@
 <p>
   <b>Session:</b>
   <%= @flag.session_id %>
+  <% if @flag.usersession != nil %>
+  (<%= @flag.usersession.user.role %>)
+  <% end %>
 </p>
 
 <p>

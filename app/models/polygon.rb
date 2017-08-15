@@ -4,6 +4,10 @@ class Polygon < ActiveRecord::Base
   belongs_to :sheet
   attr_accessible :color, :geometry, :sheet_id, :vectorizer_json, :dn, :centroid_lat, :centroid_lon, :flag_count
 
+  def admin_vote
+    4
+  end
+
   def self.grouped_by_sheet(layer_id, with_consensus_on_task)
     # returns polygon counts grouped by sheet for a given layer (used in the progress maps)
     if with_consensus_on_task == "geometry"
@@ -74,9 +78,18 @@ class Polygon < ActiveRecord::Base
   def calculate_polygonfix_consensus
     features = []
 
-    f = flags.where("flag_type = 'polygonfix' AND flag_value != 'NOFIX'")
+    f = flags.select("flags.*, users.role").where("flag_type = 'polygonfix' AND flag_value != 'NOFIX'").joins("LEFT JOIN usersessions ON usersessions.session_id = flags.session_id LEFT JOIN users ON users.id = usersessions.user_id")
 
-    features = f.map { |item| { :type => "Feature", :properties => { :id => id }, :geometry => { :type=>"Polygon", :coordinates => JSON.parse(item[:flag_value]) } } }
+    # hack so that admin polygons count more
+    f.each do |item|
+      if item[:role] != "admin"
+        features.append({ :type => "Feature", :properties => { :id => id }, :geometry => { :type=>"Polygon", :coordinates => JSON.parse(item[:flag_value]) } })
+      else
+        admin_vote.times do
+          features.append({ :type => "Feature", :properties => { :id => id }, :geometry => { :type=>"Polygon", :coordinates => add_noise_to_polygonfix( JSON.parse(item[:flag_value]) ) } })
+        end
+      end
+    end
 
     geo = { :type => "FeatureCollection", :features => features }
 
@@ -92,6 +105,14 @@ class Polygon < ActiveRecord::Base
       # puts "!=!=!=!=!=!=!=!=! Could not save polygonfix consensus with params: #{self}"
     end
     return true
+  end
+
+  def add_noise_to_polygonfix(coordinates)
+    coordinates[0].each do |c|
+      c[0] = c[0].to_f + (rand() * 10e-9).to_f
+      c[1] = c[1].to_f + (rand() * 10e-9).to_f
+    end
+    return coordinates
   end
 
   def address_as_feature(address)
