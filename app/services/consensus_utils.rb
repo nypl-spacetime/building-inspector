@@ -4,8 +4,12 @@ class ConsensusUtils
     4
   end
 
+  def self.deep_copy(o)
+    Marshal.load(Marshal.dump(o))
+  end
+
   def self.weighted_vote(vote)
-    (vote[:role] == "admin" ? admin_vote : 1)
+    (vote["role"] == "admin" ? admin_vote : 1)
   end
 
   # POLYGONFIX CONSENSUS
@@ -234,16 +238,20 @@ class ConsensusUtils
     # gonna do some admin trickery so that admin-voted flags count admin_vote times
     admin_flags = []
     flags.each do |f|
-      if f[:role] == "admin"
+      if f["role"] == "admin"
         admin_vote.times do
-          admin_flags << f
+          # add some noise because exactly the same latlon wont work in dbscan
+          noise_f = deep_copy(f)
+          noise_f["latitude"] = noise_f["latitude"].to_f + (rand() * 10e-9).to_f
+          noise_f["longitude"] = noise_f["longitude"].to_f + (rand() * 10e-9).to_f
+          admin_flags << noise_f
         end
       end
     end
     byebug if Rails.env.development?
     flags.concat(admin_flags) if admin_flags.count > 0
     # cluster them flags
-    simple_array = flags.map { |a| [a[:longitude].to_f, a[:latitude].to_f] }
+    simple_array = flags.map { |a| [a["longitude"].to_f, a["latitude"].to_f] }
     clusters = apply_dbscan(simple_array, epsilon, min_points)
     consensus_list = []
     clusters.each do |c|
@@ -252,10 +260,10 @@ class ConsensusUtils
       consensus_list.push(consensus) if consensus != nil
     end
     # group by flaggable_id
-    ids = consensus_list.map {|f| f[:flaggable_id]}.uniq
+    ids = consensus_list.map {|f| f["flaggable_id"]}.uniq
     grouped_list = {}
     ids.each do |id|
-      items = consensus_list.select {|x| x[:flaggable_id] == id}
+      items = consensus_list.select {|x| x["flaggable_id"] == id}
       grouped_list[id] = items
     end
     return grouped_list
@@ -270,13 +278,13 @@ class ConsensusUtils
     session_ids = []
     # byebug if Rails.env.development?
     flags.each do |vote|
-      role = vote[:role]
-      value = vote[:flag_value]
-      id = vote[:flaggable_id]
-      sid = vote[:session_id]
+      role = vote["role"]
+      value = vote["flag_value"]
+      id = vote["flaggable_id"]
+      sid = vote["session_id"]
       # ignore vote if session_id already exists
       # to reduce trolling
-      if session_ids.index(sid) != nil
+      if role != "admin" && session_ids.index(sid) != nil
         next
       end
       session_ids.push(sid)
@@ -310,12 +318,12 @@ class ConsensusUtils
     # check if consensus is above threshold
     return if consensus < threshold
     winner_mark = {}
-    winner_mark[:latitude] = latitude
-    winner_mark[:longitude] = longitude
-    winner_mark[:flag_value] = flag_value
-    winner_mark[:votes] = votes
-    winner_mark[:total_votes] = total_votes
-    winner_mark[:flaggable_id] = flaggable_id
+    winner_mark["latitude"] = latitude
+    winner_mark["longitude"] = longitude
+    winner_mark["flag_value"] = flag_value
+    winner_mark["votes"] = votes
+    winner_mark["total_votes"] = total_votes
+    winner_mark["flaggable_id"] = flaggable_id
     return winner_mark
   end
 
@@ -330,8 +338,8 @@ class ConsensusUtils
 
   def self.get_flag_for_point(point, flags)
     flags.each do |f|
-      lat = f[:latitude].to_f
-      lon = f[:longitude].to_f
+      lat = f["latitude"].to_f
+      lon = f["longitude"].to_f
       return f if point[0] == lon and point[1] == lat
     end
     return nil
