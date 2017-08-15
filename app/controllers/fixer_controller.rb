@@ -356,7 +356,7 @@ class FixerController < ApplicationController
     end
     session = getSession()
     progress = {}
-    progress[:layers] = Layer.all(:order => :id)
+    progress[:layers] = Layer.all(:order => :name)
     progress[:layer] = layer
     # the score
     if user_signed_in?
