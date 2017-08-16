@@ -54,7 +54,7 @@ class ConsensusUtils
   def self.validate_final_poly(poly, original_polys)
     point_count = original_polys.map { |c| c.size }
     # puts "validation: #{poly.size}, #{point_count.median}, #{point_count.mean}, #{point_count.standard_deviation}"
-    poly.size >= (point_count.mean - 2*point_count.standard_deviation).to_i
+    poly.size >= 3 && poly.size >= (point_count.mean - (2*point_count.standard_deviation+1)).to_i
   end
 
   # given a list of centroids (lon,lat), find their poly's index in the centroid list (index => lon,lat)

@@ -52,8 +52,8 @@
   end
   %>
   <% elsif f.flag_type == "color"  %>
-  color: <%= link_to "#{f.flag_value}", f %><br />
-  <%= "(#{f.usersession.user.role})" if f.usersession.present? && f.usersession.user.present? %>
+  color: <%= link_to "#{f.flag_value}", f %>
+  <%= "(#{f.usersession.user.role})" if f.usersession.present? && f.usersession.user.present? %><br />
   <% end %>
   <%
   all_count = all_count + 1
