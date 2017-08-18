@@ -8,7 +8,7 @@ class Flag < ActiveRecord::Base
     validates :flag_type, presence: true
 
     def self.distinct_task_values(type)
-      return Flag.where(:flag_type => type).pluck(:flag_value).uniq
+      return Flag.select('DISTINCT flag_value').where(:flag_type => type).pluck(:flag_value)
     end
 
     def self.flags_for_sheet_for_session(sheet_id, session_id, type = "geometry")
