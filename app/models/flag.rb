@@ -7,6 +7,10 @@ class Flag < ActiveRecord::Base
     validates :flaggable_id, presence: true
     validates :flag_type, presence: true
 
+    def self.distinct_task_values(type)
+      return Flag.where(:flag_type => type).pluck(:flag_value).uniq
+    end
+
     def self.flags_for_sheet_for_session(sheet_id, session_id, type = "geometry")
         # just need the count
         if type != "toponym"

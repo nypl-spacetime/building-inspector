@@ -3,28 +3,14 @@ namespace :db do
   desc "Process consensus in POLYGONS (recurring)"
   task :calculate_consensus => :environment do
     # geometry
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("geometry", "yes", 1))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("geometry", "no", 1))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("geometry", "fix", 1))
+    Flag.distinct_task_values("geometry").each do |value|
+      Flag.connection.execute(build_polygon_consensus_query_for_task_value("geometry", value, 1))
+    end
     # colors
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "pink", 1))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "blue", 1))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "yellow", 1))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "green", 1))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "gray", 1))
-    # multicolor
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "blue,green", 1))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "green,yellow", 1))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "blue,pink", 1))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "blue,yellow", 1))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "gray,pink", 1))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "pink,yellow", 1))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "green,pink,yellow", 1))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "green,pink", 1))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "blue,pink,yellow", 1))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "gray,green,yellow", 1))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "gray,pink,yellow", 1))
-    # address
+    Flag.distinct_task_values("color").each do |value|
+      Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", value, 1))
+    end
+    # address == 'none'
     Flag.connection.execute(build_polygon_consensus_query_for_task_value("address", "NONE", 1))
   end
 
