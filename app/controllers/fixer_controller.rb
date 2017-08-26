@@ -381,15 +381,24 @@ class FixerController < ApplicationController
 	end
 
 	def getMap(type="geometry")
-		session = getSession()
-		map = {}
-		# map[:map] = Sheet.random
-		map[:map] = Sheet.random_unprocessed(type)
+    session = getSession()
+    force = false
+    map = {}
+    # map[:map] = Sheet.random
+    map[:map] = Sheet.random_unprocessed(type)
 
     # this to override the layer being chosen
     if (params[:layer] != nil)
       override = Sheet.where(:layer_id => params[:layer]).order("RANDOM()").first
       map[:map] = override if override != nil
+    end
+
+    # this to override the sheet being chosen
+    if (params[:sheet] != nil) && user_signed_in? && current_user.role == "admin"
+      override = Sheet.find(params[:sheet])
+      if override != nil
+        map[:map] = override
+      end
     end
 
     map[:status] = {}

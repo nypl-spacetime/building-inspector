@@ -353,7 +353,7 @@ L.Polygon.polygonEditor = L.Polygon.extend({
                 that._hideAll(marker.newPointMarker);
             });
             newPointMarker.on('dragend', function(event) {
-                console.log("dragend", event);
+                // console.log("dragend", event);
                 var marker = event.target;
                 var pointNo = that._getPointNo(event.target);
                 that._addMarkers(pointNo, marker.getLatLng(), true);
@@ -363,7 +363,7 @@ L.Polygon.polygonEditor = L.Polygon.extend({
                 }, 25);
             });
             newPointMarker.on('click', function(event) {
-                console.log("click", event);
+                // console.log("click", event);
                 var marker = event.target;
                 var pointNo = that._getPointNo(event.target);
                 that._addMarkers(pointNo, marker.getLatLng(), true);

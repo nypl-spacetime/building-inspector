@@ -2,30 +2,16 @@ namespace :db do
 
   desc "Process consensus in POLYGONS (recurring)"
   task :calculate_consensus => :environment do
-    min_count = 3
-    threshold = 0.75
     # geometry
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("geometry", "yes", min_count, threshold))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("geometry", "no", min_count, threshold))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("geometry", "fix", min_count, threshold))
+    Flag.distinct_task_values("geometry").each do |value|
+      Flag.connection.execute(build_polygon_consensus_query_for_task_value("geometry", value, 1))
+    end
     # colors
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "pink", min_count, threshold))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "blue", min_count, threshold))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "yellow", min_count, threshold))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "green", min_count, threshold))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "gray", min_count, threshold))
-    # multicolor
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "blue,green", min_count, threshold))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "green,yellow", min_count, threshold))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "blue,pink", min_count, threshold))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "blue,yellow", min_count, threshold))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "gray,pink", min_count, threshold))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "pink,yellow", min_count, threshold))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "green,pink,yellow", min_count, threshold))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "green,pink", min_count, threshold))
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", "blue,pink,yellow", min_count, threshold))
-    # address
-    Flag.connection.execute(build_polygon_consensus_query_for_task_value("address", "NONE", min_count, threshold))
+    Flag.distinct_task_values("color").each do |value|
+      Flag.connection.execute(build_polygon_consensus_query_for_task_value("color", value, 1))
+    end
+    # address == 'none'
+    Flag.connection.execute(build_polygon_consensus_query_for_task_value("address", "NONE", 1))
   end
 
   desc "Process clustered consensus in ADDRESSES (more expensive, run nightly)"
@@ -43,7 +29,7 @@ namespace :db do
     Sheet.process_consensus_clusters_for_task('toponym')
   end
 
-  def build_polygon_consensus_query_for_task_value(task, value, min_count, threshold)
+  def build_polygon_consensus_query_for_task_value(task, value, min_count = 3, threshold = 0.75, admin_multiplier = 4)
     # given a task and a flag value (for simple flag values such as YES/NO/FIX)
     # and a given minimum flag count and threshold
     # determines all new polygons that should be considered as having consensus
@@ -55,27 +41,39 @@ namespace :db do
   ON C.flaggable_id = P.id
   AND C.task = '#{task}'
   INNER JOIN (
-    SELECT _F.flaggable_id, _F.flag_value, COUNT(*) AS flag_count
+    SELECT _F.flaggable_id, COUNT(*) AS flag_count, SUM(CASE WHEN _U.role = 'admin' THEN #{admin_multiplier} ELSE 1 END) AS flag_score
     FROM flags AS _F
+
+    LEFT JOIN usersessions _S
+    ON _S.session_id = _F.session_id
+    LEFT JOIN users _U
+    ON _U.id = _S.user_id
+
     WHERE _F.flag_value = '#{value}'
     AND _F.flag_type = '#{task}'
     AND _F.flaggable_type = 'Polygon'
-    GROUP BY _F.flaggable_id, _F.flag_value
+    GROUP BY _F.flaggable_id
     HAVING COUNT(*) >= #{min_count}
-  ) AS F
-  ON F.flaggable_id = P.id
+  ) AS POSITIVE
+  ON POSITIVE.flaggable_id = P.id
   INNER JOIN (
-    SELECT _F.flaggable_id, COUNT(*) AS flag_count
+    SELECT _F.flaggable_id, COUNT(*) AS flag_count, SUM(CASE WHEN _U.role = 'admin' THEN #{admin_multiplier} ELSE 1 END) AS flag_score
     FROM flags AS _F
+
+    LEFT JOIN usersessions _S
+    ON _S.session_id = _F.session_id
+    LEFT JOIN users _U
+    ON _U.id = _S.user_id
+
     WHERE _F.flag_type = '#{task}'
     AND _F.flaggable_type = 'Polygon'
     GROUP BY _F.flaggable_id
     HAVING COUNT(*) >= #{min_count}
-  ) AS FCOUNT
-  ON FCOUNT.flaggable_id = P.id
+  ) AS TOTAL
+  ON TOTAL.flaggable_id = P.id
   WHERE
     C.id IS NULL AND
-    F.flag_count::float / FCOUNT.flag_count::float >= #{threshold}"
+    POSITIVE.flag_score::float / TOTAL.flag_score::float >= #{threshold}"
   end
 
 end

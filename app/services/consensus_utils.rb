@@ -1,5 +1,17 @@
 class ConsensusUtils
 
+  def self.admin_vote
+    4
+  end
+
+  def self.deep_copy(o)
+    Marshal.load(Marshal.dump(o))
+  end
+
+  def self.weighted_vote(vote)
+    (vote["role"] == "admin" ? admin_vote : 1)
+  end
+
   # POLYGONFIX CONSENSUS
   def self.calculate_polygonfix_consensus(geojson)
     # TODO: still lacks a more robust validation/checking
@@ -42,7 +54,7 @@ class ConsensusUtils
   def self.validate_final_poly(poly, original_polys)
     point_count = original_polys.map { |c| c.size }
     # puts "validation: #{poly.size}, #{point_count.median}, #{point_count.mean}, #{point_count.standard_deviation}"
-    poly.size >= (point_count.mean - 2*point_count.standard_deviation).to_i
+    poly.size >= 3 && poly.size >= (point_count.mean - (2*point_count.standard_deviation+1)).to_i
   end
 
   # given a list of centroids (lon,lat), find their poly's index in the centroid list (index => lon,lat)
@@ -136,6 +148,7 @@ class ConsensusUtils
         connection = find_connected_point(point, original_points)
         connected_cluster = find_cluster_for_point(connection, clusters)
         # if original point belongs to another cluster
+        # byebug if Rails.env.development?
         if connected_cluster != nil && connected_cluster != cluster[0]
           # vote for the cluster
           cluster_votes[connected_cluster] = 0 if cluster_votes[connected_cluster] == nil
@@ -221,21 +234,36 @@ class ConsensusUtils
   # GENERIC POINT CONSENSUS
   def self.calculate_point_consensus(flags, epsilon, min_points)
     # flags are an activerecord list of 'address' type flags for a given sheet
+    # or 'toponym' type flags for all polygons in a sheet
+    # gonna do some admin trickery so that admin-voted flags count admin_vote times
+    admin_flags = []
+    flags.each do |f|
+      if f["role"] == "admin"
+        admin_vote.times do
+          # add some noise because exactly the same latlon wont work in dbscan
+          noise_f = deep_copy(f)
+          noise_f["latitude"] = noise_f["latitude"].to_f + (rand() * 10e-9).to_f
+          noise_f["longitude"] = noise_f["longitude"].to_f + (rand() * 10e-9).to_f
+          admin_flags << noise_f
+        end
+      end
+    end
+    byebug if Rails.env.development?
+    flags.concat(admin_flags) if admin_flags.count > 0
     # cluster them flags
     simple_array = flags.map { |a| [a["longitude"].to_f, a["latitude"].to_f] }
     clusters = apply_dbscan(simple_array, epsilon, min_points)
     consensus_list = []
-    # byebug if Rails.env.development?
     clusters.each do |c|
       next if c[0] == -1
       consensus = points_cluster_consensus(c[1], flags)
       consensus_list.push(consensus) if consensus != nil
     end
     # group by flaggable_id
-    ids = consensus_list.map {|f| f[:flaggable_id]}.uniq
+    ids = consensus_list.map {|f| f["flaggable_id"]}.uniq
     grouped_list = {}
     ids.each do |id|
-      items = consensus_list.select {|x| x[:flaggable_id] == id}
+      items = consensus_list.select {|x| x["flaggable_id"] == id}
       grouped_list[id] = items
     end
     return grouped_list
@@ -250,12 +278,13 @@ class ConsensusUtils
     session_ids = []
     # byebug if Rails.env.development?
     flags.each do |vote|
+      role = vote["role"]
       value = vote["flag_value"]
       id = vote["flaggable_id"]
       sid = vote["session_id"]
       # ignore vote if session_id already exists
       # to reduce trolling
-      if session_ids.index(sid) != nil
+      if role != "admin" && session_ids.index(sid) != nil
         next
       end
       session_ids.push(sid)
@@ -289,12 +318,12 @@ class ConsensusUtils
     # check if consensus is above threshold
     return if consensus < threshold
     winner_mark = {}
-    winner_mark[:latitude] = latitude
-    winner_mark[:longitude] = longitude
-    winner_mark[:flag_value] = flag_value
-    winner_mark[:votes] = votes
-    winner_mark[:total_votes] = total_votes
-    winner_mark[:flaggable_id] = flaggable_id
+    winner_mark["latitude"] = latitude
+    winner_mark["longitude"] = longitude
+    winner_mark["flag_value"] = flag_value
+    winner_mark["votes"] = votes
+    winner_mark["total_votes"] = total_votes
+    winner_mark["flaggable_id"] = flaggable_id
     return winner_mark
   end
 

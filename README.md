@@ -136,6 +136,7 @@ There is a very superficial [README document](README_NEW_TASK.md) briefly descri
 
 ### Version notes
 
+- 3.1 Now flags (votes) from users with role `admin` count as 4 votes. This is so that certain “power users” can do inspections that do not require additional views and reach consensus immediately.
 - 3.0 Third release with `toponym` task. Refactored and improved code. New API endpoints.
 - 2.0 Second release with `address`, `polygonfix` and `color` tasks. Refactored and improved code. New API endpoints.
 - 1.1 Added API endpoints

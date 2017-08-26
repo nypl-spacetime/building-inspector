@@ -26,11 +26,12 @@ class Sheet < ActiveRecord::Base
     c[:consensus]
   end
 
-  def self.polygons_for_task(sheet_id, session_id = nil, type="geometry")
+  def self.polygons_for_task(sheet_id, session_id = nil, type="geometry", force = false)
     return [] if type == "toponym"
     # only the necessary data of a sheet's polygons
     sheet_id = Sheet.sanitize(sheet_id)
     session_id = Sheet.sanitize(session_id)
+    type_sql = Sheet.sanitize(type)
     if session_id != nil
       # find all the sessions associated to this session_id via its user_id if any
       join = "LEFT JOIN flags AS F ON polygons.id = F.flaggable_id
@@ -46,21 +47,29 @@ class Sheet < ActiveRecord::Base
                   INNER JOIN usersessions _S
                   ON _S.user_id = S.user_id
               )"
-      where = "sheet_id = #{sheet_id} AND F.session_id IS NULL AND CP.id IS NULL"
+      if !force
+        where = "sheet_id = #{sheet_id} AND F.session_id IS NULL AND CP.id IS NULL"
+      else
+        where = "sheet_id = #{sheet_id} AND F.session_id IS NULL"
+      end
     else
       join = " "
       where = "sheet_id = #{sheet_id} AND CP.id IS NULL"
     end
 
-    case type
-    when "geometry"
-      join += "LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = "+ Sheet.sanitize(type)
-    when "address", "color"
-      join += "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.flaggable_id AND CPG.flaggable_type = 'Polygon' AND CPG.task = 'geometry' AND CPG.consensus = 'yes' LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = " + Sheet.sanitize(type)
-    when "polygonfix"
-      join += "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.flaggable_id AND CPG.flaggable_type = 'Polygon' AND CPG.task = 'geometry' AND CPG.consensus = 'fix' LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = " + Sheet.sanitize(type)
+    if !force
+      case type
+      when "geometry"
+        join += "LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = #{type_sql}"
+      when "address", "color"
+        join += "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.flaggable_id AND CPG.flaggable_type = 'Polygon' AND CPG.task = 'geometry' AND CPG.consensus = 'yes' LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = #{type_sql}"
+      when "polygonfix"
+        join += "INNER JOIN consensuspolygons AS CPG ON polygons.id = CPG.flaggable_id AND CPG.flaggable_type = 'Polygon' AND CPG.task = 'geometry' AND CPG.consensus = 'fix' LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = #{type_sql}"
+      else
+        join += "LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = #{type_sql}"
+      end
     else
-      join += "LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = "+ Sheet.sanitize(type)
+      join += " LEFT JOIN consensuspolygons AS CP ON polygons.id = CP.flaggable_id AND CP.flaggable_type = 'Polygon' AND CP.task = #{type_sql} "
     end
 
     Polygon.select("polygons.id, polygons.color, polygons.geometry, polygons.sheet_id, polygons.dn, CP.consensus").joins(join).where(where)
@@ -68,11 +77,9 @@ class Sheet < ActiveRecord::Base
 
   def self.progress_for_task(sheet_id, type)
     sheet_id = Sheet.sanitize(sheet_id)
-    type = Sheet.sanitize(type)
+    type_sql = Sheet.sanitize(type)
 
-    puts type
-
-    if type == "'geometry'"
+    if type == "geometry"
       # show EVERY POLYGON!!!1!
       join_type = "LEFT"
     else
@@ -81,7 +88,7 @@ class Sheet < ActiveRecord::Base
     end
 
     columns = "DISTINCT polygons.id, geometry, sheet_id, CP.consensus, dn, centroid_lat, centroid_lon"
-    join = "#{join_type} JOIN flags AS F ON polygons.id = F.flaggable_id #{join_type} JOIN consensuspolygons AS CP ON CP.flaggable_id = polygons.id AND CP.flaggable_type = 'Polygon' AND CP.task = #{type}"
+    join = "#{join_type} JOIN flags AS F ON polygons.id = F.flaggable_id #{join_type} JOIN consensuspolygons AS CP ON CP.flaggable_id = polygons.id AND CP.flaggable_type = 'Polygon' AND CP.task = #{type_sql}"
     where = " sheet_id = #{sheet_id} "
 
     Polygon.select(columns).joins(join).where(where)
@@ -134,8 +141,8 @@ class Sheet < ActiveRecord::Base
   end
 
   def calculate_address_consensus
-    puts "\n\nProcessing ADDRESS consensus for sheet #{self[:id]}"
-    flags = Flag.flags_for_sheet_for_task(self[:id], "address")
+    puts "\n\nProcessing ADDRESS consensus for sheet #{id}"
+    flags = Flag.flags_for_sheet_for_task(id, "address")
     consensus = ConsensusUtils.calculate_address_consensus(flags)
     puts "Found #{consensus.count} consensus"
     consensus.each_pair do |elem,c|
@@ -165,7 +172,7 @@ class Sheet < ActiveRecord::Base
   def calculate_polygonfix_consensus
     # get all polygons that have 3 or more polygonfix flags
     puts "\n\nProcessing POLYGONFIX consensus for sheet #{self[:id]}"
-    flags = Flag.flags_for_sheet_for_task_and_threshold(self[:id])
+    flags = Flag.flags_for_sheet_for_task_and_threshold(self[:id], 'polygonfix', 1)
     pids = flags.map {|fl| fl["flaggable_id"]}.uniq
     pids.each do |pid|
       poly = Polygon.find(pid.to_i)

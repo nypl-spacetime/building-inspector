@@ -25,13 +25,20 @@
   fix_count = 0
   geometry_count = 0
   all_count = 0
+  last_type = ""
   %>
   <% @polygon.flags.each do |f| %>
-  <%
-  if f.flag_type == "address"
-  %>
-  <br />address: <%= link_to_unless f.flag_value == "NONE", "#{f.flag_value}", f %>
+  <% if f.flag_type != last_type %>
+  <br />
+  <% last_type = f.flag_type %>
+  <% end %>
+  <% if f.flag_type == "address" %>
+  address: <%= link_to_unless f.flag_value == "NONE", "#{f.flag_value}", f %>
+  <%= "(#{f.usersession.user.role})" if f.usersession.present? && f.usersession.user.present? %><br />
   <% elsif f.flag_type == "geometry"  %>
+  <%= f.flag_value %>
+  <%= "(#{f.usersession.user.role})" if f.usersession.present? && f.usersession.user.present? %>
+  <br />
   <%
   geometry_count = geometry_count + 1
   if f.flag_value == "yes"
@@ -45,14 +52,14 @@
   end
   %>
   <% elsif f.flag_type == "color"  %>
-  <br />color: <%= link_to "#{f.flag_value}", f %>
+  color: <%= link_to "#{f.flag_value}", f %>
+  <%= "(#{f.usersession.user.role})" if f.usersession.present? && f.usersession.user.present? %><br />
   <% end %>
   <%
   all_count = all_count + 1
   %>
   <% end %>
   <% if geometry_count > 0 %>
-  <br />
   yes: <%= yes_count %> (<%= (yes_count.to_f / geometry_count.to_f * 100.0).round %>%)<br />
   no: <%= no_count %> (<%= (no_count.to_f / geometry_count.to_f * 100.0).round %>%)<br />
   fix: <%= fix_count %> (<%= (fix_count.to_f / geometry_count.to_f * 100.0).round %>%)<br />
